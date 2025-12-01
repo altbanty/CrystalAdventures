@@ -1,28 +1,26 @@
 _OakText6::
-	text "Now, what did you"
-	line "say your name was?"
+	text "Now, remind me..."
+	line "What was your"
+	cont "name again?"
 	prompt
 
 _OakText7::
-	text "<PLAYER>, are you"
-	line "ready?"
+	text "<PLAYER>!"
+	line "That's right!"
 
-	para "Your very own"
-	line "#MON story is"
-	cont "about to unfold."
+	para "This CRYSTAL"
+	line "ADVENTURE brings"
+	cont "fresh challenges!"
 
-	para "You'll face fun"
-	line "times and tough"
-	cont "challenges."
+	para "Every route offers"
+	line "just one catch..."
 
-	para "A world of dreams"
-	line "and adventures"
+	para "Making each choice"
+	line "matter more than"
+	cont "ever before!"
 
-	para "with #MON"
+	para "Your adventure"
 	line "awaits! Let's go!"
-
-	para "I'll be seeing you"
-	line "later!"
 	done
 
 _ClockTimeMayBeWrongText::

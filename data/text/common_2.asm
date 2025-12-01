@@ -1559,23 +1559,23 @@ _MayRegisterItemText::
 	done
 
 _OakText1::
-	text "Hello! Sorry to"
-	line "keep you waiting!"
+	text "Welcome back,"
+	line "trainer!"
 
-	para "Welcome to the"
-	line "world of #MON!"
+	para "You've returned to"
+	line "the world of"
+	cont "#MON CRYSTAL..."
 
-	para "My name is OAK."
-
-	para "People call me the"
-	line "#MON PROF."
+	para "But this journey"
+	line "will be different"
+	cont "from before!"
 	prompt
 
 _OakText2::
-	text "This world is in-"
-	line "habited by crea-"
-	cont "tures that we call"
-	cont "#MON.@"
+	text "Adventure mode"
+	line "brings balanced"
+	cont "challenge to your"
+	cont "journey!@"
 	text_end
 
 _OakText3::
@@ -1585,26 +1585,27 @@ _OakText3::
 	text_end ; unreferenced
 
 _OakText4::
-	text "People and #MON"
-	line "live together by"
+	text "You can only catch"
+	line "the first #MON"
 
-	para "supporting each"
-	line "other."
+	para "you encounter on"
+	line "each route!"
 
-	para "Some people play"
-	line "with #MON, some"
-	cont "battle with them."
+	para "This Nuzlocke rule"
+	line "makes team building"
+	cont "a roguelike puzzle!"
 	prompt
 
 _OakText5::
-	text "But we don't know"
-	line "everything about"
-	cont "#MON yet."
+	text "Healing at #MON"
+	line "Centers now costs"
+	cont "money!"
 
-	para "There are still"
-	line "many mysteries to"
-	cont "solve."
+	para "Your starter choice"
+	line "includes all three"
+	cont "original options."
 
-	para "That's why I study"
-	line "#MON every day."
+	para "And your egg will"
+	line "hatch a random"
+	cont "baby #MON!"
 	prompt
