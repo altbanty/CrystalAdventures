@@ -105,11 +105,8 @@ ElmCheckEverstone:
 	iftrue ElmGiveEverstoneScript
 	checkevent EVENT_TOLD_ELM_ABOUT_TOGEPI_OVER_THE_PHONE
 	iffalse ElmCheckTogepiEgg
-	setval TOGEPI
-	special FindPartyMonThatSpeciesYourTrainerID
-	iftrue ShowElmTogepiScript
-	setval TOGETIC
-	special FindPartyMonThatSpeciesYourTrainerID
+	; Check for any of the baby Pokemon or their evolutions
+	scall CheckForBabyPokemon
 	iftrue ShowElmTogepiScript
 	writetext ElmThoughtEggHatchedText
 	waitbutton
@@ -117,11 +114,8 @@ ElmCheckEverstone:
 	end
 
 ElmEggHatchedScript:
-	setval TOGEPI
-	special FindPartyMonThatSpeciesYourTrainerID
-	iftrue ShowElmTogepiScript
-	setval TOGETIC
-	special FindPartyMonThatSpeciesYourTrainerID
+	; Check for any of the baby Pokemon or their evolutions
+	scall CheckForBabyPokemon
 	iftrue ShowElmTogepiScript
 	sjump ElmCheckGotEggAgain
 
@@ -1360,6 +1354,74 @@ ElmsLabPCText:
 	para "…It says on the"
 	line "screen…"
 	done
+
+CheckForBabyPokemon:
+	; Check for any of the baby Pokemon from the egg
+	setval TOGEPI
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval PICHU
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval CLEFFA
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval IGGLYBUFF
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval SMOOCHUM
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval ELEKID
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval MAGBY
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval TYROGUE
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	; Also check for their evolutions
+	setval TOGETIC
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval PIKACHU
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval RAICHU
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval CLEFAIRY
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval CLEFABLE
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval JIGGLYPUFF
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval WIGGLYTUFF
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval JYNX
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval ELECTABUZZ
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval MAGMAR
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval HITMONLEE
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval HITMONCHAN
+	special FindPartyMonThatSpeciesYourTrainerID
+	iftrue .found
+	setval HITMONTOP
+	special FindPartyMonThatSpeciesYourTrainerID
+.found
+	end
 
 ElmsLab_MapEvents:
 	db 0, 0 ; filler

@@ -24,7 +24,40 @@ VioletPokecenter1F_ElmsAideScript:
 	iffalse .RefusedEgg
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .PartyFull
+	; Randomly select a baby Pokemon for the egg
+	random 8
+	ifequal 0, .GiveTogepi
+	ifequal 1, .GivePichu
+	ifequal 2, .GiveCleffa
+	ifequal 3, .GiveIgglybuff
+	ifequal 4, .GiveSmoochum
+	ifequal 5, .GiveElekid
+	ifequal 6, .GiveMagby
+	; ifequal 7 falls through to Tyrogue
+.GiveTyrogue:
+	giveegg TYROGUE, EGG_LEVEL
+	sjump .EggGiven
+.GiveTogepi:
 	giveegg TOGEPI, EGG_LEVEL
+	sjump .EggGiven
+.GivePichu:
+	giveegg PICHU, EGG_LEVEL
+	sjump .EggGiven
+.GiveCleffa:
+	giveegg CLEFFA, EGG_LEVEL
+	sjump .EggGiven
+.GiveIgglybuff:
+	giveegg IGGLYBUFF, EGG_LEVEL
+	sjump .EggGiven
+.GiveSmoochum:
+	giveegg SMOOCHUM, EGG_LEVEL
+	sjump .EggGiven
+.GiveElekid:
+	giveegg ELEKID, EGG_LEVEL
+	sjump .EggGiven
+.GiveMagby:
+	giveegg MAGBY, EGG_LEVEL
+.EggGiven:
 	getstring STRING_BUFFER_4, .eggname
 	scall .AideGivesEgg
 	setevent EVENT_GOT_TOGEPI_EGG_FROM_ELMS_AIDE

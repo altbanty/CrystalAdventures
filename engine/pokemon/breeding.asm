@@ -237,9 +237,25 @@ HatchEggs:
 	call SetSeenAndCaughtMon
 
 	ld a, [wCurPartySpecies]
+	; Check if it's one of the baby Pokemon from the egg
 	cp TOGEPI
+	jr z, .sethatched
+	cp PICHU
+	jr z, .sethatched
+	cp CLEFFA
+	jr z, .sethatched
+	cp IGGLYBUFF
+	jr z, .sethatched
+	cp SMOOCHUM
+	jr z, .sethatched
+	cp ELEKID
+	jr z, .sethatched
+	cp MAGBY
+	jr z, .sethatched
+	cp TYROGUE
 	jr nz, .nottogepi
-	; set the event flag for hatching togepi
+.sethatched
+	; set the event flag for hatching the special egg
 	ld de, EVENT_TOGEPI_HATCHED
 	ld b, SET_FLAG
 	call EventFlagAction
