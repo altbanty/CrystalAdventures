@@ -1440,6 +1440,16 @@ _BallBoxFullText::
 	cont "can't be used now."
 	prompt
 
+_NuzlockeBlockText::
+	text "You already"
+	line "encountered a"
+	cont "#MON here!"
+	
+	para "Can't catch"
+	line "another one on"
+	cont "this route!"
+	prompt
+
 _ItemUsedText::
 	text "<PLAYER> used the@"
 	text_low

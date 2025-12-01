@@ -215,6 +215,36 @@ PokeBallEffect:
 	dec a
 	jp nz, UseBallInTrainerBattle
 
+	; Check for Nuzlocke encounter rule
+	ld a, [wNuzlockeFirstEncounter]
+	and a
+	jr nz, .skip_nuzlocke_check ; This is the first encounter, allow catch
+	
+	; Check if special battle type that bypasses Nuzlocke
+	ld a, [wBattleType]
+	cp BATTLETYPE_SHINY
+	jr z, .skip_nuzlocke_check
+	cp BATTLETYPE_SUICUNE
+	jr z, .skip_nuzlocke_check
+	cp BATTLETYPE_ROAMING
+	jr z, .skip_nuzlocke_check
+	cp BATTLETYPE_TREE
+	jr z, .skip_nuzlocke_check
+	cp BATTLETYPE_TRAP
+	jr z, .skip_nuzlocke_check
+	cp BATTLETYPE_CELEBI
+	jr z, .skip_nuzlocke_check
+	cp BATTLETYPE_TUTORIAL
+	jr z, .skip_nuzlocke_check
+	
+	; Not the first encounter and not a special battle, block the catch
+	ld hl, NuzlockeBlockText
+	call PrintText
+	ld a, $ff
+	ld [wItemEffectSucceeded], a
+	ret
+	
+.skip_nuzlocke_check
 	ld a, [wBattleType]
 	cp BATTLETYPE_TUTORIAL
 	jr z, .room_in_party
@@ -2725,6 +2755,10 @@ ItemCantGetOnText:
 
 BallBoxFullText:
 	text_far _BallBoxFullText
+	text_end
+
+NuzlockeBlockText:
+	text_far _NuzlockeBlockText
 	text_end
 
 ItemUsedText:

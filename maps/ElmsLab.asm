@@ -468,6 +468,9 @@ AideScript_GivePotion:
 	writetext AideText_GiveYouPotion
 	promptbutton
 	verbosegiveitem POTION
+	writetext AideText_AlsoGivePokeBalls
+	promptbutton
+	verbosegiveitem POKE_BALL, 5
 	writetext AideText_AlwaysBusy
 	waitbutton
 	closetext
@@ -1206,6 +1209,14 @@ AideText_GiveYouPotion:
 	text "<PLAY_G>, I want"
 	line "you to have this"
 	cont "for your errand."
+	done
+
+AideText_AlsoGivePokeBalls:
+	text "Oh, and take"
+	line "these # BALLS"
+	
+	para "in case you see"
+	line "any wild #MON!"
 	done
 
 AideText_AlwaysBusy:

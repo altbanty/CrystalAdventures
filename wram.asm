@@ -2804,7 +2804,7 @@ wXYComparePointer:: dw
 	ds 4
 
 wBattleScriptFlags:: db
-	ds 1
+wNuzlockeFirstEncounter:: db ; 1 if this is the first encounter on this map
 wPlayerSpriteSetupFlags::
 ; bit 7: if set, cancel wPlayerAction
 ; bit 6: RefreshMapSprites doesn't reload player sprite
@@ -3092,7 +3092,9 @@ wMobileBattleRoomSceneID::                        db
 
 wNumBalls:: db
 wBalls:: ds MAX_BALLS * 2 + 1
-	ds 23
+	ds 15
+; Nuzlocke encounter flags - simplified to 64 routes (8 bytes)
+wNuzlockeEncounterFlags:: ds 8
 	; ds 49
 
 ; fight counts

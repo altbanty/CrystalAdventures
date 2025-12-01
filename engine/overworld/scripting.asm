@@ -1131,6 +1131,9 @@ Script_loadpikachudata:
 Script_randomwildmon:
 	xor a
 	ld [wBattleScriptFlags], a
+	; Check if this is first encounter for Nuzlocke
+	ld [wNuzlockeFirstEncounter], a
+	farcall CheckNuzlockeForBattle
 	ret
 
 Script_loadtemptrainer:
@@ -1176,6 +1179,15 @@ Script_catchtutorial:
 	jp Script_reloadmap
 
 Script_reloadmapafterbattle:
+	; Check if this was a first encounter and set Nuzlocke flag
+	ld a, [wNuzlockeFirstEncounter]
+	and a
+	jr z, .not_first_encounter
+	; Clear the flag and set the Nuzlocke encounter for this map
+	xor a
+	ld [wNuzlockeFirstEncounter], a
+	farcall SetNuzlockeEncounter
+.not_first_encounter
 	ld hl, wBattleScriptFlags
 	ld d, [hl]
 	ld [hl], 0

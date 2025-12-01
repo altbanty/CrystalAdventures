@@ -329,6 +329,8 @@ InitializeWorld:
 	call ShrinkPlayer
 	farcall SpawnPlayer
 	farcall _InitializeStartDay
+	; Clear Nuzlocke encounter flags for new game
+	farcall ClearAllNuzlockeEncounters
 	ret
 
 LoadOrRegenerateLuckyIDNumber:
