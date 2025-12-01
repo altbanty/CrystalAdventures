@@ -1090,7 +1090,7 @@ GeodudeEvosAttacks:
 	db 0 ; no more evolutions
 	db 1, TACKLE
 	db 6, DEFENSE_CURL
-	db 11, ROCK_THROW
+	db 10, ROCK_THROW
 	db 16, MAGNITUDE
 	db 21, SELFDESTRUCT
 	db 27, HARDEN
@@ -2365,7 +2365,7 @@ TotodileEvosAttacks:
 	db 1, SCRATCH
 	db 1, LEER
 	db 7, WATER_GUN
-	db 12, RAGE
+	db 10, RAGE
 	db 21, BITE
 	db 28, SCARY_FACE
 	db 37, SLASH
