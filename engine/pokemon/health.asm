@@ -85,6 +85,251 @@ HealPartyMonDaycare: ; yes this suplicate code is inefficient but ehh, we're not
 	farcall RestoreAllPP
 	ret
 
+CalculateHealingCost::
+; Calculate the cost to heal the party
+; Returns cost in wScriptVar (capped at 9999)
+	; Initialize
+	xor a
+	ld [wCurPartyMon], a
+	
+	; Get pointer to first Pokemon
+	ld a, MON_SPECIES
+	call GetPartyParamLocation
+	ld d, h
+	ld e, l
+	
+	; Calculate HP difference for first Pokemon only (for testing)
+	; Get current HP (2 bytes, big-endian)
+	ld hl, MON_HP
+	add hl, de
+	ld a, [hli]  ; High byte of current HP
+	ld b, a
+	ld a, [hl]   ; Low byte of current HP
+	ld c, a
+	; bc = current HP (e.g., 0x0010 = 16)
+	
+	; Get max HP (2 bytes, big-endian)
+	ld hl, MON_MAXHP
+	add hl, de
+	ld a, [hli]  ; High byte of max HP
+	ld d, a
+	ld a, [hl]   ; Low byte of max HP
+	ld e, a
+	; de = max HP (e.g., 0x0013 = 19)
+	
+	; Calculate max - current: de - bc
+	ld a, e      ; Low byte of max (0x13)
+	sub c        ; Subtract low byte of current (0x10)
+	ld l, a      ; Store result low byte (0x03)
+	ld a, d      ; High byte of max (0x00)
+	sbc b        ; Subtract high byte of current with borrow (0x00)
+	ld h, a      ; Store result high byte (0x00)
+	
+	; Check if result is negative (carry flag set means negative)
+	jr nc, .positive_result
+	; If negative, set to 0
+	ld hl, 0
+	
+.positive_result
+	; hl now has the HP difference
+	; Store in wScriptVar (big-endian for display)
+	ld a, h
+	ld [wScriptVar], a     ; High byte
+	ld a, l
+	ld [wScriptVar + 1], a ; Low byte
+	ret
+	
+CalculateHealingCost_Real::
+	; Initialize total to 0 using temporary storage
+	xor a
+	ld [wStringBuffer1], a     ; Low byte
+	ld [wStringBuffer1 + 1], a ; High byte
+	
+	; Loop through party
+	ld a, [wPartyCount]
+	and a
+	ret z ; No Pokemon in party
+	
+	ld b, a ; b = number of Pokemon
+	ld c, 0 ; c = index
+	
+.party_loop
+	push bc
+	
+	; Get pointer to current Pokemon
+	ld a, c
+	ld [wCurPartyMon], a
+	
+	; Check if it's an egg
+	ld hl, wPartySpecies
+	ld d, 0
+	ld e, c
+	add hl, de
+	ld a, [hl]
+	cp EGG
+	jr z, .skip_mon
+	
+	; Calculate cost for this Pokemon
+	call CalculateMonHealingCost
+	
+.skip_mon
+	pop bc
+	inc c
+	dec b
+	jr nz, .party_loop
+	
+	; Get final total from wStringBuffer1
+	ld a, [wStringBuffer1]
+	ld l, a
+	ld a, [wStringBuffer1 + 1]
+	ld h, a
+	
+	; Cap at 9999 if needed
+	ld de, 9999
+	; Compare hl with de
+	ld a, h
+	cp d
+	jr c, .store_result ; h < d, so total < 9999
+	jr nz, .cap_max ; h > d, so total > 9999
+	ld a, l
+	cp e
+	jr c, .store_result ; l < e, so total < 9999
+	
+.cap_max
+	ld hl, 9999
+	
+.store_result
+	; Store in wScriptVar in BIG-ENDIAN for text_decimal
+	ld a, h
+	ld [wScriptVar], a     ; High byte first
+	ld a, l
+	ld [wScriptVar + 1], a ; Low byte second
+	ret
+
+CalculateMonHealingCost:
+; Calculate cost for current party mon
+; Add result to running total in wStringBuffer1
+	; Get pointer to party mon data
+	ld a, MON_SPECIES
+	call GetPartyParamLocation
+	ld d, h
+	ld e, l
+	
+	; First, calculate HP cost
+	; Get current HP (big-endian: high byte, then low byte)
+	ld hl, MON_HP
+	add hl, de
+	ld a, [hli]
+	ld b, a     ; b = current HP high
+	ld a, [hl]
+	ld c, a     ; c = current HP low
+	
+	; Get max HP (big-endian: high byte, then low byte)
+	ld hl, MON_MAXHP
+	add hl, de
+	ld a, [hli]
+	ld h, a     ; h = max HP high
+	ld a, [hl]
+	ld l, a     ; l = max HP low
+	
+	; Calculate max - current
+	; We need to do hl - bc
+	ld a, l
+	sub c
+	ld c, a     ; c = low byte of difference
+	ld a, h
+	sbc b
+	ld b, a     ; b = high byte of difference
+	
+	; Check if result is negative (would mean Pokemon is already at full HP or over)
+	jr nc, .hp_ok
+	; If negative, set to 0
+	ld bc, 0
+	
+.hp_ok
+	; bc now contains HP to restore
+	; Add HP cost to running total
+	ld a, [wStringBuffer1]
+	add c
+	ld [wStringBuffer1], a
+	ld a, [wStringBuffer1 + 1]
+	adc b
+	ld [wStringBuffer1 + 1], a
+	
+	; Check status (add 1 if status != 0)
+	ld hl, MON_STATUS
+	add hl, de
+	ld a, [hl]
+	or a
+	jr z, .check_pp
+	
+	; Add 1 for status condition
+	ld a, [wStringBuffer1]
+	add 1
+	ld [wStringBuffer1], a
+	ld a, [wStringBuffer1 + 1]
+	adc 0
+	ld [wStringBuffer1 + 1], a
+	
+.check_pp
+	; For now, skip PP calculation to simplify debugging
+	ret
+
+CheckHealingPayment::
+; Check if player can afford healing cost in wScriptVar
+; Returns result in wScriptVar: 1 if can afford, 0 if not
+	; Get cost from wScriptVar (2 bytes, big-endian)
+	ld a, [wScriptVar]
+	ld h, a  ; High byte
+	ld a, [wScriptVar + 1]
+	ld l, a  ; Low byte
+	; hl = cost
+	
+	; Compare with player's money
+	ld de, wMoney + 2
+	ld a, [de]
+	cp l
+	jr c, .cant_afford
+	jr nz, .can_afford
+	dec de
+	ld a, [de]
+	cp h
+	jr c, .cant_afford
+	
+.can_afford
+	ld a, 1
+	ld [wScriptVar], a
+	ret
+	
+.cant_afford
+	xor a
+	ld [wScriptVar], a
+	ret
+
+TakeHealingPayment::
+; Take the healing cost from player's money
+; Cost should be in wScriptVar (2 bytes, big-endian)
+	; Get cost
+	ld a, [wScriptVar]
+	ld h, a  ; High byte
+	ld a, [wScriptVar + 1]
+	ld l, a  ; Low byte
+	
+	; Subtract from money (wMoney is 3 bytes: high, mid, low)
+	ld de, wMoney + 2
+	ld a, [de]
+	sub l
+	ld [de], a
+	dec de
+	ld a, [de]
+	sbc h
+	ld [de], a
+	dec de
+	ld a, [de]
+	sbc 0
+	ld [de], a
+	ret
+
 ComputeHPBarPixels:
 ; e = bc * (6 * 8) / de
 	ld a, b

@@ -39,6 +39,9 @@ SpecialsPointers::
 	add_special CheckMagikarpLength
 	add_special MagikarpHouseSign
 	add_special HealParty ; this is both a special and a predef
+	add_special CalculateHealingCost
+	add_special CheckHealingPayment
+	add_special TakeHealingPayment
 	add_special PokemonCenterPC
 	add_special PlayersHousePC
 	add_special DayCareMan

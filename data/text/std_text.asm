@@ -81,6 +81,41 @@ NurseGoodbyeText:
 	line "again."
 	done
 
+NurseHealingCostText:
+	text "The healing cost"
+	line "is ¥@"
+	text_decimal wScriptVar, 2, 5
+	text "."
+	
+	para "Would you like us"
+	line "to heal your"
+	cont "#MON?"
+	done
+
+NurseNotEnoughMoneyText:
+	text "I'm sorry, but"
+	line "you don't have"
+	cont "enough money."
+	
+	para "Please come back"
+	line "when you can"
+	cont "afford it."
+	done
+
+NurseAlreadyHealedText:
+	text "Your #MON are"
+	line "already in perfect"
+	cont "health!"
+	
+	para "There's no need"
+	line "for healing."
+	done
+
+NurseDeclinedHealText:
+	text "OK. Please come"
+	line "back anytime."
+	done
+
 ; not used
 	text "We hope to see you"
 	line "again."

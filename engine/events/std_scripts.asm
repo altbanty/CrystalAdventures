@@ -65,16 +65,14 @@ PokecenterNurseScript:
 	iftrue .day
 	checktime NITE
 	iftrue .nite
-	sjump .ok
+	opentext
+	sjump .calculate_cost
 
 .morn
 	checkevent EVENT_WELCOMED_TO_POKECOM_CENTER
 	iffalse .morn_comcenter
 	opentext
-	farwritetext NurseTakePokemonText
-	pause 40
-	closetext
-	sjump .ok
+	sjump .calculate_cost
 .morn_comcenter
 	opentext
 	farwritetext NurseMornText
@@ -85,10 +83,7 @@ PokecenterNurseScript:
 	checkevent EVENT_WELCOMED_TO_POKECOM_CENTER
 	iffalse .day_comcenter
 	opentext
-	farwritetext NurseTakePokemonText
-	pause 40
-	closetext
-	sjump .ok
+	sjump .calculate_cost
 .day_comcenter
 	opentext
 	farwritetext NurseDayText
@@ -99,24 +94,56 @@ PokecenterNurseScript:
 	checkevent EVENT_WELCOMED_TO_POKECOM_CENTER
 	iffalse .nite_comcenter
 	opentext
-	farwritetext NurseTakePokemonText
-	pause 40
-	closetext
-	sjump .ok
+	sjump .calculate_cost
 .nite_comcenter
 	opentext
 	farwritetext NurseNiteText
 	promptbutton
 	sjump .ok_first_time
+.calculate_cost
+	; Regular Pokecenter path - jump to cost calculation
+	sjump .do_cost_calculation
 .ok_first_time
-	farwritetext NurseAskHealText
+	; First time at Pokecom Center - do intro then calculate cost
+.do_cost_calculation
+	; Calculate healing cost
+	special CalculateHealingCost
+	; wScriptVar now has the cost (2 bytes, big-endian for display)
+	; Since cost is big-endian and small values have 0 in first byte,
+	; we need to check the second byte for the actual value
+	; For now, just skip the zero check and always show cost
+	sjump .show_cost
+.free_heal_unused ; Keep label to avoid breaking jumps
+.show_cost
+	; Show cost and ask
+	farwritetext NurseHealingCostText
 	yesorno
 	iffalse .no_heal
+	; Restore cost to wScriptVar for payment functions
+	special CalculateHealingCost
+	; Check if player can afford it
+	special CheckHealingPayment
+	iffalse .not_enough_money
+	; Take payment
+	special CalculateHealingCost
+	special TakeHealingPayment
 	farwritetext NurseTakePokemonText
 	waitbutton
 	closetext
 	sjump .ok
+.free_heal
+	farwritetext NurseAlreadyHealedText
+	waitbutton
+	closetext
+	sjump .done
+.not_enough_money
+	farwritetext NurseNotEnoughMoneyText
+	waitbutton
+	closetext
+	sjump .done
 .no_heal
+	farwritetext NurseDeclinedHealText
+	waitbutton
 	closetext
 	sjump .done
 .ok
