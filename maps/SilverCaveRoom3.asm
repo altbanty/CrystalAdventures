@@ -30,7 +30,7 @@ Red:
 .rematchteam
 	loadtrainer RED, 2
 .EndLoadTrainerRed
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2
@@ -67,7 +67,7 @@ Red:
 	pause 30
 	special HealParty
 	refreshscreen
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .NotHardMode1
 	loadmem wLevelCap, 100 ; update level cap for hard mode
 .NotHardMode1
@@ -89,7 +89,7 @@ MewtwoScript:
 	setevent EVENT_RED_IN_MT_SILVER
 	setevent EVENT_CERULEAN_CAVE_B1F_MEWTWO
 	reloadmapafterbattle
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .NotHardMode
 	loadmem wLevelCap, 100 ; update level cap for hard mode
 .NotHardMode

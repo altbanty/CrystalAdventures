@@ -38,7 +38,7 @@ BlackthornGymClairScript:
 	closetext
 	winlosstext ClairWinText, 0
 	loadtrainer CLAIR, CLAIR1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_CLAIR1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_CLAIR1
@@ -106,7 +106,7 @@ BlackthornGymClairScript:
 	special HealParty
 	winlosstext Clair_RematchDefeatText, 0
 	loadtrainer CLAIR, 2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2

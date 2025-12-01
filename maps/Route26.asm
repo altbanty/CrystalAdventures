@@ -68,7 +68,7 @@ TrainerCooltrainermGaven3:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer COOLTRAINERM, GAVEN3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_GAVEN3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_GAVEN3
@@ -80,7 +80,7 @@ TrainerCooltrainermGaven3:
 
 .LoadFight1:
 	loadtrainer COOLTRAINERM, GAVEN1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_GAVEN1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_GAVEN1
@@ -92,7 +92,7 @@ TrainerCooltrainermGaven3:
 
 .LoadFight2:
 	loadtrainer COOLTRAINERM, GAVEN2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_GAVEN2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_GAVEN2
@@ -184,7 +184,7 @@ TrainerCooltrainerfBeth1:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer COOLTRAINERF, BETH1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BETH1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BETH1
@@ -196,7 +196,7 @@ TrainerCooltrainerfBeth1:
 
 .LoadFight1:
 	loadtrainer COOLTRAINERF, BETH2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BETH2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BETH2
@@ -208,7 +208,7 @@ TrainerCooltrainerfBeth1:
 
 .LoadFight2:
 	loadtrainer COOLTRAINERF, BETH3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BETH3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BETH3

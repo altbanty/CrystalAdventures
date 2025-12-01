@@ -103,7 +103,7 @@ TrainerBirdKeeperJose2:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer BIRD_KEEPER, JOSE2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JOSE2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JOSE2
@@ -115,7 +115,7 @@ TrainerBirdKeeperJose2:
 
 .LoadFight1:
 	loadtrainer BIRD_KEEPER, JOSE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JOSE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JOSE1
@@ -127,7 +127,7 @@ TrainerBirdKeeperJose2:
 
 .LoadFight2:
 	loadtrainer BIRD_KEEPER, JOSE3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JOSE3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JOSE3
@@ -248,7 +248,7 @@ TrainerCooltrainerfReena:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer COOLTRAINERF, REENA1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_REENA1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_REENA1
@@ -260,7 +260,7 @@ TrainerCooltrainerfReena:
 
 .LoadFight1:
 	loadtrainer COOLTRAINERF, REENA2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_REENA2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_REENA2
@@ -272,7 +272,7 @@ TrainerCooltrainerfReena:
 
 .LoadFight2:
 	loadtrainer COOLTRAINERF, REENA3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_REENA3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_REENA3

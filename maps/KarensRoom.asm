@@ -62,7 +62,7 @@ KarenScript_Battle:
 .Rematch:
 	loadtrainer KAREN, 2
 .LoadtrainerEnd:
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2

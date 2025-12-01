@@ -63,7 +63,7 @@ NewGame:
 	ld [wDebugFlags], a
 	call ResetWRAM
 	call NewGame_ClearTilemapEtc
-	call SelectDifficulty
+	call SetAdventureMode
 	call AreYouABoyOrAreYouAGirl
 	call OakSpeech
 	call InitializeWorld
@@ -95,15 +95,11 @@ DebugRoom: ; unreferenced
 	ret
 endc
 
-SelectDifficulty::
-	farcall Mobile_AlwaysReturnNotCarry ; mobile
-	jr c, .ok
-	farcall InitDifficulty
-	ret
-
-.ok
-	ld c, 0
-	farcall InitMobileProfile ; mobile
+SetAdventureMode::
+	; Always set Adventure mode
+	ld de, ENGINE_ADVENTURE_MODE
+	ld b, SET_FLAG
+	farcall EngineFlagAction
 	ret
 
 if DEF(_DEBUG)

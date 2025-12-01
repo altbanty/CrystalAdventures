@@ -15,7 +15,7 @@ Script_Whiteout:
 	checkflag ENGINE_BUG_CONTEST_TIMER
 	iftrue .bug_contest
 	callasm HalveMoney
-	checkflag ENGINE_HARDCORE_MODE
+	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .reset
 	callasm GetWhiteoutSpawn
 	farscall Script_AbortBugContest

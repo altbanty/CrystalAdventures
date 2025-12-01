@@ -53,7 +53,7 @@ CianwoodGymChuckScript:
 	loadtrainer CHUCK, 3
 	sjump .CianwoodGymChuckScriptEnd
 .CianwoodGymChuckScriptEnd:
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_3
@@ -67,7 +67,7 @@ CianwoodGymChuckScript:
 	setflag ENGINE_STORMBADGE
 
 	; Update level caps with level scaling
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	readvar VAR_BADGES
 	ifequal 7, .SevenBadgeCap
@@ -122,7 +122,7 @@ CianwoodGymChuckScript:
 	special HealParty
 	winlosstext Chuck_RematchDefeatText, 0
 	loadtrainer CHUCK, 4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_4

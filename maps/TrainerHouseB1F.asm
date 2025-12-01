@@ -80,7 +80,7 @@ TrainerHouseReceptionistScript:
 	winlosstext TrainerHouseB1FCalBeatenText, 0
 	setlasttalked TRAINERHOUSEB1F_CHRIS
 	loadtrainer CAL, CAL2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_CAL2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_CAL2
@@ -122,7 +122,7 @@ TrainerHouseReceptionistScript:
 	loadtrainer PKMNTRAINERF, WEEBRA ; WEEBRA
 	sjump .DoneBattle
 .DoneBattle
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_WEEBRA ; WEEBRA
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_WEEBRA ; WEEBRA

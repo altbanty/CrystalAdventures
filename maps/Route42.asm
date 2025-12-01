@@ -84,7 +84,7 @@ TrainerFisherTully:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer FISHER, TULLY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TULLY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TULLY1
@@ -96,7 +96,7 @@ TrainerFisherTully:
 
 .LoadFight1:
 	loadtrainer FISHER, TULLY2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TULLY2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TULLY2
@@ -108,7 +108,7 @@ TrainerFisherTully:
 
 .LoadFight2:
 	loadtrainer FISHER, TULLY3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TULLY3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TULLY3
@@ -120,7 +120,7 @@ TrainerFisherTully:
 
 .LoadFight3:
 	loadtrainer FISHER, TULLY4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TULLY4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TULLY4

@@ -64,7 +64,7 @@ TrainerSailorHuey:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer SAILOR, HUEY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_HUEY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_HUEY1
@@ -76,7 +76,7 @@ TrainerSailorHuey:
 
 .LoadFight1:
 	loadtrainer SAILOR, HUEY2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_HUEY2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_HUEY2
@@ -88,7 +88,7 @@ TrainerSailorHuey:
 
 .LoadFight2:
 	loadtrainer SAILOR, HUEY3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_HUEY3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_HUEY3
@@ -100,7 +100,7 @@ TrainerSailorHuey:
 
 .LoadFight3:
 	loadtrainer SAILOR, HUEY4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_HUEY4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_HUEY4

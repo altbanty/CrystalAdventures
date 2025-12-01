@@ -22,7 +22,7 @@ AzaleaGymBugsyScript:
 	closetext
 	winlosstext BugsyText_ResearchIncomplete, 0
 	loadtrainer BUGSY, BUGSY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BUGSY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BUGSY1
@@ -34,7 +34,7 @@ AzaleaGymBugsyScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_HIVEBADGE
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	loadmem wLevelCap, 21 ; update level cap for hard mode
 .DontUpdateBadge
@@ -75,7 +75,7 @@ AzaleaGymBugsyScript:
 	special HealParty
 	winlosstext Bugsy_RematchDefeatText, 0
 	loadtrainer BUGSY, 2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2

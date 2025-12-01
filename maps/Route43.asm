@@ -94,7 +94,7 @@ TrainerPokemaniacBrent:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer POKEMANIAC, BRENT1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BRENT1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BRENT1
@@ -106,7 +106,7 @@ TrainerPokemaniacBrent:
 
 .LoadFight1:
 	loadtrainer POKEMANIAC, BRENT2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BRENT2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BRENT2
@@ -118,7 +118,7 @@ TrainerPokemaniacBrent:
 
 .LoadFight2:
 	loadtrainer POKEMANIAC, BRENT3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BRENT3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BRENT3
@@ -130,7 +130,7 @@ TrainerPokemaniacBrent:
 
 .LoadFight3:
 	loadtrainer POKEMANIAC, BRENT4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BRENT4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BRENT4
@@ -241,7 +241,7 @@ TrainerPicnickerTiffany:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer PICNICKER, TIFFANY3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TIFFANY3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TIFFANY3
@@ -253,7 +253,7 @@ TrainerPicnickerTiffany:
 
 .LoadFight1:
 	loadtrainer PICNICKER, TIFFANY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TIFFANY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TIFFANY1
@@ -265,7 +265,7 @@ TrainerPicnickerTiffany:
 
 .LoadFight2:
 	loadtrainer PICNICKER, TIFFANY2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TIFFANY2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TIFFANY2
@@ -277,7 +277,7 @@ TrainerPicnickerTiffany:
 
 .LoadFight3:
 	loadtrainer PICNICKER, TIFFANY4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_TIFFANY4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_TIFFANY4

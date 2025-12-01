@@ -62,7 +62,7 @@ WillScript_Battle:
 .Rematch:
 	loadtrainer WILL, 2
 .LoadtrainerEnd:
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2
@@ -70,7 +70,7 @@ WillScript_Battle:
 	reloadmapafterbattle
 	setevent EVENT_BEAT_ELITE_4_WILL
 		
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	readvar VAR_BADGES
 	if_less_than 9, .BaseCap

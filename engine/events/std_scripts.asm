@@ -1948,7 +1948,7 @@ HappinessCheckScript:
 
 KantoLevelCapUpdateScript:
 	; Update level caps with level scaling
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	readvar VAR_BADGES
 	ifequal 16, .SixteenBadgeCap

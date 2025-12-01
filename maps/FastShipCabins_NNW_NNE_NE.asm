@@ -87,7 +87,7 @@ FastShipLazySailorScript:
 	closetext
 	winlosstext SailorStanlyBeatenText, 0
 	loadtrainer SAILOR, STANLY
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_STANLY
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_STANLY

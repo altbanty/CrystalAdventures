@@ -60,7 +60,7 @@ TrainerBirdKeeperVance1:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer BIRD_KEEPER, VANCE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_VANCE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_VANCE1
@@ -72,7 +72,7 @@ TrainerBirdKeeperVance1:
 
 .LoadFight1:
 	loadtrainer BIRD_KEEPER, VANCE2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_VANCE2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_VANCE2
@@ -84,7 +84,7 @@ TrainerBirdKeeperVance1:
 
 .LoadFight2:
 	loadtrainer BIRD_KEEPER, VANCE3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_VANCE3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_VANCE3
@@ -216,7 +216,7 @@ TrainerFisherWilton1:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer FISHER, WILTON1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_WILTON1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_WILTON1
@@ -228,7 +228,7 @@ TrainerFisherWilton1:
 
 .LoadFight1:
 	loadtrainer FISHER, WILTON2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_WILTON2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_WILTON2
@@ -240,7 +240,7 @@ TrainerFisherWilton1:
 
 .LoadFight2:
 	loadtrainer FISHER, WILTON3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_WILTON3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_WILTON3

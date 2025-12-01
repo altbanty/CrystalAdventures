@@ -18,7 +18,7 @@ PewterGymBrockScript:
 	closetext
 	winlosstext BrockWinLossText, 0
 	loadtrainer BROCK, BROCK1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BROCK1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BROCK1
@@ -55,7 +55,7 @@ PewterGymBrockScript:
 	special HealParty
 	winlosstext Brock_RematchDefeatText, 0
 	loadtrainer BROCK, BROCK1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2

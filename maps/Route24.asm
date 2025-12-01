@@ -16,7 +16,7 @@ Route24RocketScript:
 	closetext
 	winlosstext Route24RocketBeatenText, -1
 	loadtrainer GRUNTM, GRUNTM_31
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_GRUNTM_31
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_GRUNTM_31

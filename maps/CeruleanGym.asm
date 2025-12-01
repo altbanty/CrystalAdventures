@@ -66,7 +66,7 @@ CeruleanGymMistyScript:
 	closetext
 	winlosstext MistyWinLossText, 0
 	loadtrainer MISTY, MISTY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_MISTY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_MISTY1
@@ -102,7 +102,7 @@ CeruleanGymMistyScript:
 	special HealParty
 	winlosstext Misty_RematchDefeatText, 0
 	loadtrainer MISTY, MISTY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2

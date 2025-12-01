@@ -31,7 +31,7 @@ OlivineGymJasmineScript:
 	loadtrainer JASMINE, 3
 	sjump .OlivineGymJasmineScriptEnd
 .OlivineGymJasmineScriptEnd
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_3
@@ -45,7 +45,7 @@ OlivineGymJasmineScript:
 	setflag ENGINE_MINERALBADGE
 
 	; Update level caps with level scaling
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	readvar VAR_BADGES
 	ifequal 7, .SevenBadgeCap
@@ -96,7 +96,7 @@ OlivineGymJasmineScript:
 	special HealParty
 	winlosstext Jasmine_RematchDefeatText, 0
 	loadtrainer JASMINE, 4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_4

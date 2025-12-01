@@ -65,7 +65,7 @@ TrainerHikerAnthony:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer HIKER, ANTHONY2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ANTHONY2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_ANTHONY2
@@ -77,7 +77,7 @@ TrainerHikerAnthony:
 
 .LoadFight1:
 	loadtrainer HIKER, ANTHONY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ANTHONY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_ANTHONY1
@@ -89,7 +89,7 @@ TrainerHikerAnthony:
 
 .LoadFight2:
 	loadtrainer HIKER, ANTHONY3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ANTHONY3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_ANTHONY3
@@ -101,7 +101,7 @@ TrainerHikerAnthony:
 
 .LoadFight3:
 	loadtrainer HIKER, ANTHONY4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ANTHONY4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_ANTHONY4
@@ -113,7 +113,7 @@ TrainerHikerAnthony:
 
 .LoadFight4:
 	loadtrainer HIKER, ANTHONY5
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ANTHONY5
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_ANTHONY5

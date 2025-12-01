@@ -21,7 +21,7 @@ SaffronGymSabrinaScript:
 	closetext
 	winlosstext SabrinaWinLossText, 0
 	loadtrainer SABRINA, SABRINA1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_SABRINA1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_SABRINA1
@@ -61,7 +61,7 @@ SaffronGymSabrinaScript:
 	special HealParty
 	winlosstext Sabrina_RematchDefeatText, 0
 	loadtrainer SABRINA, SABRINA1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2

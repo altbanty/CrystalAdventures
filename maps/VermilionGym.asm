@@ -20,7 +20,7 @@ VermilionGymSurgeScript:
 	closetext
 	winlosstext LtSurgeWinLossText, 0
 	loadtrainer LT_SURGE, LT_SURGE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_LT_SURGE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_LT_SURGE1
@@ -59,7 +59,7 @@ VermilionGymSurgeScript:
 	special HealParty
 	winlosstext Surge_RematchDefeatText, 0
 	loadtrainer LT_SURGE, LT_SURGE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2

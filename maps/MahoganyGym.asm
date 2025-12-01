@@ -36,7 +36,7 @@ MahoganyGymPryceScript:
 	loadtrainer PRYCE, 3
 	sjump .MahoganyGymPryceScriptEnd
 .MahoganyGymPryceScriptEnd:
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_3
@@ -50,7 +50,7 @@ MahoganyGymPryceScript:
 	setflag ENGINE_GLACIERBADGE
 
 	; Update level caps with level scaling
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	readvar VAR_BADGES
 	ifequal 7, .SevenBadgeCap
@@ -106,7 +106,7 @@ PryceScript_Defeat:
 	special HealParty
 	winlosstext Pryce_RematchDefeatText, 0
 	loadtrainer PRYCE, 4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_4

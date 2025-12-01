@@ -72,7 +72,7 @@ LancesRoomLanceScript:
 .Rematch:
 	loadtrainer CHAMPION, 2
 .LoadtrainerEnd:
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2
@@ -84,7 +84,7 @@ LancesRoomLanceScript:
 	setevent EVENT_ELITE_4_REMATCH
 .NoRed
 	
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .DontUpdateBadge
 	readvar VAR_BADGES
 	if_less_than 9, .BaseCap

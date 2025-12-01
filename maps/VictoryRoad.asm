@@ -64,7 +64,7 @@ VictoryRoadRivalNext:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
 	loadtrainer RIVAL1, RIVAL1_5_TOTODILE
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL1_5_TOTODILE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_RIVAL1_5_TOTODILE
@@ -77,7 +77,7 @@ VictoryRoadRivalNext:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
 	loadtrainer RIVAL1, RIVAL1_5_CHIKORITA
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL1_5_CHIKORITA
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_RIVAL1_5_CHIKORITA
@@ -90,7 +90,7 @@ VictoryRoadRivalNext:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
 	loadtrainer RIVAL1, RIVAL1_5_CYNDAQUIL
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL1_5_CYNDAQUIL
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_RIVAL1_5_CYNDAQUIL

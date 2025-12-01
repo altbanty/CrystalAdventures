@@ -237,7 +237,7 @@ TrainerCameraGrunt1:
 	winlosstext CameraGrunt1BeatenText, 0
 	setlasttalked TEAMROCKETBASEB1F_ROCKET1
 	loadtrainer GRUNTM, GRUNTM_20
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_GRUNTM_20
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_GRUNTM_20
@@ -254,7 +254,7 @@ TrainerCameraGrunt2:
 	winlosstext CameraGrunt2BeatenText, 0
 	setlasttalked TEAMROCKETBASEB1F_ROCKET1
 	loadtrainer GRUNTM, GRUNTM_21
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_GRUNTM_21
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_GRUNTM_21

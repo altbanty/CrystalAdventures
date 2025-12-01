@@ -147,7 +147,7 @@ TrainerPokefanfJaime:
 	closetext
 	winlosstext PokefanfJaimeBeatenText, 0
 	loadtrainer POKEFANF, JAIME
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JAIME
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JAIME

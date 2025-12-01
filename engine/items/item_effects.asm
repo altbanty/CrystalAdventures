@@ -2982,14 +2982,11 @@ GetMthMoveOfCurrentMon:
 	ret
 
 CheckHardcoreMode:
+	; Hardcore mode removed - always return false
 	push de
 	push bc
 	push hl
-	ld de, ENGINE_HARDCORE_MODE
-    ld b, CHECK_FLAG
-    farcall EngineFlagAction
-    ld a, c
-    or a
+	xor a ; Set zero flag (return false)
 	pop hl
 	pop bc
 	pop de

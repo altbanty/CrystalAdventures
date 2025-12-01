@@ -82,7 +82,7 @@ MeetMomScript:
 	writetext CanRunText
 	waitbutton
 	closetext
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode
 	loadmem wLevelCap, 10 ; initialise level cap for hard mode
 	sjump .doneLevelCap

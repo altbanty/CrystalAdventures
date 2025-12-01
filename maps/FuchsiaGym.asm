@@ -22,7 +22,7 @@ FuchsiaGymJanineScript:
 	closetext
 	winlosstext JanineText_ToughOne, 0
 	loadtrainer JANINE, JANINE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JANINE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JANINE1
@@ -76,7 +76,7 @@ FuchsiaGymJanineScript:
 	special HealParty
 	winlosstext Janine_RematchDefeatText, 0
 	loadtrainer JANINE, JANINE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2
@@ -101,7 +101,7 @@ LassAliceScript:
 	closetext
 	winlosstext LassAliceBeatenText, 0
 	loadtrainer LASS, ALICE
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ALICE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_ALICE
@@ -139,7 +139,7 @@ LassLindaScript:
 	closetext
 	winlosstext LassLindaBeatenText, 0
 	loadtrainer LASS, LINDA
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_LINDA
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_LINDA
@@ -177,7 +177,7 @@ PicnickerCindyScript:
 	closetext
 	winlosstext PicnickerCindyBeatenText, 0
 	loadtrainer PICNICKER, CINDY
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_CINDY
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_CINDY
@@ -215,7 +215,7 @@ CamperBarryScript:
 	closetext
 	winlosstext CamperBarryBeatenText, 0
 	loadtrainer CAMPER, BARRY
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BARRY
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BARRY

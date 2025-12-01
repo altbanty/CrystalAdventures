@@ -569,13 +569,13 @@ HOF_AnimatePlayerPic:
 	lb bc, 2, 7
 	call Textbox
 
-	ld de, ENGINE_HARDCORE_MODE
+	ld de, ENGINE_UNUSED_DIFFICULTY
 	ld b, CHECK_FLAG
 	farcall EngineFlagAction
 	cp 0
 	jr nz, .HardcoreMode
 
-	ld de, ENGINE_HARD_MODE
+	ld de, ENGINE_ADVENTURE_MODE
 	ld b, CHECK_FLAG
 	farcall EngineFlagAction
 	cp 0

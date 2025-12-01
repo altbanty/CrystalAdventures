@@ -17,7 +17,7 @@ ViridianGymBlueScript:
 	closetext
 	winlosstext LeaderBlueWinText, 0
 	loadtrainer BLUE, BLUE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BLUE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BLUE1
@@ -61,7 +61,7 @@ ViridianGymBlueScript:
 	special HealParty
 	winlosstext Blue_RematchDefeatText, 0
 	loadtrainer BLUE, BLUE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2

@@ -22,7 +22,7 @@ StartBattleWithMapTrainerScript:
 	waitbutton
 	closetext
 	loadtemptrainer
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode

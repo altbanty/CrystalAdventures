@@ -121,9 +121,9 @@ CherrygroveSilverSceneNorth:
 	setlasttalked CHERRYGROVECITY_SILVER
 	loadtrainer RIVAL1, RIVAL1_1_TOTODILE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
-	checkflag ENGINE_HARDCORE_MODE
+	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .LoadHardcoreModeBattle
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL1_1_TOTODILE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
 .normalmode_RIVAL1_1_TOTODILE
@@ -138,9 +138,9 @@ CherrygroveSilverSceneNorth:
 	setlasttalked CHERRYGROVECITY_SILVER
 	loadtrainer RIVAL1, RIVAL1_1_CHIKORITA
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
-	checkflag ENGINE_HARDCORE_MODE
+	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .LoadHardcoreModeBattle
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL1_1_CHIKORITA
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
 .normalmode_RIVAL1_1_CHIKORITA
@@ -155,9 +155,9 @@ CherrygroveSilverSceneNorth:
 	setlasttalked CHERRYGROVECITY_SILVER
 	loadtrainer RIVAL1, RIVAL1_1_CYNDAQUIL
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
-	checkflag ENGINE_HARDCORE_MODE
+	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .LoadHardcoreModeBattle
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL1_1_CYNDAQUIL
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
 .normalmode_RIVAL1_1_CYNDAQUIL

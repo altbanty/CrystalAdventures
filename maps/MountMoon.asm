@@ -33,7 +33,7 @@ MountMoon_MapScripts:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
 	loadtrainer RIVAL2, RIVAL2_1_TOTODILE
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL2_1_TOTODILE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_RIVAL2_1_TOTODILE
@@ -46,7 +46,7 @@ MountMoon_MapScripts:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
 	loadtrainer RIVAL2, RIVAL2_1_CHIKORITA
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL2_1_CHIKORITA
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_RIVAL2_1_CHIKORITA
@@ -59,7 +59,7 @@ MountMoon_MapScripts:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
 	loadtrainer RIVAL2, RIVAL2_1_CYNDAQUIL
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_RIVAL2_1_CYNDAQUIL
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_RIVAL2_1_CYNDAQUIL

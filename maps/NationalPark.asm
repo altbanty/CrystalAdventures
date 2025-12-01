@@ -121,7 +121,7 @@ TrainerSchoolboyJack1:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer SCHOOLBOY, JACK1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JACK1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JACK1
@@ -133,7 +133,7 @@ TrainerSchoolboyJack1:
 
 .LoadFight1:
 	loadtrainer SCHOOLBOY, JACK2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JACK2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JACK2
@@ -145,7 +145,7 @@ TrainerSchoolboyJack1:
 
 .LoadFight2:
 	loadtrainer SCHOOLBOY, JACK3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JACK3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JACK3
@@ -157,7 +157,7 @@ TrainerSchoolboyJack1:
 
 .LoadFight3:
 	loadtrainer SCHOOLBOY, JACK4
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JACK4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JACK4
@@ -169,7 +169,7 @@ TrainerSchoolboyJack1:
 
 .LoadFight4:
 	loadtrainer SCHOOLBOY, JACK5
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JACK5
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_JACK5

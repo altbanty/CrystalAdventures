@@ -188,7 +188,7 @@ TrainerHikerParry:
 	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer HIKER, PARRY3
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_PARRY3
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_PARRY3
@@ -200,7 +200,7 @@ TrainerHikerParry:
 
 .LoadFight1:
 	loadtrainer HIKER, PARRY1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_PARRY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_PARRY1
@@ -212,7 +212,7 @@ TrainerHikerParry:
 
 .LoadFight2:
 	loadtrainer HIKER, PARRY2
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_PARRY2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_PARRY2
@@ -285,7 +285,7 @@ TrainerCamperQuentin:
 	closetext
 	winlosstext CamperQuentinBeatenText, 0
 	loadtrainer CAMPER, QUENTIN
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_QUENTIN
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_QUENTIN

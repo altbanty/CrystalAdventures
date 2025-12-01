@@ -21,7 +21,7 @@ SeafoamGymBlaineScript:
 	closetext
 	winlosstext BlaineWinLossText, 0
 	loadtrainer BLAINE, BLAINE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BLAINE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_BLAINE1
@@ -68,7 +68,7 @@ SeafoamGymBlaineScript:
 	special HealParty
 	winlosstext Blaine_RematchDefeatText, 0
 	loadtrainer BLAINE, BLAINE1
-	checkflag ENGINE_HARD_MODE
+	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 	.normalmode_2
