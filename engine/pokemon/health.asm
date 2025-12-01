@@ -194,7 +194,7 @@ CalculateMonHealingCost:
 	
 	push de ; Save Pokemon data pointer
 	
-	; First, calculate HP cost
+	; First, check if Pokemon is fainted and needs revive cost
 	; Get current HP (big-endian: high byte, then low byte)
 	ld hl, MON_HP
 	add hl, de
@@ -203,6 +203,37 @@ CalculateMonHealingCost:
 	ld a, [hl]
 	ld c, a     ; c = current HP low
 	
+	; Check if Pokemon is fainted (HP = 0)
+	ld a, b
+	or c
+	jr nz, .not_fainted
+	
+	; Pokemon is fainted, add revive cost (level × 10)
+	push bc
+	ld hl, MON_LEVEL
+	add hl, de
+	ld a, [hl]  ; a = level
+	
+	; Multiply level by 10
+	ld b, a
+	add a, a    ; ×2
+	add a, a    ; ×4
+	add a, b    ; ×5
+	add a, a    ; ×10
+	ld c, a     ; c = level × 10 (low byte)
+	ld b, 0     ; b = 0 (high byte, assuming level × 10 < 256)
+	
+	; Add revive cost to running total
+	ld a, [wStringBuffer1]
+	add c
+	ld [wStringBuffer1], a
+	ld a, [wStringBuffer1 + 1]
+	adc b
+	ld [wStringBuffer1 + 1], a
+	pop bc
+	
+.not_fainted
+	; Calculate HP restoration cost
 	; Get max HP (big-endian: high byte, then low byte)
 	ld hl, MON_MAXHP
 	add hl, de
