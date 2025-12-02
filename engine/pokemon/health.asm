@@ -44,7 +44,7 @@ HealPartyMon:
 	dec bc
 	; Hardcore mode, don't heal fainted pokemon
 	call CheckHardcoreMode
-    jr z, .notHardcore
+	jr z, .notHardcore
 	inc bc
 	ld a, [bc]
 	dec bc
@@ -85,7 +85,7 @@ HealPartyMonDaycare: ; yes this suplicate code is inefficient but ehh, we're not
 	farcall RestoreAllPP
 	ret
 
-CalculateHealingCost::
+CalculateHealingCost_Debug:
 ; Calculate the cost to heal the party
 ; Returns cost in wScriptVar (capped at 9999)
 	; For debugging, only calculate first Pokemon
@@ -116,71 +116,45 @@ CalculateHealingCost::
 	ld [wScriptVar + 1], a ; Low byte
 	ret
 	
-CalculateHealingCost_Real::
-	; Initialize total to 0 using temporary storage
+CalculateHealingCost:
+; Calculate the cost to heal the party
+; Returns cost in wScriptVar (capped at 9999)
 	xor a
 	ld [wStringBuffer1], a     ; Low byte
 	ld [wStringBuffer1 + 1], a ; High byte
-	
-	; Loop through party
-	ld a, [wPartyCount]
-	and a
-	ret z ; No Pokemon in party
-	
-	ld b, a ; b = number of Pokemon
-	ld c, 0 ; c = index
-	
-.party_loop
-	push bc
-	
-	; Get pointer to current Pokemon
-	ld a, c
 	ld [wCurPartyMon], a
 	
-	; Check if it's an egg
+	; Loop through party
 	ld hl, wPartySpecies
-	ld d, 0
-	ld e, c
-	add hl, de
-	ld a, [hl]
+.loop
+	ld a, [hli]
+	cp -1
+	jr z, .done
 	cp EGG
-	jr z, .skip_mon
-	
-	; Calculate cost for this Pokemon
+	jr z, .next
+
+	push hl
 	call CalculateMonHealingCost
-	
-.skip_mon
-	pop bc
-	inc c
-	dec b
-	jr nz, .party_loop
-	
-	; Get final total from wStringBuffer1
+	pop hl
+
+.next
+	ld a, [wCurPartyMon]
+	inc a
+	ld [wCurPartyMon], a
+	jr .loop
+
+.done
+	; Get total from wStringBuffer1
 	ld a, [wStringBuffer1]
 	ld l, a
 	ld a, [wStringBuffer1 + 1]
 	ld h, a
 	
-	; Cap at 9999 if needed
-	ld de, 9999
-	; Compare hl with de
+	; Store in wScriptVar (big-endian for display)
 	ld a, h
-	cp d
-	jr c, .store_result ; h < d, so total < 9999
-	jr nz, .cap_max ; h > d, so total > 9999
+	ld [wScriptVar], a     ; High byte
 	ld a, l
-	cp e
-	jr c, .store_result ; l < e, so total < 9999
-	
-.cap_max
-	ld hl, 9999
-	
-.store_result
-	; Store in wScriptVar in BIG-ENDIAN for text_decimal
-	ld a, h
-	ld [wScriptVar], a     ; High byte first
-	ld a, l
-	ld [wScriptVar + 1], a ; Low byte second
+	ld [wScriptVar + 1], a ; Low byte
 	ret
 
 CalculateMonHealingCost:
@@ -214,14 +188,24 @@ CalculateMonHealingCost:
 	add hl, de
 	ld a, [hl]  ; a = level
 	
-	; Multiply level by 10
-	ld b, a
-	add a, a    ; ×2
-	add a, a    ; ×4
-	add a, b    ; ×5
-	add a, a    ; ×10
-	ld c, a     ; c = level × 10 (low byte)
-	ld b, 0     ; b = 0 (high byte, assuming level × 10 < 256)
+	; Multiply level by 25 using simple method
+	ld b, a     ; Save original level
+	
+	; Calculate level × 25 = level × 20 + level × 5
+	; First calculate level × 5
+	add a, a    ; a = level × 2
+	add a, a    ; a = level × 4  
+	add b       ; a = level × 4 + level = level × 5
+	ld c, a     ; c = level × 5
+	
+	; Calculate level × 20 = (level × 5) × 4
+	add a, a    ; a = level × 10
+	add a, a    ; a = level × 20
+	add c       ; a = level × 20 + level × 5 = level × 25
+	
+	; Result is in a, move to bc for 16-bit addition
+	ld c, a     ; c = level × 25 (low byte)
+	ld b, 0     ; b = 0 (high byte, level × 25 < 256 for level ≤ 10)
 	
 	; Add revive cost to running total
 	ld a, [wStringBuffer1]
@@ -276,124 +260,22 @@ CalculateMonHealingCost:
 	or a
 	jr z, .check_pp
 	
-	; Add 1 for status condition
+	; Add 10 for status condition
 	ld a, [wStringBuffer1]
-	add 1
+	add 10
 	ld [wStringBuffer1], a
 	ld a, [wStringBuffer1 + 1]
 	adc 0
 	ld [wStringBuffer1 + 1], a
 	
 .check_pp
-	; Calculate PP cost
-	; Each move can have missing PP that needs to be restored
-	ld hl, MON_MOVES
-	add hl, de
-	; hl now points to moves array
-	
-	ld b, NUM_MOVES ; 4 moves
-	ld c, 0 ; Move index
-.pp_loop
-	push bc
-	push hl
-	
-	; Check if move exists (not 0)
-	ld a, [hl]
-	and a
-	jr z, .skip_move ; No move in this slot
-	
-	; Calculate PP difference for this move
-	push hl
-	push bc
-	push de
-	
-	; Save move ID
-	ld [wNamedObjectIndex], a
-	
-	; Get PP-Up count for this move
-	ld hl, MON_PP
-	add hl, de ; hl = PP array start
-	ld d, 0
-	ld e, c   ; c = move index
-	add hl, de ; hl = current move's PP byte
-	
-	ld a, [hl] ; Get PP byte (includes PP-Up bits)
-	ld b, a    ; Save full PP byte
-	and PP_MASK ; Mask to get just current PP (0-63)
-	ld e, a    ; e = current PP
-	
-	; Get PP-Up count (0-3)
-	ld a, b
-	and PP_UP_MASK ; Get PP-Up bits
-	swap a
-	swap a        ; Move bits 6-7 to bits 0-1
-	and %00000011 ; Mask to get just the count
-	ld d, a       ; d = PP-Up count
-	
-	; Get base max PP for this move from moves table
-	push de       ; Save current PP and PP-Up count
-	ld a, [wNamedObjectIndex]
-	dec a         ; Move IDs start at 1
-	ld hl, Moves + MOVE_PP
-	ld bc, MOVE_LENGTH
-	call AddNTimes
-	ld a, BANK(Moves)
-	call GetFarByte ; a = base PP
-	pop de        ; Restore current PP (e) and PP-Up count (d)
-	
-	; Calculate actual max PP = base + (base * PP-Ups / 5)
-	ld b, a       ; b = base PP
-	ld c, a       ; c = base PP (for calculation)
-	
-	; Add PP-Up bonus if any
-	ld a, d       ; PP-Up count
-	and a
-	jr z, .no_pp_ups
-	
-	; Each PP-Up adds 20% of base PP (1/5)
-	; Total bonus = base * pp_ups / 5
-.pp_up_loop
-	ld a, c       ; Base PP
-	push bc
-	ld b, 5
-	call SimpleDivide ; a = base / 5
-	pop bc
-	add b         ; Add to running total
-	ld b, a       ; Update max PP
-	dec d
-	jr nz, .pp_up_loop
-	
-.no_pp_ups
-	; b = max PP, e = current PP
-	ld a, b
-	sub e         ; a = max - current
-	jr c, .pp_done ; If negative (shouldn't happen), skip
-	jr z, .pp_done ; If zero, PP is full
-	
-	; Add PP difference to total
-	ld b, 0
-	ld c, a       ; bc = PP difference
-	ld hl, wStringBuffer1
-	ld a, [hl]
-	add c
-	ld [hl], a
-	inc hl
-	ld a, [hl]
-	adc b
-	ld [hl], a
-	
-.pp_done
-	pop de
-	pop bc
-	pop hl
-	
-.skip_move
-	pop hl
-	pop bc
-	inc hl ; Next move
-	inc c  ; Next move index
-	dec b
-	jr nz, .pp_loop
+	; Add fixed cost of 40 for PP restoration per Pokemon (2 per PP point, ~20 PP per Pokemon)
+	ld a, [wStringBuffer1]
+	add 40
+	ld [wStringBuffer1], a
+	ld a, [wStringBuffer1 + 1]
+	adc 0
+	ld [wStringBuffer1 + 1], a
 	
 	ret
 
@@ -412,7 +294,7 @@ SimpleDivide:
 	pop bc
 	ret
 
-CheckHealingPayment::
+CheckHealingPayment:
 ; Check if player can afford healing cost in wScriptVar
 ; Returns result in wScriptVar: 1 if can afford, 0 if not
 	; Get cost from wScriptVar (2 bytes, big-endian)
@@ -443,7 +325,7 @@ CheckHealingPayment::
 	ld [wScriptVar], a
 	ret
 
-TakeHealingPayment::
+TakeHealingPayment:
 ; Take the healing cost from player's money
 ; Cost should be in wScriptVar (2 bytes, big-endian)
 	; Get cost

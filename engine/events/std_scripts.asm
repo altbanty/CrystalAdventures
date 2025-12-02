@@ -108,10 +108,6 @@ PokecenterNurseScript:
 .do_cost_calculation
 	; Calculate healing cost
 	special CalculateHealingCost
-	; wScriptVar now has the cost (2 bytes, big-endian for display)
-	; Since cost is big-endian and small values have 0 in first byte,
-	; we need to check the second byte for the actual value
-	; For now, just skip the zero check and always show cost
 	sjump .show_cost
 .free_heal_unused ; Keep label to avoid breaking jumps
 .show_cost
@@ -195,6 +191,11 @@ PokecenterNurseScript:
 	closetext
 	setevent EVENT_WELCOMED_TO_POKECOM_CENTER ; only show text once
 	sjump .done
+
+.CostText:
+	text "Healing will cost"
+	line "¥100. OK?"
+	done
 
 .pokerus
 	setevent EVENT_WELCOMED_TO_POKECOM_CENTER
