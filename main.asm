@@ -129,7 +129,6 @@ SECTION "bankA", ROMX
 INCLUDE "engine/link/link.asm"
 INCLUDE "engine/overworld/wildmons.asm"
 INCLUDE "engine/overworld/nuzlocke.asm"
-INCLUDE "engine/overworld/item_randomizer.asm"
 INCLUDE "engine/battle/link_result.asm"
 
 

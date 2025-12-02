@@ -217,17 +217,40 @@ Route29FruitTree:
 	fruittree FRUITTREE_ROUTE_29
 
 Route29Potion:
-	call GetRoute29RandomItem
+	random 3
+	ifequal 0, .GivePotion
+	ifequal 1, .GivePokeBall
+	ifequal 2, .GiveEther
+	; fallback
+.GivePotion:
 	opentext
 	writetext .FoundRandomItemText
 	waitbutton
-	callasm GiveRandomizedItem
+	verbosegiveitem POTION, 1
 	closetext
+	disappear LAST_TALKED
+	end
+.GivePokeBall:
+	opentext
+	writetext .FoundRandomItemText
+	waitbutton
+	verbosegiveitem POKE_BALL, 1
+	closetext
+	disappear LAST_TALKED
+	end
+.GiveEther:
+	opentext
+	writetext .FoundRandomItemText
+	waitbutton
+	verbosegiveitem ETHER, 1
+	closetext
+	disappear LAST_TALKED
 	end
 
 .FoundRandomItemText:
 	text "You found an item!"
 	done
+
 
 DudeMovementData1a:
 	step UP
@@ -469,4 +492,4 @@ Route29_MapEvents:
 	object_event 25,  3, SPRITE_FISHER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, Route29FisherScript, -1
 	object_event 13,  4, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, Route29CooltrainerMScript, -1
 	object_event 29, 12, SPRITE_TEACHER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, TuscanyScript, EVENT_ROUTE_29_TUSCANY_OF_TUESDAY
-	object_event 48,  2, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, Route29Potion, EVENT_ROUTE_29_POTION
+	object_event 48,  2, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route29Potion, EVENT_ROUTE_29_POTION
