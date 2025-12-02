@@ -217,39 +217,7 @@ Route29FruitTree:
 	fruittree FRUITTREE_ROUTE_29
 
 Route29Potion:
-	random 3
-	ifequal 0, .GivePotion
-	ifequal 1, .GivePokeBall
-	ifequal 2, .GiveEther
-	; fallback
-.GivePotion:
-	opentext
-	writetext .FoundRandomItemText
-	waitbutton
-	verbosegiveitem POTION, 1
-	closetext
-	disappear LAST_TALKED
-	end
-.GivePokeBall:
-	opentext
-	writetext .FoundRandomItemText
-	waitbutton
-	verbosegiveitem POKE_BALL, 1
-	closetext
-	disappear LAST_TALKED
-	end
-.GiveEther:
-	opentext
-	writetext .FoundRandomItemText
-	waitbutton
-	verbosegiveitem ETHER, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.FoundRandomItemText:
-	text "You found an item!"
-	done
+	randomized_item_3 POTION, POKE_BALL, ETHER
 
 
 DudeMovementData1a:

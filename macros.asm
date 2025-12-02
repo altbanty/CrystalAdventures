@@ -7,6 +7,7 @@ INCLUDE "macros/code.asm"
 INCLUDE "macros/gfx.asm"
 INCLUDE "macros/coords.asm"
 INCLUDE "macros/vc.asm"
+INCLUDE "macros/randomized_items.asm"
 
 INCLUDE "macros/scripts/audio.asm"
 INCLUDE "macros/scripts/maps.asm"
