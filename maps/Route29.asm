@@ -218,7 +218,16 @@ Route29FruitTree:
 
 Route29Potion:
 	call GetRoute29RandomItem
-	verbosegiveitem_random
+	opentext
+	writetext .FoundRandomItemText
+	waitbutton
+	callasm GiveRandomizedItem
+	closetext
+	end
+
+.FoundRandomItemText:
+	text "You found an item!"
+	done
 
 DudeMovementData1a:
 	step UP

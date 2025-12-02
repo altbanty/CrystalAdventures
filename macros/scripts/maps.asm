@@ -176,8 +176,3 @@ stonetable: MACRO
 	dw \3
 ENDM
 
-verbosegiveitem_random: MACRO
-	ld a, [wRandomizedItem]
-	ld [wScriptVar], a
-	verbosegiveitemvar wScriptVar, 1
-ENDM

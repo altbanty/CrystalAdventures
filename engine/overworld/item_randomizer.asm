@@ -130,70 +130,74 @@ GetRandomItemFromPool::
 GetRoute29RandomItem::
 	ld hl, Route29ItemPool
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
 GetRoute30RandomItem::
 	ld hl, Route30ItemPool
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
 GetRoute31RandomItem::
 	ld hl, Route31ItemPool
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
 GetUnionCaveRandomItem::
 	ld hl, UnionCaveItemPool
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
 GetSproutTowerRandomItem::
 	ld hl, SproutTowerItemPool
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
 GetIlexForestRandomItem::
 	ld hl, IlexForestItemPool
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
 ; Generic function for any pool - for future expansion
 ; Input: hl = pool pointer
 GetGenericRandomItem::
 	call GetRandomItemFromPool
-	ld [wRandomizedItem], a
+	ld [wScriptVar], a
 	ret
 
-; Script function to handle random item giving
-; Called from script system - item is in wRandomizedItem
-RandomItemScript::
-	ld a, [wRandomizedItem]
+; Function to give the randomized item from callasm context
+; Called from script system - item is in wScriptVar
+GiveRandomizedItem::
+	ld a, [wScriptVar]
 	ld [wCurItem], a
 	ld a, 1
-	ld [wItemQuantityChangeBuffer], a
+	ld [wItemQuantity], a
 	ld hl, wNumItems
 	call ReceiveItem
 	ret c   ; Return if bag full
 	
-	; Item received successfully
+	; Item received successfully - show item name
+	ld a, [wScriptVar]
+	ld [wNamedObjectIndex], a
 	call GetItemName
-	ld de, wStringBuffer1
-	ld hl, wStringBuffer3
+	ld hl, wStringBuffer1
+	ld de, wStringBuffer3
+	ld bc, ITEM_NAME_LENGTH
 	call CopyBytes
 	
-	; Play sound and show text
+	; Show received item text  
 	ld hl, .ReceivedItemText
 	call PrintText
-	jp WaitPressAorB_BlinkCursor
+	call WaitPressAorB_BlinkCursor
+	ret
 
 .ReceivedItemText:
-	text "You found"
+	text "<PLAYER> found"
 	line "@"
 	text_ram wStringBuffer3
 	text "!"

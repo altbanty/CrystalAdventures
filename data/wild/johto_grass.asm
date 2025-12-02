@@ -1249,7 +1249,7 @@ JohtoGrassWildMons:
 	db 2, SENTRET
 	db 3, PIDGEY
 	db 3, SENTRET
-	db 2, LEDYBA
+	db 2, RATTATA
 	db 3, HOPPIP
 	db 3, HOPPIP
 	; nite
