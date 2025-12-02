@@ -676,7 +676,7 @@ OakSpeech:
 	call RotateThreePalettesRight
 	call ClearTilemap
 
-	ld a, WOOPER
+	ld a, HO_OH
 	ld [wCurSpecies], a
 	ld [wCurPartySpecies], a
 	call GetBaseData
@@ -684,8 +684,10 @@ OakSpeech:
 	hlcoord 6, 4
 	call PrepMonFrontpic
 
-	xor a
+	; Set shiny DVs for Ho-oh (Attack=10, Defense=10, Speed=10, Special=10)
+	ld a, $AA ; Attack=A, Defense=A in upper/lower nibbles
 	ld [wTempMonDVs], a
+	ld a, $AA ; Speed=A, Special=A in upper/lower nibbles  
 	ld [wTempMonDVs + 1], a
 
 	ld b, SCGB_TRAINER_OR_MON_FRONTPIC_PALS
