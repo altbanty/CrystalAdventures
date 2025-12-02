@@ -1271,7 +1271,7 @@ JohtoGrassWildMons:
 	db 4, PIDGEY
 	db 4, CATERPIE
 	db 4, POLIWAG
-	db 4, FARFETCHD
+	db 4, AIPOM
 	; day
 	db 3, WEEDLE
 	db 3, CATERPIE
@@ -1299,7 +1299,7 @@ JohtoGrassWildMons:
 	db 5, MAREEP
 	db 4, WEEDLE
 	db 5, POLIWAG
-	db 5, PICHU
+	db 5, POLIWAG
 	; day
 	db 4, PIDGEY
 	db 4, CATERPIE
@@ -1307,7 +1307,7 @@ JohtoGrassWildMons:
 	db 5, MAREEP
 	db 4, WEEDLE
 	db 5, POLIWAG
-	db 5, FARFETCHD
+	db 5, POLIWAG
 	; nite
 	db 4, SPINARAK
 	db 4, POLIWAG
