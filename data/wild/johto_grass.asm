@@ -565,29 +565,29 @@ JohtoGrassWildMons:
 	def_grass_wildmons ILEX_FOREST
 	db 4 percent, 4 percent, 4 percent ; encounter rates: morn/day/nite
 	; morn
-	db 8,  CATERPIE
-	db 8,  WEEDLE
+	db 9,  METAPOD
+	db 9,  KAKUNA
 	db 12, PARAS
-	db 12, ODDISH
-	db 13, PARAS
-	db 9,  METAPOD
-	db 9,  METAPOD
+	db 12, BUTTERFREE
+	db 13, BEEDRILL
+	db 9,  PSYDUCK
+	db 9,  PSYDUCK
 	; day
-	db 8,  CATERPIE
-	db 8,  WEEDLE
+	db 9,  METAPOD
+	db 9,  KAKUNA
 	db 12, PARAS
-	db 12, ODDISH
-	db 13, PARAS
-	db 9,  KAKUNA
-	db 9,  KAKUNA
+	db 12, BEEDRILL
+	db 13, BUTTERFREE
+	db 9,  PSYDUCK
+	db 9,  PARAS
 	; nite
 	db 12, ODDISH
 	db 12, VENONAT
 	db 12, PARAS
-	db 12, HOOTHOOT
+	db 12, VENONAT
 	db 13, ODDISH
 	db 13, PSYDUCK
-	db 13, PSYDUCK
+	db 13, PARAS
 	end_grass_wildmons
 
 	def_grass_wildmons MOUNT_MORTAR_1F_OUTSIDE
@@ -1241,7 +1241,7 @@ JohtoGrassWildMons:
 	db 2, SENTRET
 	db 3, PIDGEY
 	db 3, SENTRET
-	db 2, AIPOM
+	db 2, PIDGEY
 	db 3, HOPPIP
 	db 3, HOPPIP
 	; day
@@ -1258,7 +1258,7 @@ JohtoGrassWildMons:
 	db 3, HOOTHOOT
 	db 3, RATTATA
 	db 2, HOOTHOOT
-	db 3, HOOTHOOT
+	db 3, POLIWAG
 	db 3, ZUBAT
 	end_grass_wildmons
 
