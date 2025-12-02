@@ -2805,6 +2805,7 @@ wXYComparePointer:: dw
 
 wBattleScriptFlags:: db
 wNuzlockeFirstEncounter:: db ; 1 if this is the first encounter on this map
+wRandomizedItem:: db ; storage for randomized item result
 wPlayerSpriteSetupFlags::
 ; bit 7: if set, cancel wPlayerAction
 ; bit 6: RefreshMapSprites doesn't reload player sprite
