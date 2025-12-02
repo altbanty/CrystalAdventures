@@ -77,34 +77,17 @@ VictoryRoadItemPool:
 	db VICTORYROAD_POOL_SIZE
 
 ; Gets a random item from the specified pool
-; Input: hl = pointer to item pool (pool items followed by pool size)
+; Input: hl = pointer to item pool, b = pool size
 ; Output: a = randomly selected item
 GetRandomItemFromPool::
 	push hl
 	push bc
-	push de
-	
-	; Store starting address
-	ld d, h
-	ld e, l
-	
-	; Find the pool size (scan for value >= 10)
-	ld b, 0   ; counter
-.FindPoolSizeLoop:
-	ld a, [hl]
-	cp 10     ; If value >= 10, it's the pool size
-	jr nc, .FoundPoolSize
-	inc hl
-	inc b
-	jr .FindPoolSizeLoop
-	
-.FoundPoolSize:
-	ld c, a   ; c = pool size
 	
 	; Generate random number 0 to (pool_size - 1)
 	call Random
+	ld c, b  ; c = pool size
 	
-	; Simple modulo operation
+	; Simple modulo operation  
 .ModuloLoop:
 	cp c
 	jr c, .ValidIndex
@@ -113,15 +96,12 @@ GetRandomItemFromPool::
 	
 .ValidIndex:
 	; a now contains valid index (0 to pool_size-1)
-	; Reset to start of pool and add offset
-	ld h, d
-	ld l, e
-	ld b, 0
+	; Add offset to get item at index
 	ld c, a
+	ld b, 0
 	add hl, bc
 	ld a, [hl]   ; Load the random item
 	
-	pop de
 	pop bc
 	pop hl
 	ret
@@ -129,42 +109,48 @@ GetRandomItemFromPool::
 ; Route-specific randomizer functions for easy extension
 GetRoute29RandomItem::
 	ld hl, Route29ItemPool
+	ld b, ROUTE29_POOL_SIZE
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
 	ret
 
 GetRoute30RandomItem::
 	ld hl, Route30ItemPool
+	ld b, ROUTE30_POOL_SIZE
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
 	ret
 
 GetRoute31RandomItem::
 	ld hl, Route31ItemPool
+	ld b, ROUTE31_POOL_SIZE
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
 	ret
 
 GetUnionCaveRandomItem::
 	ld hl, UnionCaveItemPool
+	ld b, UNIONCAVE_POOL_SIZE
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
 	ret
 
 GetSproutTowerRandomItem::
 	ld hl, SproutTowerItemPool
+	ld b, SPROUTTOWER_POOL_SIZE
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
 	ret
 
 GetIlexForestRandomItem::
 	ld hl, IlexForestItemPool
+	ld b, ILEXFOREST_POOL_SIZE
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
 	ret
 
 ; Generic function for any pool - for future expansion
-; Input: hl = pool pointer
+; Input: hl = pool pointer, b = pool size
 GetGenericRandomItem::
 	call GetRandomItemFromPool
 	ld [wScriptVar], a
