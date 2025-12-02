@@ -1296,16 +1296,16 @@ JohtoGrassWildMons:
 	db 4, LEDYBA
 	db 4, WEEDLE
 	db 5, CATERPIE
-	db 5, MAREEP
-	db 4, WEEDLE
+	db 5, WEEDLE
+	db 4, ODDISH
 	db 5, POLIWAG
 	db 5, POLIWAG
 	; day
 	db 4, PIDGEY
 	db 4, CATERPIE
 	db 5, WEEDLE
-	db 5, MAREEP
-	db 4, WEEDLE
+	db 5, CATERPIE
+	db 4, ODDISH
 	db 5, POLIWAG
 	db 5, POLIWAG
 	; nite
