@@ -84,7 +84,7 @@ NurseGoodbyeText:
 NurseHealingCostText:
 	text "The healing cost"
 	line "is ¥@"
-	text_decimal wScriptVar, 2, 5
+	text_decimal wStringBuffer2, 2, 5
 	text "."
 	
 	para "Would you like us"

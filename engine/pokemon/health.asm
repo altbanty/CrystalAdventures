@@ -85,76 +85,51 @@ HealPartyMonDaycare: ; yes this suplicate code is inefficient but ehh, we're not
 	farcall RestoreAllPP
 	ret
 
-CalculateHealingCost_Debug:
-; Calculate the cost to heal the party
-; Returns cost in wScriptVar (capped at 9999)
-	; For debugging, only calculate first Pokemon
+CalculateHealingCost::
+; Calculate total healing cost for all party Pokemon
+; Store in wStringBuffer2 for display (big-endian)
+; Store in wStringBuffer1 for payment functions (little-endian)
+	push hl
+	push de
+	push bc
+	
+	; Initialize total cost to 0
 	xor a
-	ld [wStringBuffer1], a     ; Low byte
-	ld [wStringBuffer1 + 1], a ; High byte
+	ld [wStringBuffer1], a
+	ld [wStringBuffer1 + 1], a
+	
+	; Loop through party Pokemon
+	ld a, 0
 	ld [wCurPartyMon], a
-	
-	; Check if first Pokemon is an egg
-	ld a, [wPartySpecies]
-	cp EGG
-	jr z, .done
-	
-	; Calculate cost for first Pokemon only
-	call CalculateMonHealingCost
-	
-.done
-	; Get total from wStringBuffer1
-	ld a, [wStringBuffer1]
-	ld l, a
-	ld a, [wStringBuffer1 + 1]
-	ld h, a
-	
-	; Store in wScriptVar (big-endian for display)
-	ld a, h
-	ld [wScriptVar], a     ; High byte
-	ld a, l
-	ld [wScriptVar + 1], a ; Low byte
-	ret
-	
-CalculateHealingCost:
-; Calculate the cost to heal the party
-; Returns cost in wScriptVar (capped at 9999)
-	xor a
-	ld [wStringBuffer1], a     ; Low byte
-	ld [wStringBuffer1 + 1], a ; High byte
-	ld [wCurPartyMon], a
-	
-	; Loop through party
 	ld hl, wPartySpecies
+	
 .loop
 	ld a, [hli]
-	cp -1
-	jr z, .done
+	cp -1  ; End of party
+	jr z, .done_calculating
 	cp EGG
-	jr z, .next
-
+	jr z, .next  ; Skip eggs
+	
 	push hl
 	call CalculateMonHealingCost
 	pop hl
-
+	
 .next
 	ld a, [wCurPartyMon]
 	inc a
 	ld [wCurPartyMon], a
 	jr .loop
-
-.done
-	; Get total from wStringBuffer1
-	ld a, [wStringBuffer1]
-	ld l, a
-	ld a, [wStringBuffer1 + 1]
-	ld h, a
 	
-	; Store in wScriptVar (big-endian for display)
-	ld a, h
-	ld [wScriptVar], a     ; High byte
-	ld a, l
-	ld [wScriptVar + 1], a ; Low byte
+.done_calculating
+	; Copy result to StringBuffer2 for display (convert to big-endian)
+	ld a, [wStringBuffer1 + 1]  ; High byte (little-endian)
+	ld [wStringBuffer2], a       ; High byte (big-endian)
+	ld a, [wStringBuffer1]       ; Low byte (little-endian)
+	ld [wStringBuffer2 + 1], a   ; Low byte (big-endian)
+	
+	pop bc
+	pop de
+	pop hl
 	ret
 
 CalculateMonHealingCost:
@@ -182,7 +157,7 @@ CalculateMonHealingCost:
 	or c
 	jr nz, .not_fainted
 	
-	; Pokemon is fainted, add revive cost (level × 10)
+	; Pokemon is fainted, add revive cost (level × 25)
 	push bc
 	ld hl, MON_LEVEL
 	add hl, de
@@ -217,7 +192,7 @@ CalculateMonHealingCost:
 	pop bc
 	
 .not_fainted
-	; Calculate HP restoration cost
+	; Calculate HP restoration cost (1 per HP)
 	; Get max HP (big-endian: high byte, then low byte)
 	ld hl, MON_MAXHP
 	add hl, de
@@ -242,7 +217,7 @@ CalculateMonHealingCost:
 	ld bc, 0
 	
 .hp_ok
-	; bc now contains HP to restore
+	; bc now contains HP to restore (cost = 1 per HP)
 	; Add HP cost to running total
 	ld a, [wStringBuffer1]
 	add c
@@ -253,7 +228,7 @@ CalculateMonHealingCost:
 	
 	pop de ; Restore Pokemon data pointer
 	
-	; Check status (add 1 if status != 0)
+	; Check status (add 10 if status != 0)
 	ld hl, MON_STATUS
 	add hl, de
 	ld a, [hl]
@@ -269,7 +244,9 @@ CalculateMonHealingCost:
 	ld [wStringBuffer1 + 1], a
 	
 .check_pp
-	; Add fixed cost of 40 for PP restoration per Pokemon (2 per PP point, ~20 PP per Pokemon)
+	; Calculate PP restoration cost (2 per PP to restore)
+	; For simplicity, estimate ~40 total PP per Pokemon average
+	; This would be 80 cost, but let's use 40 for balance
 	ld a, [wStringBuffer1]
 	add 40
 	ld [wStringBuffer1], a
@@ -294,59 +271,65 @@ SimpleDivide:
 	pop bc
 	ret
 
-CheckHealingPayment:
-; Check if player can afford healing cost in wScriptVar
+CheckHealingPayment::
+; Check if player can afford healing cost stored in wStringBuffer1
 ; Returns result in wScriptVar: 1 if can afford, 0 if not
-	; Get cost from wScriptVar (2 bytes, big-endian)
-	ld a, [wScriptVar]
-	ld h, a  ; High byte
-	ld a, [wScriptVar + 1]
-	ld l, a  ; Low byte
-	; hl = cost
+	push hl
+	push de
+	push bc
 	
-	; Compare with player's money
-	ld de, wMoney + 2
-	ld a, [de]
-	cp l
-	jr c, .cant_afford
-	jr nz, .can_afford
-	dec de
-	ld a, [de]
-	cp h
-	jr c, .cant_afford
+	; Get cost from wStringBuffer1 (where CalculateHealingCost stored it)
+	ld a, 0
+	ld [hMoneyTemp], a     ; High byte (we're dealing with small amounts)
+	ld a, [wStringBuffer1 + 1] ; High byte of cost
+	ld [hMoneyTemp + 1], a ; Mid byte
+	ld a, [wStringBuffer1]     ; Low byte of cost
+	ld [hMoneyTemp + 2], a ; Low byte
 	
-.can_afford
+	; Use the game's standard money comparison function
+	ld de, wMoney
+	ld bc, hMoneyTemp
+	farcall CompareMoney
+	
+	jr c, .cant_afford
+	; Can afford
 	ld a, 1
 	ld [wScriptVar], a
-	ret
+	jr .done
 	
 .cant_afford
 	xor a
 	ld [wScriptVar], a
+	
+.done
+	pop bc
+	pop de
+	pop hl
 	ret
 
-TakeHealingPayment:
+TakeHealingPayment::
 ; Take the healing cost from player's money
-; Cost should be in wScriptVar (2 bytes, big-endian)
-	; Get cost
-	ld a, [wScriptVar]
-	ld h, a  ; High byte
-	ld a, [wScriptVar + 1]
-	ld l, a  ; Low byte
+; Cost is stored in wStringBuffer1 by CalculateHealingCost
+	push hl
+	push de
+	push bc
 	
-	; Subtract from money (wMoney is 3 bytes: high, mid, low)
-	ld de, wMoney + 2
-	ld a, [de]
-	sub l
-	ld [de], a
-	dec de
-	ld a, [de]
-	sbc h
-	ld [de], a
-	dec de
-	ld a, [de]
-	sbc 0
-	ld [de], a
+	; Get cost from wStringBuffer1
+	ld a, 0
+	ld [hMoneyTemp], a     ; High byte (we're dealing with small amounts)
+	ld a, [wStringBuffer1 + 1] ; High byte of cost
+	ld [hMoneyTemp + 1], a ; Mid byte
+	ld a, [wStringBuffer1]     ; Low byte of cost
+	ld [hMoneyTemp + 2], a ; Low byte
+	
+	; Use the game's standard money subtraction function
+	ld de, wMoney
+	ld bc, hMoneyTemp
+	farcall TakeMoney
+	
+	pop bc
+	pop de
+	pop hl
 	ret
 
 ComputeHPBarPixels:

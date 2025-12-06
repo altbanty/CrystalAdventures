@@ -101,47 +101,38 @@ PokecenterNurseScript:
 	promptbutton
 	sjump .ok_first_time
 .calculate_cost
-	; Regular Pokecenter path - jump to cost calculation
+	; For returning players - go to cost calculation
 	sjump .do_cost_calculation
 .ok_first_time
-	; First time at Pokecom Center - do intro then calculate cost
+	farwritetext NurseAskHealText
+	yesorno
+	iffalse .no_heal
 .do_cost_calculation
 	; Calculate healing cost
 	special CalculateHealingCost
-	sjump .show_cost
-.free_heal_unused ; Keep label to avoid breaking jumps
-.show_cost
-	; Show cost and ask
+	; Show cost and ask for confirmation
 	farwritetext NurseHealingCostText
 	yesorno
 	iffalse .no_heal
-	; Restore cost to wScriptVar for payment functions
-	special CalculateHealingCost
 	; Check if player can afford it
 	special CheckHealingPayment
 	iffalse .not_enough_money
 	; Take payment
-	special CalculateHealingCost
 	special TakeHealingPayment
 	farwritetext NurseTakePokemonText
 	waitbutton
 	closetext
 	sjump .ok
-.free_heal
-	farwritetext NurseAlreadyHealedText
-	waitbutton
-	closetext
-	sjump .done
 .not_enough_money
 	farwritetext NurseNotEnoughMoneyText
 	waitbutton
 	closetext
-	sjump .done
+	end
 .no_heal
 	farwritetext NurseDeclinedHealText
 	waitbutton
 	closetext
-	sjump .done
+	end
 .ok
 	pause 20
 	special StubbedTrainerRankings_Healings
@@ -191,11 +182,6 @@ PokecenterNurseScript:
 	closetext
 	setevent EVENT_WELCOMED_TO_POKECOM_CENTER ; only show text once
 	sjump .done
-
-.CostText:
-	text "Healing will cost"
-	line "¥100. OK?"
-	done
 
 .pokerus
 	setevent EVENT_WELCOMED_TO_POKECOM_CENTER
