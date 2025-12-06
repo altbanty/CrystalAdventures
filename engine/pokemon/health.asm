@@ -143,6 +143,10 @@ CalculateMonHealingCost:
 	
 	push de ; Save Pokemon data pointer
 	
+	; Track if any healing was needed (for PP cost decision)
+	xor a
+	ld [wCurItem], a  ; Use as temp flag: 0 = no healing needed
+	
 	; First, check if Pokemon is fainted and needs revive cost
 	; Get current HP (big-endian: high byte, then low byte)
 	ld hl, MON_HP
@@ -157,7 +161,10 @@ CalculateMonHealingCost:
 	or c
 	jr nz, .not_fainted
 	
-	; Pokemon is fainted, add revive cost (level × 25)
+	; Pokemon is fainted, add revive cost (level × 25 + PP restoration included)
+	ld a, 1
+	ld [wCurItem], a  ; Mark that healing is needed
+	
 	push bc
 	ld hl, MON_LEVEL
 	add hl, de
@@ -191,6 +198,9 @@ CalculateMonHealingCost:
 	ld [wStringBuffer1 + 1], a
 	pop bc
 	
+	; Fainted Pokemon gets PP restored with revive, skip PP check later
+	jp .done
+	
 .not_fainted
 	; Calculate HP restoration cost (1 per HP)
 	; Get max HP (big-endian: high byte, then low byte)
@@ -218,6 +228,15 @@ CalculateMonHealingCost:
 	
 .hp_ok
 	; bc now contains HP to restore (cost = 1 per HP)
+	; Check if > 0
+	ld a, b
+	or c
+	jr z, .check_status
+	
+	; HP needs healing, mark it
+	ld a, 1
+	ld [wCurItem], a
+	
 	; Add HP cost to running total
 	ld a, [wStringBuffer1]
 	add c
@@ -226,7 +245,9 @@ CalculateMonHealingCost:
 	adc b
 	ld [wStringBuffer1 + 1], a
 	
+.check_status
 	pop de ; Restore Pokemon data pointer
+	push de ; Save it again for PP check
 	
 	; Check status (add 10 if status != 0)
 	ld hl, MON_STATUS
@@ -234,6 +255,10 @@ CalculateMonHealingCost:
 	ld a, [hl]
 	or a
 	jr z, .check_pp
+	
+	; Status needs healing, mark it
+	ld a, 1
+	ld [wCurItem], a
 	
 	; Add 10 for status condition
 	ld a, [wStringBuffer1]
@@ -244,16 +269,120 @@ CalculateMonHealingCost:
 	ld [wStringBuffer1 + 1], a
 	
 .check_pp
-	; Calculate PP restoration cost (2 per PP to restore)
-	; For simplicity, estimate ~40 total PP per Pokemon average
-	; This would be 80 cost, but let's use 40 for balance
+	; Use the game's existing GetMaxPPOfMove to properly check PP
+	
+	; Save current values we'll be modifying
+	push de
+	ld a, [wMonType]
+	push af
+	ld a, [wMenuCursorY]
+	push af
+	
+	; Set up for GetMaxPPOfMove
+	xor a  ; PARTYMON
+	ld [wMonType], a
+	
+	; Track total PP to restore across all moves
+	ld hl, 0  ; hl will accumulate total PP deficit
+	push hl   ; Save it on stack
+	
+	; Check all 4 move slots
+	ld b, 0  ; Move slot counter
+	
+.pp_loop
+	push bc
+	push de
+	
+	; Check if this slot has a move
+	ld hl, MON_MOVES
+	add hl, de
+	ld e, b
+	ld d, 0
+	add hl, de
+	ld a, [hl]  ; Get move ID
+	or a
+	jr z, .skip_slot  ; No move in this slot
+	
+	; Set up for GetMaxPPOfMove
+	ld a, b
+	ld [wMenuCursorY], a  ; Move slot
+	
+	; Get max PP for this move
+	push bc
+	farcall GetMaxPPOfMove  ; Returns max PP in [hl]
+	ld a, [hl]  ; a = max PP
+	ld c, a     ; c = max PP
+	pop bc
+	
+	; Get current PP
+	pop de
+	push de
+	ld hl, MON_PP
+	add hl, de
+	ld e, b
+	ld d, 0
+	add hl, de
+	ld a, [hl]  ; Get PP byte
+	and $3f     ; Get current PP (lower 6 bits)
+	
+	; Calculate PP deficit (max - current)
+	ld e, a     ; e = current PP
+	ld a, c     ; a = max PP
+	sub e       ; a = max - current
+	jr c, .pp_full  ; If negative (shouldn't happen), skip
+	jr z, .pp_full  ; If zero, PP is full
+	
+	; Add this move's PP deficit to total
+	ld e, a
+	ld d, 0     ; de = PP deficit for this move
+	pop hl      ; Get running total
+	add hl, de  ; Add this move's deficit
+	push hl     ; Save updated total
+	
+	pop de
+	pop bc
+	jr .next_slot
+	
+.pp_full
+.skip_slot
+	pop de
+	pop bc
+	
+.next_slot
+	inc b
+	ld a, b
+	cp NUM_MOVES
+	jr nz, .pp_loop
+	
+	; Get total PP deficit from stack
+	pop hl  ; hl = total PP to restore
+	
+	; Check if any PP restoration is needed
+	ld a, h
+	or l
+	jr z, .cleanup  ; No PP restoration needed
+	
+	; Calculate cost: PP deficit × 2
+	add hl, hl  ; hl = PP deficit × 2
+	
+	; Add to running total cost
 	ld a, [wStringBuffer1]
-	add 40
+	add l
 	ld [wStringBuffer1], a
 	ld a, [wStringBuffer1 + 1]
-	adc 0
+	adc h
 	ld [wStringBuffer1 + 1], a
 	
+.cleanup
+	; Restore original values
+	pop af
+	ld [wMenuCursorY], a
+	pop af
+	ld [wMonType], a
+	pop de
+	
+.done
+	pop de ; Restore Pokemon data pointer
 	ret
 
 SimpleDivide:
