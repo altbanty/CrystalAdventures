@@ -135,19 +135,22 @@ MrPokemonsHouse_OakScript:
 	setmapscene ELMS_LAB, SCENE_ELMSLAB_MEET_OFFICER
 	specialphonecall SPECIALCALL_ROBBED
 	clearevent EVENT_COP_IN_ELMS_LAB
-	checkevent EVENT_GOT_TOTODILE_FROM_ELM
-	iftrue .RivalTakesChikorita
-	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
-	iftrue .RivalTakesCyndaquil
-	setevent EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
+	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
+	iftrue .RivalTakesAipom
+	checkevent EVENT_GOT_AIPOM_FROM_ELM
+	iftrue .RivalTakesEevee
+	; Player got Eevee, rival takes Smeargle
+	setevent EVENT_SMEARGLE_POKEBALL_IN_ELMS_LAB
 	end
 
-.RivalTakesChikorita:
-	setevent EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
+.RivalTakesAipom:
+	; Player got Smeargle, rival takes Aipom
+	setevent EVENT_AIPOM_POKEBALL_IN_ELMS_LAB
 	end
 
-.RivalTakesCyndaquil:
-	setevent EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
+.RivalTakesEevee:
+	; Player got Aipom, rival takes Eevee
+	setevent EVENT_EEVEE_POKEBALL_IN_ELMS_LAB
 	end
 
 MrPokemonsHouse_ForeignMagazines:

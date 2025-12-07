@@ -26,43 +26,43 @@ MountMoon_MapScripts:
 	writetext MountMoonSilverTextBefore
 	waitbutton
 	closetext
-	checkevent EVENT_GOT_TOTODILE_FROM_ELM
-	iftrue .Totodile
-	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
-	iftrue .Chikorita
+	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
+	iftrue .Smeargle
+	checkevent EVENT_GOT_AIPOM_FROM_ELM
+	iftrue .Aipom
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
-	loadtrainer RIVAL2, RIVAL2_1_TOTODILE
+	loadtrainer RIVAL2, RIVAL2_1_SMEARGLE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_1_TOTODILE
+	iffalse .normalmode_RIVAL2_1_SMEARGLE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_1_TOTODILE
+.normalmode_RIVAL2_1_SMEARGLE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .FinishBattle
 
-.Totodile:
+.Smeargle:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
-	loadtrainer RIVAL2, RIVAL2_1_CHIKORITA
+	loadtrainer RIVAL2, RIVAL2_1_AIPOM
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_1_CHIKORITA
+	iffalse .normalmode_RIVAL2_1_AIPOM
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_1_CHIKORITA
+.normalmode_RIVAL2_1_AIPOM
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .FinishBattle
 
-.Chikorita:
+.Aipom:
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
-	loadtrainer RIVAL2, RIVAL2_1_CYNDAQUIL
+	loadtrainer RIVAL2, RIVAL2_1_EEVEE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_1_CYNDAQUIL
+	iffalse .normalmode_RIVAL2_1_EEVEE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_1_CYNDAQUIL
+.normalmode_RIVAL2_1_EEVEE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

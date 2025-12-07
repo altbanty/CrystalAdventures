@@ -60,43 +60,43 @@ AzaleaTownRivalBattleScript:
 	waitbutton
 	closetext
 	setevent EVENT_RIVAL_AZALEA_TOWN
-	checkevent EVENT_GOT_TOTODILE_FROM_ELM
-	iftrue .Totodile
-	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
-	iftrue .Chikorita
+	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
+	iftrue .Smeargle
+	checkevent EVENT_GOT_AIPOM_FROM_ELM
+	iftrue .Aipom
 	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
 	setlasttalked AZALEATOWN_SILVER
-	loadtrainer RIVAL1, RIVAL1_2_TOTODILE
+	loadtrainer RIVAL1, RIVAL1_2_SMEARGLE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_2_TOTODILE
+	iffalse .normalmode_RIVAL1_2_SMEARGLE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_2_TOTODILE
+.normalmode_RIVAL1_2_SMEARGLE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .AfterBattle
 
-.Totodile:
+.Smeargle:
 	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
 	setlasttalked AZALEATOWN_SILVER
-	loadtrainer RIVAL1, RIVAL1_2_CHIKORITA
+	loadtrainer RIVAL1, RIVAL1_2_AIPOM
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_2_CHIKORITA
+	iffalse .normalmode_RIVAL1_2_AIPOM
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_2_CHIKORITA
+.normalmode_RIVAL1_2_AIPOM
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .AfterBattle
 
-.Chikorita:
+.Aipom:
 	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
 	setlasttalked AZALEATOWN_SILVER
-	loadtrainer RIVAL1, RIVAL1_2_CYNDAQUIL
+	loadtrainer RIVAL1, RIVAL1_2_EEVEE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_2_CYNDAQUIL
+	iffalse .normalmode_RIVAL1_2_EEVEE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_2_CYNDAQUIL
+.normalmode_RIVAL1_2_EEVEE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

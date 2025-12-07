@@ -1975,11 +1975,11 @@ EeveeEvosAttacks:
 	db 0 ; no more evolutions
 	db 1, TACKLE
 	db 1, TAIL_WHIP
-	db 8, SAND_ATTACK
+	db 6, SAND_ATTACK
+	db 8, QUICK_ATTACK
 	db 12, GROWL
 	db 16, DOUBLE_KICK
 	db 20, BITE
-	db 23, QUICK_ATTACK
 	db 30, BATON_PASS
 	db 36, TAKE_DOWN
 	db 0 ; no more level-up moves
@@ -2848,9 +2848,12 @@ AipomEvosAttacks:
 	db 0 ; no more evolutions
 	db 1, SCRATCH
 	db 1, TAIL_WHIP
-	db 6, SAND_ATTACK
-	db 12, BATON_PASS
+	db 6, THIEF
+	db 9, SAND_ATTACK
+	db 12, HEADBUTT
+	db 15, PAY_DAY
 	db 19, LOW_KICK
+	db 22, BATON_PASS
 	db 27, SWIFT
 	db 36, SCREECH
 	db 46, AGILITY
@@ -3495,6 +3498,7 @@ StantlerEvosAttacks:
 
 SmeargleEvosAttacks:
 	db 0 ; no more evolutions
+	db 1, TACKLE
 	db 1, SKETCH
 	db 11, SKETCH
 	db 21, SKETCH

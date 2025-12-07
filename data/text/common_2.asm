@@ -1599,13 +1599,10 @@ _OakText4::
 _OakText5::
 	text "Healing at #MON"
 	line "Centers now costs"
-	cont "money!"
+	cont "money. Stay frugal"
 
-	para "Your starter choice"
-	line "includes all three"
-	cont "original options."
+	para "Your starter now"
+	line "involves a choice"
+	cont "of playstyle."
 
-	para "And your egg will"
-	line "hatch a random"
-	cont "baby #MON!"
 	prompt

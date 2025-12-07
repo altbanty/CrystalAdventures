@@ -57,43 +57,43 @@ VictoryRoadRivalNext:
 	waitbutton
 	closetext
 	setevent EVENT_RIVAL_VICTORY_ROAD
-	checkevent EVENT_GOT_TOTODILE_FROM_ELM
-	iftrue .GotTotodile
-	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
-	iftrue .GotChikorita
+	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
+	iftrue .GotSmeargle
+	checkevent EVENT_GOT_AIPOM_FROM_ELM
+	iftrue .GotAipom
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
-	loadtrainer RIVAL1, RIVAL1_5_TOTODILE
+	loadtrainer RIVAL1, RIVAL1_5_SMEARGLE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_5_TOTODILE
+	iffalse .normalmode_RIVAL1_5_SMEARGLE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_5_TOTODILE
+.normalmode_RIVAL1_5_SMEARGLE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .AfterBattle
 
-.GotTotodile:
+.GotSmeargle:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
-	loadtrainer RIVAL1, RIVAL1_5_CHIKORITA
+	loadtrainer RIVAL1, RIVAL1_5_AIPOM
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_5_CHIKORITA
+	iffalse .normalmode_RIVAL1_5_AIPOM
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_5_CHIKORITA
+.normalmode_RIVAL1_5_AIPOM
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .AfterBattle
 
-.GotChikorita:
+.GotAipom:
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
-	loadtrainer RIVAL1, RIVAL1_5_CYNDAQUIL
+	loadtrainer RIVAL1, RIVAL1_5_EEVEE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_5_CYNDAQUIL
+	iffalse .normalmode_RIVAL1_5_EEVEE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_5_CYNDAQUIL
+.normalmode_RIVAL1_5_EEVEE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

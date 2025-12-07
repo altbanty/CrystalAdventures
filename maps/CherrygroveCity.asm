@@ -113,54 +113,54 @@ CherrygroveSilverSceneNorth:
 	writetext CherrygroveRivalText_Seen
 	waitbutton
 	closetext
-	checkevent EVENT_GOT_TOTODILE_FROM_ELM
-	iftrue .Totodile
-	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
-	iftrue .Chikorita
+	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
+	iftrue .Smeargle
+	checkevent EVENT_GOT_AIPOM_FROM_ELM
+	iftrue .Aipom
 	winlosstext SilverCherrygroveWinText, SilverCherrygroveLossText
 	setlasttalked CHERRYGROVECITY_SILVER
-	loadtrainer RIVAL1, RIVAL1_1_TOTODILE
+	loadtrainer RIVAL1, RIVAL1_1_SMEARGLE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .LoadHardcoreModeBattle
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_1_TOTODILE
+	iffalse .normalmode_RIVAL1_1_SMEARGLE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
-.normalmode_RIVAL1_1_TOTODILE
+.normalmode_RIVAL1_1_SMEARGLE
 	startbattle
 	dontrestartmapmusic
 	reloadmap
 	iftrue .AfterVictorious
 	sjump .AfterYourDefeat
 
-.Totodile:
+.Smeargle:
 	winlosstext SilverCherrygroveWinText, SilverCherrygroveLossText
 	setlasttalked CHERRYGROVECITY_SILVER
-	loadtrainer RIVAL1, RIVAL1_1_CHIKORITA
+	loadtrainer RIVAL1, RIVAL1_1_AIPOM
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .LoadHardcoreModeBattle
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_1_CHIKORITA
+	iffalse .normalmode_RIVAL1_1_AIPOM
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
-.normalmode_RIVAL1_1_CHIKORITA
+.normalmode_RIVAL1_1_AIPOM
 	startbattle
 	dontrestartmapmusic
 	reloadmap
 	iftrue .AfterVictorious
 	sjump .AfterYourDefeat
 
-.Chikorita:
+.Aipom:
 	winlosstext SilverCherrygroveWinText, SilverCherrygroveLossText
 	setlasttalked CHERRYGROVECITY_SILVER
-	loadtrainer RIVAL1, RIVAL1_1_CYNDAQUIL
+	loadtrainer RIVAL1, RIVAL1_1_EEVEE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .LoadHardcoreModeBattle
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_1_CYNDAQUIL
+	iffalse .normalmode_RIVAL1_1_EEVEE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
-.normalmode_RIVAL1_1_CYNDAQUIL
+.normalmode_RIVAL1_1_EEVEE
 	startbattle
 	dontrestartmapmusic
 	reloadmap

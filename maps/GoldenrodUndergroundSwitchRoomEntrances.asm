@@ -167,43 +167,43 @@ UndergroundSilverBattleScript:
 	waitbutton
 	closetext
 	setevent EVENT_RIVAL_GOLDENROD_UNDERGROUND
-	checkevent EVENT_GOT_TOTODILE_FROM_ELM
-	iftrue .Totodile
-	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
-	iftrue .Chikorita
+	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
+	iftrue .Smeargle
+	checkevent EVENT_GOT_AIPOM_FROM_ELM
+	iftrue .Aipom
 	winlosstext UndergroundSilverWinText, UndergroundSilverLossText
 	setlasttalked GOLDENRODUNDERGROUNDSWITCHROOMENTRANCES_SILVER
-	loadtrainer RIVAL1, RIVAL1_4_TOTODILE
+	loadtrainer RIVAL1, RIVAL1_4_SMEARGLE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_4_TOTODILE
+	iffalse .normalmode_RIVAL1_4_SMEARGLE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_4_TOTODILE
+.normalmode_RIVAL1_4_SMEARGLE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .FinishRivalBattle
 
-.Totodile:
+.Smeargle:
 	winlosstext UndergroundSilverWinText, UndergroundSilverLossText
 	setlasttalked GOLDENRODUNDERGROUNDSWITCHROOMENTRANCES_SILVER
-	loadtrainer RIVAL1, RIVAL1_4_CHIKORITA
+	loadtrainer RIVAL1, RIVAL1_4_AIPOM
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_4_CHIKORITA
+	iffalse .normalmode_RIVAL1_4_AIPOM
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_4_CHIKORITA
+.normalmode_RIVAL1_4_AIPOM
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
 	sjump .FinishRivalBattle
 
-.Chikorita:
+.Aipom:
 	winlosstext UndergroundSilverWinText, UndergroundSilverLossText
 	setlasttalked GOLDENRODUNDERGROUNDSWITCHROOMENTRANCES_SILVER
-	loadtrainer RIVAL1, RIVAL1_4_CYNDAQUIL
+	loadtrainer RIVAL1, RIVAL1_4_EEVEE
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_4_CYNDAQUIL
+	iffalse .normalmode_RIVAL1_4_EEVEE
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_4_CYNDAQUIL
+.normalmode_RIVAL1_4_EEVEE
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
