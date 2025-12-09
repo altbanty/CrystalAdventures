@@ -23,8 +23,8 @@ JohtoGrassWildMons:
 	; nite
 	db 3, RATTATA
 	db 4, HOOTHOOT
-	db 5, HOOTHOOT
-	db 3, RATTATA
+	db 5, RATTATA
+	db 3, BELLSPROUT
 	db 6, HOOTHOOT
 	db 5, BELLSPROUT
 	db 5, GASTLY
@@ -34,20 +34,20 @@ JohtoGrassWildMons:
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
 	db 3, SUNKERN
-	db 4, BELLSPROUT
-	db 5, SUNKERN
-	db 3, BELLSPROUT
+	db 4, SUNKERN
+	db 5, BELLSPROUT
+	db 3, RATTATA
 	db 6, BELLSPROUT
 	db 5, GASTLY
 	db 5, GASTLY
 	; day
 	db 3, SUNKERN
 	db 4, BELLSPROUT
-	db 5, BELLSPROUT
-	db 3, BELLSPROUT
+	db 5, SUNKERN
+	db 3, RATTATA
 	db 6, BELLSPROUT
 	db 5, BELLSPROUT
-	db 5, GASTLY
+	db 5, BELLSPROUT
 	; nite
 	db 3, RATTATA
 	db 4, HOOTHOOT
@@ -1241,7 +1241,7 @@ JohtoGrassWildMons:
 	db 2, SENTRET
 	db 3, PIDGEY
 	db 3, SENTRET
-	db 2, PIDGEY
+	db 2, POLIWAG
 	db 3, HOPPIP
 	db 3, HOPPIP
 	; day
@@ -1250,12 +1250,12 @@ JohtoGrassWildMons:
 	db 3, PIDGEY
 	db 3, SENTRET
 	db 2, RATTATA
-	db 3, HOPPIP
+	db 3, SENTRET
 	db 3, HOPPIP
 	; nite
 	db 2, HOOTHOOT
 	db 2, RATTATA
-	db 3, HOOTHOOT
+	db 3, POLIWAG
 	db 3, RATTATA
 	db 2, HOOTHOOT
 	db 3, POLIWAG
@@ -1338,11 +1338,11 @@ JohtoGrassWildMons:
 	db 7, MAREEP
 	; nite
 	db 7, SPINARAK
-	db 7, POLIWAG
+	db 7, WOOPER
 	db 5, EKANS
 	db 6, WOOPER
 	db 7, ZUBAT
-	db 7, GASTLY
+	db 7, WOOPER
 	db 7, GASTLY
 	end_grass_wildmons
 
@@ -1666,18 +1666,18 @@ JohtoGrassWildMons:
 	db 2, GEODUDE
 	; day
 	db 2, PHANPY
-	db 2, SPEAROW
+	db 2, SANDSHREW
 	db 3, SPEAROW
 	db 3, PHANPY
-	db 2, SANDSHREW
+	db 2, SPEAROW
 	db 2, MURKROW
 	db 2, GEODUDE
 	; nite
 	db 2, SANDSHREW
 	db 2, RATTATA
+	db 3, SANDSHREW
 	db 3, RATTATA
-	db 3, RATTATA
-	db 2, SANDSHREW
+	db 2, MURKROW
 	db 2, ZUBAT
 	db 2, GEODUDE
 	end_grass_wildmons
