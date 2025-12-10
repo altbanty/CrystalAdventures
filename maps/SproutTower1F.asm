@@ -35,7 +35,7 @@ TrainerSageChow:
 	end
 
 SproutTower1FParlyzHeal:
-	itemball PARLYZ_HEAL
+	randomized_item_4 PARLYZ_HEAL, AWAKENING, ANTIDOTE, BURN_HEAL
 
 SproutTower1FStatue:
 	jumptext SproutTower1FStatueText

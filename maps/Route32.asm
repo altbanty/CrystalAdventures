@@ -471,13 +471,13 @@ FriedaScript:
 	end
 
 Route32GreatBall:
-	randomized_item_4 SUPER_POTION, GREAT_BALL, MAX_ETHER, REPEL
+	randomized_item_4 SUPER_POTION, GREAT_BALL, REVIVE, REPEL
 
 Route32MiracleSeed:
-	itemball MIRACLE_SEED
+	randomized_item_5 MIRACLE_SEED, POISON_BARB, MYSTIC_WATER, QUICK_CLAW, HARD_STONE
 
 Route32Repel:
-	itemball REPEL
+	randomized_item_4 REPEL, SUPER_REPEL, ESCAPE_ROPE, PEARL
 
 Route32Sign:
 	jumptext Route32SignText

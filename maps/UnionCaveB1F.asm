@@ -57,10 +57,10 @@ TrainerHikerLeonard:
 	end
 
 UnionCaveB1FTMSwift:
-	itemball TM_SWIFT
+	randomized_item_4 TM_SWIFT, WATER_STONE, SOFT_SAND, TM_ROAR
 
 UnionCaveB1FXDefend:
-	itemball X_DEFEND
+	randomized_item_5 NUGGET, PEARL, GREAT_BALL, BIG_PEARL, BIG_MUSHROOM
 
 UnionCaveB1FBoulder:
 	jumpstd StrengthBoulderScript

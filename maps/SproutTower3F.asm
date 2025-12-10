@@ -134,10 +134,10 @@ SproutTower3FStatue:
 	jumptext SproutTower3FStatueText
 
 SproutTower3FPotion:
-	itemball POTION
+	randomized_item_3 POTION, SUPER_POTION, ETHER
 
 SproutTower3FEscapeRope:
-	itemball ESCAPE_ROPE
+	randomized_item_4 ESCAPE_ROPE, LEAF_STONE, TM_SUNNY_DAY, FOCUS_BAND
 
 SproutTower3FPlayerApproachesRivalMovement:
 	step UP

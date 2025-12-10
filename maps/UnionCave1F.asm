@@ -70,16 +70,16 @@ TrainerFirebreatherRay:
 	end
 
 UnionCave1FGreatBall:
-	itemball GREAT_BALL
+	randomized_item_4 POKE_BALL, GREAT_BALL, POTION, SUPER_POTION
 
 UnionCave1FXAttack:
-	itemball X_ATTACK
+	randomized_item_4 PEARL, POTION, REVIVE, PARLYZ_HEAL
 
 UnionCave1FPotion:
-	itemball POTION
+	randomized_item_4 POTION, AWAKENING, BURN_HEAL, RARE_CANDY
 
 UnionCave1FAwakening:
-	itemball AWAKENING
+	randomized_item_4 AWAKENING, POKE_BALL, ANTIDOTE, FULL_HEAL
 
 UnionCave1FUnusedSign: ; unreferenced
 	jumptext UnionCave1FUnusedSignText
