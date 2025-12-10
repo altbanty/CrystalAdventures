@@ -47,6 +47,8 @@ randomized_item_4: MACRO
 	ifequal 1, .Give\@Item2
 	ifequal 2, .Give\@Item3
 	ifequal 3, .Give\@Item4
+	; Fallback - should never reach here, but just in case
+	sjump .Give\@Item1
 
 .Give\@Item1:
 	opentext
@@ -97,6 +99,8 @@ randomized_item_5: MACRO
 	ifequal 2, .Give\@Item3
 	ifequal 3, .Give\@Item4
 	ifequal 4, .Give\@Item5
+	; Fallback - should never reach here, but just in case
+	sjump .Give\@Item1
 
 .Give\@Item1:
 	opentext

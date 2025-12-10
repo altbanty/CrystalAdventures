@@ -1,5 +1,5 @@
 roms := \
-	pokecrystal.gbc \
+	CrystalAdventures.gbc \
 	pokecrystal11.gbc \
 	pokecrystal_au.gbc \
 	pokecrystal_debug.gbc \
@@ -24,6 +24,7 @@ rom_obj := \
 	gfx/tilesets.o \
 	lib/mobile/main.o
 
+CrystalAdventures_obj   := $(rom_obj:.o=.o)
 pokecrystal_obj         := $(rom_obj:.o=.o)
 pokecrystal11_obj       := $(rom_obj:.o=11.o)
 pokecrystal_au_obj      := $(rom_obj:.o=_au.o)
@@ -56,7 +57,7 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDARY:
 
 all: crystal
-crystal:         pokecrystal.gbc
+crystal:         CrystalAdventures.gbc
 crystal11:       pokecrystal11.gbc
 crystal_au:      pokecrystal_au.gbc
 crystal_debug:   pokecrystal_debug.gbc
@@ -151,6 +152,7 @@ $(foreach obj, $(pokecrystal11_vc_obj), $(eval $(call DEP,$(obj),$(obj:11_vc.o=.
 endif
 
 
+CrystalAdventures_opt   = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 pokecrystal_opt         = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 pokecrystal11_opt       = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 pokecrystal_au_opt      = -Cjv -t PM_CRYSTAL -i BYTU -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
@@ -158,6 +160,7 @@ pokecrystal_debug_opt   = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 
 pokecrystal11_debug_opt = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 pokecrystal11_vc_opt    = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 
+CrystalAdventures_base   = us
 pokecrystal_base         = us
 pokecrystal11_base       = us
 pokecrystal_au_base      = us

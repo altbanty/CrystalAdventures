@@ -343,26 +343,26 @@ JohtoGrassWildMons:
 	; morn
 	db 14, NIDORAN_M
 	db 15, NIDORAN_F
-	db 17, SUNKERN
-	db 10, WEEDLE
-	db 10, CATERPIE
-	db 16, SCYTHER
+	db 14, CHIKORITA
+	db 10, BEEDRILL
+	db 10, BUTTERFREE
+	db 16, PINSIR
 	db 16, SCYTHER
 	; day
 	db 15, NIDORAN_F
 	db 14, NIDORAN_M
-	db 10, WEEDLE
+	db 14, CHIKORITA
 	db 13, SUNKERN
-	db 10, CATERPIE
-	db 16, SCYTHER
+	db 10, BUTTERFREE
+	db 16, PINSIR
 	db 16, SCYTHER
 	; nite
-	db 13, PSYDUCK
+	db 15, PSYDUCK
 	db 17, MURKROW
-	db 14, SPINARAK
-	db 15, HOOTHOOT
-	db 14, VENONAT
-	db 16, SCYTHER
+	db 14, NATU
+	db 15, VENONAT
+	db 14, PINSIR
+	db 16, PINSIR
 	db 16, SCYTHER
 	end_grass_wildmons
 
@@ -1377,57 +1377,57 @@ JohtoGrassWildMons:
 	def_grass_wildmons ROUTE_34
 	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
 	; morn
-	db 14, MANKEY
-	db 13, ABRA
+	db 14, FARFETCH_D
+	db 13, DITTO
 	db 14, SNUBBULL
-	db 13, GRIMER
+	db 13, MANKEY
 	db 14, JIGGLYPUFF
-	db 10, DITTO
-	db 10, DITTO
+	db 10, ABRA
+	db 10, ABRA
 	; day
-	db 14, MANKEY
-	db 13, ABRA
+	db 14, FARFETCH_D
+	db 13, TANGELA
 	db 14, SNUBBULL
-	db 13, GRIMER
+	db 13, MANKEY
 	db 14, JIGGLYPUFF
 	db 10, DITTO
-	db 10, DITTO
+	db 10, ABRA
 	; nite
 	db 14, DROWZEE
-	db 13, GRIMER
-	db 14, ABRA
+	db 13, TANGELA
+	db 14, GRIMER
 	db 13, SNUBBULL
 	db 14, JIGGLYPUFF
-	db 10, DITTO
-	db 10, DITTO
+	db 10, ABRA
+	db 10, ABRA
 	end_grass_wildmons
 
 	def_grass_wildmons ROUTE_35
 	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
 	; morn
 	db 15, SNUBBULL
-	db 15, ABRA
 	db 15, YANMA
-	db 14, PIDGEY
-	db 14, GROWLITHE
-	db 15, GROWLITHE
+	db 15, ABRA
+	db 14, SPEAROW
+	db 14, PONYTA
+	db 15, PONYTA
 	db 18, YANMA
 	; day
 	db 15, SNUBBULL
 	db 15, PIDGEY
 	db 15, ABRA
 	db 14, YANMA
-	db 14, GROWLITHE
+	db 14, PONYTA
 	db 15, GROWLITHE
 	db 18, YANMA
 	; nite
 	db 15, PSYDUCK
-	db 15, GROWLITHE
-	db 15, ABRA
-	db 14, YANMA
+	db 15, PONYTA
+	db 15, YANMA
+	db 14, ABRA
 	db 14, DITTO
 	db 15, PSYDUCK
-	db 18, YANMA
+	db 18, GROWLITHE
 	end_grass_wildmons
 
 	def_grass_wildmons ROUTE_36

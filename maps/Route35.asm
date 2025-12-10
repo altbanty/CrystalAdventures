@@ -293,7 +293,7 @@ Route35Sign:
 	jumptext Route35SignText
 
 Route35TMRollout:
-	itemball TM_ROLLOUT
+	randomized_item_4 TM_ROLLOUT, THUNDERSTONE, TM_PROTECT, LEAF_STONE
 
 Route35FruitTree:
 	fruittree FRUITTREE_ROUTE_35
