@@ -343,25 +343,25 @@ JohtoGrassWildMons:
 	; morn
 	db 14, NIDORAN_M
 	db 15, NIDORAN_F
-	db 14, CHIKORITA
-	db 10, BEEDRILL
-	db 10, BUTTERFREE
+	db 14, BUTTERFREE
+	db 13, TOTODILE
+	db 43, BEEDRILL
 	db 16, PINSIR
 	db 16, SCYTHER
 	; day
 	db 15, NIDORAN_F
 	db 14, NIDORAN_M
-	db 14, CHIKORITA
-	db 13, SUNKERN
-	db 10, BUTTERFREE
+	db 14, BEEDRILL
+	db 13, TOTODILE
+	db 14, BUTTERFREE
 	db 16, PINSIR
 	db 16, SCYTHER
 	; nite
 	db 15, PSYDUCK
 	db 17, MURKROW
 	db 14, NATU
-	db 15, VENONAT
-	db 14, PINSIR
+	db 15, TOTODILE
+	db 14, PSYDUCK
 	db 16, PINSIR
 	db 16, SCYTHER
 	end_grass_wildmons
@@ -427,25 +427,25 @@ JohtoGrassWildMons:
 	; morn
 	db 8, SANDSHREW
 	db 8, CUBONE
-	db 9, MARILL
+	db 9, SLUGMA
 	db 9, GEODUDE
 	db 8, ZUBAT
-	db 8, ONIX
+	db 8, SLUGMA
 	db 9, ONIX
 	; day
 	db 8, CUBONE
 	db 8, SANDSHREW
-	db 9, MARILL
+	db 9, SLUGMA
 	db 9, GEODUDE
 	db 8, ZUBAT
-	db 8, ONIX
+	db 8, SLUGMA
 	db 9, ONIX
 	; nite
 	db 8, CUBONE
 	db 8, SANDSHREW
-	db 9, CUBONE
+	db 9, SLUGMA
 	db 9, ZUBAT
-	db 8, ZUBAT
+	db 8, SLUGMA
 	db 8, ONIX
 	db 9, ONIX
 	end_grass_wildmons
@@ -456,7 +456,7 @@ JohtoGrassWildMons:
 	db 8, SANDSHREW
 	db 8, CUBONE
 	db 9, WOOPER
-	db 8, WOOPER
+	db 8, CYNDAQUIL
 	db 8, ONIX
 	db 9, ZUBAT
 	db 9, WOOPER
@@ -464,7 +464,7 @@ JohtoGrassWildMons:
 	db 8, SANDSHREW
 	db 8, CUBONE
 	db 9, WOOPER
-	db 8, WOOPER
+	db 8, CYNDAQUIL
 	db 8, ONIX
 	db 9, ZUBAT
 	db 9, WOOPER
@@ -472,7 +472,7 @@ JohtoGrassWildMons:
 	db 8, SANDSHREW
 	db 8, CUBONE
 	db 9, WOOPER
-	db 8, WOOPER
+	db 8, CYNDAQUIL
 	db 8, ONIX
 	db 9, ZUBAT
 	db 9, WOOPER
@@ -568,26 +568,26 @@ JohtoGrassWildMons:
 	db 9,  METAPOD
 	db 9,  KAKUNA
 	db 12, PARAS
-	db 12, BUTTERFREE
+	db 12, CHIKORITA
 	db 13, BEEDRILL
-	db 9,  PSYDUCK
-	db 9,  PSYDUCK
+	db 9,  CHIKORITA
+	db 9,  CHIKORITA
 	; day
 	db 9,  METAPOD
 	db 9,  KAKUNA
-	db 12, PARAS
-	db 12, BEEDRILL
-	db 13, BUTTERFREE
-	db 9,  PSYDUCK
-	db 9,  PARAS
-	; nite
-	db 12, ODDISH
-	db 12, VENONAT
-	db 12, PARAS
-	db 12, VENONAT
-	db 13, ODDISH
-	db 13, PSYDUCK
 	db 13, PARAS
+	db 13, CHIKORITA
+	db 13, BUTTERFREE
+	db 9,  CHIKORITA
+	db 13,  BEEDRILL
+	; nite
+	db 12, PARAS
+	db 12, VENONAT
+	db 12, PSYDUCK
+	db 12, CHIKORITA
+	db 13, PSYDUCK
+	db 13, VENONAT
+	db 13, PSYDUCK
 	end_grass_wildmons
 
 	def_grass_wildmons MOUNT_MORTAR_1F_OUTSIDE
@@ -1240,7 +1240,7 @@ JohtoGrassWildMons:
 	db 2, PIDGEY
 	db 2, SENTRET
 	db 3, PIDGEY
-	db 3, SENTRET
+	db 3, CYNDAQUIL
 	db 2, POLIWAG
 	db 3, HOPPIP
 	db 3, HOPPIP
@@ -1248,7 +1248,7 @@ JohtoGrassWildMons:
 	db 2, PIDGEY
 	db 2, SENTRET
 	db 3, PIDGEY
-	db 3, SENTRET
+	db 3, CYNDAQUIL
 	db 2, RATTATA
 	db 3, SENTRET
 	db 3, HOPPIP
@@ -1256,8 +1256,8 @@ JohtoGrassWildMons:
 	db 2, HOOTHOOT
 	db 2, RATTATA
 	db 3, POLIWAG
-	db 3, RATTATA
-	db 2, HOOTHOOT
+	db 3, CYNDAQUIL
+	db 2, RATTATA
 	db 3, POLIWAG
 	db 3, ZUBAT
 	end_grass_wildmons
@@ -1338,11 +1338,11 @@ JohtoGrassWildMons:
 	db 7, MAREEP
 	; nite
 	db 7, SPINARAK
-	db 7, WOOPER
+	db 7, MARILL
 	db 5, EKANS
-	db 6, WOOPER
+	db 6, MARILL
 	db 7, ZUBAT
-	db 7, WOOPER
+	db 7, MARILL
 	db 7, GASTLY
 	end_grass_wildmons
 
@@ -1352,7 +1352,7 @@ JohtoGrassWildMons:
 	db 9, EKANS
 	db 9, SPEAROW
 	db 8, MANKEY
-	db 9, HOPPIP
+	db 9, SPEAROW
 	db 8, MANKEY
 	db 8, MACHOP
 	db 8, MACHOP
@@ -1367,7 +1367,7 @@ JohtoGrassWildMons:
 	; nite
 	db 9, RATTATA
 	db 9, EKANS
-	db 8, RATTATA
+	db 8, MANKEY
 	db 9, EKANS
 	db 8, MACHOP
 	db 8, ZUBAT
