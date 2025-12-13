@@ -285,7 +285,7 @@ JohtoGrassWildMons:
 	def_grass_wildmons BURNED_TOWER_1F
 	db 4 percent, 4 percent, 4 percent ; encounter rates: morn/day/nite
 	; morn
-	db 13, RATTATA
+	db 13, MAGMAR
 	db 14, KOFFING
 	db 15, MAGMAR
 	db 14, MISDREAVUS
