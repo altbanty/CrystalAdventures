@@ -287,55 +287,55 @@ JohtoGrassWildMons:
 	; morn
 	db 13, RATTATA
 	db 14, KOFFING
+	db 15, MAGMAR
+	db 14, MISDREAVUS
+	db 15, MISDREAVUS
+	db 15, RATICATE
 	db 15, HOUNDOUR
-	db 14, SLUGMA
-	db 15, SLUGMA
-	db 15, RATICATE
-	db 15, RATICATE
 	; day
-	db 13, RATTATA
+	db 13, RATICATE
 	db 14, KOFFING
-	db 15, SLUGMA
-	db 14, SLUGMA
+	db 15, MAGMAR
+	db 14, MISDREAVUS
+	db 15, MAGMAR
 	db 15, HOUNDOUR
-	db 15, RATICATE
-	db 15, RATICATE
+	db 15, HOUNDOUR
 	; nite
-	db 13, SLUGMA
+	db 13, RATICATE
 	db 14, KOFFING
 	db 15, SLUGMA
 	db 14, ZUBAT
+	db 15, MAGMAR
 	db 15, HOUNDOUR
-	db 15, RATICATE
-	db 15, RATICATE
+	db 15, HOUNDOUR
 	end_grass_wildmons
 
 	def_grass_wildmons BURNED_TOWER_B1F
 	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
 	; morn
-	db 18, ZUBAT
+	db 18, MURKROW
 	db 17, KOFFING
 	db 16, KOFFING
 	db 16, MISDREAVUS
-	db 16, KOFFING
+	db 16, GASTLY
 	db 18, MAGMAR
 	db 18, MAGMAR
 	; day
-	db 18, ZUBAT
+	db 18, MURKROW
 	db 17, KOFFING
 	db 16, KOFFING
 	db 16, MAGMAR
-	db 16, KOFFING
+	db 16, GASTLY
 	db 18, MISDREAVUS
-	db 17, MISDREAVUS
+	db 17, HOUNDOUR
 	; nite
-	db 18, MISDREAVUS
+	db 18, MURKROW
 	db 17, ZUBAT
 	db 16, KOFFING
 	db 16, KOFFING
-	db 16, KOFFING
+	db 16, GASTLY
 	db 18, MAGMAR
-	db 18, MAGMAR
+	db 18, HOUNDOUR
 	end_grass_wildmons
 
 	def_grass_wildmons NATIONAL_PARK
@@ -423,7 +423,7 @@ JohtoGrassWildMons:
 	end_grass_wildmons
 
 	def_grass_wildmons UNION_CAVE_1F
-	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
+	db 5 percent, 5 percent, 5 percent ; encounter rates: morn/day/nite
 	; morn
 	db 8, SANDSHREW
 	db 8, CUBONE
@@ -451,20 +451,20 @@ JohtoGrassWildMons:
 	end_grass_wildmons
 
 	def_grass_wildmons UNION_CAVE_B1F
-	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
+	db 5 percent, 5 percent, 5 percent ; encounter rates: morn/day/nite
 	; morn
 	db 8, SANDSHREW
 	db 8, CUBONE
 	db 9, WOOPER
-	db 8, CYNDAQUIL
+	db 8, SLUGMA
 	db 8, ONIX
 	db 9, ZUBAT
-	db 9, WOOPER
+	db 9, ZUBAT
 	; day
 	db 8, SANDSHREW
 	db 8, CUBONE
 	db 9, WOOPER
-	db 8, CYNDAQUIL
+	db 8, SLUGMA
 	db 8, ONIX
 	db 9, ZUBAT
 	db 9, WOOPER
@@ -472,7 +472,7 @@ JohtoGrassWildMons:
 	db 8, SANDSHREW
 	db 8, CUBONE
 	db 9, WOOPER
-	db 8, CYNDAQUIL
+	db 8, SLUGMA
 	db 8, ONIX
 	db 9, ZUBAT
 	db 9, WOOPER
