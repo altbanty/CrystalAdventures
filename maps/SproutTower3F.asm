@@ -134,7 +134,7 @@ SproutTower3FStatue:
 	jumptext SproutTower3FStatueText
 
 SproutTower3FPotion:
-	randomized_item_3 POTION, SUPER_POTION, ETHER
+	randomized_item_5 POTION, SUPER_POTION, ETHER, PROTEIN, REVIVE
 
 SproutTower3FEscapeRope:
 	randomized_item_5 ESCAPE_ROPE, SUN_STONE, LEAF_STONE, TM_SUNNY_DAY, FOCUS_BAND

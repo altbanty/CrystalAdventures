@@ -257,7 +257,7 @@ Route30TrainerTips:
 	jumptext Route30TrainerTipsText
 
 Route30Antidote:
-	randomized_item_4 POTION, ANTIDOTE, ETHER, POKE_BALL
+	randomized_item_5 POTION, ANTIDOTE, ETHER, POKE_BALL, CARBOS
 
 Route30FruitTree1:
 	fruittree FRUITTREE_ROUTE_30_1

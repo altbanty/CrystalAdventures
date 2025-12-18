@@ -317,10 +317,10 @@ NationalParkTrainerTipsSign:
 	jumptext NationalParkTrainerTipsText
 
 NationalParkParlyzHeal:
-	randomized_item_4 GOLD_LEAF, TM_FURY_CUTTER, FULL_HEAL, ULTRA_BALL
+	randomized_item_5 GOLD_LEAF, TM_FURY_CUTTER, FULL_HEAL, ULTRA_BALL, PROTEIN
 
 NationalParkTMDig:
-	randomized_item_4 TM_DIG, TM_MUD_SLAP, REVIVE, SUPER_POTION
+	randomized_item_5 TM_DIG, TM_MUD_SLAP, REVIVE, SUPER_POTION, CALCIUM
 
 NationalParkHiddenFullHeal:
 	hiddenitem FULL_HEAL, EVENT_NATIONAL_PARK_HIDDEN_FULL_HEAL

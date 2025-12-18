@@ -57,10 +57,10 @@ TrainerHikerLeonard:
 	end
 
 UnionCaveB1FTMSwift:
-	randomized_item_4 TM_SWIFT, WATER_STONE, SOFT_SAND, TM_ROAR
+	randomized_item_5 TM_SWIFT, WATER_STONE, SOFT_SAND, TM_ROAR, HARD_STONE
 
 UnionCaveB1FXDefend:
-	randomized_item_5 NUGGET, PEARL, GREAT_BALL, BIG_PEARL, BIG_MUSHROOM
+	randomized_item_5 NUGGET, PEARL, GREAT_BALL, BIG_PEARL, PEARL
 
 UnionCaveB1FBoulder:
 	jumpstd StrengthBoulderScript

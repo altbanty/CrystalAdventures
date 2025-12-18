@@ -400,16 +400,16 @@ IlexForestLassScript:
 	jumptextfaceplayer Text_IlexForestLass
 
 IlexForestRevive:
-	randomized_item_3 REVIVE, SUPER_POTION, SUPER_REPEL
+	randomized_item_5 REVIVE, SUPER_POTION, SUPER_REPEL, CALCIUM, PEARL
 
 IlexForestXAttack:
-	randomized_item_4 SILVERPOWDER, TM_SLUDGE_BOMB, TM_PSYCHIC_M, BIG_MUSHROOM
+	randomized_item_5 SILVERPOWDER, TM_SLUDGE_BOMB, TM_PSYCHIC_M, BIG_MUSHROOM, HP_UP
 
 IlexForestAntidote:
-	randomized_item_4 ANTIDOTE, PARLYZ_HEAL, FULL_HEAL, TM_REST
+	randomized_item_5 ANTIDOTE, PARLYZ_HEAL, FULL_HEAL, TM_REST, IRON
 
 IlexForestEther:
-	randomized_item_4 ETHER, GREAT_BALL, TM_SOLARBEAM, RARE_CANDY
+	randomized_item_5 ETHER, GREAT_BALL, TM_SOLARBEAM, RARE_CANDY, PP_UP
 
 IlexForestHiddenEther:
 	hiddenitem ETHER, EVENT_ILEX_FOREST_HIDDEN_ETHER

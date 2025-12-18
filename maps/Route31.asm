@@ -280,10 +280,10 @@ Route31FruitTree:
 	fruittree FRUITTREE_ROUTE_31
 
 Route31Potion:
-	randomized_item_4 POTION, POKE_BALL, ANTIDOTE, SILVERPOWDER
+	randomized_item_5 POTION, POKE_BALL, ANTIDOTE, SILVERPOWDER, CALCIUM
 
 Route31PokeBall:
-	randomized_item_4 POTION, POKE_BALL, PARLYZ_HEAL, RARE_CANDY
+	randomized_item_5 POTION, POKE_BALL, PARLYZ_HEAL, RARE_CANDY, PEARL
 
 Route31CooltrainerMText:
 	text "DARK CAVE…"

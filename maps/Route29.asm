@@ -217,7 +217,7 @@ Route29FruitTree:
 	fruittree FRUITTREE_ROUTE_29
 
 Route29Potion:
-	randomized_item_3 POTION, POKE_BALL, ETHER
+	randomized_item_5 POTION, POKE_BALL, ETHER, REVIVE, HP_UP
 
 
 DudeMovementData1a:

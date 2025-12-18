@@ -35,7 +35,7 @@ TrainerSageChow:
 	end
 
 SproutTower1FParlyzHeal:
-	randomized_item_4 PARLYZ_HEAL, AWAKENING, ANTIDOTE, BURN_HEAL
+	randomized_item_5 PARLYZ_HEAL, AWAKENING, ANTIDOTE, BURN_HEAL, TINYMUSHROOM
 
 SproutTower1FStatue:
 	jumptext SproutTower1FStatueText
