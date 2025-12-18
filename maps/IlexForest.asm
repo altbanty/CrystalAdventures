@@ -406,7 +406,7 @@ IlexForestXAttack:
 	randomized_item_5 SILVERPOWDER, TM_SLUDGE_BOMB, TM_PSYCHIC_M, BIG_MUSHROOM, HP_UP
 
 IlexForestAntidote:
-	randomized_item_5 ANTIDOTE, PARLYZ_HEAL, FULL_HEAL, TM_REST, IRON
+	randomized_item_5 ANTIDOTE, MOON_STONE, FULL_HEAL, TM_REST, IRON
 
 IlexForestEther:
 	randomized_item_5 ETHER, GREAT_BALL, TM_SOLARBEAM, RARE_CANDY, PP_UP
