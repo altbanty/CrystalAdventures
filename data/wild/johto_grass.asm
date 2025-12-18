@@ -510,7 +510,7 @@ JohtoGrassWildMons:
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
 	db 5, KOFFING
-	db 6, SLOWPOKE
+	db 6, GRIMER
 	db 7, KOFFING
 	db 6, SLOWPOKE
 	db 8, ZUBAT
@@ -518,7 +518,7 @@ JohtoGrassWildMons:
 	db 8, SLOWPOKE
 	; day
 	db 5, KOFFING
-	db 6, SLOWPOKE
+	db 6, GRIMER
 	db 7, KOFFING
 	db 6, SLOWPOKE
 	db 8, ZUBAT
@@ -526,7 +526,7 @@ JohtoGrassWildMons:
 	db 8, SLOWPOKE
 	; nite
 	db 5, KOFFING
-	db 6, SLOWPOKE
+	db 6, GRIMER
 	db 7, KOFFING
 	db 6, SLOWPOKE
 	db 8, ZUBAT
