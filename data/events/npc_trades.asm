@@ -15,4 +15,5 @@ NPCTrades:
 	npctrade TRADE_DIALOGSET_NEWBIE,    XATU,       HAUNTER,    "PAUL@@@@@@@", $96, $86, MYSTERYBERRY, 15616, "CHRIS@@@@@@", TRADE_GENDER_EITHER
 	npctrade TRADE_DIALOGSET_GIRL,      CHANSEY,    AERODACTYL, "AEROY@@@@@@", $96, $66, GOLD_BERRY,   26491, "KIM@@@@@@@@", TRADE_GENDER_EITHER
 	npctrade TRADE_DIALOGSET_COLLECTOR, DUGTRIO,    MAGNETON,   "MAGGIE@@@@@", $96, $66, METAL_COAT,   50082, "FOREST@@@@@", TRADE_GENDER_EITHER
+; Note: Kyle's trade (index 1) uses dynamic species from wKyleTradeVariant - see engine/events/npc_trade.asm
 	assert_table_length NUM_NPC_TRADES

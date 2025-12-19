@@ -3002,7 +3002,7 @@ wPlayerState:: db
 wHallOfFameCount:: db
 	ds 1
 wTradeFlags:: flag_array NUM_NPC_TRADES
-	ds 1
+wKyleTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-4), bit 7: initialized
 wMooMooBerries:: db
 wUndergroundSwitchPositions:: db
 wFarfetchdPosition:: db

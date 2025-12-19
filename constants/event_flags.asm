@@ -1042,6 +1042,7 @@
 	const EVENT_BEAT_SAGE_GAKU
 	const EVENT_BEAT_SAGE_MASA
 	const EVENT_BEAT_SAGE_KOJI
+; Kyle's trade now uses wKyleTradeVariant for dynamic species selection
 ; Unused: next 116 events
 
 	const_next 1600

@@ -275,7 +275,80 @@ DoNPCTrade:
 GetTradeAttr:
 	ld d, 0
 	push de
+	; Check if this is Kyle's dynamic trade
 	ld a, [wJumptableIndex]
+	cp NPC_TRADE_KYLE
+	jr nz, .normal_trade
+	; Kyle's trade - first ensure variant is initialized
+	call EnsureKyleTradeVariantInitialized
+	; Now check which attribute is being requested
+	pop de
+	push de
+	ld a, e
+	cp NPCTRADE_GIVEMON
+	jr z, .kyle_givemon
+	cp NPCTRADE_GETMON
+	jr z, .kyle_getmon
+	cp NPCTRADE_NICKNAME
+	jr z, .kyle_nickname
+	; For other attributes (DVs, item, OT, etc.), use the base Kyle entry
+	jr .kyle_base_entry
+
+.kyle_givemon:
+	; Return pointer to requested species based on wKyleTradeVariant bits 3-5
+	ld a, [wKyleTradeVariant]
+	and %00111000      ; mask bits 3-5
+	rrca
+	rrca
+	rrca               ; shift right by 3 to get index 0-4
+	ld e, a
+	ld d, 0
+	ld hl, KyleRequestedSpecies
+	add hl, de
+	pop de             ; clean up stack
+	ret
+
+.kyle_getmon:
+	; Return pointer to offered species based on wKyleTradeVariant bits 0-2
+	ld a, [wKyleTradeVariant]
+	and %00000111      ; mask bits 0-2 to get index 0-5
+	ld e, a
+	ld d, 0
+	ld hl, KyleOfferedSpecies
+	add hl, de
+	pop de             ; clean up stack
+	ret
+
+.kyle_nickname:
+	; Return pointer to nickname based on wKyleTradeVariant bits 0-2
+	ld a, [wKyleTradeVariant]
+	and %00000111      ; mask bits 0-2 to get index 0-5
+	; Multiply by MON_NAME_LENGTH (11)
+	ld e, a
+	ld d, 0
+	ld hl, KyleNicknames
+	; index * 11 = index * 8 + index * 2 + index * 1
+	add hl, de         ; + index
+	add hl, de         ; + index (now 2x)
+	add hl, de         ; + index (now 3x)
+	add hl, de         ; + index (now 4x)
+	add hl, de         ; + index (now 5x)
+	add hl, de         ; + index (now 6x)
+	add hl, de         ; + index (now 7x)
+	add hl, de         ; + index (now 8x)
+	add hl, de         ; + index (now 9x)
+	add hl, de         ; + index (now 10x)
+	add hl, de         ; + index (now 11x)
+	pop de             ; clean up stack
+	ret
+
+.kyle_base_entry:
+	; Fall through to load from Kyle's base entry in NPCTrades
+	pop de
+	push de
+	ld a, NPC_TRADE_KYLE
+
+.normal_trade:
 	and $f
 	swap a
 	ld e, a
@@ -286,6 +359,57 @@ GetTradeAttr:
 	pop de
 	add hl, de
 	ret
+
+; Initialize Kyle's trade variant if not already set (bit 7 = 0)
+EnsureKyleTradeVariantInitialized:
+	ld a, [wKyleTradeVariant]
+	bit 7, a
+	ret nz             ; already initialized, return
+	; Generate random variant: bits 0-2 = offered (0-5), bits 3-5 = requested (0-4)
+	push de
+	; Generate random 0-5 for offered species
+	ld a, 6
+	call RandomRange   ; returns 0-5 in a
+	ld d, a            ; d = offered index (0-5)
+	; Generate random 0-4 for requested species
+	ld a, 5
+	call RandomRange   ; returns 0-4 in a
+	; Combine: (requested << 3) | offered | 0x80 (initialized flag)
+	rlca
+	rlca
+	rlca               ; shift left by 3
+	or d               ; combine with offered index
+	or %10000000       ; set initialized flag (bit 7)
+	ld [wKyleTradeVariant], a
+	pop de
+	ret
+
+; Kyle's dynamic trade lookup tables
+; Sprout Tower Pokemon (requested from player) - 5 options
+KyleRequestedSpecies:
+	db BELLSPROUT   ; 0
+	db RATTATA      ; 1
+	db HOOTHOOT     ; 2
+	db GASTLY       ; 3
+	db SUNKERN      ; 4
+
+; Union Cave Pokemon (offered to player) - 6 options
+KyleOfferedSpecies:
+	db ONIX         ; 0
+	db GEODUDE      ; 1
+	db CUBONE       ; 2
+	db SLUGMA       ; 3
+	db SANDSHREW    ; 4
+	db WOOPER       ; 5
+
+; Nicknames for each offered Pokemon (11 bytes each, padded with @)
+KyleNicknames:
+	db "ROCKY@@@@@@"     ; Onix
+	db "BOULDER@@@@"     ; Geodude
+	db "SKULLY@@@@@"     ; Cubone
+	db "MAGGY@@@@@@"     ; Slugma
+	db "DIGGER@@@@@"     ; Sandshrew
+	db "WHOOPER@@@@"     ; Wooper
 
 Trade_GetAttributeOfCurrentPartymon:
 	ld a, [wCurPartyMon]

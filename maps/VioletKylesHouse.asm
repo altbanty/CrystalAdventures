@@ -13,6 +13,8 @@ VioletKylesHousePokefanMScript:
 Kyle:
 	faceplayer
 	opentext
+	; Dynamic trade - species determined by wKyleTradeVariant
+	; (initialized automatically on first access in GetTradeAttr)
 	trade NPC_TRADE_KYLE
 	waitbutton
 	closetext
