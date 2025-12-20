@@ -932,7 +932,7 @@ BirdKeeperGroup:
 
 	; BIRD_KEEPER (2)
 	db "ABE@", TRAINERTYPE_NORMAL
-	db  9, SPEAROW
+	db  12, SPEAROW
 	db -1 ; end
 
 	; BIRD_KEEPER (3)
