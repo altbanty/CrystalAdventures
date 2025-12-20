@@ -407,7 +407,7 @@ KyleNicknames:
 	db "BOULDER@@@@"     ; Geodude
 	db "SKULLY@@@@@"     ; Cubone
 	db "MAGGY@@@@@@"     ; Slugma
-	db "DIGGER@@@@@"     ; Sandshrew
+	db "SANDY@@@@@@"     ; Sandshrew
 	db "WHOOPER@@@@"     ; Wooper
 
 Trade_GetAttributeOfCurrentPartymon:
