@@ -300,7 +300,7 @@ GetTradeAttr:
 	and %00111000      ; mask bits 3-5
 	rrca
 	rrca
-	rrca               ; shift right by 3 to get index 0-4
+	rrca               ; shift right by 3 to get index 0-3
 	ld e, a
 	ld d, 0
 	ld hl, KyleRequestedSpecies
@@ -365,15 +365,15 @@ EnsureKyleTradeVariantInitialized:
 	ld a, [wKyleTradeVariant]
 	bit 7, a
 	ret nz             ; already initialized, return
-	; Generate random variant: bits 0-2 = offered (0-5), bits 3-5 = requested (0-4)
+	; Generate random variant: bits 0-2 = offered (0-5), bits 3-5 = requested (0-3)
 	push de
 	; Generate random 0-5 for offered species
 	ld a, 6
 	call RandomRange   ; returns 0-5 in a
 	ld d, a            ; d = offered index (0-5)
-	; Generate random 0-4 for requested species
-	ld a, 5
-	call RandomRange   ; returns 0-4 in a
+	; Generate random 0-3 for requested species
+	ld a, 4
+	call RandomRange   ; returns 0-3 in a
 	; Combine: (requested << 3) | offered | 0x80 (initialized flag)
 	rlca
 	rlca
@@ -385,13 +385,12 @@ EnsureKyleTradeVariantInitialized:
 	ret
 
 ; Kyle's dynamic trade lookup tables
-; Sprout Tower Pokemon (requested from player) - 5 options
+; Sprout Tower Pokemon (requested from player) - 4 options
 KyleRequestedSpecies:
 	db BELLSPROUT   ; 0
 	db RATTATA      ; 1
 	db HOOTHOOT     ; 2
-	db GASTLY       ; 3
-	db SUNKERN      ; 4
+	db SUNKERN      ; 3
 
 ; Union Cave Pokemon (offered to player) - 6 options
 KyleOfferedSpecies:

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document explains the implementation of Kyle's randomized trade system in Violet City, which offers 30 possible trade combinations while using only 1 byte of save RAM. This approach bypasses the WRAMX memory constraints that would normally prevent adding multiple NPC trade entries.
+This document explains the implementation of Kyle's randomized trade system in Violet City, which offers 24 possible trade combinations (4 requested × 6 offered) while using only 1 byte of save RAM. This approach bypasses the WRAMX memory constraints that would normally prevent adding multiple NPC trade entries.
 
 ## The Problem: WRAMX Memory Overflow
 
@@ -84,7 +84,7 @@ A single byte encodes the random selection:
 
 ```
 Bit 7:     Initialized flag (1 = variant has been set)
-Bits 5-3:  Requested species index (0-4)
+Bits 5-3:  Requested species index (0-3)
 Bits 2-0:  Offered species index (0-5)
 ```
 
@@ -94,20 +94,19 @@ Example values:
 | `$00`  | `00000000` | Uninitialized              |
 | `$80`  | `10000000` | Bellsprout (0) → Onix (0)  |
 | `$89`  | `10001001` | Rattata (1) → Geodude (1)  |
-| `$BD`  | `10111101` | Sunkern (4) → Wooper (5)   |
+| `$9D`  | `10011101` | Sunkern (3) → Wooper (5)   |
 
 ### ROM Lookup Tables
 
 Species and nicknames are stored in ROM (no RAM cost):
 
 ```asm
-; Sprout Tower Pokemon (requested from player) - 5 options
+; Sprout Tower Pokemon (requested from player) - 4 options
 KyleRequestedSpecies:
     db BELLSPROUT   ; 0
     db RATTATA      ; 1
     db HOOTHOOT     ; 2
-    db GASTLY       ; 3
-    db SUNKERN      ; 4
+    db SUNKERN      ; 3
 
 ; Union Cave Pokemon (offered to player) - 6 options
 KyleOfferedSpecies:
@@ -170,7 +169,7 @@ For each intercepted attribute, the function returns a pointer to the appropriat
     and %00111000      ; mask bits 3-5
     rrca
     rrca
-    rrca               ; shift right by 3
+    rrca               ; shift right by 3 to get index 0-3
     ld e, a
     ld d, 0
     ld hl, KyleRequestedSpecies
@@ -225,9 +224,9 @@ EnsureKyleTradeVariantInitialized:
     call RandomRange   ; Returns 0-5 in a
     ld d, a
 
-    ; Random 0-4 for requested species
-    ld a, 5
-    call RandomRange   ; Returns 0-4 in a
+    ; Random 0-3 for requested species
+    ld a, 4
+    call RandomRange   ; Returns 0-3 in a
 
     ; Combine: (requested << 3) | offered | 0x80
     rlca
