@@ -3007,7 +3007,11 @@ wMooMooBerries:: db
 wUndergroundSwitchPositions:: db
 wFarfetchdPosition:: db
 
-	ds 13
+wStarterChoices:: ; 2 bytes - randomized starter indices
+; byte 0: bit 7 = initialized, bits 2-0 = ball 1 species index (0-7)
+; byte 1: bits 5-3 = ball 3 species index (0-7), bits 2-0 = ball 2 species index (0-7)
+	ds 2
+	ds 11 ; remaining padding (was ds 13)
 
 ; map scene ids
 wPokecenter2FSceneID::                            db

@@ -152,27 +152,31 @@ LabTryToLeaveScript:
 CyndaquilPokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue LookAtElmPokeBallScript
+	callasm InitStarterChoices
+	callasm GetStarterSlot1
 	turnobject ELMSLAB_ELM, DOWN
 	refreshscreen
-	pokepic EEVEE
-	cry EEVEE
+	pokepic 0
+	cry 0
 	waitbutton
 	closepokepic
 	opentext
-	writetext TakeEeveeText
+	getmonname STRING_BUFFER_3, 0
+	writetext TakeStarterText
 	yesorno
 	iffalse DidntChooseStarterScript
+	callasm GetStarterSlot1
 	disappear ELMSLAB_POKE_BALL1
 	setevent EVENT_GOT_EEVEE_FROM_ELM
 	writetext ChoseStarterText
 	promptbutton
 	waitsfx
-	getmonname STRING_BUFFER_3, EEVEE
+	getmonname STRING_BUFFER_3, 0
 	writetext ReceivedStarterText
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	promptbutton
-	givepoke EEVEE, 5, BERRY
+	callasm GiveStarterMon
 	closetext
 	readvar VAR_FACING
 	ifequal RIGHT, ElmDirectionsScript
@@ -182,27 +186,31 @@ CyndaquilPokeBallScript:
 TotodilePokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue LookAtElmPokeBallScript
+	callasm InitStarterChoices
+	callasm GetStarterSlot2
 	turnobject ELMSLAB_ELM, DOWN
 	refreshscreen
-	pokepic SMEARGLE
-	cry SMEARGLE
+	pokepic 0
+	cry 0
 	waitbutton
 	closepokepic
 	opentext
-	writetext TakeSmeargleText
+	getmonname STRING_BUFFER_3, 0
+	writetext TakeStarterText
 	yesorno
 	iffalse DidntChooseStarterScript
+	callasm GetStarterSlot2
 	disappear ELMSLAB_POKE_BALL2
 	setevent EVENT_GOT_SMEARGLE_FROM_ELM
 	writetext ChoseStarterText
 	promptbutton
 	waitsfx
-	getmonname STRING_BUFFER_3, SMEARGLE
+	getmonname STRING_BUFFER_3, 0
 	writetext ReceivedStarterText
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	promptbutton
-	givepoke SMEARGLE, 5, BERRY
+	callasm GiveStarterMon
 	closetext
 	applymovement PLAYER, AfterTotodileMovement
 	sjump ElmDirectionsScript
@@ -210,27 +218,31 @@ TotodilePokeBallScript:
 ChikoritaPokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue LookAtElmPokeBallScript
+	callasm InitStarterChoices
+	callasm GetStarterSlot3
 	turnobject ELMSLAB_ELM, DOWN
 	refreshscreen
-	pokepic AIPOM
-	cry AIPOM
+	pokepic 0
+	cry 0
 	waitbutton
 	closepokepic
 	opentext
-	writetext TakeAipomText
+	getmonname STRING_BUFFER_3, 0
+	writetext TakeStarterText
 	yesorno
 	iffalse DidntChooseStarterScript
+	callasm GetStarterSlot3
 	disappear ELMSLAB_POKE_BALL3
 	setevent EVENT_GOT_AIPOM_FROM_ELM
 	writetext ChoseStarterText
 	promptbutton
 	waitsfx
-	getmonname STRING_BUFFER_3, AIPOM
+	getmonname STRING_BUFFER_3, 0
 	writetext ReceivedStarterText
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	promptbutton
-	givepoke AIPOM, 5, BERRY
+	callasm GiveStarterMon
 	closetext
 	applymovement PLAYER, AfterChikoritaMovement
 	sjump ElmDirectionsScript
@@ -835,22 +847,11 @@ LabWhereGoingText:
 	line "are you going?"
 	done
 
-TakeEeveeText:
-	text "ELM: You'll take"
-	line "EEVEE, the"
-	cont "evolution #MON?"
-	done
-
-TakeSmeargleText:
-	text "ELM: Do you want"
-	line "SMEARGLE, the"
-	cont "painter #MON?"
-	done
-
-TakeAipomText:
-	text "ELM: So, you like"
-	line "AIPOM, the"
-	cont "long tail #MON?"
+TakeStarterText:
+	text "ELM: So, you want"
+	line "@"
+	text_ram wStringBuffer3
+	text "?"
 	done
 
 DidntChooseStarterText:

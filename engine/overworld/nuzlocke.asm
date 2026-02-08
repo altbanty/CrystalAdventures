@@ -114,6 +114,8 @@ CheckNuzlockeForBattle::
 	ret z
 	cp BATTLETYPE_TUTORIAL
 	ret z
+	cp BATTLETYPE_FISH
+	ret z
 	; Check if already encountered on this map
 	call CheckNuzlockeEncounter
 	ret nz ; Already encountered

@@ -1545,6 +1545,8 @@ Script_GotABite:
 	applymovement PLAYER, .Movement_RestoreRod
 	writetext RodBiteText
 	callasm PutTheRodAway
+	callasm BreakFishingRod
+	writetext RodBrokeText
 	closetext
 	randomwildmon
 	startbattle
@@ -1608,6 +1610,174 @@ PutTheRodAway:
 	call UpdateSprites
 	call UpdatePlayerSprite
 	ret
+
+; --- Randomized Starter Selection ---
+
+InitStarterChoices::
+; Initialize the 3 starter choices if not already done.
+; Uses weighted random selection from a pool of 8 species.
+; Results packed into wStarterChoices (2 bytes).
+	ld a, [wStarterChoices]
+	bit 7, a
+	ret nz ; already initialized
+
+	; Pick slot 1
+	call .RollWeightedSpecies
+	ld d, a ; d = slot 1 index
+
+	; Pick slot 2 (reject if = slot 1)
+.roll_slot2:
+	call .RollWeightedSpecies
+	cp d
+	jr z, .roll_slot2
+	ld e, a ; e = slot 2 index
+
+	; Pick slot 3 (reject if = slot 1 or slot 2)
+.roll_slot3:
+	call .RollWeightedSpecies
+	cp d
+	jr z, .roll_slot3
+	cp e
+	jr z, .roll_slot3
+	; a = slot 3 index
+
+	; Pack into 2 bytes:
+	; byte 0: bit 7 = initialized, bits 2-0 = slot 1
+	; byte 1: bits 5-3 = slot 3, bits 2-0 = slot 2
+	push af ; save slot 3
+	ld a, d
+	or %10000000 ; set initialized flag
+	ld [wStarterChoices], a
+	pop af ; restore slot 3
+	rlca
+	rlca
+	rlca ; shift slot 3 to bits 5-3
+	or e ; combine with slot 2 in bits 2-0
+	ld [wStarterChoices + 1], a
+	ret
+
+.RollWeightedSpecies:
+; Returns a species index 0-7 in a, weighted by StarterWeightThresholds.
+; Total weight = 20. RandomRange(20) gives 0-19.
+	push bc
+	push hl
+	ld a, 20
+	call RandomRange
+	ld b, a ; b = random value 0-19
+	ld hl, StarterWeightThresholds
+	ld c, 0 ; species index
+.threshold_loop:
+	ld a, [hli]
+	cp b
+	jr z, .next_threshold
+	jr nc, .found ; threshold > random → this species
+.next_threshold:
+	inc c
+	jr .threshold_loop
+.found:
+	ld a, c
+	pop hl
+	pop bc
+	ret
+
+GetStarterSlot1::
+; Put species constant for ball 1 into wScriptVar.
+	ld a, [wStarterChoices]
+	and %00000111
+	call LookupStarterSpecies
+	ld [wScriptVar], a
+	ret
+
+GetStarterSlot2::
+; Put species constant for ball 2 into wScriptVar.
+	ld a, [wStarterChoices + 1]
+	and %00000111
+	call LookupStarterSpecies
+	ld [wScriptVar], a
+	ret
+
+GetStarterSlot3::
+; Put species constant for ball 3 into wScriptVar.
+	ld a, [wStarterChoices + 1]
+	rrca
+	rrca
+	rrca
+	and %00000111
+	call LookupStarterSpecies
+	ld [wScriptVar], a
+	ret
+
+LookupStarterSpecies:
+; a = index 0-7. Returns species constant in a.
+	ld e, a
+	ld d, 0
+	ld hl, StarterSpeciesTable
+	add hl, de
+	ld a, [hl]
+	ret
+
+GiveStarterMon::
+; Give the player the starter Pokemon stored in wScriptVar.
+; Level 5, holding BERRY, with nickname prompt (b=0 → wild mon).
+	ld a, [wScriptVar]
+	ld [wCurPartySpecies], a
+	ld a, 5
+	ld [wCurPartyLevel], a
+	ld a, BERRY
+	ld [wCurItem], a
+	ld b, 0
+	farcall GivePoke
+	ld a, b
+	ld [wScriptVar], a
+	ret
+
+StarterSpeciesTable:
+	db CHIKORITA  ; 0
+	db TOTODILE   ; 1
+	db CYNDAQUIL  ; 2
+	db AIPOM      ; 3
+	db SUDOWOODO  ; 4
+	db SMEARGLE   ; 5
+	db SWINUB     ; 6
+	db WOBBUFFET  ; 7
+
+StarterWeightThresholds:
+; Cumulative thresholds for RandomRange(20):
+; Chikorita 10% (0-1), Totodile 10% (2-3), Cyndaquil 10% (4-5),
+; Snubbull 20% (6-9), Sudowoodo 15% (10-12), Smeargle 15% (13-15),
+; Swinub 15% (16-18), Wobbuffet 5% (19)
+	db 2, 4, 6, 10, 13, 16, 19, 20
+
+; --- End Randomized Starter Selection ---
+
+BreakFishingRod:
+; Remove the used fishing rod from the bag.
+; wFishingRodUsed: 0=Old, 1=Good, 2=Super
+	ld a, [wFishingRodUsed]
+	ld c, a
+	ld b, 0
+	ld hl, .RodItemTable
+	add hl, bc
+	ld a, [hl]
+	; Buffer the item name into wStringBuffer1
+	ld [wNamedObjectIndex], a
+	call GetItemName
+	; Set up TossItem: wCurItem + quantity 1
+	ld a, [wNamedObjectIndex]
+	ld [wCurItem], a
+	ld a, 1
+	ld [wItemQuantityChange], a
+	call TossItem
+	ret
+
+.RodItemTable:
+	db OLD_ROD
+	db GOOD_ROD
+	db SUPER_ROD
+
+RodBrokeText:
+	text_far _RodBrokeText
+	text_end
 
 RodBiteText:
 	text_far _RodBiteText

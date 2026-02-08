@@ -478,6 +478,12 @@ _AskRockSmashText::
 	line "SMASH?"
 	done
 
+_RodBrokeText::
+	text "Your @"
+	text_ram wStringBuffer1
+	text " broke!"
+	prompt
+
 _RodBiteText::
 	text "Oh!"
 	line "A bite!"
