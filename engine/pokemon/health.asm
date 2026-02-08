@@ -269,30 +269,24 @@ CalculateMonHealingCost:
 	ld [wStringBuffer1 + 1], a
 	
 .check_pp
-	; Use the game's existing GetMaxPPOfMove to properly check PP
-	
 	; Save current values we'll be modifying
 	push de
 	ld a, [wMonType]
 	push af
 	ld a, [wMenuCursorY]
 	push af
-	
+
 	; Set up for GetMaxPPOfMove
 	xor a  ; PARTYMON
 	ld [wMonType], a
-	
-	; Track total PP to restore across all moves
-	ld hl, 0  ; hl will accumulate total PP deficit
-	push hl   ; Save it on stack
-	
-	; Check all 4 move slots
-	ld b, 0  ; Move slot counter
-	
+
+	; b = move slot counter, c = PP deficit accumulator
+	ld b, 0
+	ld c, 0
+
 .pp_loop
-	push bc
-	push de
-	
+	push de  ; save pokemon data pointer
+
 	; Check if this slot has a move
 	ld hl, MON_MOVES
 	add hl, de
@@ -302,21 +296,22 @@ CalculateMonHealingCost:
 	ld a, [hl]  ; Get move ID
 	or a
 	jr z, .skip_slot  ; No move in this slot
-	
+
 	; Set up for GetMaxPPOfMove
 	ld a, b
 	ld [wMenuCursorY], a  ; Move slot
-	
-	; Get max PP for this move
+
+	; GetMaxPPOfMove clobbers bc, so save and restore around farcall
 	push bc
-	farcall GetMaxPPOfMove  ; Returns max PP in [hl]
-	ld a, [hl]  ; a = max PP
-	ld c, a     ; c = max PP
+	farcall GetMaxPPOfMove
 	pop bc
-	
-	; Get current PP
+	; Max PP is now in [wTempPP]; bc restored (b=slot, c=deficit)
+
+	; Restore pokemon data pointer (farcall clobbered de)
 	pop de
 	push de
+
+	; Get current PP for this slot
 	ld hl, MON_PP
 	add hl, de
 	ld e, b
@@ -324,55 +319,44 @@ CalculateMonHealingCost:
 	add hl, de
 	ld a, [hl]  ; Get PP byte
 	and $3f     ; Get current PP (lower 6 bits)
-	
+
 	; Calculate PP deficit (max - current)
-	ld e, a     ; e = current PP
-	ld a, c     ; a = max PP
-	sub e       ; a = max - current
-	jr c, .pp_full  ; If negative (shouldn't happen), skip
-	jr z, .pp_full  ; If zero, PP is full
-	
-	; Add this move's PP deficit to total
-	ld e, a
-	ld d, 0     ; de = PP deficit for this move
-	pop hl      ; Get running total
-	add hl, de  ; Add this move's deficit
-	push hl     ; Save updated total
-	
-	pop de
-	pop bc
-	jr .next_slot
-	
-.pp_full
+	ld e, a          ; e = current PP
+	ld a, [wTempPP]  ; a = max PP
+	sub e            ; a = max - current
+	jr c, .skip_slot ; If negative (shouldn't happen), skip
+	jr z, .skip_slot ; If zero, PP is full
+
+	; Accumulate this move's PP deficit
+	add c
+	ld c, a
+
 .skip_slot
-	pop de
-	pop bc
-	
-.next_slot
+	pop de  ; restore pokemon data pointer
+
 	inc b
 	ld a, b
 	cp NUM_MOVES
 	jr nz, .pp_loop
-	
-	; Get total PP deficit from stack
-	pop hl  ; hl = total PP to restore
-	
-	; Check if any PP restoration is needed
-	ld a, h
-	or l
+
+	; c = total PP deficit across all moves
+	ld a, c
+	or a
 	jr z, .cleanup  ; No PP restoration needed
-	
-	; Calculate cost: PP deficit × 2
-	add hl, hl  ; hl = PP deficit × 2
-	
-	; Add to running total cost
+
+	; Cost = deficit x 2
+	ld l, c
+	ld h, 0
+	add hl, hl  ; hl = deficit x 2
+
+	; Add PP cost to running total
 	ld a, [wStringBuffer1]
 	add l
 	ld [wStringBuffer1], a
 	ld a, [wStringBuffer1 + 1]
 	adc h
 	ld [wStringBuffer1 + 1], a
-	
+
 .cleanup
 	; Restore original values
 	pop af
@@ -380,7 +364,7 @@ CalculateMonHealingCost:
 	pop af
 	ld [wMonType], a
 	pop de
-	
+
 .done
 	pop de ; Restore Pokemon data pointer
 	ret
