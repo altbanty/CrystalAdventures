@@ -1527,7 +1527,7 @@ JohtoGrassWildMons:
 	; day
 	db 21, PONYTA
 	db 21, FURRET
-	db 21, PHANPHY
+	db 21, PHANPY
 	db 21, PONYTA
 	db 21, MILTANK
 	db 21, TAUROS

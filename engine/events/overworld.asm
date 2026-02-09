@@ -1739,14 +1739,14 @@ StarterSpeciesTable:
 	db SUDOWOODO  ; 4
 	db SMEARGLE   ; 5
 	db SWINUB     ; 6
-	db WOBBUFFET  ; 7
+	db MAREEP     ; 7
 
 StarterWeightThresholds:
 ; Cumulative thresholds for RandomRange(20):
 ; Chikorita 10% (0-1), Totodile 10% (2-3), Cyndaquil 10% (4-5),
-; Snubbull 20% (6-9), Sudowoodo 15% (10-12), Smeargle 15% (13-15),
-; Swinub 15% (16-18), Wobbuffet 5% (19)
-	db 2, 4, 6, 10, 13, 16, 19, 20
+; Aipom 20% (6-9), Sudowoodo 15% (10-12), Smeargle 15% (13-15),
+; Swinub 10% (16-17), Mareep 10% (18-19)
+	db 2, 4, 6, 10, 13, 16, 18, 20
 
 ; --- End Randomized Starter Selection ---
 
