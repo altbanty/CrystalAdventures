@@ -1438,16 +1438,16 @@ JohtoGrassWildMons:
 	db 5, LEDYBA
 	db 5, SPINARAK
 	db 5, RATTATA
-	db 6, GROWLITHE
-	db 6, GROWLITHE
+	db 6, VULPIX
+	db 6, VULPIX
 	; day
 	db 4, LEDYBA
 	db 4, FARFETCH_D
 	db 5, PIDGEY
 	db 5, FARFETCH_D
 	db 5, RATTATA
-	db 6, GROWLITHE
-	db 6, GROWLITHE
+	db 6, VULPIX
+	db 6, VULPIX
 	; nite
 	db 4, SPINARAK
 	db 4, HOOTHOOT
@@ -1489,46 +1489,46 @@ JohtoGrassWildMons:
 	def_grass_wildmons ROUTE_38
 	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
 	; morn
-	db 21, TAUROS
-	db 21, MILTANK
-	db 20, MAGNEMITE
+	db 21, FURRET
+	db 21, MEOWTH
 	db 20, DODUO
-	db 20, MEOWTH
-	db 19, RATICATE
-	db 19, RATICATE
+	db 20, TAUROS
+	db 20, MILTANK
+	db 19, TAUROS
+	db 21, MILTANK
 	; day
-	db 20, MAGNEMITE
-	db 21, MILTANK
+	db 21, FURRET
+	db 21, MEOWTH
+	db 21, DODUO
+	db 22, MILTANK
+	db 20, TAUROS
+	db 19, MILTANK
 	db 21, TAUROS
-	db 20, DODUO
-	db 20, MEOWTH
-	db 19, RATICATE
-	db 18, RATICATE
 	; nite
 	db 20, RATICATE
-	db 20, MAGNEMITE
-	db 19, MEOWTH
-	db 21, NOCTOWL
-	db 21, MEOWTH
 	db 20, MEOWTH
-	db 20, MEOWTH
+	db 22, NOCTOWL
+	db 21, MAGNEMITE
+	db 24, NOCTOWL
+	db 21, MAGNEMITE
+	db 22, MAGNEMITE
 	end_grass_wildmons
 
 	def_grass_wildmons ROUTE_39
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
-	db 21, PONYTA
-	db 21, RATICATE
-	db 21, MAGNEMITE
-	db 21, DODUO
+	db 21, FURRET
+	db 21, MEOWTH
+	db 20, PONYTA
+	db 20, PONYTA
+	db 20, MILTANK
+	db 19, TAUROS
 	db 21, MILTANK
-	db 21, TAUROS
-	db 21, TAUROS
 	; day
 	db 21, PONYTA
-	db 21, RATICATE
-	db 21, MAGNEMITE
-	db 21, DODUO
+	db 21, FURRET
+	db 21, PHANPHY
+	db 21, PONYTA
 	db 21, MILTANK
 	db 21, TAUROS
 	db 21, TAUROS
@@ -1536,10 +1536,10 @@ JohtoGrassWildMons:
 	db 21, MEOWTH
 	db 21, RATICATE
 	db 20, MAGNEMITE
-	db 20, NOCTOWL
-	db 18, MEOWTH
-	db 19, MEOWTH
-	db 18, MEOWTH
+	db 22, NOCTOWL
+	db 23, MEOWTH
+	db 25, PERSIAN
+	db 26, PERSIAN
 	end_grass_wildmons
 
 	def_grass_wildmons ROUTE_42
