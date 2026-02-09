@@ -1,39 +1,74 @@
 INCLUDE "engine/gfx/sgb_layouts.asm"
 
-SHINY_ATK_BIT EQU 5
-SHINY_DEF_VAL EQU 10
-SHINY_SPD_VAL EQU 10
-SHINY_SPC_VAL EQU 10
+SHINY_DV_SUM_THRESHOLD EQU 50
 
 CheckShininess:
 ; Check if a mon is shiny by DVs at bc.
+; Shiny if ATK + DEF + SPD + SPC + HP >= SHINY_DV_SUM_THRESHOLD.
+; HP DV = bit3 ATK, bit2 DEF, bit1 SPD, bit0 SPC (lowest bits).
 ; Return carry if shiny.
 
 	ld l, c
 	ld h, b
 
-; Attack
+; ATK (high nibble of byte 0)
 	ld a, [hl]
-	and 1 << SHINY_ATK_BIT
-	jr z, .not_shiny
+	swap a
+	and $f
+	ld c, a ; c = running sum = ATK
 
-; Defense
+; DEF (low nibble of byte 0)
 	ld a, [hli]
 	and $f
-	cp  SHINY_DEF_VAL
-	jr nz, .not_shiny
+	add c
+	ld c, a ; c = ATK + DEF
 
-; Speed
+; SPD (high nibble of byte 1)
 	ld a, [hl]
-	and $f0
-	cp  SHINY_SPD_VAL << 4
-	jr nz, .not_shiny
+	swap a
+	and $f
+	add c
+	ld c, a ; c = ATK + DEF + SPD
 
-; Special
+; SPC (low nibble of byte 1)
 	ld a, [hl]
 	and $f
-	cp  SHINY_SPC_VAL
-	jr nz, .not_shiny
+	add c
+	ld c, a ; c = ATK + DEF + SPD + SPC
+
+; HP DV = bit3 from ATK, bit2 from DEF, bit1 from SPD, bit0 from SPC
+; Recompute from the two bytes
+	dec hl ; point back to byte 0
+	ld a, [hli] ; byte 0: ATK|DEF
+	ld b, a
+	ld a, [hl]  ; byte 1: SPD|SPC
+; bit 3: ATK bit 0 (bit 4 of byte 0)
+	ld d, 0
+	bit 4, b
+	jr z, .no_atk_bit
+	set 3, d
+.no_atk_bit:
+; bit 2: DEF bit 0 (bit 0 of byte 0)
+	bit 0, b
+	jr z, .no_def_bit
+	set 2, d
+.no_def_bit:
+; bit 1: SPD bit 0 (bit 4 of byte 1)
+	bit 4, a
+	jr z, .no_spd_bit
+	set 1, d
+.no_spd_bit:
+; bit 0: SPC bit 0 (bit 0 of byte 1)
+	bit 0, a
+	jr z, .no_spc_bit
+	set 0, d
+.no_spc_bit:
+; d = HP DV (0-15)
+	ld a, d
+	add c ; a = ATK + DEF + SPD + SPC + HP
+
+	cp SHINY_DV_SUM_THRESHOLD
+	jr c, .not_shiny
 
 ; shiny
 	scf
