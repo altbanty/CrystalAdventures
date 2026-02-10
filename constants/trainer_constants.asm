@@ -48,6 +48,9 @@ KRIS EQU __trainer_class__
 
 	trainerclass MORTY ; 4
 	const MORTY1
+	const MORTY2
+	const MORTY3
+	const MORTY4 ; rematch
 
 	trainerclass PRYCE ; 5
 	const PRYCE1

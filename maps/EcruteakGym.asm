@@ -30,7 +30,17 @@ EcruteakGymMortyScript:
 	waitbutton
 	closetext
 	winlosstext MortyWinLossText, 0
+	callasm GetMortyTeam
+	ifequal 3, .Team3
+	ifequal 2, .Team2
 	loadtrainer MORTY, MORTY1
+	sjump .MortyLoadEnd
+.Team2:
+	loadtrainer MORTY, MORTY2
+	sjump .MortyLoadEnd
+.Team3:
+	loadtrainer MORTY, MORTY3
+.MortyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_MORTY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -86,7 +96,7 @@ EcruteakGymMortyScript:
 .MortyRematch:
 	special HealParty
 	winlosstext Morty_RematchDefeatText, 0
-	loadtrainer MORTY, 2
+	loadtrainer MORTY, MORTY4
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

@@ -1978,8 +1978,8 @@ MartTier1TMs: ; 9 TMs - $10,000
 
 InitGymTeams:
 ; Initialize all gym team choices if not yet done.
-; Randomizes Falkner (bits 1-0), Bugsy (bits 3-2), Whitney (bits 5-4).
-; Sets bit 7 as initialized flag.
+; wGymTeamChoices: bit 7 = init, bits 5-4 = Whitney, bits 3-2 = Bugsy, bits 1-0 = Falkner
+; wGymTeamChoices2: bits 1-0 = Morty
 	ld a, [wGymTeamChoices]
 	bit 7, a
 	ret nz
@@ -2009,6 +2009,17 @@ InitGymTeams:
 	sla a
 	sla a ; shift into bits 5-4
 	or b
+	ld b, a
+
+	; Randomize Morty (wGymTeamChoices2 bits 1-0)
+	push bc
+	ld a, 3
+	call RandomRange ; a = 0-2
+	ld [wGymTeamChoices2], a
+	pop bc
+
+	; Store combined value with init flag
+	ld a, b
 	or %10000000 ; set initialized flag
 	ld [wGymTeamChoices], a
 	ret
@@ -2039,6 +2050,15 @@ GetWhitneyTeam::
 	ld a, [wGymTeamChoices]
 	and %00110000 ; extract Whitney team (bits 5-4)
 	swap a ; swap nibbles to get bits 1-0
+	inc a ; convert to 1-based
+	ld [wScriptVar], a
+	ret
+
+GetMortyTeam::
+; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+	call InitGymTeams
+	ld a, [wGymTeamChoices2]
+	and %00000011 ; extract Morty team (bits 1-0)
 	inc a ; convert to 1-based
 	ld [wScriptVar], a
 	ret
