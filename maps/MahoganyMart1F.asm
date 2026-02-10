@@ -35,6 +35,31 @@ MahoganyMart1FPharmacistScript:
 	opentext
 	checkevent EVENT_DECIDED_TO_HELP_LANCE
 	iftrue .LanceEntered
+	setval 6
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext MahoganyMart1FTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 5000
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 6
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 5000
+	writetext MahoganyMart1FReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext MahoganyMart1FCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext MahoganyMart1FBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_STANDARD, MART_MAHOGANY_1
 	closetext
 	end
@@ -260,6 +285,32 @@ MahoganyMart1FLanceSplitUpText:
 
 	para "check this place."
 	line "I'll go first."
+	done
+
+MahoganyMart1FTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥5000!"
+	done
+
+MahoganyMart1FReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+MahoganyMart1FCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+MahoganyMart1FBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 MahoganyMart1F_MapEvents:

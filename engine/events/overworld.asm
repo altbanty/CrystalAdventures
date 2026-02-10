@@ -1750,6 +1750,230 @@ StarterWeightThresholds:
 
 ; --- End Randomized Starter Selection ---
 
+; --- Randomized One-Time TM Sales at Pokemarts ---
+
+InitMartTMs::
+; Initialize all 8 mart TM slot choices if not already done.
+; Each slot gets a random index into its tier's TM pool.
+	ld a, [wMartTMChoices]
+	bit 7, a
+	ret nz ; already initialized
+
+	; Slots 1-4: Tier 3 (25 TMs)
+	ld hl, wMartTMChoices + 1
+	ld b, 4
+	ld c, 25
+	call .FillSlots
+
+	; Slots 5-7: Tier 2 (16 TMs)
+	ld b, 3
+	ld c, 16
+	call .FillSlots
+
+	; Slot 8: Tier 1 (9 TMs)
+	ld b, 1
+	ld c, 9
+	call .FillSlots
+
+	; Set initialized flag
+	ld a, [wMartTMChoices]
+	or %10000000
+	ld [wMartTMChoices], a
+	ret
+
+.FillSlots:
+; Fill b slots pointed by hl with RandomRange(c).
+	push bc
+	ld a, c
+	call RandomRange ; a = random 0..c-1
+	ld [hli], a
+	pop bc
+	dec b
+	jr nz, .FillSlots
+	ret
+
+CheckMartTM::
+; Input: wScriptVar = mart slot index (1-8).
+; Calls InitMartTMs, then checks if TM already bought.
+; Output: wScriptVar = TM item constant, or 0 if bought.
+; Also builds "TM## MOVENAME" in wStringBuffer3.
+	call InitMartTMs
+
+	; Load slot byte
+	ld a, [wScriptVar]
+	ld e, a
+	ld d, 0
+	ld hl, wMartTMChoices
+	add hl, de
+	ld a, [hl]
+
+	; Check bought flag (bit 7)
+	bit 7, a
+	jr z, .notBought
+	xor a
+	ld [wScriptVar], a
+	ret
+
+.notBought:
+	; a = TM index within tier; get the TM item constant
+	push af ; save raw slot byte
+	ld a, [wScriptVar]
+	call GetMartTMItem ; a = TM item constant
+	pop bc ; discard saved byte
+
+	; Store TM item in wScriptVar
+	ld [wScriptVar], a
+
+	; Build "TM## MOVENAME" in wStringBuffer3
+	; Step 1: Get "TM##" into wStringBuffer1
+	ld [wNamedObjectIndex], a
+	call GetItemName ; wStringBuffer1 = "TM##", de = wStringBuffer1
+
+	; Step 2: Copy "TM##" from wStringBuffer1 to wStringBuffer3
+	; de = wStringBuffer1 (source), find end to know length
+	ld hl, wStringBuffer3
+	ld de, wStringBuffer1
+.copyTMName:
+	ld a, [de]
+	cp "@"
+	jr z, .doneCopyTM
+	ld [hli], a
+	inc de
+	jr .copyTMName
+.doneCopyTM:
+	; hl now points to end of "TM##" in wStringBuffer3
+	; Append " " separator
+	ld [hl], " "
+	inc hl
+	push hl ; save dest pointer
+
+	; Step 3: Get the move name
+	; Convert TM item → TM number → move ID → move name
+	ld a, [wScriptVar]
+	ld [wCurItem], a
+	ld c, a
+	farcall GetTMHMNumber ; c = TM number (1-based)
+	ld a, c
+	ld [wTempTMHM], a
+	predef GetTMHMMove ; wTempTMHM = move ID
+	ld a, [wTempTMHM]
+	ld [wNamedObjectIndex], a
+	call GetMoveName ; wStringBuffer1 = move name, de = wStringBuffer1
+
+	; Step 4: Append move name to wStringBuffer3
+	pop hl ; hl = dest in wStringBuffer3 after "TM## "
+	ld de, wStringBuffer1
+.copyMoveName:
+	ld a, [de]
+	ld [hli], a
+	cp "@"
+	jr nz, .incAndCopy
+	ret
+.incAndCopy:
+	inc de
+	jr .copyMoveName
+
+GiveMartTM::
+; Input: wScriptVar = mart slot index (1-8).
+; Gives the TM to the player and marks it as bought.
+; Output: wScriptVar = 1 (success) or 0 (bag full).
+	ld a, [wScriptVar]
+	push af ; save slot index
+
+	; Get the TM item constant
+	call GetMartTMItem ; a = TM item
+
+	; Give the item
+	ld [wCurItem], a
+	ld a, 1
+	ld [wItemQuantityChange], a
+	ld hl, wNumItems
+	call ReceiveItem
+	pop bc ; b = slot index
+	jr nc, .bagFull
+
+	; Mark slot as bought (set bit 7)
+	ld a, b
+	ld e, a
+	ld d, 0
+	ld hl, wMartTMChoices
+	add hl, de
+	ld a, [hl]
+	or %10000000
+	ld [hl], a
+
+	ld a, 1
+	ld [wScriptVar], a
+	ret
+
+.bagFull:
+	xor a
+	ld [wScriptVar], a
+	ret
+
+GetMartTMItem::
+; Input: a = slot index (1-8).
+; Returns TM item constant in a.
+	push bc
+	push hl
+
+	; Determine tier based on slot index
+	; Slots 1-4 → Tier3, 5-7 → Tier2, 8 → Tier1
+	ld b, a ; b = slot index
+	cp 5
+	jr c, .tier3
+	cp 8
+	jr c, .tier2
+	; slot 8 → tier 1
+	ld hl, MartTier1TMs
+	jr .lookup
+.tier2:
+	ld hl, MartTier2TMs
+	jr .lookup
+.tier3:
+	ld hl, MartTier3TMs
+
+.lookup:
+	; Get TM pool index from wMartTMChoices + slot
+	ld a, b
+	ld e, a
+	ld d, 0
+	push hl ; save table base
+	ld hl, wMartTMChoices
+	add hl, de
+	ld a, [hl]
+	and %00011111 ; extract TM pool index (bits 4-0)
+	pop hl ; restore table base
+
+	; Index into the table
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld a, [hl]
+
+	pop hl
+	pop bc
+	ret
+
+MartTier3TMs: ; 25 TMs - $2,500
+	db TM_HEADBUTT, TM_ROLLOUT, TM_ROAR, TM_ROCK_SMASH, TM_PSYCH_UP
+	db TM_HIDDEN_POWER, TM_SUNNY_DAY, TM_SWEET_SCENT, TM_SNORE, TM_ICY_WIND
+	db TM_RAIN_DANCE, TM_ENDURE, TM_FRUSTRATION, TM_MUD_SLAP, TM_DOUBLE_TEAM
+	db TM_SWAGGER, TM_SANDSTORM, TM_SWIFT, TM_DEFENSE_CURL, TM_DREAM_EATER
+	db TM_DETECT, TM_ATTRACT, TM_THIEF, TM_FURY_CUTTER, TM_NIGHTMARE
+
+MartTier2TMs: ; 16 TMs - $5,000
+	db TM_DYNAMICPUNCH, TM_CURSE, TM_TOXIC, TM_ZAP_CANNON, TM_PROTECT
+	db TM_GIGA_DRAIN, TM_IRON_TAIL, TM_DRAGONBREATH, TM_RETURN, TM_DIG
+	db TM_ICE_PUNCH, TM_SLEEP_TALK, TM_THUNDERPUNCH, TM_REST, TM_STEEL_WING
+	db TM_FIRE_PUNCH
+
+MartTier1TMs: ; 9 TMs - $10,000
+	db TM_BLIZZARD, TM_HYPER_BEAM, TM_SOLARBEAM, TM_THUNDER, TM_EARTHQUAKE
+	db TM_PSYCHIC_M, TM_SHADOW_BALL, TM_SLUDGE_BOMB, TM_FIRE_BLAST
+
+; --- End Randomized One-Time TM Sales ---
+
 BreakFishingRod:
 ; Remove the used fishing rod from the bag.
 ; wFishingRodUsed: 0=Old, 1=Good, 2=Super

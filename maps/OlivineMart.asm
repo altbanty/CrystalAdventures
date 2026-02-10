@@ -10,6 +10,31 @@ OlivineMart_MapScripts:
 
 OlivineMartClerkScript:
 	opentext
+	setval 5
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext OlivineMartTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 5000
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 5
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 5000
+	writetext OlivineMartReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext OlivineMartCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext OlivineMartBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_STANDARD, MART_OLIVINE
 	closetext
 	end
@@ -41,6 +66,32 @@ OlivineMartLassText:
 
 	para "Let's see… Nope!"
 	line "It's a secret!"
+	done
+
+OlivineMartTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥5000!"
+	done
+
+OlivineMartReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+OlivineMartCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+OlivineMartBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 OlivineMart_MapEvents:

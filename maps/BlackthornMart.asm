@@ -10,6 +10,31 @@ BlackthornMart_MapScripts:
 
 BlackthornMartClerkScript:
 	opentext
+	setval 8
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext BlackthornMartTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 10000
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 8
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 10000
+	writetext BlackthornMartReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext BlackthornMartCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext BlackthornMartBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_STANDARD, MART_BLACKTHORN
 	closetext
 	end
@@ -42,6 +67,32 @@ BlackthornMartBlackBeltText:
 	para "It's the longest"
 	line "lasting of the"
 	cont "REPEL sprays."
+	done
+
+BlackthornMartTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥10000!"
+	done
+
+BlackthornMartReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+BlackthornMartCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+BlackthornMartBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 BlackthornMart_MapEvents:

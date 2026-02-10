@@ -3011,7 +3011,15 @@ wStarterChoices:: ; 2 bytes - randomized starter indices
 ; byte 0: bit 7 = initialized, bits 2-0 = ball 1 species index (0-7)
 ; byte 1: bits 5-3 = ball 3 species index (0-7), bits 2-0 = ball 2 species index (0-7)
 	ds 2
-	ds 11 ; remaining padding (was ds 13)
+wMartTMChoices:: ; 9 bytes - randomized TM mart data
+; byte 0: bit 7 = initialized flag
+; bytes 1-8: one per mart slot
+;   bit 7 = bought flag, bits 4-0 = TM index within tier
+;   slots: 1=Cherrygrove, 2=Violet, 3=Azalea, 4=Ecruteak (tier 3)
+;          5=Olivine, 6=Mahogany, 7=Cianwood (tier 2)
+;          8=Blackthorn (tier 1)
+	ds 9
+	ds 2 ; remaining padding
 
 ; map scene ids
 wPokecenter2FSceneID::                            db

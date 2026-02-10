@@ -10,6 +10,31 @@ CherrygroveMart_MapScripts:
 
 CherrygroveMartClerkScript:
 	opentext
+	setval 1
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext CherrygroveMartTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 2500
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 1
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 2500
+	writetext CherrygroveMartReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext CherrygroveMartCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext CherrygroveMartBagFullTMText
+	promptbutton
+.SkipTM:
 	checkevent EVENT_GAVE_MYSTERY_EGG_TO_ELM
 	iftrue .PokeBallsInStock
 	pokemart MARTTYPE_STANDARD, MART_CHERRYGROVE
@@ -67,6 +92,32 @@ CherrygroveMartYoungsterText:
 
 	para "You should keep an"
 	line "ANTIDOTE with you."
+	done
+
+CherrygroveMartTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥2500!"
+	done
+
+CherrygroveMartReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+CherrygroveMartCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+CherrygroveMartBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 CherrygroveMart_MapEvents:

@@ -10,6 +10,31 @@ VioletMart_MapScripts:
 
 VioletMartClerkScript:
 	opentext
+	setval 2
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext VioletMartTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 2500
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 2
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 2500
+	writetext VioletMartReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext VioletMartCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext VioletMartBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_STANDARD, MART_VIOLET
 	closetext
 	end
@@ -44,6 +69,32 @@ VioletMartCooltrainerMText:
 
 	para "to use manmade"
 	line "items."
+	done
+
+VioletMartTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥2500!"
+	done
+
+VioletMartReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+VioletMartCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+VioletMartBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 VioletMart_MapEvents:

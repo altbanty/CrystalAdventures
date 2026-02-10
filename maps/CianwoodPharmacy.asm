@@ -31,6 +31,31 @@ CianwoodPharmacist:
 	end
 
 .Mart:
+	setval 7
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext CianwoodPharmacyTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 5000
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 7
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 5000
+	writetext CianwoodPharmacyReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext CianwoodPharmacyCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext CianwoodPharmacyBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_PHARMACY, MART_CIANWOOD
 	closetext
 	end
@@ -68,6 +93,32 @@ PharmacistDescribeSecretpotionText:
 
 	para "I only offer it in"
 	line "an emergency."
+	done
+
+CianwoodPharmacyTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥5000!"
+	done
+
+CianwoodPharmacyReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+CianwoodPharmacyCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+CianwoodPharmacyBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 CianwoodPharmacy_MapEvents:

@@ -10,6 +10,31 @@ AzaleaMart_MapScripts:
 
 AzaleaMartClerkScript:
 	opentext
+	setval 3
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext AzaleaMartTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 2500
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 3
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 2500
+	writetext AzaleaMartReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext AzaleaMartCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext AzaleaMartBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_STANDARD, MART_AZALEA
 	closetext
 	end
@@ -41,6 +66,32 @@ AzaleaMartBugCatcherText:
 	para "But KURT's might"
 	line "be better some-"
 	cont "times."
+	done
+
+AzaleaMartTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥2500!"
+	done
+
+AzaleaMartReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+AzaleaMartCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+AzaleaMartBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 AzaleaMart_MapEvents:

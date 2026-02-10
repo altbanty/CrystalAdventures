@@ -10,6 +10,31 @@ EcruteakMart_MapScripts:
 
 EcruteakMartClerkScript:
 	opentext
+	setval 4
+	callasm CheckMartTM
+	iffalse .SkipTM
+	writetext EcruteakMartTMOfferText
+	yesorno
+	iffalse .SkipTM
+	checkmoney YOUR_MONEY, 2500
+	ifequal HAVE_LESS, .CantAffordTM
+	setval 4
+	callasm GiveMartTM
+	iffalse .BagFullTM
+	takemoney YOUR_MONEY, 2500
+	writetext EcruteakMartReceivedTMText
+	playsound SFX_TRANSACTION
+	waitsfx
+	promptbutton
+	sjump .SkipTM
+.CantAffordTM:
+	writetext EcruteakMartCantAffordTMText
+	promptbutton
+	sjump .SkipTM
+.BagFullTM:
+	writetext EcruteakMartBagFullTMText
+	promptbutton
+.SkipTM:
 	pokemart MARTTYPE_STANDARD, MART_ECRUTEAK
 	closetext
 	end
@@ -41,6 +66,32 @@ EcruteakMartGrannyText:
 
 	para "fainted will wake"
 	line "right up."
+	done
+
+EcruteakMartTMOfferText:
+	text "I have a special"
+	line "deal today!"
+	para "@"
+	text_ram wStringBuffer3
+	text ""
+	line "just ¥2500!"
+	done
+
+EcruteakMartReceivedTMText:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer3
+	text "!"
+	done
+
+EcruteakMartCantAffordTMText:
+	text "Sorry, you can't"
+	line "afford that."
+	done
+
+EcruteakMartBagFullTMText:
+	text "You can't carry"
+	line "any more items."
 	done
 
 EcruteakMart_MapEvents:
