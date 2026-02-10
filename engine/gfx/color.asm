@@ -37,35 +37,42 @@ CheckShininess:
 	ld c, a ; c = ATK + DEF + SPD + SPC
 
 ; HP DV = bit3 from ATK, bit2 from DEF, bit1 from SPD, bit0 from SPC
-; Recompute from the two bytes
+; Add each HP bit's contribution directly to running sum c.
+; This avoids clobbering d, which callers depend on being preserved.
 	dec hl ; point back to byte 0
 	ld a, [hli] ; byte 0: ATK|DEF
 	ld b, a
-	ld a, [hl]  ; byte 1: SPD|SPC
-; bit 3: ATK bit 0 (bit 4 of byte 0)
-	ld d, 0
+	; hl now points to byte 1
+; bit 3: ATK bit 0 (bit 4 of byte 0) → contributes 8
 	bit 4, b
 	jr z, .no_atk_bit
-	set 3, d
+	ld a, c
+	add 8
+	ld c, a
 .no_atk_bit:
-; bit 2: DEF bit 0 (bit 0 of byte 0)
+; bit 2: DEF bit 0 (bit 0 of byte 0) → contributes 4
 	bit 0, b
 	jr z, .no_def_bit
-	set 2, d
+	ld a, c
+	add 4
+	ld c, a
 .no_def_bit:
-; bit 1: SPD bit 0 (bit 4 of byte 1)
+; bit 1: SPD bit 0 (bit 4 of byte 1) → contributes 2
+	ld a, [hl]
 	bit 4, a
 	jr z, .no_spd_bit
-	set 1, d
+	ld a, c
+	add 2
+	ld c, a
 .no_spd_bit:
-; bit 0: SPC bit 0 (bit 0 of byte 1)
+; bit 0: SPC bit 0 (bit 0 of byte 1) → contributes 1
+	ld a, [hl]
 	bit 0, a
 	jr z, .no_spc_bit
-	set 0, d
+	inc c
 .no_spc_bit:
-; d = HP DV (0-15)
-	ld a, d
-	add c ; a = ATK + DEF + SPD + SPC + HP
+; c = ATK + DEF + SPD + SPC + HP
+	ld a, c
 
 	cp SHINY_DV_SUM_THRESHOLD
 	jr c, .not_shiny
