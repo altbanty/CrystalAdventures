@@ -275,10 +275,15 @@ DoNPCTrade:
 GetTradeAttr:
 	ld d, 0
 	push de
-	; Check if this is Kyle's dynamic trade
+	; Check if this is a dynamic trade
 	ld a, [wJumptableIndex]
 	cp NPC_TRADE_KYLE
-	jr nz, .normal_trade
+	jr z, .kyle_trade
+	cp NPC_TRADE_MIKE
+	jp z, .mike_trade
+	jr .normal_trade
+
+.kyle_trade:
 	; Kyle's trade - first ensure variant is initialized
 	call EnsureKyleTradeVariantInitialized
 	; Now check which attribute is being requested
@@ -360,6 +365,80 @@ GetTradeAttr:
 	add hl, de
 	ret
 
+; Mike's dynamic trade handler
+.mike_trade:
+	call EnsureMikeTradeVariantInitialized
+	pop de
+	push de
+	ld a, e
+	cp NPCTRADE_GIVEMON
+	jr z, .mike_givemon
+	cp NPCTRADE_GETMON
+	jr z, .mike_getmon
+	cp NPCTRADE_NICKNAME
+	jr z, .mike_nickname
+	; For other attributes, use Mike's base entry in NPCTrades
+	pop de
+	push de
+	ld a, NPC_TRADE_MIKE
+	and $f
+	swap a
+	ld e, a
+	ld d, 0
+	ld hl, NPCTrades
+	add hl, de
+	add hl, de
+	pop de
+	add hl, de
+	ret
+
+.mike_givemon:
+	; Return pointer to requested species based on wMikeTradeVariant bits 3-5
+	ld a, [wMikeTradeVariant]
+	and %00111000      ; mask bits 3-5
+	rrca
+	rrca
+	rrca               ; shift right by 3 to get index 0-3
+	ld e, a
+	ld d, 0
+	ld hl, MikeRequestedSpecies
+	add hl, de
+	pop de             ; clean up stack
+	ret
+
+.mike_getmon:
+	; Return pointer to offered species based on wMikeTradeVariant bits 0-2
+	ld a, [wMikeTradeVariant]
+	and %00000111      ; mask bits 0-2 to get index 0-5
+	ld e, a
+	ld d, 0
+	ld hl, MikeOfferedSpecies
+	add hl, de
+	pop de             ; clean up stack
+	ret
+
+.mike_nickname:
+	; Return pointer to nickname based on wMikeTradeVariant bits 0-2
+	ld a, [wMikeTradeVariant]
+	and %00000111      ; mask bits 0-2 to get index 0-5
+	; Multiply by MON_NAME_LENGTH (11)
+	ld e, a
+	ld d, 0
+	ld hl, MikeNicknames
+	add hl, de         ; + index
+	add hl, de         ; + index (now 2x)
+	add hl, de         ; + index (now 3x)
+	add hl, de         ; + index (now 4x)
+	add hl, de         ; + index (now 5x)
+	add hl, de         ; + index (now 6x)
+	add hl, de         ; + index (now 7x)
+	add hl, de         ; + index (now 8x)
+	add hl, de         ; + index (now 9x)
+	add hl, de         ; + index (now 10x)
+	add hl, de         ; + index (now 11x)
+	pop de             ; clean up stack
+	ret
+
 ; Initialize Kyle's trade variant if not already set (bit 7 = 0)
 EnsureKyleTradeVariantInitialized:
 	ld a, [wKyleTradeVariant]
@@ -409,6 +488,56 @@ KyleNicknames:
 	db "MAGGY@@@@@@"     ; Slugma
 	db "SANDY@@@@@@"     ; Sandshrew
 	db "WHOOPER@@@@"     ; Wooper
+
+; Initialize Mike's trade variant if not already set (bit 7 = 0)
+EnsureMikeTradeVariantInitialized:
+	ld a, [wMikeTradeVariant]
+	bit 7, a
+	ret nz             ; already initialized, return
+	; Generate random variant: bits 0-2 = offered (0-5), bits 3-5 = requested (0-3)
+	push de
+	; Generate random 0-5 for offered species
+	ld a, 6
+	call RandomRange   ; returns 0-5 in a
+	ld d, a            ; d = offered index (0-5)
+	; Generate random 0-3 for requested species
+	ld a, 4
+	call RandomRange   ; returns 0-3 in a
+	; Combine: (requested << 3) | offered | 0x80 (initialized flag)
+	rlca
+	rlca
+	rlca               ; shift left by 3
+	or d               ; combine with offered index
+	or %10000000       ; set initialized flag (bit 7)
+	ld [wMikeTradeVariant], a
+	pop de
+	ret
+
+; Mike's dynamic trade lookup tables
+; Route 33 Pokemon (requested from player) - 4 options
+MikeRequestedSpecies:
+	db EKANS       ; 0
+	db SPEAROW     ; 1
+	db MANKEY      ; 2
+	db MACHOP      ; 3
+
+; Route 34/35 Pokemon (offered to player) - 6 options
+MikeOfferedSpecies:
+	db PONYTA      ; 0
+	db GROWLITHE   ; 1
+	db ABRA        ; 2
+	db DROWZEE     ; 3
+	db YANMA       ; 4
+	db DITTO       ; 5
+
+; Nicknames for each offered Pokemon (11 bytes each, padded with @)
+MikeNicknames:
+	db "BLAZE@@@@@@"     ; Ponyta
+	db "SPARKY@@@@@"     ; Growlithe
+	db "PSYCH@@@@@@"     ; Abra
+	db "SLEEPY@@@@@"     ; Drowzee
+	db "ZIPPY@@@@@@"     ; Yanma
+	db "SQUISHY@@@@"     ; Ditto
 
 Trade_GetAttributeOfCurrentPartymon:
 	ld a, [wCurPartyMon]

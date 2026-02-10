@@ -3000,7 +3000,7 @@ wRegisteredItem:: db
 wPlayerState:: db
 
 wHallOfFameCount:: db
-	ds 1
+wMikeTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-3), bit 7: initialized
 wTradeFlags:: flag_array NUM_NPC_TRADES
 wKyleTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-3), bit 7: initialized
 wMooMooBerries:: db
