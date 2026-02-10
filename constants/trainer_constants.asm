@@ -36,9 +36,15 @@ KRIS EQU __trainer_class__
 
 	trainerclass WHITNEY ; 2
 	const WHITNEY1
+	const WHITNEY2
+	const WHITNEY3
+	const WHITNEY4 ; rematch
 
 	trainerclass BUGSY ; 3
 	const BUGSY1
+	const BUGSY2
+	const BUGSY3
+	const BUGSY4 ; rematch
 
 	trainerclass MORTY ; 4
 	const MORTY1

@@ -28,7 +28,17 @@ GoldenrodGymWhitneyScript:
 	waitbutton
 	closetext
 	winlosstext WhitneyShouldntBeSoSeriousText, 0
+	callasm GetWhitneyTeam
+	ifequal 3, .Team3
+	ifequal 2, .Team2
 	loadtrainer WHITNEY, WHITNEY1
+	sjump .WhitneyLoadEnd
+.Team2:
+	loadtrainer WHITNEY, WHITNEY2
+	sjump .WhitneyLoadEnd
+.Team3:
+	loadtrainer WHITNEY, WHITNEY3
+.WhitneyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_WHITNEY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -97,7 +107,7 @@ GoldenrodGymWhitneyScript:
 .WhitneyRematch:
 	special HealParty
 	winlosstext Whitney_RematchDefeatText, 0
-	loadtrainer WHITNEY, 2
+	loadtrainer WHITNEY, WHITNEY4
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

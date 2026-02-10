@@ -1976,23 +1976,70 @@ MartTier1TMs: ; 9 TMs - $10,000
 
 ; --- Randomized Gym Leader Teams ---
 
-GetFalknerTeam::
-; Initialize Falkner's team choice if needed, then return it.
-; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+InitGymTeams:
+; Initialize all gym team choices if not yet done.
+; Randomizes Falkner (bits 1-0), Bugsy (bits 3-2), Whitney (bits 5-4).
+; Sets bit 7 as initialized flag.
 	ld a, [wGymTeamChoices]
 	bit 7, a
-	jr nz, .alreadyInit
+	ret nz
 
-	; Pick random team 0-2
+	; Randomize Falkner (bits 1-0)
 	ld a, 3
-	call RandomRange ; a = 0, 1, or 2
+	call RandomRange ; a = 0-2
+	ld b, a
+
+	; Randomize Bugsy (bits 3-2)
+	push bc
+	ld a, 3
+	call RandomRange ; a = 0-2
+	pop bc
+	sla a
+	sla a ; shift into bits 3-2
+	or b
+	ld b, a
+
+	; Randomize Whitney (bits 5-4)
+	push bc
+	ld a, 3
+	call RandomRange ; a = 0-2
+	pop bc
+	sla a
+	sla a
+	sla a
+	sla a ; shift into bits 5-4
+	or b
 	or %10000000 ; set initialized flag
 	ld [wGymTeamChoices], a
+	ret
 
-.alreadyInit:
+GetFalknerTeam::
+; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+	call InitGymTeams
 	ld a, [wGymTeamChoices]
-	and %00000011 ; extract team index (0-2)
-	inc a ; convert to 1-based trainer ID
+	and %00000011 ; extract Falkner team (bits 1-0)
+	inc a ; convert to 1-based
+	ld [wScriptVar], a
+	ret
+
+GetBugsyTeam::
+; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+	call InitGymTeams
+	ld a, [wGymTeamChoices]
+	and %00001100 ; extract Bugsy team (bits 3-2)
+	srl a
+	srl a ; shift to bits 1-0
+	inc a ; convert to 1-based
+	ld [wScriptVar], a
+	ret
+
+GetWhitneyTeam::
+; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+	call InitGymTeams
+	ld a, [wGymTeamChoices]
+	and %00110000 ; extract Whitney team (bits 5-4)
+	swap a ; swap nibbles to get bits 1-0
+	inc a ; convert to 1-based
 	ld [wScriptVar], a
 	ret
 

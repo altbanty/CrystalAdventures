@@ -21,7 +21,17 @@ AzaleaGymBugsyScript:
 	waitbutton
 	closetext
 	winlosstext BugsyText_ResearchIncomplete, 0
+	callasm GetBugsyTeam
+	ifequal 3, .Team3
+	ifequal 2, .Team2
 	loadtrainer BUGSY, BUGSY1
+	sjump .BugsyLoadEnd
+.Team2:
+	loadtrainer BUGSY, BUGSY2
+	sjump .BugsyLoadEnd
+.Team3:
+	loadtrainer BUGSY, BUGSY3
+.BugsyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BUGSY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -74,7 +84,7 @@ AzaleaGymBugsyScript:
 .BugsyRematch:
 	special HealParty
 	winlosstext Bugsy_RematchDefeatText, 0
-	loadtrainer BUGSY, 2
+	loadtrainer BUGSY, BUGSY4
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
