@@ -571,14 +571,14 @@ JohtoGrassWildMons:
 	db 12, BUTTERFREE
 	db 13, CHIKORITA
 	db 13, BUTTERFREE
-	db 14,  BEEDRILL
+	db 14, BEEDRILL
 	; day
 	db 9,  METAPOD
 	db 9,  KAKUNA
 	db 13, PARAS
 	db 13, BUTTERFREE
 	db 13, CHIKORITA
-	db 13,  BEEDRILL
+	db 13, BEEDRILL
 	db 14, BEEDRILL
 	; nite
 	db 12, PARAS
@@ -705,29 +705,29 @@ JohtoGrassWildMons:
 	def_grass_wildmons ICE_PATH_1F
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
-	db 21, SWINUB
-	db 22, ZUBAT
+	db 21, DELIBIRD
+	db 22, SWINUB
 	db 22, GOLBAT
 	db 23, SWINUB
 	db 24, GOLBAT
-	db 22, GOLBAT
-	db 22, GOLBAT
+	db 22, JYNX
+	db 22, SNEASEL
 	; day
-	db 21, SWINUB
-	db 22, ZUBAT
+	db 21, DELIBIRD
+	db 22, SWINUB
 	db 22, GOLBAT
 	db 23, SWINUB
 	db 24, GOLBAT
-	db 22, GOLBAT
-	db 22, GOLBAT
+	db 25, JYNX
+	db 22, SNEASEL
 	; nite
 	db 21, DELIBIRD
-	db 22, ZUBAT
+	db 22, SWINUB
 	db 22, GOLBAT
 	db 23, DELIBIRD
 	db 24, GOLBAT
-	db 22, GOLBAT
-	db 22, GOLBAT
+	db 25, JYNX
+	db 22, SNEASEL
 	end_grass_wildmons
 
 	def_grass_wildmons ICE_PATH_B1F
@@ -736,26 +736,26 @@ JohtoGrassWildMons:
 	db 32, SWINUB
 	db 33, JYNX
 	db 33, GOLBAT
-	db 34, SNEASEL
-	db 32, SWINUB
-	db 33, GOLBAT
+	db 34, SWINUB
+	db 32, SNEASEL
+	db 33, JYNX
 	db 32, JYNX
 	; day
 	db 32, SWINUB
 	db 33, JYNX
 	db 33, GOLBAT
-	db 34, SNEASEL
-	db 32, SWINUB
-	db 33, GOLBAT
+	db 34, SWINUB
+	db 32, SNEASEL
+	db 33, JYNX
 	db 32, JYNX
 	; nite
 	db 32, DELIBIRD
 	db 33, SNEASEL
 	db 33, GOLBAT
-	db 34, DELIBIRD
-	db 32, GOLBAT
-	db 33, GOLBAT
+	db 34, SWINUB
 	db 32, SNEASEL
+	db 33, JYNX
+	db 32, JYNX
 	end_grass_wildmons
 
 	def_grass_wildmons ICE_PATH_B2F_MAHOGANY_SIDE
@@ -1630,25 +1630,25 @@ JohtoGrassWildMons:
 	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
 	; morn
 	db 34, DONPHAN
-	db 34, GRAVELER
-	db 31, GLIGAR
+	db 34, URSARING
+	db 33, GLIGAR
 	db 35, DONPHAN
-	db 35, URSARING
+	db 35, GRAVELER
 	db 37, SKARMORY
 	db 37, SKARMORY
 	; day
 	db 35, DONPHAN
-	db 34, GRAVELER
-	db 31, GLIGAR
+	db 34, URSARING
+	db 33, GLIGAR
 	db 35, DONPHAN
-	db 35, URSARING
+	db 35, GRAVELER
 	db 35, SKARMORY
 	db 35, SKARMORY
 	; nite
-	db 35, GRAVELER
+	db 35, VILEPLUME
 	db 34, GRAVELER
-	db 31, GLIGAR
-	db 35, MURKROW
+	db 34, GLIGAR
+	db 35, WOBBUFFET
 	db 35, GOLBAT
 	db 35, SKARMORY
 	db 35, SKARMORY
