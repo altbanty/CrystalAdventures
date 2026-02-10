@@ -7,7 +7,7 @@ TinTower5F_MapScripts:
 	def_callbacks
 
 TinTower5FRareCandy:
-	itemball RARE_CANDY
+	randomized_item_5 RARE_CANDY, PP_UP, MAX_ETHER, PROTEIN, STAR_PIECE
 
 TinTower5FHiddenFullRestore:
 	hiddenitem FULL_RESTORE, EVENT_TIN_TOWER_5F_HIDDEN_FULL_RESTORE
@@ -31,4 +31,4 @@ TinTower5F_MapEvents:
 	bg_event  3, 15, BGEVENT_ITEM, TinTower5FHiddenCarbos
 
 	def_object_events
-	object_event  9,  9, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, TinTower5FRareCandy, EVENT_TIN_TOWER_5F_RARE_CANDY
+	object_event  9,  9, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, TinTower5FRareCandy, EVENT_TIN_TOWER_5F_RARE_CANDY

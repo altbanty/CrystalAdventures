@@ -1,153 +1,26 @@
 ; Randomized Item System Macros
-; Provides maintainable randomization for overworld items
+; Each macro picks one item at random from the pool and gives it to the player.
+; Uses a shared assembly function (PickRandomItems) to select the item
+; and a shared script (GiveRandomItemScript) to present and give it.
+; Total per-instance cost: callasm(4) + count+items(N+1) + farsjump(4) bytes.
 
-; 3-item randomized item script (most common)
+; 3-item randomized item script
 randomized_item_3: MACRO
-	random 3
-	ifequal 0, .Give\@Item1
-	ifequal 1, .Give\@Item2
-	ifequal 2, .Give\@Item3
-
-.Give\@Item1:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \1, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item2:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \2, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item3:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \3, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Found\@ItemText:
-	text "You found an item!"
-	done
+	callasm PickRandomItems
+	db 3, \1, \2, \3
+	farsjump GiveRandomItemScript
 ENDM
 
 ; 4-item randomized item script
 randomized_item_4: MACRO
-	random 4
-	ifequal 0, .Give\@Item1
-	ifequal 1, .Give\@Item2
-	ifequal 2, .Give\@Item3
-	ifequal 3, .Give\@Item4
-	; Fallback - should never reach here, but just in case
-	sjump .Give\@Item1
-
-.Give\@Item1:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \1, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item2:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \2, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item3:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \3, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item4:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \4, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Found\@ItemText:
-	text "You found an item!"
-	done
+	callasm PickRandomItems
+	db 4, \1, \2, \3, \4
+	farsjump GiveRandomItemScript
 ENDM
 
 ; 5-item randomized item script
 randomized_item_5: MACRO
-	random 5
-	ifequal 0, .Give\@Item1
-	ifequal 1, .Give\@Item2
-	ifequal 2, .Give\@Item3
-	ifequal 3, .Give\@Item4
-	ifequal 4, .Give\@Item5
-	; Fallback - should never reach here, but just in case
-	sjump .Give\@Item1
-
-.Give\@Item1:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \1, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item2:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \2, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item3:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \3, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item4:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \4, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Give\@Item5:
-	opentext
-	writetext .Found\@ItemText
-	waitbutton
-	verbosegiveitem \5, 1
-	closetext
-	disappear LAST_TALKED
-	end
-
-.Found\@ItemText:
-	text "You found an item!"
-	done
+	callasm PickRandomItems
+	db 5, \1, \2, \3, \4, \5
+	farsjump GiveRandomItemScript
 ENDM

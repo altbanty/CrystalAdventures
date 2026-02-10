@@ -7,7 +7,7 @@ IcePathB2FBlackthornSide_MapScripts:
 	def_callbacks
 
 IcePathB2FBlackthornSideTMRest:
-	itemball TM_REST
+	randomized_item_5 TM_REST, TM_ICE_PUNCH, TM_BLIZZARD, NEVERMELTICE, PP_UP
 
 IcePathB2FBlackthornSideHiddenIceHeal:
 	hiddenitem ICE_HEAL, EVENT_ICE_PATH_B2F_BLACKTHORN_SIDE_HIDDEN_ICE_HEAL
@@ -25,4 +25,4 @@ IcePathB2FBlackthornSide_MapEvents:
 	bg_event  2, 10, BGEVENT_ITEM, IcePathB2FBlackthornSideHiddenIceHeal
 
 	def_object_events
-	object_event  8, 16, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, IcePathB2FBlackthornSideTMRest, EVENT_ICE_PATH_B2F_BLACKTHORN_SIDE_TM_REST
+	object_event  8, 16, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, IcePathB2FBlackthornSideTMRest, EVENT_ICE_PATH_B2F_BLACKTHORN_SIDE_TM_REST

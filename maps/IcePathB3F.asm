@@ -8,7 +8,7 @@ IcePathB3F_MapScripts:
 	def_callbacks
 
 IcePathB3FNevermeltice:
-	itemball NEVERMELTICE
+	randomized_item_5 NEVERMELTICE, FULL_RESTORE, MAX_POTION, REVIVE, MAX_ETHER
 
 IcePathB3FRock:
 	jumpstd SmashRockScript
@@ -25,5 +25,5 @@ IcePathB3F_MapEvents:
 	def_bg_events
 
 	def_object_events
-	object_event  5,  7, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, IcePathB3FNevermeltice, EVENT_ICE_PATH_B3F_NEVERMELTICE
+	object_event  5,  7, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, IcePathB3FNevermeltice, EVENT_ICE_PATH_B3F_NEVERMELTICE
 	object_event  6,  6, SPRITE_ROCK, SPRITEMOVEDATA_SMASHABLE_ROCK, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, IcePathB3FRock, -1

@@ -2317,3 +2317,42 @@ CantCutScript:
 CanCutText:
 	text_far _CanCutText
 	text_end
+
+PickRandomItems::
+; Called via callasm from randomized_item macros.
+; Reads a count byte and that many item IDs from the script stream,
+; picks one at random, and stores it in wScriptVar.
+; Preserves script pointer past all consumed bytes.
+	call GetScriptByte      ; a = count N
+	ld c, a                 ; c = N (loop counter)
+	call RandomRange        ; a = random 0..N-1 (bc preserved)
+	ld b, a                 ; b = target index
+	ld d, 0                 ; d = current index
+.loop:
+	call GetScriptByte      ; a = item ID (bc preserved)
+	ld e, a
+	ld a, d
+	cp b
+	jr nz, .skip
+	ld a, e
+	ld [wScriptVar], a
+.skip:
+	inc d
+	dec c
+	jr nz, .loop
+	ret
+
+GiveRandomItemScript::
+; Shared script jumped to by randomized_item macros via farsjump.
+; Expects wScriptVar = item ID to give.
+	opentext
+	writetext .FoundItemText
+	waitbutton
+	verbosegiveitem ITEM_FROM_MEM, 1
+	closetext
+	disappear LAST_TALKED
+	end
+
+.FoundItemText:
+	text "You found an item!"
+	done

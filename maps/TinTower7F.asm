@@ -7,7 +7,7 @@ TinTower7F_MapScripts:
 	def_callbacks
 
 TinTower7FMaxRevive:
-	itemball MAX_REVIVE
+	randomized_item_5 MAX_REVIVE, FULL_RESTORE, MAX_ELIXER, RARE_CANDY, LEFTOVERS
 
 TinTower7F_MapEvents:
 	db 0, 0 ; filler
@@ -24,4 +24,4 @@ TinTower7F_MapEvents:
 	def_bg_events
 
 	def_object_events
-	object_event 16,  1, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, TinTower7FMaxRevive, EVENT_TIN_TOWER_7F_MAX_REVIVE
+	object_event 16,  1, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, TinTower7FMaxRevive, EVENT_TIN_TOWER_7F_MAX_REVIVE

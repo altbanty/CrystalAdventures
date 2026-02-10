@@ -7,7 +7,7 @@ WhirlIslandNE_MapScripts:
 	def_callbacks
 
 WhirlIslandNEUltraBall:
-	itemball ULTRA_BALL
+	randomized_item_5 ULTRA_BALL, MAX_REPEL, ESCAPE_ROPE, REVIVE, HYPER_POTION
 
 WhirlIslandNE_MapEvents:
 	db 0, 0 ; filler
@@ -22,4 +22,4 @@ WhirlIslandNE_MapEvents:
 	def_bg_events
 
 	def_object_events
-	object_event 11, 11, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, WhirlIslandNEUltraBall, EVENT_WHIRL_ISLAND_NE_ULTRA_BALL
+	object_event 11, 11, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, WhirlIslandNEUltraBall, EVENT_WHIRL_ISLAND_NE_ULTRA_BALL

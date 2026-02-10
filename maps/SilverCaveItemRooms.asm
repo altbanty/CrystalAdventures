@@ -8,10 +8,10 @@ SilverCaveItemRooms_MapScripts:
 	def_callbacks
 
 SilverCaveItemRoomsMaxRevive:
-	itemball MAX_REVIVE
+	randomized_item_5 MAX_REVIVE, FULL_RESTORE, MAX_ELIXER, RARE_CANDY, LEFTOVERS
 
 SilverCaveItemRoomsFullRestore:
-	itemball FULL_RESTORE
+	randomized_item_5 FULL_RESTORE, MAX_REVIVE, MAX_ELIXER, PP_UP, SCOPE_LENS
 
 SilverCaveItemRooms_MapEvents:
 	db 0, 0 ; filler
@@ -25,5 +25,5 @@ SilverCaveItemRooms_MapEvents:
 	def_bg_events
 
 	def_object_events
-	object_event  6,  3, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, SilverCaveItemRoomsMaxRevive, EVENT_SILVER_CAVE_ITEM_ROOMS_MAX_REVIVE
-	object_event 15, 11, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, SilverCaveItemRoomsFullRestore, EVENT_SILVER_CAVE_ITEM_ROOMS_FULL_RESTORE
+	object_event  6,  3, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SilverCaveItemRoomsMaxRevive, EVENT_SILVER_CAVE_ITEM_ROOMS_MAX_REVIVE
+	object_event 15, 11, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SilverCaveItemRoomsFullRestore, EVENT_SILVER_CAVE_ITEM_ROOMS_FULL_RESTORE
