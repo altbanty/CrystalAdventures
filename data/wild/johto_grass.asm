@@ -285,28 +285,28 @@ JohtoGrassWildMons:
 	def_grass_wildmons BURNED_TOWER_1F
 	db 4 percent, 4 percent, 4 percent ; encounter rates: morn/day/nite
 	; morn
-	db 13, MAGMAR
+	db 13, MURKROW
 	db 14, KOFFING
-	db 15, MAGMAR
-	db 14, MISDREAVUS
+	db 15, MURKROW
+	db 14, MAGMAR
 	db 15, MISDREAVUS
-	db 15, RATICATE
+	db 15, MISDREAVUS
 	db 15, HOUNDOUR
 	; day
-	db 13, RATICATE
+	db 13, MURKROW
 	db 14, KOFFING
+	db 15, MURKROW
+	db 14, MAGMAR
 	db 15, MAGMAR
-	db 14, MISDREAVUS
-	db 15, MAGMAR
-	db 15, HOUNDOUR
+	db 15, MISDREAVUS
 	db 15, HOUNDOUR
 	; nite
-	db 13, RATICATE
+	db 13, MURKROW
 	db 14, KOFFING
-	db 15, SLUGMA
+	db 15, RATICATE
 	db 14, ZUBAT
-	db 15, MAGMAR
-	db 15, HOUNDOUR
+	db 15, MISDREAVUS
+	db 15, MISDREAVUS
 	db 15, HOUNDOUR
 	end_grass_wildmons
 
@@ -318,23 +318,23 @@ JohtoGrassWildMons:
 	db 16, KOFFING
 	db 16, MISDREAVUS
 	db 16, GASTLY
-	db 18, MAGMAR
-	db 18, MAGMAR
+	db 18, HOUNDOUR
+	db 18, HOUNDOUR
 	; day
 	db 18, MURKROW
 	db 17, KOFFING
 	db 16, KOFFING
-	db 16, MAGMAR
+	db 16, MISDREAVUS
 	db 16, GASTLY
-	db 18, MISDREAVUS
+	db 18, HOUNDOUR
 	db 17, HOUNDOUR
 	; nite
 	db 18, MURKROW
-	db 17, ZUBAT
-	db 16, KOFFING
+	db 17, KOFFING
 	db 16, KOFFING
 	db 16, GASTLY
-	db 18, MAGMAR
+	db 16, GASTLY
+	db 18, HOUNDOUR
 	db 18, HOUNDOUR
 	end_grass_wildmons
 
@@ -482,23 +482,23 @@ JohtoGrassWildMons:
 	db 4 percent, 4 percent, 4 percent ; encounter rates: morn/day/nite
 	; morn
 	db 22, ONIX
-	db 22, GOLBAT
-	db 22, DIGLETT
+	db 22, QUAGSIRE
+	db 22, QUAGSIRE
 	db 21, RATICATE
-	db 20, QUAGSIRE
+	db 20, GOLBAT
 	db 23, KANGASKHAN
 	db 23, KANGASKHAN
 	; day
 	db 22, ONIX
-	db 22, GOLBAT
+	db 22, QUAGSIRE
 	db 22, DIGLETT
 	db 21, RATICATE
-	db 20, QUAGSIRE
+	db 20, GOLBAT
 	db 23, KANGASKHAN
 	db 23, KANGASKHAN
 	; nite
 	db 22, ONIX
-	db 22, GOLBAT
+	db 22, QUAGSIRE
 	db 22, DIGLETT
 	db 21, RATICATE
 	db 20, QUAGSIRE
