@@ -37,7 +37,17 @@ BlackthornGymClairScript:
 	waitbutton
 	closetext
 	winlosstext ClairWinText, 0
+	callasm GetClairTeam
+	ifequal 3, .Team3
+	ifequal 2, .Team2
 	loadtrainer CLAIR, CLAIR1
+	sjump .ClairLoadEnd
+.Team2:
+	loadtrainer CLAIR, CLAIR2
+	sjump .ClairLoadEnd
+.Team3:
+	loadtrainer CLAIR, CLAIR3
+.ClairLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_CLAIR1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -105,7 +115,7 @@ BlackthornGymClairScript:
 .ClairRematch:
 	special HealParty
 	winlosstext Clair_RematchDefeatText, 0
-	loadtrainer CLAIR, 2
+	loadtrainer CLAIR, CLAIR4
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

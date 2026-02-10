@@ -2012,9 +2012,16 @@ InitGymTeams:
 	ld b, a
 
 	; Randomize Morty (wGymTeamChoices2 bits 1-0)
+	; and Clair (wGymTeamChoices2 bits 3-2)
 	push bc
 	ld a, 3
-	call RandomRange ; a = 0-2
+	call RandomRange ; a = 0-2 for Morty
+	ld c, a
+	ld a, 3
+	call RandomRange ; a = 0-2 for Clair
+	sla a
+	sla a ; shift into bits 3-2
+	or c
 	ld [wGymTeamChoices2], a
 	pop bc
 
@@ -2059,6 +2066,17 @@ GetMortyTeam::
 	call InitGymTeams
 	ld a, [wGymTeamChoices2]
 	and %00000011 ; extract Morty team (bits 1-0)
+	inc a ; convert to 1-based
+	ld [wScriptVar], a
+	ret
+
+GetClairTeam::
+; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+	call InitGymTeams
+	ld a, [wGymTeamChoices2]
+	and %00001100 ; extract Clair team (bits 3-2)
+	srl a
+	srl a ; shift to bits 1-0
 	inc a ; convert to 1-based
 	ld [wScriptVar], a
 	ret

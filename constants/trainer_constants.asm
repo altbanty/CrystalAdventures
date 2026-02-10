@@ -63,6 +63,9 @@ KRIS EQU __trainer_class__
 
 	trainerclass CLAIR ; 8
 	const CLAIR1
+	const CLAIR2
+	const CLAIR3
+	const CLAIR4 ; rematch
 
 	trainerclass RIVAL1 ; 9
 	const RIVAL1_1_AIPOM

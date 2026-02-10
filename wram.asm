@@ -3023,7 +3023,7 @@ wGymTeamChoices:: ; 1 byte - randomized gym leader team variants
 ; bit 7 = initialized, bits 5-4 = Whitney, bits 3-2 = Bugsy, bits 1-0 = Falkner
 	ds 1
 wGymTeamChoices2:: ; 1 byte - more gym leader team variants
-; bits 1-0 = Morty team (0-2)
+; bits 3-2 = Clair team (0-2), bits 1-0 = Morty team (0-2)
 	ds 1
 
 ; map scene ids
