@@ -3003,6 +3003,8 @@ wHallOfFameCount:: db
 wMikeTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-3), bit 7: initialized
 wTradeFlags:: flag_array NUM_NPC_TRADES
 wKyleTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-3), bit 7: initialized
+wTimTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-3), bit 7: initialized
+wEmyTradeVariant:: db ; bits 0-2: offered species (0-5), bits 3-5: requested species (0-3), bit 7: initialized
 wMooMooBerries:: db
 wUndergroundSwitchPositions:: db
 wFarfetchdPosition:: db
@@ -3109,7 +3111,7 @@ wMobileBattleRoomSceneID::                        db
 
 wNumBalls:: db
 wBalls:: ds MAX_BALLS * 2 + 1
-	ds 15
+	ds 13
 ; Nuzlocke encounter flags - simplified to 64 routes (8 bytes)
 wNuzlockeEncounterFlags:: ds 8
 	; ds 49

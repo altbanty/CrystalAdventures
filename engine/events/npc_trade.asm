@@ -281,6 +281,10 @@ GetTradeAttr:
 	jr z, .kyle_trade
 	cp NPC_TRADE_MIKE
 	jp z, .mike_trade
+	cp NPC_TRADE_TIM
+	jp z, .tim_trade
+	cp NPC_TRADE_EMY
+	jp z, .emy_trade
 	jr .normal_trade
 
 .kyle_trade:
@@ -439,6 +443,146 @@ GetTradeAttr:
 	pop de             ; clean up stack
 	ret
 
+; Tim's dynamic trade handler
+.tim_trade:
+	call EnsureTimTradeVariantInitialized
+	pop de
+	push de
+	ld a, e
+	cp NPCTRADE_GIVEMON
+	jr z, .tim_givemon
+	cp NPCTRADE_GETMON
+	jr z, .tim_getmon
+	cp NPCTRADE_NICKNAME
+	jr z, .tim_nickname
+	; For other attributes, use Tim's base entry in NPCTrades
+	pop de
+	push de
+	ld a, NPC_TRADE_TIM
+	and $f
+	swap a
+	ld e, a
+	ld d, 0
+	ld hl, NPCTrades
+	add hl, de
+	add hl, de
+	pop de
+	add hl, de
+	ret
+
+.tim_givemon:
+	ld a, [wTimTradeVariant]
+	and %00111000
+	rrca
+	rrca
+	rrca
+	ld e, a
+	ld d, 0
+	ld hl, TimRequestedSpecies
+	add hl, de
+	pop de
+	ret
+
+.tim_getmon:
+	ld a, [wTimTradeVariant]
+	and %00000111
+	ld e, a
+	ld d, 0
+	ld hl, TimOfferedSpecies
+	add hl, de
+	pop de
+	ret
+
+.tim_nickname:
+	ld a, [wTimTradeVariant]
+	and %00000111
+	ld e, a
+	ld d, 0
+	ld hl, TimNicknames
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	pop de
+	ret
+
+; Emy's dynamic trade handler
+.emy_trade:
+	call EnsureEmyTradeVariantInitialized
+	pop de
+	push de
+	ld a, e
+	cp NPCTRADE_GIVEMON
+	jr z, .emy_givemon
+	cp NPCTRADE_GETMON
+	jr z, .emy_getmon
+	cp NPCTRADE_NICKNAME
+	jr z, .emy_nickname
+	; For other attributes, use Emy's base entry in NPCTrades
+	pop de
+	push de
+	ld a, NPC_TRADE_EMY
+	and $f
+	swap a
+	ld e, a
+	ld d, 0
+	ld hl, NPCTrades
+	add hl, de
+	add hl, de
+	pop de
+	add hl, de
+	ret
+
+.emy_givemon:
+	ld a, [wEmyTradeVariant]
+	and %00111000
+	rrca
+	rrca
+	rrca
+	ld e, a
+	ld d, 0
+	ld hl, EmyRequestedSpecies
+	add hl, de
+	pop de
+	ret
+
+.emy_getmon:
+	ld a, [wEmyTradeVariant]
+	and %00000111
+	ld e, a
+	ld d, 0
+	ld hl, EmyOfferedSpecies
+	add hl, de
+	pop de
+	ret
+
+.emy_nickname:
+	ld a, [wEmyTradeVariant]
+	and %00000111
+	ld e, a
+	ld d, 0
+	ld hl, EmyNicknames
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	add hl, de
+	pop de
+	ret
+
 ; Initialize Kyle's trade variant if not already set (bit 7 = 0)
 EnsureKyleTradeVariantInitialized:
 	ld a, [wKyleTradeVariant]
@@ -538,6 +682,108 @@ MikeNicknames:
 	db "SLEEPY@@@@@"     ; Drowzee
 	db "ZIPPY@@@@@@"     ; Yanma
 	db "SQUISHY@@@@"     ; Ditto
+
+; Initialize Tim's trade variant if not already set (bit 7 = 0)
+EnsureTimTradeVariantInitialized:
+	ld a, [wTimTradeVariant]
+	bit 7, a
+	ret nz             ; already initialized, return
+	; Generate random variant: bits 0-2 = offered (0-5), bits 3-5 = requested (0-3)
+	push de
+	; Generate random 0-5 for offered species
+	ld a, 6
+	call RandomRange   ; returns 0-5 in a
+	ld d, a            ; d = offered index (0-5)
+	; Generate random 0-3 for requested species
+	ld a, 4
+	call RandomRange   ; returns 0-3 in a
+	; Combine: (requested << 3) | offered | 0x80 (initialized flag)
+	rlca
+	rlca
+	rlca               ; shift left by 3
+	or d               ; combine with offered index
+	or %10000000       ; set initialized flag (bit 7)
+	ld [wTimTradeVariant], a
+	pop de
+	ret
+
+; Tim's dynamic trade lookup tables
+; Water Pokemon around Olivine (requested from player) - 4 options
+TimRequestedSpecies:
+	db KRABBY       ; 0
+	db TENTACOOL    ; 1
+	db SHELLDER     ; 2
+	db STARYU       ; 3
+
+; Mahogany/Blackthorn area Pokemon + Tauros/Miltank (offered to player) - 6 options
+TimOfferedSpecies:
+	db SNEASEL      ; 0
+	db ELECTABUZZ   ; 1
+	db JYNX         ; 2
+	db DELIBIRD     ; 3
+	db TAUROS       ; 4
+	db MILTANK      ; 5
+
+; Nicknames for each offered Pokemon (11 bytes each, padded with @)
+TimNicknames:
+	db "SLASH@@@@@@"     ; Sneasel
+	db "BUZZER@@@@@"     ; Electabuzz
+	db "SMOOCH@@@@@"     ; Jynx
+	db "PREZZY@@@@@"     ; Delibird
+	db "BULLY@@@@@@"     ; Tauros
+	db "BESSIE@@@@@"     ; Miltank
+
+; Initialize Emy's trade variant if not already set (bit 7 = 0)
+EnsureEmyTradeVariantInitialized:
+	ld a, [wEmyTradeVariant]
+	bit 7, a
+	ret nz             ; already initialized, return
+	; Generate random variant: bits 0-2 = offered (0-6), bits 3-5 = requested (0-3)
+	push de
+	; Generate random 0-6 for offered species
+	ld a, 7
+	call RandomRange   ; returns 0-6 in a
+	ld d, a            ; d = offered index (0-6)
+	; Generate random 0-3 for requested species
+	ld a, 4
+	call RandomRange   ; returns 0-3 in a
+	; Combine: (requested << 3) | offered | 0x80 (initialized flag)
+	rlca
+	rlca
+	rlca               ; shift left by 3
+	or d               ; combine with offered index
+	or %10000000       ; set initialized flag (bit 7)
+	ld [wEmyTradeVariant], a
+	pop de
+	ret
+
+; Emy's dynamic trade lookup tables
+; Wide variety across Johto (requested from player) - 4 options
+EmyRequestedSpecies:
+	db POLIWHIRL    ; 0 - common fishing across Johto
+	db FLAAFFY      ; 1 - Routes 32/42/43
+	db STANTLER     ; 2 - Route 36/37
+	db TANGELA      ; 3 - Route 44
+
+; Rare Pokemon around Blackthorn (offered to player) - 7 options
+EmyOfferedSpecies:
+	db DRATINI      ; 0 - Dragon's Den
+	db SEADRA       ; 1 - Dragon's Den fishing
+	db SKARMORY     ; 2 - Route 45
+	db PHANPY       ; 3 - Route 45
+	db GLIGAR       ; 4 - Route 45
+	db NATU         ; 5 - Ruins of Alph
+	db HERACROSS    ; 6 - headbutt trees
+
+; Nicknames for each offered Pokemon (11 bytes each, padded with @)
+EmyNicknames:
+	db "NESSIE@@@@@"     ; Dratini
+	db "CORAL@@@@@@"     ; Seadra
+	db "STEELY@@@@@"     ; Skarmory
+	db "TRUNKS@@@@@"     ; Phanpy
+	db "GLIDER@@@@@"     ; Gligar
+	db "MYSTIC@@@@@"     ; Natu
+	db "HORNS@@@@@@"     ; Heracross
 
 Trade_GetAttributeOfCurrentPartymon:
 	ld a, [wCurPartyMon]
