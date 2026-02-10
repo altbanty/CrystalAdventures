@@ -1974,6 +1974,30 @@ MartTier1TMs: ; 9 TMs - $10,000
 
 ; --- End Randomized One-Time TM Sales ---
 
+; --- Randomized Gym Leader Teams ---
+
+GetFalknerTeam::
+; Initialize Falkner's team choice if needed, then return it.
+; Output: wScriptVar = 1, 2, or 3 (trainer sub-ID).
+	ld a, [wGymTeamChoices]
+	bit 7, a
+	jr nz, .alreadyInit
+
+	; Pick random team 0-2
+	ld a, 3
+	call RandomRange ; a = 0, 1, or 2
+	or %10000000 ; set initialized flag
+	ld [wGymTeamChoices], a
+
+.alreadyInit:
+	ld a, [wGymTeamChoices]
+	and %00000011 ; extract team index (0-2)
+	inc a ; convert to 1-based trainer ID
+	ld [wScriptVar], a
+	ret
+
+; --- End Randomized Gym Leader Teams ---
+
 BreakFishingRod:
 ; Remove the used fishing rod from the bag.
 ; wFishingRodUsed: 0=Old, 1=Good, 2=Super

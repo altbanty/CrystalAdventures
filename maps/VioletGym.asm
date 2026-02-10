@@ -18,7 +18,17 @@ VioletGymFalknerScript:
 	waitbutton
 	closetext
 	winlosstext FalknerWinLossText, 0
+	callasm GetFalknerTeam
+	ifequal 3, .Team3
+	ifequal 2, .Team2
 	loadtrainer FALKNER, FALKNER1
+	sjump .FalknerLoadEnd
+.Team2:
+	loadtrainer FALKNER, FALKNER2
+	sjump .FalknerLoadEnd
+.Team3:
+	loadtrainer FALKNER, FALKNER3
+.FalknerLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_FALKNER1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -71,11 +81,11 @@ VioletGymFalknerScript:
 .FalknerRematch:
 	special HealParty
 	winlosstext Falkner_RematchDefeatText, 0
-	loadtrainer FALKNER, 2
+	loadtrainer FALKNER, FALKNER4
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_2
+	iffalse .normalmode_rematch
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_2
+.normalmode_rematch
 	startbattle
 	reloadmapafterbattle
 	end

@@ -3019,7 +3019,10 @@ wMartTMChoices:: ; 9 bytes - randomized TM mart data
 ;          5=Olivine, 6=Mahogany, 7=Cianwood (tier 2)
 ;          8=Blackthorn (tier 1)
 	ds 9
-	ds 2 ; remaining padding
+wGymTeamChoices:: ; 1 byte - randomized gym leader team variants
+; bit 7 = initialized, bits 1-0 = Falkner team (0-2)
+	ds 1
+	ds 1 ; remaining padding
 
 ; map scene ids
 wPokecenter2FSceneID::                            db
