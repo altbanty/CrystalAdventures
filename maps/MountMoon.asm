@@ -26,43 +26,14 @@ MountMoon_MapScripts:
 	writetext MountMoonSilverTextBefore
 	waitbutton
 	closetext
-	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
-	iftrue .Smeargle
-	checkevent EVENT_GOT_AIPOM_FROM_ELM
-	iftrue .Aipom
 	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
 	setlasttalked MOUNTMOON_SILVER
-	loadtrainer RIVAL2, RIVAL2_1_SMEARGLE
+	setval 6
+	callasm LoadRivalTrainer
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_1_SMEARGLE
+	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_1_SMEARGLE
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .FinishBattle
-
-.Smeargle:
-	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
-	setlasttalked MOUNTMOON_SILVER
-	loadtrainer RIVAL2, RIVAL2_1_AIPOM
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_1_AIPOM
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_1_AIPOM
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .FinishBattle
-
-.Aipom:
-	winlosstext MountMoonSilverTextWin, MountMoonSilverTextLoss
-	setlasttalked MOUNTMOON_SILVER
-	loadtrainer RIVAL2, RIVAL2_1_EEVEE
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_1_EEVEE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_1_EEVEE
+.normalmode
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

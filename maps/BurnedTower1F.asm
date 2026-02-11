@@ -60,43 +60,14 @@ BurnedTowerRivalBattleScript:
 	writetext BurnedTowerSilver_BeforeText
 	waitbutton
 	closetext
-	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
-	iftrue .smeargle
-	checkevent EVENT_GOT_AIPOM_FROM_ELM
-	iftrue .aipom
 	winlosstext BurnedTowerSilver_WinText, BurnedTowerSilver_LossText
 	setlasttalked BURNEDTOWER1F_SILVER
-	loadtrainer RIVAL1, RIVAL1_3_SMEARGLE
+	setval 3
+	callasm LoadRivalTrainer
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_3_SMEARGLE
+	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_3_SMEARGLE
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .returnfrombattle
-
-.smeargle
-	winlosstext BurnedTowerSilver_WinText, BurnedTowerSilver_LossText
-	setlasttalked BURNEDTOWER1F_SILVER
-	loadtrainer RIVAL1, RIVAL1_3_AIPOM
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_3_AIPOM
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_3_AIPOM
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .returnfrombattle
-
-.aipom
-	winlosstext BurnedTowerSilver_WinText, BurnedTowerSilver_LossText
-	setlasttalked BURNEDTOWER1F_SILVER
-	loadtrainer RIVAL1, RIVAL1_3_EEVEE
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_3_EEVEE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_3_EEVEE
+.normalmode
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

@@ -57,43 +57,14 @@ VictoryRoadRivalNext:
 	waitbutton
 	closetext
 	setevent EVENT_RIVAL_VICTORY_ROAD
-	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
-	iftrue .GotSmeargle
-	checkevent EVENT_GOT_AIPOM_FROM_ELM
-	iftrue .GotAipom
 	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
 	setlasttalked VICTORYROAD_SILVER
-	loadtrainer RIVAL1, RIVAL1_5_SMEARGLE
+	setval 5
+	callasm LoadRivalTrainer
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_5_SMEARGLE
+	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_5_SMEARGLE
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .AfterBattle
-
-.GotSmeargle:
-	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
-	setlasttalked VICTORYROAD_SILVER
-	loadtrainer RIVAL1, RIVAL1_5_AIPOM
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_5_AIPOM
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_5_AIPOM
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .AfterBattle
-
-.GotAipom:
-	winlosstext VictoryRoadRivalDefeatText, VictoryRoadRivalVictoryText
-	setlasttalked VICTORYROAD_SILVER
-	loadtrainer RIVAL1, RIVAL1_5_EEVEE
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_5_EEVEE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_5_EEVEE
+.normalmode
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

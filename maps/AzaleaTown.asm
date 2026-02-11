@@ -60,43 +60,14 @@ AzaleaTownRivalBattleScript:
 	waitbutton
 	closetext
 	setevent EVENT_RIVAL_AZALEA_TOWN
-	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
-	iftrue .Smeargle
-	checkevent EVENT_GOT_AIPOM_FROM_ELM
-	iftrue .Aipom
 	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
 	setlasttalked AZALEATOWN_SILVER
-	loadtrainer RIVAL1, RIVAL1_2_SMEARGLE
+	setval 2
+	callasm LoadRivalTrainer
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_2_SMEARGLE
+	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_2_SMEARGLE
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .AfterBattle
-
-.Smeargle:
-	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
-	setlasttalked AZALEATOWN_SILVER
-	loadtrainer RIVAL1, RIVAL1_2_AIPOM
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_2_AIPOM
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_2_AIPOM
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .AfterBattle
-
-.Aipom:
-	winlosstext AzaleaTownRivalWinText, AzaleaTownRivalLossText
-	setlasttalked AZALEATOWN_SILVER
-	loadtrainer RIVAL1, RIVAL1_2_EEVEE
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_2_EEVEE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_2_EEVEE
+.normalmode
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

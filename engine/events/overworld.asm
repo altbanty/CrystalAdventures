@@ -1748,6 +1748,79 @@ StarterWeightThresholds:
 ; Swinub 10% (16-17), Mareep 10% (18-19)
 	db 2, 4, 6, 10, 13, 16, 18, 20
 
+GetPlayerStarterIndex::
+; Returns the player's starter index (0-7) in a and wScriptVar.
+; Checks which ball slot was picked, then extracts that slot's species index.
+	ld a, [wStarterChoices + 1]     ; byte contains slot 2 (bits 2-0) and slot 3 (bits 5-3)
+	ld [wScriptVar], a             ; temporarily stash packed byte
+	ld de, EVENT_GOT_SMEARGLE_FROM_ELM  ; slot 2
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	jr nz, .slot2
+	ld de, EVENT_GOT_AIPOM_FROM_ELM     ; slot 3
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	jr nz, .slot3
+	; default: slot 1
+	ld a, [wStarterChoices]
+	and %00000111
+	ld [wScriptVar], a
+	ret
+.slot2
+	ld a, [wScriptVar]
+	and %00000111
+	ld [wScriptVar], a
+	ret
+.slot3
+	ld a, [wScriptVar]
+	rrca
+	rrca
+	rrca
+	and %00000111
+	ld [wScriptVar], a
+	ret
+
+LoadRivalTrainer::
+; Input: wScriptVar = encounter number (1-7).
+; Sets wBattleScriptFlags, wOtherTrainerClass, wOtherTrainerID.
+	ld a, [wScriptVar]
+	push af                          ; save encounter number
+	call GetPlayerStarterIndex       ; a = starter index 0-7
+	ld b, a                          ; b = starter index
+	pop af                           ; a = encounter number 1-7
+	cp 6
+	jr nc, .rival2
+	; RIVAL1: encounters 1-5
+	dec a                            ; 0-4
+	sla a
+	sla a
+	sla a                            ; (encounter-1) * 8
+	add b                            ; + starter index
+	inc a                            ; 1-based ID
+	ld [wOtherTrainerID], a
+	ld a, RIVAL1
+	ld [wOtherTrainerClass], a
+	jr .done
+.rival2
+	; RIVAL2: encounters 6-7
+	sub 6                            ; 0-1
+	sla a
+	sla a
+	sla a                            ; (encounter-6) * 8
+	add b
+	inc a
+	ld [wOtherTrainerID], a
+	ld a, RIVAL2
+	ld [wOtherTrainerClass], a
+.done
+	ld a, (1 << 7) | 1
+	ld [wBattleScriptFlags], a
+	ret
+
 ; --- End Randomized Starter Selection ---
 
 ; --- Randomized One-Time TM Sales at Pokemarts ---

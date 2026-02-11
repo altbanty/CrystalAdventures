@@ -68,21 +68,51 @@ KRIS EQU __trainer_class__
 	const CLAIR4 ; rematch
 
 	trainerclass RIVAL1 ; 9
+	; encounter 1 (Cherrygrove) - 8 variants by player starter
+	const RIVAL1_1_CHIKORITA
+	const RIVAL1_1_TOTODILE
+	const RIVAL1_1_CYNDAQUIL
 	const RIVAL1_1_AIPOM
-	const RIVAL1_1_EEVEE
+	const RIVAL1_1_SUDOWOODO
 	const RIVAL1_1_SMEARGLE
+	const RIVAL1_1_SWINUB
+	const RIVAL1_1_MAREEP
+	; encounter 2 (Azalea) - 8 variants
+	const RIVAL1_2_CHIKORITA
+	const RIVAL1_2_TOTODILE
+	const RIVAL1_2_CYNDAQUIL
 	const RIVAL1_2_AIPOM
-	const RIVAL1_2_EEVEE
+	const RIVAL1_2_SUDOWOODO
 	const RIVAL1_2_SMEARGLE
+	const RIVAL1_2_SWINUB
+	const RIVAL1_2_MAREEP
+	; encounter 3 (Burned Tower) - 8 variants
+	const RIVAL1_3_CHIKORITA
+	const RIVAL1_3_TOTODILE
+	const RIVAL1_3_CYNDAQUIL
 	const RIVAL1_3_AIPOM
-	const RIVAL1_3_EEVEE
+	const RIVAL1_3_SUDOWOODO
 	const RIVAL1_3_SMEARGLE
+	const RIVAL1_3_SWINUB
+	const RIVAL1_3_MAREEP
+	; encounter 4 (Goldenrod Underground) - 8 variants
+	const RIVAL1_4_CHIKORITA
+	const RIVAL1_4_TOTODILE
+	const RIVAL1_4_CYNDAQUIL
 	const RIVAL1_4_AIPOM
-	const RIVAL1_4_EEVEE
+	const RIVAL1_4_SUDOWOODO
 	const RIVAL1_4_SMEARGLE
+	const RIVAL1_4_SWINUB
+	const RIVAL1_4_MAREEP
+	; encounter 5 (Victory Road) - 8 variants
+	const RIVAL1_5_CHIKORITA
+	const RIVAL1_5_TOTODILE
+	const RIVAL1_5_CYNDAQUIL
 	const RIVAL1_5_AIPOM
-	const RIVAL1_5_EEVEE
+	const RIVAL1_5_SUDOWOODO
 	const RIVAL1_5_SMEARGLE
+	const RIVAL1_5_SWINUB
+	const RIVAL1_5_MAREEP
 
 	trainerclass POKEMON_PROF ; a
 
@@ -468,12 +498,24 @@ KRIS EQU __trainer_class__
 	const MARKUS
 
 	trainerclass RIVAL2 ; 2a
+	; encounter 6 (Mt. Moon) - 8 variants
+	const RIVAL2_1_CHIKORITA
+	const RIVAL2_1_TOTODILE
+	const RIVAL2_1_CYNDAQUIL
 	const RIVAL2_1_AIPOM
-	const RIVAL2_1_EEVEE
+	const RIVAL2_1_SUDOWOODO
 	const RIVAL2_1_SMEARGLE
+	const RIVAL2_1_SWINUB
+	const RIVAL2_1_MAREEP
+	; encounter 7 (Indigo Plateau) - 8 variants
+	const RIVAL2_2_CHIKORITA
+	const RIVAL2_2_TOTODILE
+	const RIVAL2_2_CYNDAQUIL
 	const RIVAL2_2_AIPOM
-	const RIVAL2_2_EEVEE
+	const RIVAL2_2_SUDOWOODO
 	const RIVAL2_2_SMEARGLE
+	const RIVAL2_2_SWINUB
+	const RIVAL2_2_MAREEP
 
 	trainerclass GUITARIST ; 2b
 	const CLYDE

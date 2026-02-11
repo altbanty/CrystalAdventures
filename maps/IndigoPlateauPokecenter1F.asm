@@ -88,44 +88,14 @@ PlateauRivalBattleCommon:
 	waitbutton
 	closetext
 	setevent EVENT_INDIGO_PLATEAU_POKECENTER_RIVAL
-	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
-	iftrue .Smeargle
-	checkevent EVENT_GOT_AIPOM_FROM_ELM
-	iftrue .Aipom
-	; Eevee
 	winlosstext PlateauRivalWinText, PlateauRivalLoseText
 	setlasttalked INDIGOPLATEAUPOKECENTER1F_SILVER
-	loadtrainer RIVAL2, RIVAL2_2_SMEARGLE
+	setval 7
+	callasm LoadRivalTrainer
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_2_SMEARGLE
+	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_2_SMEARGLE
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump PlateauRivalPostBattle
-
-.Smeargle:
-	winlosstext PlateauRivalWinText, PlateauRivalLoseText
-	setlasttalked INDIGOPLATEAUPOKECENTER1F_SILVER
-	loadtrainer RIVAL2, RIVAL2_2_AIPOM
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_2_AIPOM
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_2_AIPOM
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump PlateauRivalPostBattle
-
-.Aipom:
-	winlosstext PlateauRivalWinText, PlateauRivalLoseText
-	setlasttalked INDIGOPLATEAUPOKECENTER1F_SILVER
-	loadtrainer RIVAL2, RIVAL2_2_EEVEE
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL2_2_EEVEE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL2_2_EEVEE
+.normalmode
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle

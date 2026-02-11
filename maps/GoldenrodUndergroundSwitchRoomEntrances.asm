@@ -167,43 +167,14 @@ UndergroundSilverBattleScript:
 	waitbutton
 	closetext
 	setevent EVENT_RIVAL_GOLDENROD_UNDERGROUND
-	checkevent EVENT_GOT_SMEARGLE_FROM_ELM
-	iftrue .Smeargle
-	checkevent EVENT_GOT_AIPOM_FROM_ELM
-	iftrue .Aipom
 	winlosstext UndergroundSilverWinText, UndergroundSilverLossText
 	setlasttalked GOLDENRODUNDERGROUNDSWITCHROOMENTRANCES_SILVER
-	loadtrainer RIVAL1, RIVAL1_4_SMEARGLE
+	setval 4
+	callasm LoadRivalTrainer
 	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_4_SMEARGLE
+	iffalse .normalmode
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_4_SMEARGLE
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .FinishRivalBattle
-
-.Smeargle:
-	winlosstext UndergroundSilverWinText, UndergroundSilverLossText
-	setlasttalked GOLDENRODUNDERGROUNDSWITCHROOMENTRANCES_SILVER
-	loadtrainer RIVAL1, RIVAL1_4_AIPOM
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_4_AIPOM
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_4_AIPOM
-	startbattle
-	dontrestartmapmusic
-	reloadmapafterbattle
-	sjump .FinishRivalBattle
-
-.Aipom:
-	winlosstext UndergroundSilverWinText, UndergroundSilverLossText
-	setlasttalked GOLDENRODUNDERGROUNDSWITCHROOMENTRANCES_SILVER
-	loadtrainer RIVAL1, RIVAL1_4_EEVEE
-	checkflag ENGINE_ADVENTURE_MODE
-	iffalse .normalmode_RIVAL1_4_EEVEE
-	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
-.normalmode_RIVAL1_4_EEVEE
+.normalmode
 	startbattle
 	dontrestartmapmusic
 	reloadmapafterbattle
