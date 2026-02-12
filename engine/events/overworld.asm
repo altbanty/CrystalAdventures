@@ -1657,27 +1657,9 @@ InitStarterChoices::
 	ret
 
 .RollWeightedSpecies:
-; Returns a species index 0-7 in a, weighted by StarterWeightThresholds.
-; Total weight = 20. RandomRange(20) gives 0-19.
-	push bc
-	push hl
-	ld a, 20
+; Returns a species index 0-7 in a, equally weighted.
+	ld a, 8
 	call RandomRange
-	ld b, a ; b = random value 0-19
-	ld hl, StarterWeightThresholds
-	ld c, 0 ; species index
-.threshold_loop:
-	ld a, [hli]
-	cp b
-	jr z, .next_threshold
-	jr nc, .found ; threshold > random → this species
-.next_threshold:
-	inc c
-	jr .threshold_loop
-.found:
-	ld a, c
-	pop hl
-	pop bc
 	ret
 
 GetStarterSlot1::
@@ -1741,12 +1723,6 @@ StarterSpeciesTable:
 	db SWINUB     ; 6
 	db MAREEP     ; 7
 
-StarterWeightThresholds:
-; Cumulative thresholds for RandomRange(20):
-; Chikorita 10% (0-1), Totodile 10% (2-3), Cyndaquil 10% (4-5),
-; Aipom 20% (6-9), Sudowoodo 15% (10-12), Smeargle 15% (13-15),
-; Swinub 10% (16-17), Mareep 10% (18-19)
-	db 2, 4, 6, 10, 13, 16, 18, 20
 
 GetPlayerStarterIndex::
 ; Returns the player's starter index (0-7) in a and wScriptVar.

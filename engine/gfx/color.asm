@@ -1,6 +1,6 @@
 INCLUDE "engine/gfx/sgb_layouts.asm"
 
-SHINY_DV_SUM_THRESHOLD EQU 50
+SHINY_DV_SUM_THRESHOLD EQU 58
 
 CheckShininess:
 ; Check if a mon is shiny by DVs at bc.
