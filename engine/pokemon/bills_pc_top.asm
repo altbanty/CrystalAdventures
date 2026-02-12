@@ -139,35 +139,6 @@ BillsPC_DepositMenu:
 	and a
 	ret
 
-BillsPC_Deposit_CheckPartySize: ; unreferenced
-	ld a, [wPartyCount]
-	and a
-	jr z, .no_mon
-	cp 2
-	jr c, .only_one_mon
-	and a
-	ret
-
-.no_mon
-	ld hl, .PCNoSingleMonText
-	call MenuTextboxBackup
-	scf
-	ret
-
-.only_one_mon
-	ld hl, .PCCantDepositLastMonText
-	call MenuTextboxBackup
-	scf
-	ret
-
-.PCNoSingleMonText:
-	text_far _PCNoSingleMonText
-	text_end
-
-.PCCantDepositLastMonText:
-	text_far _PCCantDepositLastMonText
-	text_end
-
 CheckCurPartyMonFainted:
 	ld hl, wPartyMon1HP
 	ld de, PARTYMON_STRUCT_LENGTH

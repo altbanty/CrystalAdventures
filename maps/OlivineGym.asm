@@ -70,7 +70,9 @@ OlivineGymJasmineScript:
 	iftrue .GotIronTail
 	writetext Jasmine_BadgeSpeech
 	promptbutton
-	verbosegiveitem TM_IRON_TAIL
+	setval 6
+	callasm GetGymTM
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoomForIronTail
 	setevent EVENT_GOT_TM23_IRON_TAIL
 	writetext Jasmine_IronTailSpeech
@@ -208,9 +210,9 @@ Text_ReceivedTM09: ; unreferenced
 	done
 
 Jasmine_IronTailSpeech:
-	text "…You could use"
-	line "that TM to teach"
-	cont "IRON TAIL."
+	text "I hope that TM"
+	line "helps you on your"
+	cont "journey…"
 	done
 
 Jasmine_GoodLuck:

@@ -3025,8 +3025,13 @@ wGymTeamChoices:: ; 1 byte - randomized gym leader team variants
 ; bit 7 = initialized, bits 5-4 = Whitney, bits 3-2 = Bugsy, bits 1-0 = Falkner
 	ds 1
 wGymTeamChoices2:: ; 1 byte - more gym leader team variants
-; bits 3-2 = Clair team (0-2), bits 1-0 = Morty team (0-2)
+; bit 7 = gym TM init flag, bits 3-2 = Clair team (0-2), bits 1-0 = Morty team (0-2)
 	ds 1
+
+wGymTMChoices:: ; 2 bytes - randomized gym TM reward choices
+; byte 0: bits 7-6 = Morty, bits 5-4 = Whitney, bits 3-2 = Bugsy, bits 1-0 = Falkner
+; byte 1: bits 7-6 = Clair, bits 5-4 = Pryce, bits 3-2 = Jasmine, bits 1-0 = Chuck
+	ds 2
 
 ; map scene ids
 wPokecenter2FSceneID::                            db
@@ -3131,12 +3136,10 @@ wLizFightCount::     db
 wAnthonyFightCount:: db
 wToddFightCount::    db
 wGinaFightCount::    db
-wIrwinFightCount::   db ; unreferenced
 wArnieFightCount::   db
 wAlanFightCount::    db
 wDanaFightCount::    db
 wChadFightCount::    db
-wDerekFightCount::   db ; unreferenced
 wTullyFightCount::   db
 wBrentFightCount::   db
 wTiffanyFightCount:: db

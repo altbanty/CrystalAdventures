@@ -2132,6 +2132,8 @@ GetClairTeam::
 
 ; --- End Randomized Gym Leader Teams ---
 
+; --- Randomized Gym TM Rewards (in engine/events/gym_tms.asm, bank4) ---
+
 BreakFishingRod:
 ; Remove the used fishing rod from the bag.
 ; wFishingRodUsed: 0=Old, 1=Good, 2=Super
@@ -2167,10 +2169,6 @@ RodBiteText:
 
 RodNothingText:
 	text_far _RodNothingText
-	text_end
-
-UnusedNothingHereText: ; unreferenced
-	text_far _UnusedNothingHereText
 	text_end
 
 BikeFunction:
@@ -2274,10 +2272,6 @@ Script_GetOnBike_Register:
 	closetext
 	special UpdatePlayerSprite
 	end
-
-Overworld_DummyFunction: ; unreferenced
-	nop
-	ret
 
 Script_GetOffBike:
 	reloadmappart
