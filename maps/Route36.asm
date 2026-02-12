@@ -74,7 +74,30 @@ WateredWeirdTreeScript:: ; export (for when you use Squirtbottle from pack)
 	writetext SudowoodoAttackedText
 	waitbutton
 	closetext
+	callasm PickWeirdTree
+	ifequal 1, .LoadMuk
+	ifequal 2, .LoadTauros
+	ifequal 3, .LoadSnorlax
+	ifequal 4, .LoadWobbuffet
 	loadwildmon SUDOWOODO, 28
+	sjump .StartTreeBattle
+
+.LoadMuk:
+	loadwildmon MUK, 28
+	sjump .StartTreeBattle
+
+.LoadTauros:
+	loadwildmon TAUROS, 28
+	sjump .StartTreeBattle
+
+.LoadSnorlax:
+	loadwildmon SNORLAX, 28
+	sjump .StartTreeBattle
+
+.LoadWobbuffet:
+	loadwildmon WOBBUFFET, 28
+
+.StartTreeBattle:
 	startbattle
 	setevent EVENT_FOUGHT_SUDOWOODO
 	ifequal DRAW, DidntCatchSudowoodo
@@ -440,7 +463,7 @@ SudowoodoAttackedText:
 	line "doesn't like the"
 	cont "SQUIRTBOTTLE!"
 
-	para "The weird tree"
+	para "A stubborn #MON"
 	line "attacked!"
 	done
 

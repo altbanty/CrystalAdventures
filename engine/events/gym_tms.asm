@@ -154,3 +154,67 @@ _LoadScaledGymTrainer:
 	ld a, (1 << 7) | 1
 	ld [wBattleScriptFlags], a
 	ret
+
+; --- Randomized Bill's Gift Pokemon ---
+; 30% Farfetch'd, 30% Exeggcute, 15% Vulpix, 15% Eevee, 10% Magikarp
+; Output: wScriptVar = 0-4 index
+PickBillPokemon::
+	ld a, 100
+	call RandomRange ; a = 0-99
+	cp 30
+	jr c, .farfetchd   ; 0-29 (30%)
+	cp 60
+	jr c, .exeggcute   ; 30-59 (30%)
+	cp 75
+	jr c, .vulpix       ; 60-74 (15%)
+	cp 90
+	jr c, .eevee        ; 75-89 (15%)
+	; 90-99 (10%)
+	ld a, 4
+	jr .done
+.farfetchd:
+	xor a ; 0
+	jr .done
+.exeggcute:
+	ld a, 1
+	jr .done
+.vulpix:
+	ld a, 2
+	jr .done
+.eevee:
+	ld a, 3
+.done:
+	ld [wScriptVar], a
+	ret
+
+; --- Randomized Weird Tree Encounter ---
+; 40% Sudowoodo, 30% Muk, 20% Tauros, 5% Snorlax, 5% Wobbuffet
+; Output: wScriptVar = 0-4 index
+PickWeirdTree::
+	ld a, 100
+	call RandomRange ; a = 0-99
+	cp 40
+	jr c, .sudowoodo    ; 0-39 (40%)
+	cp 70
+	jr c, .muk          ; 40-69 (30%)
+	cp 90
+	jr c, .tauros       ; 70-89 (20%)
+	cp 95
+	jr c, .snorlax      ; 90-94 (5%)
+	; 95-99 (5%)
+	ld a, 4
+	jr .done_tree
+.sudowoodo:
+	xor a ; 0
+	jr .done_tree
+.muk:
+	ld a, 1
+	jr .done_tree
+.tauros:
+	ld a, 2
+	jr .done_tree
+.snorlax:
+	ld a, 3
+.done_tree:
+	ld [wScriptVar], a
+	ret

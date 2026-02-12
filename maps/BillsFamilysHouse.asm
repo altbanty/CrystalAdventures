@@ -13,7 +13,7 @@ BillScript:
 	opentext
 	checkevent EVENT_GOT_EEVEE
 	iftrue .GotEevee
-	writetext BillTakeThisEeveeText
+	writetext BillTakeThisText
 	yesorno
 	iffalse .Refused
 	writetext BillImCountingOnYouText
@@ -21,12 +21,33 @@ BillScript:
 	waitsfx
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .NoRoom
-	writetext ReceivedEeveeText
-	playsound SFX_CAUGHT_MON
-	waitsfx
+	callasm PickBillPokemon
+	ifequal 0, .GiveFarfetchd
+	ifequal 1, .GiveExeggcute
+	ifequal 2, .GiveVulpix
+	ifequal 3, .GiveEevee
+	; 4 = Magikarp
+	givepoke MAGIKARP, 20
+	sjump .AfterGive
+
+.GiveFarfetchd:
+	givepoke FARFETCH_D, 20
+	sjump .AfterGive
+
+.GiveExeggcute:
+	givepoke EXEGGCUTE, 20
+	sjump .AfterGive
+
+.GiveVulpix:
+	givepoke VULPIX, 20
+	sjump .AfterGive
+
+.GiveEevee:
 	givepoke EEVEE, 20
+
+.AfterGive:
 	setevent EVENT_GOT_EEVEE
-	writetext BillEeveeMayEvolveText
+	writetext BillTakeCareText
 	waitbutton
 	closetext
 	end
@@ -106,10 +127,10 @@ BillsHouseBookshelf2:
 BillsHouseRadio:
 	jumpstd Radio2Script
 
-BillTakeThisEeveeText:
+BillTakeThisText:
 	text "BILL: Hi, <PLAYER>!"
 	line "Do us a favor and"
-	cont "take this EEVEE."
+	cont "take this #MON."
 
 	para "It came over when"
 	line "I was adjusting"
@@ -140,17 +161,9 @@ BillImCountingOnYouText:
 	line "it!"
 	done
 
-ReceivedEeveeText:
-	text "<PLAYER> received"
-	line "EEVEE!"
-	done
-
-BillEeveeMayEvolveText:
-	text "BILL: PROF.ELM"
-	line "claims EEVEE may"
-
-	para "evolve in new and"
-	line "unknown ways."
+BillTakeCareText:
+	text "BILL: Take good"
+	line "care of it!"
 	done
 
 BillPartyFullText:
