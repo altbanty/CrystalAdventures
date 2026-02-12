@@ -53,13 +53,40 @@ KRIS EQU __trainer_class__
 	const MORTY4 ; rematch
 
 	trainerclass PRYCE ; 5
-	const PRYCE1
+	const PRYCE1  ; tier 1 variant A
+	const PRYCE2  ; tier 1 variant B
+	const PRYCE3  ; tier 1 variant C
+	const PRYCE4  ; tier 2 variant A
+	const PRYCE5  ; tier 2 variant B
+	const PRYCE6  ; tier 2 variant C
+	const PRYCE7  ; tier 3 variant A
+	const PRYCE8  ; tier 3 variant B
+	const PRYCE9  ; tier 3 variant C
+	const PRYCE10 ; rematch
 
 	trainerclass JASMINE ; 6
-	const JASMINE1
+	const JASMINE1  ; tier 1 variant A
+	const JASMINE2  ; tier 1 variant B
+	const JASMINE3  ; tier 1 variant C
+	const JASMINE4  ; tier 2 variant A
+	const JASMINE5  ; tier 2 variant B
+	const JASMINE6  ; tier 2 variant C
+	const JASMINE7  ; tier 3 variant A
+	const JASMINE8  ; tier 3 variant B
+	const JASMINE9  ; tier 3 variant C
+	const JASMINE10 ; rematch
 
 	trainerclass CHUCK ; 7
-	const CHUCK1
+	const CHUCK1  ; tier 1 variant A
+	const CHUCK2  ; tier 1 variant B
+	const CHUCK3  ; tier 1 variant C
+	const CHUCK4  ; tier 2 variant A
+	const CHUCK5  ; tier 2 variant B
+	const CHUCK6  ; tier 2 variant C
+	const CHUCK7  ; tier 3 variant A
+	const CHUCK8  ; tier 3 variant B
+	const CHUCK9  ; tier 3 variant C
+	const CHUCK10 ; rematch
 
 	trainerclass CLAIR ; 8
 	const CLAIR1

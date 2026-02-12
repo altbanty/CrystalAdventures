@@ -16,20 +16,20 @@ OlivineGymJasmineScript:
 	waitbutton
 	closetext
 	winlosstext Jasmine_BetterTrainer, 0
-	;  Level scaling if statments
+	;  Level scaling + team randomization
 	readvar VAR_BADGES
 	ifequal 6, .SevenBadges
 	ifequal 5, .SixBadges
-	ifequal 4, .FiveBadges
 .FiveBadges:
-	loadtrainer JASMINE, JASMINE1
-	sjump .OlivineGymJasmineScriptEnd
+	setval 0           ; tier 1 base
+	sjump .LoadTeam
 .SixBadges:
-	loadtrainer JASMINE, 2
-	sjump .OlivineGymJasmineScriptEnd
+	setval 3           ; tier 2 base
+	sjump .LoadTeam
 .SevenBadges:
-	loadtrainer JASMINE, 3
-	sjump .OlivineGymJasmineScriptEnd
+	setval 6           ; tier 3 base
+.LoadTeam:
+	callasm LoadJasmineTrainer
 .OlivineGymJasmineScriptEnd
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
@@ -97,7 +97,7 @@ OlivineGymJasmineScript:
 .JasmineRematch:
 	special HealParty
 	winlosstext Jasmine_RematchDefeatText, 0
-	loadtrainer JASMINE, 4
+	loadtrainer JASMINE, 10
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

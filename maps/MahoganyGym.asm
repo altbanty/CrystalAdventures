@@ -21,20 +21,20 @@ MahoganyGymPryceScript:
 	waitbutton
 	closetext
 	winlosstext PryceText_Impressed, 0
-	;  Level scaling if statments
+	;  Level scaling + team randomization
 	readvar VAR_BADGES
 	ifequal 6, .SevenBadges
 	ifequal 5, .SixBadges
-	ifequal 4, .FiveBadges
 .FiveBadges:
-	loadtrainer PRYCE, PRYCE1
-	sjump .MahoganyGymPryceScriptEnd
+	setval 0           ; tier 1 base
+	sjump .LoadTeam
 .SixBadges:
-	loadtrainer PRYCE, 2
-	sjump .MahoganyGymPryceScriptEnd
+	setval 3           ; tier 2 base
+	sjump .LoadTeam
 .SevenBadges:
-	loadtrainer PRYCE, 3
-	sjump .MahoganyGymPryceScriptEnd
+	setval 6           ; tier 3 base
+.LoadTeam:
+	callasm LoadPryceTrainer
 .MahoganyGymPryceScriptEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
@@ -107,7 +107,7 @@ PryceScript_Defeat:
 .PryceRematch:
 	special HealParty
 	winlosstext Pryce_RematchDefeatText, 0
-	loadtrainer PRYCE, 4
+	loadtrainer PRYCE, 10
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

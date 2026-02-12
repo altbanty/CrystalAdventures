@@ -11,12 +11,12 @@ InitGymTMs:
 
 	; Byte 0: 4 gyms (Morty/Whitney/Bugsy/Falkner)
 	ld c, 4
-	call .BuildByte
+	call BuildRandomByte
 	ld [wGymTMChoices], a
 
 	; Byte 1: 4 gyms (Clair/Pryce/Jasmine/Chuck)
 	ld c, 4
-	call .BuildByte
+	call BuildRandomByte
 	ld [wGymTMChoices + 1], a
 
 	; Set init flag
@@ -25,7 +25,7 @@ InitGymTMs:
 	ld [wGymTeamChoices2], a
 	ret
 
-.BuildByte:
+BuildRandomByte:
 ; Build a byte with c packed 2-bit random values (0-2).
 	xor a
 	ld b, a
@@ -95,3 +95,62 @@ GymTMPools:
 	db TM_IRON_TAIL,     TM_STEEL_WING,  TM_SANDSTORM     ; Jasmine
 	db TM_ICY_WIND,      TM_BLIZZARD,    TM_REST          ; Pryce
 	db TM_DRAGONBREATH,  TM_FIRE_BLAST,  TM_THUNDERPUNCH  ; Clair
+
+; --- Randomized Scaled Gym Teams (Chuck, Jasmine, Pryce) ---
+
+InitScaledGymTeams:
+	ld a, [wScaledGymTeamChoices]
+	bit 7, a
+	ret nz
+	ld c, 3
+	call BuildRandomByte
+	or %10000000             ; set init flag
+	ld [wScaledGymTeamChoices], a
+	ret
+
+LoadChuckTrainer::
+	ld c, %00110000          ; Chuck mask (bits 5-4)
+	ld b, 4                  ; shift count
+	ld e, CHUCK
+	jr _LoadScaledGymTrainer
+
+LoadJasmineTrainer::
+	ld c, %00001100          ; Jasmine mask (bits 3-2)
+	ld b, 2                  ; shift count
+	ld e, JASMINE
+	jr _LoadScaledGymTrainer
+
+LoadPryceTrainer::
+	ld c, %00000011          ; Pryce mask (bits 1-0)
+	ld b, 0                  ; shift count
+	ld e, PRYCE
+	; fall through
+
+_LoadScaledGymTrainer:
+	push bc
+	push de
+	call InitScaledGymTeams
+	pop de
+	pop bc
+	; Extract variant (0-2) from wScaledGymTeamChoices
+	ld a, [wScaledGymTeamChoices]
+	and c                    ; mask the relevant bits
+	; Shift right by b positions
+	inc b
+.shift_loop:
+	dec b
+	jr z, .shift_done
+	srl a
+	jr .shift_loop
+.shift_done:
+	; a = variant (0-2), wScriptVar = tier base (0/3/6)
+	ld d, a                  ; d = variant
+	ld a, [wScriptVar]       ; tier base from setval
+	add d                    ; + variant
+	inc a                    ; 1-based trainer ID
+	ld [wOtherTrainerID], a
+	ld a, e
+	ld [wOtherTrainerClass], a
+	ld a, (1 << 7) | 1
+	ld [wBattleScriptFlags], a
+	ret

@@ -3145,7 +3145,7 @@ wBrentFightCount::   db
 wTiffanyFightCount:: db
 wVanceFightCount::   db
 wWiltonFightCount::  db
-wKenjiFightCount::   db ; unreferenced
+wScaledGymTeamChoices:: db ; bit 7 = init flag, bits 5-4 = Chuck (0-2), bits 3-2 = Jasmine (0-2), bits 1-0 = Pryce (0-2)
 wParryFightCount::   db
 wErinFightCount::    db
 

@@ -38,20 +38,20 @@ CianwoodGymChuckScript:
 	waitbutton
 	closetext
 	winlosstext ChuckLossText, 0
-	;  Level scaling if statments
+	;  Level scaling + team randomization
 	readvar VAR_BADGES
 	ifequal 6, .SevenBadges
 	ifequal 5, .SixBadges
-	ifequal 4, .FiveBadges
 .FiveBadges:
-	loadtrainer CHUCK, CHUCK1
-	sjump .CianwoodGymChuckScriptEnd
+	setval 0           ; tier 1 base
+	sjump .LoadTeam
 .SixBadges:
-	loadtrainer CHUCK, 2
-	sjump .CianwoodGymChuckScriptEnd
+	setval 3           ; tier 2 base
+	sjump .LoadTeam
 .SevenBadges:
-	loadtrainer CHUCK, 3
-	sjump .CianwoodGymChuckScriptEnd
+	setval 6           ; tier 3 base
+.LoadTeam:
+	callasm LoadChuckTrainer
 .CianwoodGymChuckScriptEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
@@ -123,7 +123,7 @@ CianwoodGymChuckScript:
 .ChuckRematch:
 	special HealParty
 	winlosstext Chuck_RematchDefeatText, 0
-	loadtrainer CHUCK, 4
+	loadtrainer CHUCK, 10
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_4
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
