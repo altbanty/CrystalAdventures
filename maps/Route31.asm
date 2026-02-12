@@ -226,11 +226,13 @@ Route31MailRecipientScript:
 	writetext Text_Route31ReadingMail
 	promptbutton
 	setevent EVENT_GAVE_KENYA
-	verbosegiveitem TM_NIGHTMARE
+	callasm PickRandomItems
+	db 5, TM_NIGHTMARE, TM_PSYWAVE, TM_DREAM_EATER, TM_BIDE, TM_SNORE
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoomForItems
 	setevent EVENT_GOT_TM50_NIGHTMARE
 .DescribeNightmare:
-	writetext Text_Route31DescribeNightmare
+	writetext Text_Route31SleepyMan
 	waitbutton
 .NoRoomForItems:
 	closetext
@@ -369,7 +371,7 @@ Text_Route31ReadingMail:
 	line "to have this!"
 	done
 
-Text_Route31DescribeNightmare:
+Text_Route31DescribeNightmare: ; unreferenced
 	text "TM50 is NIGHTMARE."
 
 	para "It's a wicked move"

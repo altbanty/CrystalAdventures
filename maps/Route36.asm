@@ -158,7 +158,9 @@ Route36RockSmashGuyScript:
 .ClearedSudowoodo:
 	writetext RockSmashGuyText2
 	promptbutton
-	verbosegiveitem TM_ROCK_SMASH
+	callasm PickRandomItems
+	db 5, TM_ROCK_SMASH, TM_ROLLOUT, TM_WATER_GUN, TM_MEGA_KICK, TM_HORN_DRILL
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoomForTM
 	setevent EVENT_GOT_TM08_ROCK_SMASH
 .AlreadyGotRockSmash:
@@ -535,18 +537,11 @@ Text_ReceivedTM08: ; unreferenced
 	done
 
 RockSmashGuyText3:
-	text "That happens to be"
-	line "ROCK SMASH."
+	text "Use that TM well!"
 
-	para "You can shatter"
-	line "rocks with just a"
-
-	para "single well-aimed"
-	line "smack."
-
-	para "If any rocks are"
-	line "in your way, just"
-	cont "smash 'em up!"
+	para "I bet you can do"
+	line "great things with"
+	cont "your #MON."
 	done
 
 UnusedOddTreeText: ; unreferenced

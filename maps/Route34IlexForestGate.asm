@@ -49,7 +49,9 @@ Route34IlexForestGateTeacherScript:
 	iftrue .GotSweetScent
 	writetext Route34IlexForestGateTeacherText
 	promptbutton
-	verbosegiveitem TM_SWEET_SCENT
+	callasm PickRandomItems
+	db 5, TM_SWEET_SCENT, TM_TELEPORT, TM_DEFENSE_CURL, TM_RAZOR_WIND, TM_BUBBLEBEAM
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoom
 	setevent EVENT_GOT_TM12_SWEET_SCENT
 .GotSweetScent:
@@ -98,13 +100,9 @@ Route34IlexForestGateTeacherText:
 	done
 
 Route34IlexForestGateTeacher_GotSweetScent:
-	text "It's SWEET SCENT."
-
-	para "Use it wherever"
-	line "#MON appear."
-
-	para "#MON will be"
-	line "enticed by it."
+	text "I hope it helps"
+	line "you find plenty"
+	cont "of #MON!"
 	done
 
 Route34IlexForestGateTeacher_ForestIsRestless:

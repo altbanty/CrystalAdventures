@@ -375,7 +375,9 @@ IlexForestHeadbuttGuyScript:
 	iftrue .AlreadyGotHeadbutt
 	writetext Text_HeadbuttIntro
 	promptbutton
-	verbosegiveitem TM_HEADBUTT
+	callasm PickRandomItems
+	db 5, TM_HEADBUTT, TM_FURY_CUTTER, TM_MEGA_PUNCH, TM_SKULL_BASH, TM_TAKE_DOWN
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .BagFull
 	setevent EVENT_GOT_TM02_HEADBUTT
 .AlreadyGotHeadbutt:
@@ -827,14 +829,14 @@ Text_HeadbuttIntro:
 	line "using HEADBUTT."
 
 	para "It's fun. Here,"
-	line "you try it too!"
+	line "take this TM!"
 	done
 
 Text_HeadbuttOutro:
-	text "Rattle trees with"
-	line "HEADBUTT. Some-"
-	cont "times, sleeping"
-	cont "#MON fall out."
+	text "Try teaching that"
+	line "to your #MON."
+	cont "I bet they'd"
+	cont "love it!"
 	done
 
 Text_IlexForestLass:

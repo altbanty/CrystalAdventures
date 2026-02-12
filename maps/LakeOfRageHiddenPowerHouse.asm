@@ -13,7 +13,9 @@ HiddenPowerGuy:
 	iftrue .AlreadyGotItem
 	writetext HiddenPowerGuyText1
 	promptbutton
-	verbosegiveitem TM_HIDDEN_POWER
+	callasm PickRandomItems
+	db 5, TM_HIDDEN_POWER, TM_PSYCHIC_M, TM_THUNDERPUNCH, TM_FIRE_PUNCH, TM_ICE_PUNCH
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .Done
 	setevent EVENT_GOT_TM10_HIDDEN_POWER
 	writetext HiddenPowerGuyText2
@@ -48,17 +50,12 @@ HiddenPowerGuyText1:
 	done
 
 HiddenPowerGuyText2:
-	text "Do you see it? It"
-	line "is HIDDEN POWER!"
+	text "Do you see? The"
+	line "power within your"
+	cont "#MON awaits…"
 
-	para "It draws out the"
-	line "power of #MON"
-	cont "for attacking."
-
-	para "Remember this: its"
-	line "type and power de-"
-	cont "pend on the #-"
-	cont "MON using it."
+	para "Use it wisely,"
+	line "child."
 	done
 
 HiddenPowerGuyText3:

@@ -73,7 +73,9 @@ GoldenrodDeptStore5FReceptionistScript:
 .VeryHappy:
 	writetext GoldenrodDeptStore5FReceptionistThisMoveShouldBePerfectText
 	promptbutton
-	verbosegiveitem TM_RETURN
+	callasm PickRandomItems
+	db 5, TM_RETURN, TM_BODY_SLAM, TM_PAY_DAY, TM_METRONOME, TM_TRI_ATTACK
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .Done
 	setflag ENGINE_GOLDENROD_DEPT_STORE_TM27_RETURN
 	closetext
@@ -88,7 +90,9 @@ GoldenrodDeptStore5FReceptionistScript:
 .NotVeryHappy:
 	writetext GoldenrodDeptStore5FReceptionistItLooksEvilHowAboutThisTMText
 	promptbutton
-	verbosegiveitem TM_FRUSTRATION
+	callasm PickRandomItems
+	db 5, TM_FRUSTRATION, TM_SUBMISSION, TM_COUNTER, TM_MIMIC, TM_DOUBLE_EDGE
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .Done
 	setflag ENGINE_GOLDENROD_DEPT_STORE_TM27_RETURN
 	closetext

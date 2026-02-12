@@ -65,10 +65,10 @@ RadioTower3FCooltrainerFScript:
 .NoRockets:
 	writetext RadioTower3FCooltrainerFYoureMyHeroText
 	promptbutton
-	verbosegiveitem TM_SUNNY_DAY
+	callasm PickRandomItems
+	db 5, TM_SUNNY_DAY, TM_RAIN_DANCE, TM_THUNDER_WAVE, TM_REFLECT, TM_SANDSTORM
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoom
-	writetext RadioTower3FCooltrainerFItsSunnyDayText
-	waitbutton
 	closetext
 	setevent EVENT_GOT_SUNNY_DAY_FROM_RADIO_TOWER
 	end

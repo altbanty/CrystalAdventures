@@ -113,7 +113,9 @@ OfficerScript_GuardWithSludgeBomb:
 	iftrue .GotSludgeBomb
 	writetext OfficerText_FoundTM
 	promptbutton
-	verbosegiveitem TM_SLUDGE_BOMB
+	callasm PickRandomItems
+	db 5, TM_SLUDGE_BOMB, TM_SELFDESTRUCT, TM_EXPLOSION, TM_IRON_TAIL, TM_TOXIC
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoomForSludgeBomb
 	setevent EVENT_GOT_TM36_SLUDGE_BOMB
 	closetext

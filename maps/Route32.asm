@@ -52,7 +52,9 @@ Route32RoarTMGuyScript:
 	iftrue .AlreadyHaveRoar
 	writetext Text_RoarIntro
 	promptbutton
-	verbosegiveitem TM_ROAR
+	callasm PickRandomItems
+	db 5, TM_ROAR, TM_RAGE, TM_DRAGON_RAGE, TM_WHIRLWIND, TM_MUD_SLAP
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .Finish
 	setevent EVENT_GOT_TM05_ROAR
 .AlreadyHaveRoar:
@@ -837,10 +839,10 @@ Text_RoarIntro:
 
 Text_RoarOutro:
 	text "WROOOAR!"
-	line "IT'S ROAR!"
+	line "USE IT WELL!"
 
-	para "EVEN #MON RUN"
-	line "FROM A GOOD ROAR!"
+	para "LOUD MOVES ARE"
+	line "THE BEST MOVES!"
 	done
 
 MeetFriedaText:

@@ -53,16 +53,11 @@ DragonsDenB1F_ClairScene:
 	opentext
 	writetext ClairText_GiveDragonbreathDragonDen
 	promptbutton
-	giveitem TM_DRAGONBREATH
+	callasm PickRandomItems
+	db 5, TM_DRAGONBREATH, TM_EARTHQUAKE, TM_SKY_ATTACK, TM_SWORDS_DANCE, TM_HYPER_BEAM
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .BagFull
-	getitemname STRING_BUFFER_3, TM_DRAGONBREATH
-	writetext Text_ReceivedTM24
-	playsound SFX_ITEM
-	waitsfx
-	itemnotify
 	setevent EVENT_GOT_TM24_DRAGONBREATH
-	writetext ClairText_DescribeDragonbreathDragonDen
-	promptbutton
 	writetext ClairText_WhatsTheMatterDragonDen
 	waitbutton
 	closetext

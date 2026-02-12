@@ -2851,7 +2851,6 @@ AipomEvosAttacks:
 	db 6, THIEF
 	db 9, SAND_ATTACK
 	db 12, HEADBUTT
-	db 15, PAY_DAY
 	db 19, LOW_KICK
 	db 22, BATON_PASS
 	db 27, SWIFT
