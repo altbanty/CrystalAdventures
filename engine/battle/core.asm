@@ -2168,6 +2168,9 @@ UpdateBattleStateAndExperienceAfterEnemyFaint:
 	ld a, [wBattleResult]
 	and BATTLERESULT_BITMASK
 	ld [wBattleResult], a ; WIN
+	jp DistributeExperiencePoints
+
+DistributeExperiencePoints:
 	call IsAnyMonHoldingExpShare
 	jr z, .skip_exp
 	ld hl, wEnemyMonBaseStats
@@ -2202,6 +2205,17 @@ UpdateBattleStateAndExperienceAfterEnemyFaint:
 	call GiveExperiencePoints
 	pop af
 	ld [wBattleParticipantsNotFainted], a
+	ret
+
+GiveCatchExperience::
+; Award 2x exp for catching. Temporarily doubles wEnemyMonLevel.
+	ld a, [wEnemyMonLevel]
+	push af
+	add a               ; double level (max 100->200, fits in byte)
+	ld [wEnemyMonLevel], a
+	call DistributeExperiencePoints
+	pop af
+	ld [wEnemyMonLevel], a
 	ret
 
 IsAnyMonHoldingExpShare:

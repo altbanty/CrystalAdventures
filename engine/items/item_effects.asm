@@ -487,6 +487,15 @@ PokeBallEffect:
 	ld hl, Text_GotchaMonWasCaught
 	call PrintText
 
+; Award catch exp (2x normal battle exp)
+	ld a, [wBattleType]
+	cp BATTLETYPE_CONTEST
+	jr z, .no_catch_exp
+	cp BATTLETYPE_TUTORIAL
+	jr z, .no_catch_exp
+	farcall GiveCatchExperience
+.no_catch_exp:
+
 	call ClearSprites
 
 	ld a, [wTempSpecies]
