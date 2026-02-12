@@ -182,6 +182,33 @@ PickManiasPokemon::
 	ld [wScriptVar], a
 	ret
 
+; --- Randomized Kiyo's Gift Pokemon ---
+; 30% Hitmonlee, 30% Hitmonchan, 30% Hitmontop, 10% Mr. Mime
+; Output: wScriptVar = 0-3 index
+PickKiyoPokemon::
+	ld a, 100
+	call RandomRange ; a = 0-99
+	cp 30
+	jr c, .hitmonlee    ; 0-29 (30%)
+	cp 60
+	jr c, .hitmonchan   ; 30-59 (30%)
+	cp 90
+	jr c, .hitmontop    ; 60-89 (30%)
+	; 90-99 (10%)
+	ld a, 3
+	jr .done_kiyo
+.hitmonlee:
+	xor a ; 0
+	jr .done_kiyo
+.hitmonchan:
+	ld a, 1
+	jr .done_kiyo
+.hitmontop:
+	ld a, 2
+.done_kiyo:
+	ld [wScriptVar], a
+	ret
+
 ; --- Randomized Bill's Gift Pokemon ---
 ; 30% Farfetch'd, 30% Exeggcute, 15% Vulpix, 15% Eevee, 10% Magikarp
 ; Output: wScriptVar = 0-4 index

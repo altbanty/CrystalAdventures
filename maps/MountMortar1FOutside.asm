@@ -33,10 +33,26 @@ MountMortarB1FKiyoScript:
 	waitsfx
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .NoRoom
-	writetext MountMortarB1FReceiveMonText
-	playsound SFX_CAUGHT_MON
-	waitsfx
-	givepoke TYROGUE, 10
+	callasm PickKiyoPokemon
+	ifequal 0, .GiveHitmonlee
+	ifequal 1, .GiveHitmonchan
+	ifequal 2, .GiveHitmontop
+	; 3 = Mr. Mime
+	givepoke MR__MIME, 10
+	sjump .AfterGive
+
+.GiveHitmonlee:
+	givepoke HITMONLEE, 10
+	sjump .AfterGive
+
+.GiveHitmonchan:
+	givepoke HITMONCHAN, 10
+	sjump .AfterGive
+
+.GiveHitmontop:
+	givepoke HITMONTOP, 10
+
+.AfterGive:
 	setevent EVENT_GOT_TYROGUE_FROM_KIYO
 .GotTyrogue:
 	writetext MountMortarB1FKiyoGotTyrogueText
@@ -95,17 +111,14 @@ MountMortarB1FTyrogueRewardText:
 	line "fighting #MON."
 	done
 
-MountMortarB1FReceiveMonText:
+MountMortarB1FReceiveMonText: ; unreferenced
 	text "<PLAYER> received"
 	line "TYROGUE."
 	done
 
 MountMortarB1FKiyoGotTyrogueText:
-	text "TYROGUE is a"
-	line "FIGHTING-type."
-
-	para "It evolves into a"
-	line "tougher #MON."
+	text "Take good care of"
+	line "that #MON."
 
 	para "Keep up the hard"
 	line "work. I'll keep"
