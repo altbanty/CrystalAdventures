@@ -59,15 +59,7 @@ ItemNameOrder:
 	db HEAL_POWDER 		; 2f
 	db REVIVAL_HERB 	; 30
 
-	db X_ATTACK 		; 31
-	db X_DEFEND 		; 32
-	db X_SPEED 			; 33
-	db X_SPECIAL 		; 34
-	db X_ACCURACY 		; 35
-	db DIRE_HIT 		; 36
-	db GUARD_SPEC 		; 37
-
-	db REPEL 			; 38
+	db REPEL 			; 31
 	db SUPER_REPEL 		; 39
 	db MAX_REPEL 		; 3a
 	db ESCAPE_ROPE 		; 3b

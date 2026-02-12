@@ -403,7 +403,7 @@ IlexForestRevive:
 	randomized_item_5 REVIVE, SUPER_POTION, SUPER_REPEL, CALCIUM, PEARL
 
 IlexForestXAttack:
-	randomized_item_5 SILVERPOWDER, TM_SLUDGE_BOMB, TM_PSYCHIC_M, BIG_MUSHROOM, HP_UP
+	randomized_item_5 SUPER_POTION, TM_SLUDGE_BOMB, TM_PSYCHIC_M, BIG_MUSHROOM, HP_UP
 
 IlexForestAntidote:
 	randomized_item_5 ANTIDOTE, MOON_STONE, FULL_HEAL, TM_REST, IRON

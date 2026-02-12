@@ -276,14 +276,7 @@ AI_Items:
 	dbw HYPER_POTION, .HyperPotion
 	dbw SUPER_POTION, .SuperPotion
 	dbw POTION,       .Potion
-	dbw X_ACCURACY,   .XAccuracy
 	dbw FULL_HEAL,    .FullHeal
-	dbw GUARD_SPEC,   .GuardSpec
-	dbw DIRE_HIT,     .DireHit
-	dbw X_ATTACK,     .XAttack
-	dbw X_DEFEND,     .XDefend
-	dbw X_SPEED,      .XSpeed
-	dbw X_SPECIAL,    .XSpecial
 	db -1 ; end
 
 .FullHeal:
@@ -445,76 +438,6 @@ AI_Items:
 	cp 39 percent + 1
 	jp c, .Use
 	jp .DontUse
-
-; End unused
-
-.XAccuracy:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedXAccuracy
-	jp .Use
-
-.GuardSpec:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedGuardSpec
-	jp .Use
-
-.DireHit:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedDireHit
-	jp .Use
-
-.XAttack:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedXAttack
-	jp .Use
-
-.XDefend:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedXDefend
-	jp .Use
-
-.XSpeed:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedXSpeed
-	jp .Use
-
-.XSpecial:
-	call .XItem
-	jp c, .DontUse
-	call EnemyUsedXSpecial
-	jp .Use
-
-.XItem:
-	ld a, [wEnemyTurnsTaken]
-	and a
-	jr nz, .notfirstturnout
-	ld a, [bc]
-	bit ALWAYS_USE_F, a
-	jp nz, .Use
-	call Random
-	cp 50 percent + 1
-	jp c, .DontUse
-	ld a, [bc]
-	bit CONTEXT_USE_F, a
-	jp nz, .Use
-	call Random
-	cp 50 percent + 1
-	jp c, .DontUse
-	jp .Use
-.notfirstturnout
-	ld a, [bc]
-	bit ALWAYS_USE_F, a
-	jp z, .DontUse
-	call Random
-	cp 20 percent - 1
-	jp nc, .DontUse
-	jp .Use
 
 .DontUse:
 	scf
@@ -737,27 +660,6 @@ AI_HealStatus:
 	res SUBSTATUS_TOXIC, [hl]
 	ret
 
-EnemyUsedXAccuracy:
-	call AIUsedItemSound
-	ld hl, wEnemySubStatus4
-	set SUBSTATUS_X_ACCURACY, [hl]
-	ld a, X_ACCURACY
-	jp PrintText_UsedItemOn_AND_AIUpdateHUD
-
-EnemyUsedGuardSpec:
-	call AIUsedItemSound
-	ld hl, wEnemySubStatus4
-	set SUBSTATUS_MIST, [hl]
-	ld a, GUARD_SPEC
-	jp PrintText_UsedItemOn_AND_AIUpdateHUD
-
-EnemyUsedDireHit:
-	call AIUsedItemSound
-	ld hl, wEnemySubStatus4
-	set SUBSTATUS_FOCUS_ENERGY, [hl]
-	ld a, DIRE_HIT
-	jp PrintText_UsedItemOn_AND_AIUpdateHUD
-
 AICheckEnemyFractionMaxHP: ; unreferenced
 ; Input: a = divisor
 ; Work: bc = [wEnemyMonMaxHP] / a
@@ -789,36 +691,6 @@ AICheckEnemyFractionMaxHP: ; unreferenced
 	ld a, e
 	sub c
 	ret
-
-EnemyUsedXAttack:
-	ld b, ATTACK
-	ld a, X_ATTACK
-	jr EnemyUsedXItem
-
-EnemyUsedXDefend:
-	ld b, DEFENSE
-	ld a, X_DEFEND
-	jr EnemyUsedXItem
-
-EnemyUsedXSpeed:
-	ld b, SPEED
-	ld a, X_SPEED
-	jr EnemyUsedXItem
-
-EnemyUsedXSpecial:
-	ld b, SP_ATTACK
-	ld a, X_SPECIAL
-
-; Parameter
-; a = ITEM_CONSTANT
-; b = BATTLE_CONSTANT (ATTACK, DEFENSE, SPEED, SP_ATTACK, SP_DEFENSE, ACCURACY, EVASION)
-EnemyUsedXItem:
-	ld [wCurEnemyItem], a
-	push bc
-	call PrintText_UsedItemOn
-	pop bc
-	farcall RaiseStat
-	jp AIUpdateHUD
 
 ; Parameter
 ; a = ITEM_CONSTANT

@@ -32,7 +32,6 @@ ItemDescriptions:
 	dw LuckyPunchDesc
 	dw CalciumDesc
 	dw RareCandyDesc
-	dw XAccuracyDesc
 	dw LeafStoneDesc
 	dw MetalPowderDesc
 	dw NuggetDesc
@@ -40,17 +39,11 @@ ItemDescriptions:
 	dw FullHealDesc
 	dw ReviveDesc
 	dw MaxReviveDesc
-	dw GuardSpecDesc
 	dw SuperRepelDesc
 	dw MaxRepelDesc
-	dw DireHitDesc
 	dw FreshWaterDesc
 	dw SodaPopDesc
 	dw LemonadeDesc
-	dw XAttackDesc
-	dw XDefendDesc
-	dw XSpeedDesc
-	dw XSpecialDesc
 	dw CoinCaseDesc
 	dw ItemfinderDesc
 	dw TeruSama5Desc
@@ -176,6 +169,14 @@ REPT NUM_HMS
 	dw TeruSama26Desc
 ENDR
 	assert_table_length NUM_ITEMS + NUM_TMS + NUM_HMS
+; padding to $ff
+	dw TeruSama26Desc
+	dw TeruSama26Desc
+	dw TeruSama26Desc
+	dw TeruSama26Desc
+	dw TeruSama26Desc
+	dw TeruSama26Desc
+	dw TeruSama26Desc
 	assert_table_length $ff
 
 MasterBallDesc:
@@ -301,10 +302,6 @@ RareCandyDesc:
 	db   "Raises level of a"
 	next "#MON by one.@"
 
-XAccuracyDesc:
-	db   "Raises accuracy."
-	next "(1 BTL)@"
-
 LeafStoneDesc:
 	db   "Evolves certain"
 	next "kinds of #MON.@"
@@ -333,10 +330,6 @@ MaxReviveDesc:
 	db   "Fully restores a"
 	next "fainted #MON.@"
 
-GuardSpecDesc:
-	db   "Prevents stats"
-	next "reduction. (1 BTL)@"
-
 SuperRepelDesc:
 	db   "Repels weak #-"
 	next "MON for 200 steps.@"
@@ -344,10 +337,6 @@ SuperRepelDesc:
 MaxRepelDesc:
 	db   "Repels weak #-"
 	next "MON for 250 steps.@"
-
-DireHitDesc:
-	db   "Ups critical hit"
-	next "ratio. (1 BTL)@"
 
 FreshWaterDesc:
 	db   "Restores #MON"
@@ -360,22 +349,6 @@ SodaPopDesc:
 LemonadeDesc:
 	db   "Restores #MON"
 	next "HP by 80.@"
-
-XAttackDesc:
-	db   "Raises ATTACK."
-	next "(1 BTL)@"
-
-XDefendDesc:
-	db   "Raises DEFENSE."
-	next "(1 BTL)@"
-
-XSpeedDesc:
-	db   "Raises SPEED."
-	next "(1 BTL)@"
-
-XSpecialDesc:
-	db   "Raises SPECIAL"
-	next "ATTACK. (1 BTL)@"
 
 CoinCaseDesc:
 	db   "Holds up to 9,999"

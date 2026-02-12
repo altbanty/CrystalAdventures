@@ -53,7 +53,7 @@ Route2DiglettsCaveSign:
 	jumptext Route2DiglettsCaveSignText
 
 Route2DireHit:
-	itemball BRIGHTPOWDER
+	itemball MAX_REPEL
 
 Route2MaxPotion:
 	itemball SILVERPOWDER

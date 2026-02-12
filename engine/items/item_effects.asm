@@ -45,7 +45,6 @@ ItemEffects:
 	dw NoEffect            ; LUCKY_PUNCH
 	dw VitaminEffect       ; CALCIUM
 	dw RareCandyEffect     ; RARE_CANDY
-	dw XAccuracyEffect     ; X_ACCURACY
 	dw EvoStoneEffect      ; LEAF_STONE
 	dw NoEffect            ; METAL_POWDER
 	dw NoEffect            ; NUGGET
@@ -53,17 +52,11 @@ ItemEffects:
 	dw StatusHealingEffect ; FULL_HEAL
 	dw ReviveEffect        ; REVIVE
 	dw ReviveEffect        ; MAX_REVIVE
-	dw GuardSpecEffect     ; GUARD_SPEC
 	dw SuperRepelEffect    ; SUPER_REPEL
 	dw MaxRepelEffect      ; MAX_REPEL
-	dw DireHitEffect       ; DIRE_HIT
 	dw RestoreHPEffect     ; FRESH_WATER
 	dw RestoreHPEffect     ; SODA_POP
 	dw RestoreHPEffect     ; LEMONADE
-	dw XItemEffect         ; X_ATTACK
-	dw XItemEffect         ; X_DEFEND
-	dw XItemEffect         ; X_SPEED
-	dw XItemEffect         ; X_SPECIAL
 	dw CoinCaseEffect      ; COIN_CASE
 	dw ItemfinderEffect    ; ITEMFINDER
 	dw PokeFluteEffect     ; POKE_FLUTE
@@ -2081,13 +2074,6 @@ RepelUsedEarlierIsStillInEffectText:
 	text_far _RepelUsedEarlierIsStillInEffectText
 	text_end
 
-XAccuracyEffect:
-	ld hl, wPlayerSubStatus4
-	bit SUBSTATUS_X_ACCURACY, [hl]
-	jp nz, WontHaveAnyEffect_NotUsedMessage
-	set SUBSTATUS_X_ACCURACY, [hl]
-	jp UseItemText
-
 PokeDollEffect:
 	ld a, [wBattleMode]
 	dec a ; WILD_BATTLE?
@@ -2104,54 +2090,6 @@ PokeDollEffect:
 	xor a
 	ld [wItemEffectSucceeded], a
 	ret
-
-GuardSpecEffect:
-	ld hl, wPlayerSubStatus4
-	bit SUBSTATUS_MIST, [hl]
-	jp nz, WontHaveAnyEffect_NotUsedMessage
-	set SUBSTATUS_MIST, [hl]
-	jp UseItemText
-
-DireHitEffect:
-	ld hl, wPlayerSubStatus4
-	bit SUBSTATUS_FOCUS_ENERGY, [hl]
-	jp nz, WontHaveAnyEffect_NotUsedMessage
-	set SUBSTATUS_FOCUS_ENERGY, [hl]
-	jp UseItemText
-
-XItemEffect:
-	call UseItemText
-
-	ld a, [wCurItem]
-	ld hl, XItemStats
-
-.loop
-	cp [hl]
-	jr z, .got_it
-	inc hl
-	inc hl
-	jr .loop
-
-.got_it
-	inc hl
-	ld b, [hl]
-	xor a
-	ldh [hBattleTurn], a
-	ld [wAttackMissed], a
-	ld [wEffectFailed], a
-	farcall RaiseStat
-	call WaitSFX
-
-	farcall BattleCommand_StatUpMessage
-	farcall BattleCommand_StatUpFailText
-
-	ld a, [wCurBattleMon]
-	ld [wCurPartyMon], a
-	ld c, HAPPINESS_USEDXITEM
-	farcall ChangeHappiness
-	ret
-
-INCLUDE "data/items/x_stats.asm"
 
 PokeFluteEffect:
 	ld a, [wBattleMode]

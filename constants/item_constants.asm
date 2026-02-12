@@ -37,26 +37,19 @@
 	const LUCKY_PUNCH  ; 1d
 	const CALCIUM      ; 1e
 	const RARE_CANDY   ; 1f
-	const X_ACCURACY   ; 20
-	const LEAF_STONE   ; 21
+	const LEAF_STONE   ; 20
 	const METAL_POWDER ; 22
 	const NUGGET       ; 23
 	const POKE_DOLL    ; 24
 	const FULL_HEAL    ; 25
 	const REVIVE       ; 26
 	const MAX_REVIVE   ; 27
-	const GUARD_SPEC   ; 28
-	const SUPER_REPEL  ; 29
-	const MAX_REPEL    ; 2a
-	const DIRE_HIT     ; 2b
-	const FRESH_WATER  ; 2c
+	const SUPER_REPEL  ; 28
+	const MAX_REPEL    ; 29
+	const FRESH_WATER  ; 2a
 	const SODA_POP     ; 2d
-	const LEMONADE     ; 2e
-	const X_ATTACK     ; 2f
-	const X_DEFEND     ; 30
-	const X_SPEED      ; 31
-	const X_SPECIAL    ; 32
-	const COIN_CASE    ; 33
+	const LEMONADE     ; 2c
+	const COIN_CASE    ; 2d
 	const ITEMFINDER   ; 34
 	const POKE_FLUTE   ; 35
 	const EXP_SHARE    ; 36

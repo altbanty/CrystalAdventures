@@ -60,7 +60,7 @@ UnionCaveB1FTMSwift:
 	randomized_item_5 TM_SWIFT, WATER_STONE, SOFT_SAND, TM_ROAR, HARD_STONE
 
 UnionCaveB1FXDefend:
-	randomized_item_5 NUGGET, PEARL, GREAT_BALL, BIG_PEARL, PEARL
+	randomized_item_5 GREAT_BALL, PEARL, GREAT_BALL, BIG_PEARL, PEARL
 
 UnionCaveB1FBoulder:
 	jumpstd StrengthBoulderScript

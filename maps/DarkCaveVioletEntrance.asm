@@ -23,7 +23,7 @@ DarkCaveVioletEntranceHyperPotion:
 	randomized_item_5 HYPER_POTION, SUPER_POTION, REVIVE, RARE_CANDY, NUGGET
 
 DarkCaveVioletEntranceDireHit:
-	randomized_item_5 DIRE_HIT, X_ATTACK, X_DEFEND, X_SPEED, GUARD_SPEC
+	randomized_item_5 SUPER_POTION, ANTIDOTE, REPEL, GREAT_BALL, REVIVE
 
 DarkCaveVioletEntranceRock:
 	jumpstd SmashRockScript

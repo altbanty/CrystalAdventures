@@ -172,7 +172,7 @@ Route46Sign:
 	jumptext Route46SignText
 
 Route46XSpeed:
-	randomized_item_5 X_SPEED, POKE_BALL, ANTIDOTE, PEARL, POTION
+	randomized_item_5 SUPER_POTION, POKE_BALL, ANTIDOTE, PEARL, POTION
 
 Route46FruitTree1:
 	fruittree FRUITTREE_ROUTE_46_1

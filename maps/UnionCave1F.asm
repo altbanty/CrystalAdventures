@@ -73,7 +73,7 @@ UnionCave1FGreatBall:
 	randomized_item_5 POKE_BALL, GREAT_BALL, POTION, SUPER_POTION, PEARL
 
 UnionCave1FXAttack:
-	randomized_item_5 PEARL, POTION, REVIVE, PARLYZ_HEAL, HP_UP
+	randomized_item_5 REPEL, POTION, REVIVE, PARLYZ_HEAL, HP_UP
 
 UnionCave1FPotion:
 	randomized_item_5 POTION, AWAKENING, BURN_HEAL, RARE_CANDY, PROTEIN
