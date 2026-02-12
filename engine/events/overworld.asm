@@ -1814,9 +1814,9 @@ InitMartTMs::
 	ld c, 32
 	call .FillSlots
 
-	; Slots 5-7: Tier 2 (29 TMs)
+	; Slots 5-7: Tier 2 (30 TMs)
 	ld b, 3
-	ld c, 29
+	ld c, 30
 	call .FillSlots
 
 	; Slot 8: Tier 1 (17 TMs)
@@ -2017,7 +2017,7 @@ MartTier3TMs: ; 32 TMs - $2,500
 	db TM_RAGE, TM_BIDE, TM_RAZOR_WIND, TM_SKULL_BASH
 	assert MartTier2TMs - MartTier3TMs <= 32
 
-MartTier2TMs: ; 29 TMs - $5,000
+MartTier2TMs: ; 30 TMs - $5,000
 	db TM_DYNAMICPUNCH, TM_CURSE, TM_TOXIC, TM_ZAP_CANNON, TM_PROTECT
 	db TM_GIGA_DRAIN, TM_IRON_TAIL, TM_DRAGONBREATH, TM_RETURN, TM_DIG
 	db TM_ICE_PUNCH, TM_SLEEP_TALK, TM_THUNDERPUNCH, TM_REST, TM_STEEL_WING
@@ -2027,7 +2027,7 @@ MartTier2TMs: ; 29 TMs - $5,000
 	db TM_SKY_ATTACK, TM_TRI_ATTACK, TM_SUBMISSION, TM_MIMIC
 	db TM_MEGA_DRAIN, TM_PAY_DAY, TM_METRONOME
 	; Phase 2 Gen 1 TMs
-	db TM_BUBBLEBEAM, TM_WATER_GUN
+	db TM_BUBBLEBEAM, TM_WATER_GUN, TM_EGG_BOMB
 	assert MartTier1TMs - MartTier2TMs <= 32
 
 MartTier1TMs: ; 17 TMs - $10,000

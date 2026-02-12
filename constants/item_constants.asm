@@ -269,6 +269,7 @@ TM01 EQU const_value
 	add_tm SKULL_BASH   ; TM81
 	add_tm BUBBLEBEAM   ; TM82
 	add_tm WATER_GUN    ; TM83
+	add_tm EGG_BOMB     ; TM84
 NUM_TMS EQU __tmhm_value__ - 1
 
 add_hm: MACRO

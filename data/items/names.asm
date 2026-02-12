@@ -242,6 +242,7 @@ ItemNames::
 	li "TM81"
 	li "TM82"
 	li "TM83"
+	li "TM84"
 	assert_list_length NUM_ITEMS + NUM_TMS
 	li "HM01"
 	li "HM02"
@@ -251,7 +252,6 @@ ItemNames::
 	li "HM06"
 	li "HM07"
 	assert_list_length NUM_ITEMS + NUM_TMS + NUM_HMS
-	li "?"
 	li "?"
 	li "?"
 	li "?"
