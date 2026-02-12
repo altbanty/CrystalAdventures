@@ -13,6 +13,8 @@ ReadTrainerParty:
 	and a
 	ret nz
 
+	farcall CheckTrainerVariant
+
 	ld hl, wOTPartyCount
 	xor a
 	ld [hli], a

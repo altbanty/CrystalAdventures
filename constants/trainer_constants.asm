@@ -198,6 +198,18 @@ KRIS EQU __trainer_class__
 	const JASON
 	const JOEY4
 	const JOEY5
+	const JOEY1_V1
+	const JOEY1_V2
+	const MIKEY_V1
+	const MIKEY_V2
+	const ALBERT_V1
+	const ALBERT_V2
+	const GORDON_V1
+	const GORDON_V2
+	const SAMUEL_V1
+	const SAMUEL_V2
+	const IAN_V1
+	const IAN_V2
 
 	trainerclass SCHOOLBOY ; 17
 	const JACK1
@@ -224,6 +236,12 @@ KRIS EQU __trainer_class__
 	const ALAN5
 	const CHAD4
 	const CHAD5
+	const JACK1_V1
+	const JACK1_V2
+	const ALAN1_V1
+	const ALAN1_V2
+	const CHAD1_V1
+	const CHAD1_V2
 
 	trainerclass BIRD_KEEPER ; 18
 	const ROD
@@ -245,6 +263,18 @@ KRIS EQU __trainer_class__
 	const JOSE3
 	const VANCE2
 	const VANCE3
+	const PETER_V1
+	const PETER_V2
+	const BRYAN_V1
+	const BRYAN_V2
+	const THEO_V1
+	const THEO_V2
+	const TOBY_V1
+	const TOBY_V2
+	const DENIS_V1
+	const DENIS_V2
+	const VANCE1_V1
+	const VANCE1_V2
 
 	trainerclass LASS ; 19
 	const CARRIE
@@ -264,6 +294,16 @@ KRIS EQU __trainer_class__
 	const DANA3
 	const DANA4
 	const DANA5
+	const CARRIE_V1
+	const CARRIE_V2
+	const BRIDGET_V1
+	const BRIDGET_V2
+	const KRISE_V1
+	const KRISE_V2
+	const DANA1_V1
+	const DANA1_V2
+	const CONNIE1_V1
+	const CONNIE1_V2
 
 	trainerclass JANINE ; 1a
 	const JANINE1
@@ -289,6 +329,14 @@ KRIS EQU __trainer_class__
 	const STEVE ; unused
 	const ALLEN
 	const DARIN
+	const NICK_V1
+	const NICK_V2
+	const AARON_V1
+	const AARON_V2
+	const ALLEN_V1
+	const ALLEN_V2
+	const RYAN_V1
+	const RYAN_V2
 
 	trainerclass COOLTRAINERF ; 1c
 	const GWEN
@@ -312,6 +360,18 @@ KRIS EQU __trainer_class__
 	const REENA2
 	const REENA3
 	const CARA
+	const IRENE_V1
+	const IRENE_V2
+	const JENN_V1
+	const JENN_V2
+	const KATE_V1
+	const KATE_V2
+	const GWEN_V1
+	const GWEN_V2
+	const EMMA_V1
+	const EMMA_V2
+	const LOIS_V1
+	const LOIS_V2
 
 	trainerclass BEAUTY ; 1d
 	const VICTORIA
@@ -331,6 +391,14 @@ KRIS EQU __trainer_class__
 	const THERESA ; unused
 	const VALERIE
 	const OLIVIA
+	const VICTORIA_V1
+	const VICTORIA_V2
+	const SAMANTHA_V1
+	const SAMANTHA_V2
+	const VALERIE_V1
+	const VALERIE_V2
+	const OLIVIA_V1
+	const OLIVIA_V2
 
 	trainerclass POKEMANIAC ; 1e
 	const LARRY
@@ -348,6 +416,28 @@ KRIS EQU __trainer_class__
 	const ZACH
 	const BRENT4
 	const MILLER
+	const LARRY_V1
+	const LARRY_V2
+	const ANDREW_V1
+	const ANDREW_V2
+	const CALVIN_V1
+	const CALVIN_V2
+	const SHANE_V1
+	const SHANE_V2
+	const BEN_V1
+	const BEN_V2
+	const BRENT1_V1
+	const BRENT1_V2
+	const RON_V1
+	const RON_V2
+	const ISSAC_V1
+	const ISSAC_V2
+	const DONALD_V1
+	const DONALD_V2
+	const MILLER_V1
+	const MILLER_V2
+	const ZACH_V1
+	const ZACH_V2
 
 	trainerclass GRUNTM ; 1f
 	const GRUNTM_1
@@ -388,10 +478,18 @@ KRIS EQU __trainer_class__
 	const GREGORY
 	const VIRGIL ; unused
 	const ALFRED
+	const PRESTON_V1
+	const PRESTON_V2
+	const ALFRED_V1
+	const ALFRED_V2
 
 	trainerclass SKIER ; 21
 	const ROXANNE
 	const CLARISSA
+	const ROXANNE_V1
+	const ROXANNE_V2
+	const CLARISSA_V1
+	const CLARISSA_V2
 
 	trainerclass TEACHER ; 22
 	const COLETTE
@@ -421,6 +519,20 @@ KRIS EQU __trainer_class__
 	const ARNIE4
 	const ARNIE5
 	const WAYNE
+	const DON_V1
+	const DON_V2
+	const WADE1_V1
+	const WADE1_V2
+	const BUG_CATCHER_BENNY_V1
+	const BUG_CATCHER_BENNY_V2
+	const AL_V1
+	const AL_V2
+	const JOSH_V1
+	const JOSH_V2
+	const ARNIE1_V1
+	const ARNIE1_V2
+	const WAYNE_V1
+	const WAYNE_V2
 
 	trainerclass FISHER ; 25
 	const JUSTIN
@@ -448,6 +560,24 @@ KRIS EQU __trainer_class__
 	const RALPH4
 	const RALPH5
 	const TULLY4
+	const JUSTIN_V1
+	const JUSTIN_V2
+	const RALPH1_V1
+	const RALPH1_V2
+	const HENRY_V1
+	const HENRY_V2
+	const TULLY1_V1
+	const TULLY1_V2
+	const MARVIN_V1
+	const MARVIN_V2
+	const ANDRE_V1
+	const ANDRE_V2
+	const RAYMOND_V1
+	const RAYMOND_V2
+	const WILTON1_V1
+	const WILTON1_V2
+	const EDGAR_V1
+	const EDGAR_V2
 
 	trainerclass SWIMMERM ; 26
 	const HAROLD
@@ -471,6 +601,20 @@ KRIS EQU __trainer_class__
 	const JAMES ; unused
 	const LEWIS ; unused
 	const PARKER
+	const SIMON_V1
+	const SIMON_V2
+	const RANDALL_V1
+	const RANDALL_V2
+	const CHARLIE_V1
+	const CHARLIE_V2
+	const GEORGE_V1
+	const GEORGE_V2
+	const BERKE_V1
+	const BERKE_V2
+	const KIRK_V1
+	const KIRK_V2
+	const MATHEW_V1
+	const MATHEW_V2
 
 	trainerclass SWIMMERF ; 27
 	const ELAINE
@@ -492,6 +636,20 @@ KRIS EQU __trainer_class__
 	const NIKKI
 	const DIANA
 	const BRIANA
+	const ELAINE_V1
+	const ELAINE_V2
+	const PAULA_V1
+	const PAULA_V2
+	const KAYLEE_V1
+	const KAYLEE_V2
+	const SUSIE_V1
+	const SUSIE_V2
+	const DENISE_V1
+	const DENISE_V2
+	const KARA_V1
+	const KARA_V2
+	const WENDY_V1
+	const WENDY_V2
 
 	trainerclass SAILOR ; 28
 	const EUGENE
@@ -507,6 +665,18 @@ KRIS EQU __trainer_class__
 	const HUEY2
 	const HUEY3
 	const HUEY4
+	const EUGENE_V1
+	const EUGENE_V2
+	const HUEY1_V1
+	const HUEY1_V2
+	const TERRELL_V1
+	const TERRELL_V2
+	const KENT_V1
+	const KENT_V2
+	const ERNEST_V1
+	const ERNEST_V2
+	const HARRY_V1
+	const HARRY_V2
 
 	trainerclass SUPER_NERD ; 29
 	const STAN
@@ -523,6 +693,14 @@ KRIS EQU __trainer_class__
 	const NORTON ; unused
 	const HUGH
 	const MARKUS
+	const ERIC_V1
+	const ERIC_V2
+	const TERU_V1
+	const TERU_V2
+	const MARKUS_V1
+	const MARKUS_V2
+	const HUGH_V1
+	const HUGH_V2
 
 	trainerclass RIVAL2 ; 2a
 	; encounter 6 (Mt. Moon) - 8 variants
@@ -571,6 +749,24 @@ KRIS EQU __trainer_class__
 	const PARRY3
 	const ANTHONY4
 	const ANTHONY5
+	const RUSSELL_V1
+	const RUSSELL_V2
+	const DANIEL_V1
+	const DANIEL_V2
+	const ANTHONY1_V1
+	const ANTHONY1_V2
+	const PHILLIP_V1
+	const PHILLIP_V2
+	const LEONARD_V1
+	const LEONARD_V2
+	const BENJAMIN_V1
+	const BENJAMIN_V2
+	const ERIK_V1
+	const ERIK_V2
+	const MICHAEL_V1
+	const MICHAEL_V2
+	const TIMOTHY_V1
+	const TIMOTHY_V2
 
 	trainerclass BIKER ; 2d
 	const BIKER_BENNY ; unused
@@ -590,6 +786,10 @@ KRIS EQU __trainer_class__
 	const DUNCAN
 	const EDDIE
 	const COREY
+	const DUNCAN_V1
+	const DUNCAN_V2
+	const EDDIE_V1
+	const EDDIE_V2
 
 	trainerclass FIREBREATHER ; 30
 	const OTIS
@@ -600,6 +800,12 @@ KRIS EQU __trainer_class__
 	const WALT
 	const RAY
 	const LYLE
+	const BILL_V1
+	const BILL_V2
+	const WALT_V1
+	const WALT_V2
+	const RAY_V1
+	const RAY_V2
 
 	trainerclass JUGGLER ; 31
 	const IRWIN1
@@ -608,6 +814,8 @@ KRIS EQU __trainer_class__
 	const IRWIN2 ; unused
 	const IRWIN3 ; unused
 	const IRWIN4 ; unused
+	const IRWIN1_V1
+	const IRWIN1_V2
 
 	trainerclass BLACKBELT_T ; 32
 	const KENJI1 ; unused
@@ -619,6 +827,16 @@ KRIS EQU __trainer_class__
 	const LUNG
 	const KENJI3
 	const WAI
+	const YOSHI_V1
+	const YOSHI_V2
+	const LAO_V1
+	const LAO_V2
+	const NOB_V1
+	const NOB_V2
+	const LUNG_V1
+	const LUNG_V2
+	const KENJI3_V1
+	const KENJI3_V2
 
 	trainerclass EXECUTIVEM ; 33
 	const EXECUTIVEM_1
@@ -639,6 +857,14 @@ KRIS EQU __trainer_class__
 	const GILBERT
 	const JARED
 	const RODNEY
+	const GREG_V1
+	const GREG_V2
+	const NORMAN_V1
+	const NORMAN_V2
+	const MARK_V1
+	const MARK_V2
+	const PHIL_V1
+	const PHIL_V2
 
 	trainerclass PICNICKER ; 35
 	const LIZ1
@@ -667,6 +893,18 @@ KRIS EQU __trainer_class__
 	const GINA4
 	const GINA5
 	const TIFFANY4
+	const LIZ1_V1
+	const LIZ1_V2
+	const GINA1_V1
+	const GINA1_V2
+	const BROOKE_V1
+	const BROOKE_V2
+	const KIM_V1
+	const KIM_V2
+	const TIFFANY1_V1
+	const TIFFANY1_V2
+	const ERIN1_V1
+	const ERIN1_V2
 
 	trainerclass CAMPER ; 36
 	const ROLAND
@@ -691,6 +929,20 @@ KRIS EQU __trainer_class__
 	const TODD4
 	const TODD5
 	const QUENTIN
+	const ROLAND_V1
+	const ROLAND_V2
+	const TODD1_V1
+	const TODD1_V2
+	const IVAN_V1
+	const IVAN_V2
+	const ELLIOT_V1
+	const ELLIOT_V2
+	const SPENCER_V1
+	const SPENCER_V2
+	const TED_V1
+	const TED_V2
+	const QUENTIN_V1
+	const QUENTIN_V2
 
 	trainerclass EXECUTIVEF ; 37
 	const EXECUTIVEF_1
@@ -709,6 +961,24 @@ KRIS EQU __trainer_class__
 	const GAKU
 	const MASA
 	const KOJI
+	const CHOW_V1
+	const CHOW_V2
+	const NICO_V1
+	const NICO_V2
+	const EDMOND_V1
+	const EDMOND_V2
+	const JIN_V1
+	const JIN_V2
+	const TROY_V1
+	const TROY_V2
+	const NEAL_V1
+	const NEAL_V2
+	const LI_V1
+	const LI_V2
+	const JEFFREY_V1
+	const JEFFREY_V2
+	const PING_V1
+	const PING_V2
 
 	trainerclass MEDIUM ; 39
 	const MARTHA
@@ -718,11 +988,21 @@ KRIS EQU __trainer_class__
 	const ETHEL ; unused
 	const REBECCA
 	const DORIS
+	const MARTHA_V1
+	const MARTHA_V2
+	const GRACE_V1
+	const GRACE_V2
 
 	trainerclass BOARDER ; 3a
 	const RONALD
 	const BRAD
 	const DOUGLAS
+	const RONALD_V1
+	const RONALD_V2
+	const BRAD_V1
+	const BRAD_V2
+	const DOUGLAS_V1
+	const DOUGLAS_V2
 
 	trainerclass POKEFANM ; 3b
 	const WILLIAM
@@ -739,6 +1019,12 @@ KRIS EQU __trainer_class__
 	const ALEX
 	const REX
 	const ALLAN
+	const WILLIAM_V1
+	const WILLIAM_V2
+	const DEREK1_V1
+	const DEREK1_V2
+	const BRANDON_V1
+	const BRANDON_V2
 
 	trainerclass KIMONO_GIRL ; 3c
 	const NAOKO_UNUSED ; unused
@@ -759,6 +1045,10 @@ KRIS EQU __trainer_class__
 	const MEGANDPEG2
 	const LEAANDPIA1
 	const LEAANDPIA2 ; unused
+	const AMYANDMAY1_V1
+	const AMYANDMAY1_V2
+	const ANNANDANNE1_V1
+	const ANNANDANNE1_V2
 
 	trainerclass POKEFANF ; 3e
 	const BEVERLY1
@@ -767,6 +1057,10 @@ KRIS EQU __trainer_class__
 	const BEVERLY3 ; unused
 	const GEORGIA
 	const JAIME
+	const BEVERLY1_V1
+	const BEVERLY1_V2
+	const RUTH_V1
+	const RUTH_V2
 
 	trainerclass RED ; 3f
 	const RED1

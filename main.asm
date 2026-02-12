@@ -164,6 +164,11 @@ INCLUDE "engine/battle/read_trainer_party.asm"
 INCLUDE "data/trainers/parties.asm"
 
 
+SECTION "Trainer Variants", ROMX
+
+INCLUDE "engine/battle/trainer_variants.asm"
+
+
 SECTION "Battle Core", ROMX
 
 INCLUDE "engine/battle/core.asm"
