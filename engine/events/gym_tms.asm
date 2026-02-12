@@ -155,6 +155,33 @@ _LoadScaledGymTrainer:
 	ld [wBattleScriptFlags], a
 	ret
 
+; --- Randomized Mania's Gift Pokemon ---
+; 40% Shuckle, 30% Corsola, 20% Delibird, 10% Seel
+; Output: wScriptVar = species constant (for GiveShuckle to read)
+PickManiasPokemon::
+	ld a, 100
+	call RandomRange ; a = 0-99
+	cp 40
+	jr c, .shuckle     ; 0-39 (40%)
+	cp 70
+	jr c, .corsola     ; 40-69 (30%)
+	cp 90
+	jr c, .delibird    ; 70-89 (20%)
+	; 90-99 (10%)
+	ld a, SEEL
+	jr .done_mania
+.shuckle:
+	ld a, SHUCKLE
+	jr .done_mania
+.corsola:
+	ld a, CORSOLA
+	jr .done_mania
+.delibird:
+	ld a, DELIBIRD
+.done_mania:
+	ld [wScriptVar], a
+	ret
+
 ; --- Randomized Bill's Gift Pokemon ---
 ; 30% Farfetch'd, 30% Exeggcute, 15% Vulpix, 15% Eevee, 10% Magikarp
 ; Output: wScriptVar = 0-4 index

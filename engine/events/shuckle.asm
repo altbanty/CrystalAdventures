@@ -5,10 +5,10 @@ GiveShuckle:
 	xor a ; PARTYMON
 	ld [wMonType], a
 
-; Level 15 Shuckle.
-	ld a, SHUCKLE
+; Species from wScriptVar (set by PickManiasPokemon), level 27.
+	ld a, [wScriptVar]
 	ld [wCurPartySpecies], a
-	ld a, 15
+	ld a, 27
 	ld [wCurPartyLevel], a
 
 	predef TryAddMonToParty
@@ -36,14 +36,6 @@ GiveShuckle:
 	ld a, HIGH(MANIA_OT_ID)
 	ld [hli], a
 	ld [hl], LOW(MANIA_OT_ID)
-
-; Nickname.
-	ld a, [wPartyCount]
-	dec a
-	ld hl, wPartyMonNicknames
-	call SkipNames
-	ld de, SpecialShuckleNickname
-	call CopyName2
 
 ; OT.
 	ld a, [wPartyCount]
@@ -75,10 +67,7 @@ ReturnShuckie:
 	farcall SelectMonFromParty
 	jr c, .refused
 
-	ld a, [wCurPartySpecies]
-	cp SHUCKLE
-	jr nz, .DontReturn
-
+	; Species check removed - OT ID + name is sufficient
 	ld a, [wCurPartyMon]
 	ld hl, wPartyMon1ID
 	ld bc, PARTYMON_STRUCT_LENGTH

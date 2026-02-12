@@ -16,6 +16,7 @@ ManiaScript:
 	writetext ManiaText_AskLookAfterShuckle
 	yesorno
 	iffalse .refusetotakeshuckie
+	callasm PickManiasPokemon
 	special GiveShuckle
 	iffalse .partyfull
 	writetext ManiaText_TakeCareOfShuckle
