@@ -9,7 +9,7 @@ SilverCaveRoom2_MapScripts:
 	def_callbacks
 
 SilverCaveRoom2Calcium:
-	randomized_item_5 CALCIUM, PROTEIN, IRON, HP_UP, CARBOS
+	randomized_item_5 CALCIUM, PROTEIN, TM_SEISMIC_TOSS, HP_UP, CARBOS
 
 SilverCaveRoom2UltraBall:
 	randomized_item_5 ULTRA_BALL, FULL_RESTORE, MAX_REVIVE, MAX_ELIXER, STAR_PIECE

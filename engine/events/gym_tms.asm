@@ -87,14 +87,14 @@ GetGymTM::
 
 GymTMPools:
 ; 3 TMs per gym, 8 gyms
-	db TM_MUD_SLAP,      TM_SWIFT,       TM_ROAR         ; Falkner
-	db TM_FURY_CUTTER,   TM_CURSE,       TM_HIDDEN_POWER  ; Bugsy
-	db TM_ATTRACT,       TM_RETURN,      TM_ROLLOUT       ; Whitney
+	db TM_MUD_SLAP,      TM_SKY_ATTACK,  TM_ROAR         ; Falkner
+	db TM_FURY_CUTTER,   TM_MEGA_DRAIN,  TM_HIDDEN_POWER  ; Bugsy
+	db TM_ATTRACT,       TM_BODY_SLAM,   TM_TRI_ATTACK    ; Whitney
 	db TM_SHADOW_BALL,   TM_DREAM_EATER, TM_NIGHTMARE     ; Morty
-	db TM_DYNAMICPUNCH,  TM_ICE_PUNCH,   TM_ROCK_SMASH    ; Chuck
-	db TM_IRON_TAIL,     TM_STEEL_WING,  TM_SANDSTORM     ; Jasmine
-	db TM_ICY_WIND,      TM_BLIZZARD,    TM_REST          ; Pryce
-	db TM_DRAGONBREATH,  TM_FIRE_BLAST,  TM_THUNDERPUNCH  ; Clair
+	db TM_DYNAMICPUNCH,  TM_COUNTER,     TM_SUBMISSION    ; Chuck
+	db TM_IRON_TAIL,     TM_STEEL_WING,  TM_ROCK_SLIDE    ; Jasmine
+	db TM_ICY_WIND,      TM_SUBSTITUTE,  TM_REFLECT       ; Pryce
+	db TM_DRAGONBREATH,  TM_DRAGON_RAGE, TM_THUNDER_WAVE  ; Clair
 
 ; --- Randomized Scaled Gym Teams (Chuck, Jasmine, Pryce) ---
 

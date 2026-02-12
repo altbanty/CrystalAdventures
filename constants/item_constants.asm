@@ -30,174 +30,147 @@
 	const FIRE_STONE   ; 16
 	const THUNDERSTONE ; 17
 	const WATER_STONE  ; 18
-	const ITEM_19      ; 19
-	const HP_UP        ; 1a
-	const PROTEIN      ; 1b
-	const IRON         ; 1c
-	const CARBOS       ; 1d
-	const LUCKY_PUNCH  ; 1e
-	const CALCIUM      ; 1f
-	const RARE_CANDY   ; 20
-	const X_ACCURACY   ; 21
-	const LEAF_STONE   ; 22
-	const METAL_POWDER ; 23
-	const NUGGET       ; 24
-	const POKE_DOLL    ; 25
-	const FULL_HEAL    ; 26
-	const REVIVE       ; 27
-	const MAX_REVIVE   ; 28
-	const GUARD_SPEC   ; 29
-	const SUPER_REPEL  ; 2a
-	const MAX_REPEL    ; 2b
-	const DIRE_HIT     ; 2c
-	const ITEM_2D      ; 2d
-	const FRESH_WATER  ; 2e
-	const SODA_POP     ; 2f
-	const LEMONADE     ; 30
-	const X_ATTACK     ; 31
-	const ITEM_32      ; 32
-	const X_DEFEND     ; 33
-	const X_SPEED      ; 34
-	const X_SPECIAL    ; 35
-	const COIN_CASE    ; 36
-	const ITEMFINDER   ; 37
-	const POKE_FLUTE   ; 38
-	const EXP_SHARE    ; 39
-	const OLD_ROD      ; 3a
-	const GOOD_ROD     ; 3b
-	const SILVER_LEAF  ; 3c
-	const SUPER_ROD    ; 3d
-	const PP_UP        ; 3e
-	const ETHER        ; 3f
-	const MAX_ETHER    ; 40
-	const ELIXER       ; 41
-	const RED_SCALE    ; 42
-	const SECRETPOTION ; 43
-	const S_S_TICKET   ; 44
-	const MYSTERY_EGG  ; 45
-	const CLEAR_BELL   ; 46
-	const SILVER_WING  ; 47
-	const MOOMOO_MILK  ; 48
-	const QUICK_CLAW   ; 49
-	const PSNCUREBERRY ; 4a
-	const GOLD_LEAF    ; 4b
-	const SOFT_SAND    ; 4c
-	const SHARP_BEAK   ; 4d
-	const PRZCUREBERRY ; 4e
-	const BURNT_BERRY  ; 4f
-	const ICE_BERRY    ; 50
-	const POISON_BARB  ; 51
-	const KINGS_ROCK   ; 52
-	const BITTER_BERRY ; 53
-	const MINT_BERRY   ; 54
-	const RED_APRICORN ; 55
-	const TINYMUSHROOM ; 56
-	const BIG_MUSHROOM ; 57
-	const SILVERPOWDER ; 58
-	const BLU_APRICORN ; 59
-	const ITEM_5A      ; 5a
-	const AMULET_COIN  ; 5b
-	const YLW_APRICORN ; 5c
-	const GRN_APRICORN ; 5d
-	const CLEANSE_TAG  ; 5e
-	const MYSTIC_WATER ; 5f
-	const TWISTEDSPOON ; 60
-	const WHT_APRICORN ; 61
-	const BLACKBELT_I  ; 62
-	const BLK_APRICORN ; 63
-	const ITEM_64      ; 64
-	const PNK_APRICORN ; 65
-	const BLACKGLASSES ; 66
-	const SLOWPOKETAIL ; 67
-	const PINK_BOW     ; 68
-	const STICK        ; 69
-	const SMOKE_BALL   ; 6a
-	const NEVERMELTICE ; 6b
-	const MAGNET       ; 6c
-	const MIRACLEBERRY ; 6d
-	const PEARL        ; 6e
-	const BIG_PEARL    ; 6f
-	const EVERSTONE    ; 70
-	const SPELL_TAG    ; 71
-	const RAGECANDYBAR ; 72
-	const GS_BALL      ; 73
-	const BLUE_CARD    ; 74
-	const MIRACLE_SEED ; 75
-	const THICK_CLUB   ; 76
-	const FOCUS_BAND   ; 77
-	const ITEM_78      ; 78
-	const ENERGYPOWDER ; 79
-	const ENERGY_ROOT  ; 7a
-	const HEAL_POWDER  ; 7b
-	const REVIVAL_HERB ; 7c
-	const HARD_STONE   ; 7d
-	const LUCKY_EGG    ; 7e
-	const CARD_KEY     ; 7f
-	const MACHINE_PART ; 80
-	const EGG_TICKET   ; 81
-	const LOST_ITEM    ; 82
-	const STARDUST     ; 83
-	const STAR_PIECE   ; 84
-	const BASEMENT_KEY ; 85
-	const PASS         ; 86
-	const ITEM_87      ; 87
-	const ITEM_88      ; 88
-	const ITEM_89      ; 89
-	const CHARCOAL     ; 8a
-	const BERRY_JUICE  ; 8b
-	const SCOPE_LENS   ; 8c
-	const ITEM_8D      ; 8d
-	const ITEM_8E      ; 8e
-	const METAL_COAT   ; 8f
-	const DRAGON_FANG  ; 90
-	const ITEM_91      ; 91
-	const LEFTOVERS    ; 92
-	const OLD_AMBER    ; 93
-	const DOME_FOSSIL  ; 94
-	const HELIX_FOSSIL ; 95
-	const MYSTERYBERRY ; 96
-	const DRAGON_SCALE ; 97
-	const BERSERK_GENE ; 98
-	const ITEM_99      ; 99
-	const ITEM_9A      ; 9a
-	const ITEM_9B      ; 9b
-	const SACRED_ASH   ; 9c
-	const HEAVY_BALL   ; 9d
-	const FLOWER_MAIL  ; 9e
-	const LEVEL_BALL   ; 9f
-	const LURE_BALL    ; a0
-	const FAST_BALL    ; a1
-	const ITEM_A2      ; a2
-	const LIGHT_BALL   ; a3
-	const FRIEND_BALL  ; a4
-	const MOON_BALL    ; a5
-	const LOVE_BALL    ; a6
-	const NORMAL_BOX   ; a7
-	const GORGEOUS_BOX ; a8
-	const SUN_STONE    ; a9
-	const POLKADOT_BOW ; aa
-	const ITEM_AB      ; ab
-	const UP_GRADE     ; ac
-	const BERRY        ; ad
-	const GOLD_BERRY   ; ae
-	const SQUIRTBOTTLE ; af
-	const ITEM_B0      ; b0
-	const PARK_BALL    ; b1
-	const RAINBOW_WING ; b2
-	const ITEM_B3      ; b3
-	const BRICK_PIECE  ; b4
-	const SURF_MAIL    ; b5
-	const LITEBLUEMAIL ; b6
-	const PORTRAITMAIL ; b7
-	const LOVELY_MAIL  ; b8
-	const EON_MAIL     ; b9
-	const MORPH_MAIL   ; ba
-	const BLUESKY_MAIL ; bb
-	const MUSIC_MAIL   ; bc
-	const MIRAGE_MAIL  ; bd
-	const ITEM_BE      ; be
-	const ITEM_C3      ; c3
-	const ITEM_DC      ; dc
+	const HP_UP        ; 19
+	const PROTEIN      ; 1a
+	const IRON         ; 1b
+	const CARBOS       ; 1c
+	const LUCKY_PUNCH  ; 1d
+	const CALCIUM      ; 1e
+	const RARE_CANDY   ; 1f
+	const X_ACCURACY   ; 20
+	const LEAF_STONE   ; 21
+	const METAL_POWDER ; 22
+	const NUGGET       ; 23
+	const POKE_DOLL    ; 24
+	const FULL_HEAL    ; 25
+	const REVIVE       ; 26
+	const MAX_REVIVE   ; 27
+	const GUARD_SPEC   ; 28
+	const SUPER_REPEL  ; 29
+	const MAX_REPEL    ; 2a
+	const DIRE_HIT     ; 2b
+	const FRESH_WATER  ; 2c
+	const SODA_POP     ; 2d
+	const LEMONADE     ; 2e
+	const X_ATTACK     ; 2f
+	const X_DEFEND     ; 30
+	const X_SPEED      ; 31
+	const X_SPECIAL    ; 32
+	const COIN_CASE    ; 33
+	const ITEMFINDER   ; 34
+	const POKE_FLUTE   ; 35
+	const EXP_SHARE    ; 36
+	const OLD_ROD      ; 37
+	const GOOD_ROD     ; 38
+	const SUPER_ROD    ; 39
+	const PP_UP        ; 3b
+	const ETHER        ; 3c
+	const MAX_ETHER    ; 3d
+	const ELIXER       ; 3e
+	const RED_SCALE    ; 3f
+	const SECRETPOTION ; 40
+	const S_S_TICKET   ; 41
+	const MYSTERY_EGG  ; 42
+	const CLEAR_BELL   ; 43
+	const SILVER_WING  ; 44
+	const MOOMOO_MILK  ; 45
+	const QUICK_CLAW   ; 46
+	const PSNCUREBERRY ; 47
+	const SOFT_SAND    ; 48
+	const SHARP_BEAK   ; 4a
+	const PRZCUREBERRY ; 4b
+	const BURNT_BERRY  ; 4c
+	const ICE_BERRY    ; 4d
+	const POISON_BARB  ; 4e
+	const KINGS_ROCK   ; 4f
+	const BITTER_BERRY ; 50
+	const MINT_BERRY   ; 51
+	const RED_APRICORN ; 52
+	const TINYMUSHROOM ; 53
+	const BIG_MUSHROOM ; 54
+	const SILVERPOWDER ; 55
+	const BLU_APRICORN ; 56
+	const AMULET_COIN  ; 57
+	const YLW_APRICORN ; 58
+	const GRN_APRICORN ; 59
+	const CLEANSE_TAG  ; 5a
+	const MYSTIC_WATER ; 5b
+	const TWISTEDSPOON ; 5c
+	const WHT_APRICORN ; 5d
+	const BLACKBELT_I  ; 5e
+	const BLK_APRICORN ; 5f
+	const PNK_APRICORN ; 60
+	const BLACKGLASSES ; 61
+	const SLOWPOKETAIL ; 62
+	const PINK_BOW     ; 63
+	const STICK        ; 64
+	const SMOKE_BALL   ; 65
+	const NEVERMELTICE ; 66
+	const MAGNET       ; 67
+	const MIRACLEBERRY ; 68
+	const PEARL        ; 69
+	const BIG_PEARL    ; 6a
+	const EVERSTONE    ; 6b
+	const SPELL_TAG    ; 6c
+	const RAGECANDYBAR ; 6d
+	const GS_BALL      ; 6e
+	const BLUE_CARD    ; 6f
+	const MIRACLE_SEED ; 70
+	const THICK_CLUB   ; 71
+	const FOCUS_BAND   ; 72
+	const ENERGYPOWDER ; 73
+	const ENERGY_ROOT  ; 74
+	const HEAL_POWDER  ; 75
+	const REVIVAL_HERB ; 76
+	const HARD_STONE   ; 77
+	const LUCKY_EGG    ; 78
+	const CARD_KEY     ; 79
+	const MACHINE_PART ; 7a
+	const EGG_TICKET   ; 7b
+	const LOST_ITEM    ; 7c
+	const STARDUST     ; 7d
+	const STAR_PIECE   ; 7e
+	const BASEMENT_KEY ; 7f
+	const PASS         ; 80
+	const CHARCOAL     ; 81
+	const BERRY_JUICE  ; 82
+	const SCOPE_LENS   ; 83
+	const METAL_COAT   ; 84
+	const DRAGON_FANG  ; 85
+	const LEFTOVERS    ; 86
+	const OLD_AMBER    ; 87
+	const DOME_FOSSIL  ; 88
+	const HELIX_FOSSIL ; 89
+	const MYSTERYBERRY ; 8a
+	const DRAGON_SCALE ; 8b
+	const BERSERK_GENE ; 8c
+	const SACRED_ASH   ; 8d
+	const HEAVY_BALL   ; 8e
+	const FLOWER_MAIL  ; 8f
+	const LEVEL_BALL   ; 90
+	const LURE_BALL    ; 91
+	const FAST_BALL    ; 92
+	const LIGHT_BALL   ; 93
+	const FRIEND_BALL  ; 94
+	const MOON_BALL    ; 95
+	const LOVE_BALL    ; 96
+	const SUN_STONE    ; 97
+	const UP_GRADE     ; 98
+	const BERRY        ; 9c
+	const GOLD_BERRY   ; 9d
+	const SQUIRTBOTTLE ; 9e
+	const PARK_BALL    ; 9f
+	const RAINBOW_WING ; a0
+	const BRICK_PIECE  ; a1
+	const SURF_MAIL    ; a2
+	const LITEBLUEMAIL ; a3
+	const PORTRAITMAIL ; a4
+	const LOVELY_MAIL  ; a5
+	const EON_MAIL     ; a6
+	const MORPH_MAIL   ; a7
+	const BLUESKY_MAIL ; a8
+	const MUSIC_MAIL   ; a9
+	const MIRAGE_MAIL  ; aa
 NUM_ITEMS EQU const_value - 1
 
 __tmhm_value__ = 1
@@ -209,7 +182,7 @@ ENDM
 
 add_tm: MACRO
 ; Defines three constants:
-; - TM_\1: the item id, starting at $bf
+; - TM_\1: the item id, starting at NUM_ITEMS + 1
 ; - \1_TMNUM: the learnable TM/HM flag, starting at 1
 ; - TM##_MOVE: alias for the move id, equal to the value of \1
 	const TM_\1
@@ -219,62 +192,96 @@ ENDM
 
 ; see data/moves/tmhm_moves.asm for moves
 TM01 EQU const_value
-	add_tm DYNAMICPUNCH ; bf
-	add_tm HEADBUTT     ; c0
-	add_tm CURSE        ; c1
-	add_tm ROLLOUT      ; c2
-	add_tm ROAR         ; c4
-	add_tm TOXIC        ; c5
-	add_tm ZAP_CANNON   ; c6
-	add_tm ROCK_SMASH   ; c7
-	add_tm PSYCH_UP     ; c8
-	add_tm HIDDEN_POWER ; c9
-	add_tm SUNNY_DAY    ; ca
-	add_tm SWEET_SCENT  ; cb
-	add_tm SNORE        ; cc
-	add_tm BLIZZARD     ; cd
-	add_tm HYPER_BEAM   ; ce
-	add_tm ICY_WIND     ; cf
-	add_tm PROTECT      ; d0
-	add_tm RAIN_DANCE   ; d1
-	add_tm GIGA_DRAIN   ; d2
-	add_tm ENDURE       ; d3
-	add_tm FRUSTRATION  ; d4
-	add_tm SOLARBEAM    ; d5
-	add_tm IRON_TAIL    ; d6
-	add_tm DRAGONBREATH ; d7
-	add_tm THUNDER      ; d8
-	add_tm EARTHQUAKE   ; d9
-	add_tm RETURN       ; da
-	add_tm DIG          ; db
-	add_tm PSYCHIC_M    ; dd
-	add_tm SHADOW_BALL  ; de
-	add_tm MUD_SLAP     ; df
-	add_tm DOUBLE_TEAM  ; e0
-	add_tm ICE_PUNCH    ; e1
-	add_tm SWAGGER      ; e2
-	add_tm SLEEP_TALK   ; e3
-	add_tm SLUDGE_BOMB  ; e4
-	add_tm SANDSTORM    ; e5
-	add_tm FIRE_BLAST   ; e6
-	add_tm SWIFT        ; e7
-	add_tm DEFENSE_CURL ; e8
-	add_tm THUNDERPUNCH ; e9
-	add_tm DREAM_EATER  ; ea
-	add_tm DETECT       ; eb
-	add_tm REST         ; ec
-	add_tm ATTRACT      ; ed
-	add_tm THIEF        ; ee
-	add_tm STEEL_WING   ; ef
-	add_tm FIRE_PUNCH   ; f0
-	add_tm FURY_CUTTER  ; f1
-	add_tm NIGHTMARE    ; f2
+	add_tm DYNAMICPUNCH ; TM01
+	add_tm HEADBUTT     ; TM02
+	add_tm CURSE        ; TM03
+	add_tm ROLLOUT      ; TM04
+	add_tm ROAR         ; TM05
+	add_tm TOXIC        ; TM06
+	add_tm ZAP_CANNON   ; TM07
+	add_tm ROCK_SMASH   ; TM08
+	add_tm PSYCH_UP     ; TM09
+	add_tm HIDDEN_POWER ; TM10
+	add_tm SUNNY_DAY    ; TM11
+	add_tm SWEET_SCENT  ; TM12
+	add_tm SNORE        ; TM13
+	add_tm BLIZZARD     ; TM14
+	add_tm HYPER_BEAM   ; TM15
+	add_tm ICY_WIND     ; TM16
+	add_tm PROTECT      ; TM17
+	add_tm RAIN_DANCE   ; TM18
+	add_tm GIGA_DRAIN   ; TM19
+	add_tm ENDURE       ; TM20
+	add_tm FRUSTRATION  ; TM21
+	add_tm SOLARBEAM    ; TM22
+	add_tm IRON_TAIL    ; TM23
+	add_tm DRAGONBREATH ; TM24
+	add_tm THUNDER      ; TM25
+	add_tm EARTHQUAKE   ; TM26
+	add_tm RETURN       ; TM27
+	add_tm DIG          ; TM28
+	add_tm PSYCHIC_M    ; TM29
+	add_tm SHADOW_BALL  ; TM30
+	add_tm MUD_SLAP     ; TM31
+	add_tm DOUBLE_TEAM  ; TM32
+	add_tm ICE_PUNCH    ; TM33
+	add_tm SWAGGER      ; TM34
+	add_tm SLEEP_TALK   ; TM35
+	add_tm SLUDGE_BOMB  ; TM36
+	add_tm SANDSTORM    ; TM37
+	add_tm FIRE_BLAST   ; TM38
+	add_tm SWIFT        ; TM39
+	add_tm DEFENSE_CURL ; TM40
+	add_tm THUNDERPUNCH ; TM41
+	add_tm DREAM_EATER  ; TM42
+	add_tm DETECT       ; TM43
+	add_tm REST         ; TM44
+	add_tm ATTRACT      ; TM45
+	add_tm THIEF        ; TM46
+	add_tm STEEL_WING   ; TM47
+	add_tm FIRE_PUNCH   ; TM48
+	add_tm FURY_CUTTER  ; TM49
+	add_tm NIGHTMARE    ; TM50
+	; Gen 1 TMs
+	add_tm BODY_SLAM    ; TM51
+	add_tm SWORDS_DANCE ; TM52
+	add_tm THUNDER_WAVE ; TM53
+	add_tm ROCK_SLIDE   ; TM54
+	add_tm SUBSTITUTE   ; TM55
+	add_tm DOUBLE_EDGE  ; TM56
+	add_tm REFLECT      ; TM57
+	add_tm EXPLOSION    ; TM58
+	add_tm COUNTER      ; TM59
+	add_tm SEISMIC_TOSS ; TM60
+	add_tm SOFTBOILED   ; TM61
+	add_tm SELFDESTRUCT ; TM62
+	add_tm SKY_ATTACK   ; TM63
+	add_tm TRI_ATTACK   ; TM64
+	add_tm SUBMISSION   ; TM65
+	add_tm MIMIC        ; TM66
+	add_tm MEGA_DRAIN   ; TM67
+	add_tm PAY_DAY      ; TM68
+	add_tm METRONOME    ; TM69
+	add_tm MEGA_PUNCH   ; TM70
+	add_tm MEGA_KICK    ; TM71
+	add_tm TAKE_DOWN    ; TM72
+	add_tm DRAGON_RAGE  ; TM73
+	add_tm WHIRLWIND    ; TM74
+	add_tm TELEPORT     ; TM75
+	add_tm PSYWAVE      ; TM76
+	add_tm HORN_DRILL   ; TM77
+	add_tm RAGE         ; TM78
+	add_tm BIDE         ; TM79
+	add_tm RAZOR_WIND   ; TM80
+	add_tm SKULL_BASH   ; TM81
+	add_tm BUBBLEBEAM   ; TM82
+	add_tm WATER_GUN    ; TM83
 NUM_TMS EQU __tmhm_value__ - 1
 
 add_hm: MACRO
 ; Defines three constants:
-; - HM_\1: the item id, starting at $f3
-; - \1_TMNUM: the learnable TM/HM flag, starting at 51
+; - HM_\1: the item id
+; - \1_TMNUM: the learnable TM/HM flag
 ; - HM##_MOVE: alias for the move id, equal to the value of \1
 	const HM_\1
 HM_VALUE = __tmhm_value__ - NUM_TMS
@@ -283,18 +290,18 @@ HM{02d:HM_VALUE}_MOVE = \1
 ENDM
 
 HM01 EQU const_value
-	add_hm CUT          ; f3
-	add_hm FLY          ; f4
-	add_hm SURF         ; f5
-	add_hm STRENGTH     ; f6
-	add_hm FLASH        ; f7
-	add_hm WHIRLPOOL    ; f8
-	add_hm WATERFALL    ; f9
+	add_hm CUT
+	add_hm FLY
+	add_hm SURF
+	add_hm STRENGTH
+	add_hm FLASH
+	add_hm WHIRLPOOL
+	add_hm WATERFALL
 NUM_HMS EQU __tmhm_value__ - NUM_TMS - 1
 
 add_mt: MACRO
 ; Defines two constants:
-; - \1_TMNUM: the learnable TM/HM flag, starting at 58
+; - \1_TMNUM: the learnable TM/HM flag
 ; - MT##_MOVE: alias for the move id, equal to the value of \1
 MT_VALUE = __tmhm_value__ - NUM_TMS - NUM_HMS
 MT{02d:MT_VALUE}_MOVE = \1
@@ -308,8 +315,6 @@ MT01 EQU const_value
 NUM_TUTORS = __tmhm_value__ - NUM_TMS - NUM_HMS - 1
 
 NUM_TM_HM_TUTOR EQU NUM_TMS + NUM_HMS + NUM_TUTORS
-
-	const ITEM_FA       ; fa
 
 USE_SCRIPT_VAR EQU $00
 ITEM_FROM_MEM  EQU $ff

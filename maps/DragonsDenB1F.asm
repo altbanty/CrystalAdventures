@@ -174,7 +174,7 @@ DragonShrineSignpost:
 	jumptext DragonShrineSignpostText
 
 DragonsDenB1FCalcium:
-	randomized_item_5 CALCIUM, PROTEIN, HP_UP, IRON, CARBOS
+	randomized_item_5 CALCIUM, PROTEIN, HP_UP, TM_THUNDER_WAVE, CARBOS
 
 DragonsDenB1FMaxElixer:
 	randomized_item_5 MAX_ELIXER, FULL_RESTORE, MAX_REVIVE, PP_UP, DRAGON_SCALE

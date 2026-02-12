@@ -7,7 +7,7 @@ TinTower5F_MapScripts:
 	def_callbacks
 
 TinTower5FRareCandy:
-	randomized_item_5 RARE_CANDY, PP_UP, MAX_ETHER, PROTEIN, STAR_PIECE
+	randomized_item_5 RARE_CANDY, PP_UP, MAX_ETHER, PROTEIN, TM_DOUBLE_EDGE
 
 TinTower5FHiddenFullRestore:
 	hiddenitem FULL_RESTORE, EVENT_TIN_TOWER_5F_HIDDEN_FULL_RESTORE

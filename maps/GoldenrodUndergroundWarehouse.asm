@@ -90,7 +90,7 @@ GoldenrodUndergroundWarehouseMaxEther:
 	randomized_item_5 MAX_ETHER, ELIXER, HYPER_POTION, NUGGET, REVIVE
 
 GoldenrodUndergroundWarehouseTMSleepTalk:
-	randomized_item_5 TM_SLEEP_TALK, TM_SWAGGER, TM_DOUBLE_TEAM, BLACKGLASSES, CARBOS
+	randomized_item_5 TM_SLEEP_TALK, TM_MIMIC, TM_DOUBLE_TEAM, BLACKGLASSES, CARBOS
 
 GoldenrodUndergroundWarehouseUltraBall:
 	randomized_item_5 ULTRA_BALL, HYPER_POTION, MAX_REPEL, FULL_HEAL, BIG_PEARL

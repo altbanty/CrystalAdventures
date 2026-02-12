@@ -9,7 +9,7 @@ WhirlIslandB2F_MapScripts:
 	def_callbacks
 
 WhirlIslandB2FFullRestore:
-	randomized_item_5 FULL_RESTORE, MAX_REVIVE, MAX_ELIXER, RARE_CANDY, LEFTOVERS
+	randomized_item_5 FULL_RESTORE, MAX_REVIVE, MAX_ELIXER, RARE_CANDY, TM_SUBSTITUTE
 
 WhirlIslandB2FMaxRevive:
 	randomized_item_5 MAX_REVIVE, FULL_RESTORE, PP_UP, STAR_PIECE, MAX_ELIXER

@@ -527,7 +527,7 @@ DayCareSign:
 	jumptext DayCareSignText
 
 Route34Nugget:
-	randomized_item_5 NUGGET, STICK, ULTRA_BALL, TM_PSYCH_UP, CARBOS
+	randomized_item_5 NUGGET, TM_MEGA_PUNCH, ULTRA_BALL, TM_PSYCH_UP, CARBOS
 
 Route34HiddenRareCandy:
 	hiddenitem RARE_CANDY, EVENT_ROUTE_34_HIDDEN_RARE_CANDY

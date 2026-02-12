@@ -143,9 +143,7 @@ ItemNameOrder:
 	db STARDUST 		; 78
 	db STAR_PIECE 		; 79
 	db BRICK_PIECE		; 7a
-	db SILVER_LEAF		; 7b
-	db GOLD_LEAF		; 7c
-	db SLOWPOKETAIL 	; 7d
+	db SLOWPOKETAIL 	; 7b
 
 	db HELIX_FOSSIL 	; 7e
 	db DOME_FOSSIL 		; 7f
@@ -183,10 +181,7 @@ ItemNameOrder:
     db LOST_ITEM		; 9c
     db BASEMENT_KEY		; 9d
     db PASS 			; 9e
-    db NORMAL_BOX 		; 9f
-    db GORGEOUS_BOX 	; a0
-    db POLKADOT_BOW 	; a1
-    db SQUIRTBOTTLE 	; a2
+    db SQUIRTBOTTLE 	; 9f
     db BLUE_CARD 		; a3
 
 ; Apricorns
@@ -197,10 +192,6 @@ ItemNameOrder:
     db WHT_APRICORN		; a8
     db BLK_APRICORN		; a9
     db PNK_APRICORN		; aa
-
-REPT 22
-	db $FF ; fill with empty bytes to reach NUM_ITEMS + 1
-ENDR
 
 	assert_table_length NUM_ITEMS + 1
 	db -1 ; end

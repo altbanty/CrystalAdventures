@@ -33,7 +33,7 @@ MountMortar2FInsideEther:
 	randomized_item_5 ETHER, ELIXER, MAX_ETHER, REVIVE, BIG_PEARL
 
 MountMortar2FInsideDragonScale:
-	randomized_item_5 DRAGON_SCALE, METAL_COAT, KINGS_ROCK, LEFTOVERS, SCOPE_LENS
+	randomized_item_5 DRAGON_SCALE, METAL_COAT, KINGS_ROCK, LEFTOVERS, TM_EXPLOSION
 
 MountMortar2FInsideElixer:
 	randomized_item_5 ELIXER, MAX_ETHER, MAX_ELIXER, FULL_RESTORE, NUGGET

@@ -314,7 +314,7 @@ Route45FruitTree:
 	fruittree FRUITTREE_ROUTE_45
 
 Route45Nugget:
-	randomized_item_5 NUGGET, BIG_PEARL, STAR_PIECE, RARE_CANDY, MAX_ETHER
+	randomized_item_5 NUGGET, TM_ROCK_SLIDE, STAR_PIECE, RARE_CANDY, MAX_ETHER
 
 Route45Revive:
 	randomized_item_5 REVIVE, MAX_POTION, ULTRA_BALL, FULL_HEAL, ELIXER

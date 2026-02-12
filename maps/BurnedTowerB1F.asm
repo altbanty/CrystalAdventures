@@ -117,7 +117,7 @@ BurnedTowerB1FEusine:
 	end
 
 BurnedTowerB1FTMEndure:
-	randomized_item_5 TM_ENDURE, TM_DETECT, SPELL_TAG, CALCIUM, BIG_PEARL
+	randomized_item_5 TM_COUNTER, TM_DETECT, SPELL_TAG, CALCIUM, BIG_PEARL
 
 BurnedTowerB1FBoulder:
 	jumpstd StrengthBoulderScript

@@ -7,7 +7,7 @@ IcePathB2FBlackthornSide_MapScripts:
 	def_callbacks
 
 IcePathB2FBlackthornSideTMRest:
-	randomized_item_5 TM_REST, TM_ICE_PUNCH, TM_BLIZZARD, NEVERMELTICE, PP_UP
+	randomized_item_5 TM_REFLECT, TM_ICE_PUNCH, TM_BLIZZARD, NEVERMELTICE, PP_UP
 
 IcePathB2FBlackthornSideHiddenIceHeal:
 	hiddenitem ICE_HEAL, EVENT_ICE_PATH_B2F_BLACKTHORN_SIDE_HIDDEN_ICE_HEAL

@@ -3116,7 +3116,6 @@ wMobileBattleRoomSceneID::                        db
 
 wNumBalls:: db
 wBalls:: ds MAX_BALLS * 2 + 1
-	ds 13
 ; Nuzlocke encounter flags - simplified to 64 routes (8 bytes)
 wNuzlockeEncounterFlags:: ds 8
 	; ds 49
@@ -3245,8 +3244,6 @@ wPlayerMonSelection:: ds 3
 wdc5f:: db
 wdc60:: db
 
-	ds 18
-
 wStepCount:: db
 wPoisonStepCount:: db
 	ds 2
@@ -3327,7 +3324,7 @@ wPartyMon{d:n}Nickname:: ds MON_NAME_LENGTH
 endr
 wPartyMonNicknamesEnd::
 
-	ds 22
+	ds 15 ; reduced from 22 to make room for TM78-TM83
 
 wPokedexCaught:: flag_array NUM_POKEMON
 wEndPokedexCaught::
