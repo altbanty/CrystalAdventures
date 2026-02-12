@@ -1,10 +1,8 @@
 MomPhoneCalleeScript:
 	checkevent EVENT_TALKED_TO_MOM_AFTER_MYSTERY_EGG_QUEST
 	iftrue .started_quest
-	checkevent EVENT_DUDE_TALKED_TO_YOU
-	iftrue MomPhoneLectureScript
 	checkevent EVENT_GAVE_MYSTERY_EGG_TO_ELM
-	iftrue MomPhoneNoGymQuestScript
+	iftrue MomPhoneLectureScript
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue MomPhoneNoPokedexScript
 	sjump MomPhoneNoPokemonScript
