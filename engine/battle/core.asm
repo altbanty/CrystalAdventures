@@ -2209,6 +2209,15 @@ DistributeExperiencePoints:
 
 GiveCatchExperience::
 ; Award 2x exp for catching. Temporarily doubles wEnemyMonLevel.
+; Prepare screen same as normal faint-exp path (lines 2166-2167).
+	call EmptyBattleTextbox
+	call LoadTilemapToTempTilemap
+; Save species vars — GiveExperiencePoints/LearnLevelMoves clobber these
+; on level-up, but PokeBallEffect needs them for Pokedex + nickname afterward.
+	ld a, [wTempSpecies]
+	push af
+	ld a, [wCurPartySpecies]
+	push af
 	ld a, [wEnemyMonLevel]
 	push af
 	add a               ; double level (max 100->200, fits in byte)
@@ -2216,6 +2225,10 @@ GiveCatchExperience::
 	call DistributeExperiencePoints
 	pop af
 	ld [wEnemyMonLevel], a
+	pop af
+	ld [wCurPartySpecies], a
+	pop af
+	ld [wTempSpecies], a
 	ret
 
 IsAnyMonHoldingExpShare:
