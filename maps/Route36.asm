@@ -24,6 +24,10 @@ Route36_MapScripts:
 	end
 
 .ArthurCallback:
+	checkevent EVENT_FOUGHT_SUDOWOODO
+	iftrue .SkipTreeSprite
+	callasm SetWeirdTreeSprite
+.SkipTreeSprite:
 	readvar VAR_WEEKDAY
 	ifequal THURSDAY, .ArthurAppears
 	disappear ROUTE36_ARTHUR
@@ -74,11 +78,11 @@ WateredWeirdTreeScript:: ; export (for when you use Squirtbottle from pack)
 	writetext SudowoodoAttackedText
 	waitbutton
 	closetext
-	callasm PickWeirdTree
+	callasm GetWeirdTreeChoice
 	ifequal 1, .LoadMuk
 	ifequal 2, .LoadTauros
 	ifequal 3, .LoadSnorlax
-	ifequal 4, .LoadWobbuffet
+	ifequal 4, .LoadChansey
 	loadwildmon SUDOWOODO, 28
 	sjump .StartTreeBattle
 
@@ -94,8 +98,8 @@ WateredWeirdTreeScript:: ; export (for when you use Squirtbottle from pack)
 	loadwildmon SNORLAX, 28
 	sjump .StartTreeBattle
 
-.LoadWobbuffet:
-	loadwildmon WOBBUFFET, 28
+.LoadChansey:
+	loadwildmon CHANSEY, 28
 
 .StartTreeBattle:
 	startbattle
@@ -715,7 +719,7 @@ Route36_MapEvents:
 	def_object_events
 	object_event 20, 13, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerPsychicMark, -1
 	object_event 31, 14, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 5, TrainerSchoolboyAlan1, -1
-	object_event 35,  9, SPRITE_SUDOWOODO, SPRITEMOVEDATA_SUDOWOODO, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SudowoodoScript, EVENT_ROUTE_36_SUDOWOODO
+	object_event 35,  9, SPRITE_WEIRD_TREE, SPRITEMOVEDATA_SUDOWOODO, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SudowoodoScript, EVENT_ROUTE_36_SUDOWOODO
 	object_event 51,  8, SPRITE_LASS, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 2, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route36LassScript, -1
 	object_event 44,  9, SPRITE_FISHER, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route36RockSmashGuyScript, -1
 	object_event 21,  4, SPRITE_FRUIT_TREE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route36FruitTree, -1

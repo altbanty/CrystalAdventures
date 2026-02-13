@@ -3025,7 +3025,7 @@ wGymTeamChoices:: ; 1 byte - randomized gym leader team variants
 ; bit 7 = initialized, bits 5-4 = Whitney, bits 3-2 = Bugsy, bits 1-0 = Falkner
 	ds 1
 wGymTeamChoices2:: ; 1 byte - more gym leader team variants
-; bit 7 = gym TM init flag, bits 3-2 = Clair team (0-2), bits 1-0 = Morty team (0-2)
+; bit 7 = gym TM init flag, bits 6-4 = weird tree choice (0-4), bits 3-2 = Clair team (0-2), bits 1-0 = Morty team (0-2)
 	ds 1
 
 wGymTMChoices:: ; 2 bytes - randomized gym TM reward choices

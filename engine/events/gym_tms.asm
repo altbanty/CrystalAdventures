@@ -1,6 +1,6 @@
 ; Randomized Gym TM Rewards
 ; Called via callasm from map scripts, so can be in any bank.
-; Init flag: bit 7 of wGymTeamChoices2 (bits 4-7 unused by gym teams).
+; Init flag: bit 7 of wGymTeamChoices2. Bits 6-4 = weird tree choice (0-4).
 ; wGymTMChoices byte 0: bits 7-6 = Morty, bits 5-4 = Whitney, bits 3-2 = Bugsy, bits 1-0 = Falkner
 ; wGymTMChoices byte 1: bits 7-6 = Clair, bits 5-4 = Pryce, bits 3-2 = Jasmine, bits 1-0 = Chuck
 
@@ -242,7 +242,7 @@ PickBillPokemon::
 	ret
 
 ; --- Randomized Weird Tree Encounter ---
-; 40% Sudowoodo, 30% Muk, 20% Tauros, 5% Snorlax, 5% Wobbuffet
+; 40% Sudowoodo, 30% Muk, 20% Tauros, 5% Snorlax, 5% Chansey
 ; Output: wScriptVar = 0-4 index
 PickWeirdTree::
 	ld a, 100
@@ -270,5 +270,42 @@ PickWeirdTree::
 .snorlax:
 	ld a, 3
 .done_tree:
+	ld [wScriptVar], a
+	ret
+
+; Pick random weird tree, store choice in wGymTeamChoices2 bits 6-4, set variable sprite.
+; Called from Route 36 MAPCALLBACK_OBJECTS.
+SetWeirdTreeSprite::
+	call PickWeirdTree       ; result in wScriptVar (0-4)
+	ld a, [wScriptVar]
+	ld c, a                  ; c = choice (0-4)
+	; Store choice in wGymTeamChoices2 bits 6-4
+	swap a                   ; shift into bits 4-6
+	ld b, a
+	ld a, [wGymTeamChoices2]
+	and %10001111            ; clear bits 6-4
+	or b
+	ld [wGymTeamChoices2], a
+	; Map choice to sprite
+	ld hl, .SpriteTable
+	ld b, 0
+	add hl, bc
+	ld a, [hl]
+	ld [wVariableSprites + SPRITE_WEIRD_TREE - SPRITE_VARS], a
+	ret
+
+.SpriteTable:
+	db SPRITE_SUDOWOODO  ; 0
+	db SPRITE_GRIMER     ; 1
+	db SPRITE_TAUROS     ; 2
+	db SPRITE_SNORLAX    ; 3
+	db SPRITE_BLISSEY    ; 4
+
+; Read the stored weird tree choice back into wScriptVar.
+; Called from Route 36 battle script.
+GetWeirdTreeChoice::
+	ld a, [wGymTeamChoices2]
+	and %01110000            ; isolate bits 6-4
+	swap a                   ; shift to bits 2-0
 	ld [wScriptVar], a
 	ret
