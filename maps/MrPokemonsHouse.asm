@@ -39,11 +39,6 @@ MrPokemonsHouse_MapScripts:
 	waitbutton
 	verbosegiveitem EXP_SHARE
 	iffalse .full
-	writetext MrPokemonIntroText3
-	promptbutton
-	turnobject MRPOKEMONSHOUSE_GENTLEMAN, RIGHT
-	writetext MrPokemonIntroText4
-	promptbutton
 	turnobject MRPOKEMONSHOUSE_GENTLEMAN, DOWN
 	turnobject MRPOKEMONSHOUSE_OAK, LEFT
 	writetext MrPokemonIntroText5
@@ -123,10 +118,6 @@ MrPokemonsHouse_OakScript:
 	pause 60
 	special FadeInQuickly
 	special RestartMapMusic
-	opentext
-	writetext MrPokemonText_ImDependingOnYou
-	waitbutton
-	closetext
 	setevent EVENT_RIVAL_NEW_BARK_TOWN
 	setevent EVENT_PLAYERS_HOUSE_1F_NEIGHBOR
 	clearevent EVENT_PLAYERS_NEIGHBORS_HOUSE_NEIGHBOR
@@ -199,47 +190,21 @@ MrPokemonsHouse_GotEggText:
 	line "MYSTERY EGG."
 	done
 
-MrPokemonIntroText3:
-	text "I know a couple"
-	line "who run a #MON"
-	cont "DAY-CARE service."
-
-	para "They gave me that"
-	line "EGG."
-
-	para "I was intrigued,"
-	line "so I sent mail to"
-	cont "PROF.ELM."
-
-	para "For #MON evolu-"
-	line "tion, PROF.ELM is"
-	cont "the authority."
-	done
-
 MrPokemonExpShareText:
 	text "I also have a"
 	line "special item for"
 	cont "you."
 	done
 
-MrPokemonIntroText4:
-	text "Even PROF.OAK here"
-	line "recognizes that."
-	done
-
 MrPokemonIntroText5:
-	text "If my assumption"
-	line "is correct, PROF."
-	cont "ELM will know it."
+	text "PROF.OAK here can"
+	line "tell you more."
 	done
 
 MrPokemonsHouse_MrPokemonHealText:
-	text "You are returning"
-	line "to PROF.ELM?"
-
-	para "Here. Your #MON"
-	line "should have some"
-	cont "rest."
+	text "Here, let me heal"
+	line "your #MON before"
+	cont "you head back."
 	done
 
 MrPokemonText_ImDependingOnYou:
@@ -256,72 +221,15 @@ MrPokemonText_AlwaysNewDiscoveries:
 	done
 
 MrPokemonsHouse_OakText1:
-	text "OAK: Aha! So"
-	line "you're <PLAY_G>!"
+	text "OAK: You must be"
+	line "<PLAY_G>!"
 
-	para "I'm OAK! A #MON"
-	line "researcher."
+	para "Take this #DEX"
+	line "— it records data"
+	cont "on every #MON"
 
-	para "I was just visit-"
-	line "ing my old friend"
-	cont "MR.#MON."
-
-	para "I heard you were"
-	line "running an errand"
-
-	para "for PROF.ELM, so I"
-	line "waited here."
-
-	para "Oh! What's this?"
-	line "A rare #MON!"
-
-	para "Let's see…"
-
-	para "Hm, I see!"
-
-	para "I understand why"
-	line "PROF.ELM gave you"
-
-	para "a #MON for this"
-	line "errand."
-
-	para "To researchers"
-	line "like PROF.ELM and"
-
-	para "I, #MON are our"
-	line "friends."
-
-	para "He saw that you"
-	line "would treat your"
-
-	para "#MON with love"
-	line "and care."
-
-	para "…Ah!"
-
-	para "You seem to be"
-	line "dependable."
-
-	para "How would you like"
-	line "to help me out?"
-
-	para "See? This is the"
-	line "latest version of"
-	cont "the #DEX."
-
-	para "It automatically"
-	line "records data on"
-
-	para "#MON you've"
-	line "seen or caught."
-
-	para "It's a hi-tech"
-	line "encyclopedia!"
-
-	para "It shows their"
-	line "habitats, how they"
-	cont "evolve, and their"
-	cont "moves."
+	para "you encounter."
+	line "Fill it up!"
 	done
 
 MrPokemonsHouse_GetDexText:
@@ -330,21 +238,8 @@ MrPokemonsHouse_GetDexText:
 	done
 
 MrPokemonsHouse_OakText2:
-	text "Go meet many kinds"
-	line "of #MON and"
-
-	para "complete that"
-	line "#DEX!"
-
-	para "But I've stayed"
-	line "too long."
-
-	para "I have to get to"
-	line "GOLDENROD for my"
-	cont "usual radio show."
-
-	para "<PLAY_G>, I'm"
-	line "counting on you!"
+	text "Good luck out"
+	line "there!"
 	done
 
 MrPokemonText_GimmeTheScale:

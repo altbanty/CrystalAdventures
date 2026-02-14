@@ -764,8 +764,8 @@ ElmText_MissionFromMrPokemon:
 	line "emailed me."
 
 	para "He needs us to"
-	line "pick up something"
-	cont "rare."
+	line "pick up some"
+	cont "useful items."
 
 	para "Take one of these"
 	line "starter #MON and"
