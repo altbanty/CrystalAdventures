@@ -57,8 +57,6 @@ ElmsLab_MapScripts:
 	sjump .MustSayYes
 
 .ElmGetsEmail:
-	writetext ElmText_Accepted
-	promptbutton
 	writetext ElmText_ResearchAmbitions
 	waitbutton
 	closetext
@@ -264,16 +262,6 @@ ElmDirectionsScript:
 	writetext GotElmsNumberText
 	playsound SFX_REGISTER_PHONE_NUMBER
 	waitsfx
-	waitbutton
-	closetext
-	turnobject ELMSLAB_ELM, LEFT
-	opentext
-	writetext ElmDirectionsText2
-	waitbutton
-	closetext
-	turnobject ELMSLAB_ELM, DOWN
-	opentext
-	writetext ElmDirectionsText3
 	waitbutton
 	closetext
 	setevent EVENT_GOT_A_POKEMON_FROM_ELM
@@ -482,8 +470,6 @@ AideScript_GivePotion:
 	writetext AideText_AlsoGivePokeBalls
 	promptbutton
 	verbosegiveitem POKE_BALL, 5
-	writetext AideText_AlwaysBusy
-	waitbutton
 	closetext
 	setscene SCENE_ELMSLAB_NOTHING
 	end
@@ -529,7 +515,7 @@ ElmsAideScript:
 	iftrue AideScript_ExplainBalls
 	checkevent EVENT_GOT_MYSTERY_EGG_FROM_MR_POKEMON
 	iftrue AideScript_TheftTestimony
-	writetext AideText_AlwaysBusy
+	writetext AideText_GiveYouPotion
 	waitbutton
 	closetext
 	end
@@ -743,26 +729,14 @@ AfterChikoritaMovement:
 
 ElmText_Intro:
 	text "ELM: <PLAY_G>!"
-	line "There you are!"
 
-	para "I needed to ask"
-	line "you a favor."
+	para "Your Crystal"
+	line "Adventure is about"
+	cont "to unfold."
 
-	para "I'm conducting new"
-	line "#MON research"
-
-	para "right now. I was"
-	line "wondering if you"
-
-	para "could help me with"
-	line "it, <PLAY_G>."
-	done
-
-ElmText_Accepted:
-	text "Thanks, <PLAY_G>!"
-
-	para "You're a great"
-	line "help!"
+	para "Are you ready to"
+	line "choose your"
+	cont "starting #MON?"
 	done
 
 ElmText_Refused:
@@ -771,68 +745,36 @@ ElmText_Refused:
 	done
 
 ElmText_ResearchAmbitions:
-	text "When I announce my"
-	line "findings, I'm sure"
+	text "With tactical"
+	line "battling, smart"
+	cont "resource use,"
 
-	para "we'll delve a bit"
-	line "deeper into the"
-
-	para "many mysteries of"
-	line "#MON."
-
-	para "You can count on"
-	line "it!"
+	para "and curiosity,"
+	line "you'll complete"
+	cont "this adventure!"
 	done
 
 ElmText_GotAnEmail:
 	text "Oh, hey! I got an"
 	line "e-mail!"
-
-	para "<……><……><……>"
-	line "Hm… Uh-huh…"
-
-	para "Okay…"
 	done
 
 ElmText_MissionFromMrPokemon:
-	text "Hey, listen."
+	text "MR.BACKTRACK just"
+	line "emailed me."
 
-	para "I have an acquain-"
-	line "tance called MR."
-	cont "#MON."
+	para "He needs us to"
+	line "pick up something"
+	cont "rare."
 
-	para "Anyway, I just got"
-	line "an e-mail from him"
-
-	para "saying that this"
-	line "time it's real."
-
-	para "It is intriguing,"
-	line "but we're busy"
-
-	para "with our #MON"
-	line "research…"
-
-	para "Wait!"
-
-	para "I know!"
-
-	para "<PLAY_G>, can you"
-	line "go in our place?"
+	para "Take one of these"
+	line "starter #MON and"
+	cont "head over to him!"
 	done
 
 ElmText_ChooseAPokemon:
-	text "I want you to"
-	line "raise one of the"
-
-	para "#MON contained"
-	line "in these BALLS."
-
-	para "You'll be that"
-	line "#MON's first"
-	cont "partner, <PLAY_G>!"
-
-	para "Go on. Pick one!"
+	text "Go on, <PLAY_G>!"
+	line "Pick your partner!"
 	done
 
 ElmText_LetYourMonBattleIt:
@@ -875,37 +817,15 @@ ReceivedStarterText:
 	done
 
 ElmDirectionsText1:
-	text "MR.#MON lives a"
-	line "little bit beyond"
+	text "MR.BACKTRACK lives"
+	line "north of"
+	cont "CHERRYGROVE,"
 
-	para "CHERRYGROVE, the"
-	line "next city over."
-
-	para "It's almost a"
-	line "direct route"
-
-	para "there, so you"
-	line "can't miss it."
-
-	para "But just in case,"
-	line "here's my phone"
-
-	para "number. Call me if"
-	line "anything comes up!"
+	para "the next city"
+	line "over. Call me if"
+	cont "you get lost!"
 	done
 
-ElmDirectionsText2:
-	text "If your #MON is"
-	line "hurt, you should"
-
-	para "heal it with this"
-	line "machine."
-	done
-
-ElmDirectionsText3:
-	text "<PLAY_G>, I'm"
-	line "counting on you!"
-	done
 
 GotElmsNumberText:
 	text "<PLAYER> got ELM's"
@@ -1219,11 +1139,6 @@ AideText_AlsoGivePokeBalls:
 	line "any wild #MON!"
 	done
 
-AideText_AlwaysBusy:
-	text "There are only two"
-	line "of us, so we're"
-	cont "always busy."
-	done
 
 AideText_TheftTestimony:
 	text "There was a loud"
