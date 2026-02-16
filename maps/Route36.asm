@@ -27,6 +27,7 @@ Route36_MapScripts:
 	checkevent EVENT_FOUGHT_SUDOWOODO
 	iftrue .SkipTreeSprite
 	callasm SetWeirdTreeSprite
+	special LoadUsedSpritesGFX
 .SkipTreeSprite:
 	readvar VAR_WEEKDAY
 	ifequal THURSDAY, .ArthurAppears
