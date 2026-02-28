@@ -118,6 +118,10 @@ MrPokemonsHouse_OakScript:
 	pause 60
 	special FadeInQuickly
 	special RestartMapMusic
+	opentext
+	writetext MrPokemonsHouse_ShinyHintText
+	waitbutton
+	closetext
 	setevent EVENT_RIVAL_NEW_BARK_TOWN
 	setevent EVENT_PLAYERS_HOUSE_1F_NEIGHBOR
 	clearevent EVENT_PLAYERS_NEIGHBORS_HOUSE_NEIGHBOR
@@ -203,8 +207,21 @@ MrPokemonIntroText5:
 
 MrPokemonsHouse_MrPokemonHealText:
 	text "Here, let me heal"
-	line "your #MON before"
-	cont "you head back."
+	line "your #MON"
+	cont "before you go."
+	done
+
+MrPokemonsHouse_ShinyHintText:
+	text "Oh, one more"
+	line "thing!"
+
+	para "If you spot a"
+	line "#MON with an"
+	cont "unusual color,"
+
+	para "catch it! They"
+	line "tend to be much"
+	cont "stronger!"
 	done
 
 MrPokemonText_ImDependingOnYou:
@@ -224,8 +241,8 @@ MrPokemonsHouse_OakText1:
 	text "OAK: You must be"
 	line "<PLAY_G>!"
 
-	para "Take this #DEX"
-	line "— it records data"
+	para "Take this #DEX."
+	line "It records data"
 	cont "on every #MON"
 
 	para "you encounter."

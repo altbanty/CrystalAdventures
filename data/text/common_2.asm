@@ -1565,50 +1565,36 @@ _MayRegisterItemText::
 	done
 
 _OakText1::
-	text "Welcome back,"
-	line "trainer!"
+	text "Welcome to the"
+	line "world of #MON!"
 
-	para "You've returned to"
-	line "the world of"
-	cont "#MON CRYSTAL..."
+	para "This is CRYSTAL"
+	line "ADVENTURE!"
 
-	para "But this journey"
-	line "will be different"
-	cont "from before!"
-	prompt
+	para "Want to hear what"
+	line "makes it special?"
+	done
 
-_OakText2::
-	text "Adventure mode"
-	line "brings balanced"
-	cont "challenge to your"
-	cont "journey!@"
-	text_end
-
-_OakText3::
-	text_promptbutton
-	text_end
-
-	text_end ; unreferenced
-
-_OakText4::
+_OakTextRules::
 	text "You can only catch"
-	line "the first #MON"
+	line "one wild #MON"
+	cont "per route!"
 
-	para "you encounter on"
-	line "each route!"
+	para "Work with what you"
+	line "get - adaptability"
+	cont "is key!"
 
-	para "This Nuzlocke rule"
-	line "makes team building"
-	cont "a roguelike puzzle!"
+	para "Healing your team"
+	line "now costs money,"
+	cont "so budget wisely!"
 	prompt
 
-_OakText5::
-	text "Healing at #MON"
-	line "Centers now costs"
-	cont "money. Stay frugal"
+_OakTextRandom::
+	text "Shops will carry"
+	line "different items"
+	cont "each playthrough!"
 
-	para "Your starter now"
-	line "involves a choice"
-	cont "of playstyle."
-
+	para "Even Gym Leaders"
+	line "will surprise you"
+	cont "with new teams!"
 	prompt

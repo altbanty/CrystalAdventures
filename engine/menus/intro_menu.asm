@@ -673,6 +673,10 @@ OakSpeech:
 
 	ld hl, OakText1
 	call PrintText
+	call YesNoBox
+	jr c, .skipExplanation
+
+	; YES path: show Ho-Oh pic with rules text
 	call RotateThreePalettesRight
 	call ClearTilemap
 
@@ -687,20 +691,19 @@ OakSpeech:
 	; Set shiny DVs for Ho-oh (Attack=10, Defense=10, Speed=10, Special=10)
 	ld a, $AA ; Attack=A, Defense=A in upper/lower nibbles
 	ld [wTempMonDVs], a
-	ld a, $AA ; Speed=A, Special=A in upper/lower nibbles  
+	ld a, $AA ; Speed=A, Special=A in upper/lower nibbles
 	ld [wTempMonDVs + 1], a
 
 	ld b, SCGB_TRAINER_OR_MON_FRONTPIC_PALS
 	call GetSGBLayout
 	call Intro_WipeInFrontpic
 
-	ld hl, OakText2
-	call PrintText
-	ld hl, OakText4
+	ld hl, OakTextRules
 	call PrintText
 	call RotateThreePalettesRight
 	call ClearTilemap
 
+	; Show Oak pic again for randomization text
 	xor a
 	ld [wCurPartySpecies], a
 	ld a, POKEMON_PROF
@@ -711,8 +714,11 @@ OakSpeech:
 	call GetSGBLayout
 	call Intro_RotatePalettesLeftFrontpic
 
-	ld hl, OakText5
+	ld hl, OakTextRandom
 	call PrintText
+
+.skipExplanation:
+	; Both paths: show player pic, name prompt, closing
 	call RotateThreePalettesRight
 	call ClearTilemap
 
@@ -735,25 +741,12 @@ OakText1:
 	text_far _OakText1
 	text_end
 
-OakText2:
-	text_far _OakText2
-	text_asm
-	ld a, WOOPER
-	call PlayMonCry
-	call WaitSFX
-	ld hl, OakText3
-	ret
-
-OakText3:
-	text_far _OakText3
+OakTextRules:
+	text_far _OakTextRules
 	text_end
 
-OakText4:
-	text_far _OakText4
-	text_end
-
-OakText5:
-	text_far _OakText5
+OakTextRandom:
+	text_far _OakTextRandom
 	text_end
 
 OakText6:

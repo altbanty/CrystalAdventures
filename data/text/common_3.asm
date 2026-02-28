@@ -1,26 +1,12 @@
 _OakText6::
-	text "Now, remind me..."
-	line "What was your"
-	cont "name again?"
+	text "Now, tell me..."
+	line "What is your name?"
 	prompt
 
 _OakText7::
 	text "<PLAYER>!"
-	line "That's right!"
-
-	para "This CRYSTAL"
-	line "ADVENTURE brings"
-	cont "fresh challenges!"
-
-	para "Every route offers"
-	line "just one catch..."
-
-	para "Making each choice"
-	line "matter more than"
-	cont "ever before!"
-
-	para "Your adventure"
-	line "awaits! Let's go!"
+	line "Your adventure"
+	cont "awaits. Let's go!"
 	done
 
 _ClockTimeMayBeWrongText::
