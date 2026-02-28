@@ -28,14 +28,17 @@ The cost is shown before you commit. Budget wisely — running low on money with
 ### Randomized Starters
 Three starters are randomly selected from a pool of eight: Chikorita, Totodile, Cyndaquil, Aipom, Sudowoodo, Smeargle, Swinub, and Mareep. Each starts at level 5 holding a Berry.
 
-### Randomized Gym Leaders
-All eight Johto Gym Leaders have multiple possible team configurations. Even if you know Crystal inside and out, you won't know exactly what Falkner, Whitney, or Clair will throw at you.
+### Randomized Trainers & Gym Leaders
+All eight Johto Gym Leaders have multiple possible team configurations, and 147 regular Johto trainers each have three possible teams — randomly selected at battle start. Even if you know Crystal inside and out, every trainer battle can surprise you.
 
 ### Randomized Shops & TMs
-Mart inventories change between playthroughs. Gym TM rewards and fixed TM pickups throughout Johto are drawn from randomized pools. 34 Gen 1 TMs (TM51–TM84) have been added, expanding the move options available.
+The Goldenrod Dept Store stocks change each playthrough — 3F sells a random selection of evolution stones, trade evolution items, held items, type boosters, and vitamins, while 5F offers six randomized TMs drawn from tiered pools. Gym TM rewards and fixed TM pickups throughout Johto are also randomized. 34 Gen 1 TMs (TM51–TM84) have been added to the game, expanding the available move options.
 
-### Randomized Trades, Gifts & Items
-NPC trades, gift Pokemon (Karate King, Mania, Bill), and overworld item pickups all draw from randomized pools. The Route 36 weird tree encounter is randomized too.
+### Randomized Overworld Items
+144 item pickups across 62 Johto maps draw from randomized pools of 3–5 possible items each. That Great Ball you found last run might be an Ultra Ball or a Nugget this time.
+
+### Randomized Trades, Gifts & Encounters
+NPC trades, gift Pokemon (Karate King, Mania, Bill), and the Route 36 weird tree encounter all draw from randomized pools.
 
 ### Catch Experience Bonus
 Catching a wild Pokemon awards 2x experience, rewarding you for building your team rather than just knocking everything out.
