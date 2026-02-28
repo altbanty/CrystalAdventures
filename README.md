@@ -1,128 +1,124 @@
-# Pokémon Crystal Adventures
+# Pokemon Crystal Adventures
 
-**A roguelike enhancement mod built on top of Pokémon Crystal Legacy**
+**A roguelike reimagining of Pokemon Crystal Legacy — different every time you play.**
 
-This project extends [Pokémon Crystal Legacy](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy) by TheSmithPlays with additional gameplay mechanics that transform the experience into a roguelike adventure. Crystal Adventures maintains all the polish and balance improvements of Crystal Legacy while adding strategic depth through limited resources and randomized encounters.
+Crystal Adventures transforms [Pokemon Crystal Legacy](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy) into a strategic, replayable adventure. Nuzlocke rules are built into the game, shops and gym teams are randomized, and healing costs money — every decision matters, and no two playthroughs are the same.
 
-## What is Crystal Adventures?
+## Design Goals
 
-Crystal Adventures takes the refined Crystal Legacy experience and adds:
-- **Nuzlocke Encounter System** - One catch per route creates roguelike team building
-- **Paid Healing** - Resource management through Pokémon Center fees
-- **Random Starter Eggs** - Each playthrough begins with a different baby Pokémon
-- **Adventure Mode** - Single balanced difficulty for consistent challenge
+- **High replayability** — Randomized starters, gym teams, shops, TM rewards, NPC trades, gift Pokemon, and overworld items mean each run feels fresh
+- **Strategic resource management** — Paid healing and one-catch-per-route force you to think carefully about every battle and every Pokeball
+- **Streamlined experience** — Faster early-game dialogue, optional tutorials, and a single balanced difficulty with no mode selection
+- **Built on Crystal Legacy** — All of Legacy's polish, rebalanced learnsets, improved sprites, and quality-of-life fixes carry over
 
-## New Features in Crystal Adventures
+## Features
 
-### 🎲 Nuzlocke Encounter System
-- Only the first wild Pokémon encountered on each route can be caught
-- Multiple Poké Ball attempts allowed during that first encounter
-- Static encounters (legendaries, gifts) bypass this restriction
-- Creates unique team compositions each playthrough
+### Nuzlocke Catch Rule
+Only the first wild Pokemon you encounter on each route can be caught. You get multiple Pokeball attempts during that encounter, but once it's over, that route is done. Static encounters (legendaries, gifts, special events) bypass this restriction. Every team you build is unique.
 
-### 💰 Pokémon Center Economics
-- Healing now costs money based on:
-  - 1¥ per HP restored
-  - 1¥ per PP restored  
-  - 1¥ per status condition cured
-  - Level × 10¥ for reviving fainted Pokémon
-- Cost displayed before accepting treatment
-- Adds resource management strategy
+### Paid Healing
+Pokemon Centers charge for their services:
+- **1¥ per HP** restored
+- **2¥ per PP** point restored
+- **10¥** per status condition cured
+- **Level x 25¥** to revive a fainted Pokemon (includes PP restoration)
 
-### 🥚 Random Mystery Eggs
-- Professor Elm's egg randomly contains one of 8 baby Pokémon:
-  - Togepi, Pichu, Cleffa, Igglybuff, Smoochum, Elekid, Magby, or Tyrogue
-- Each playthrough starts with a different support Pokémon
-- Story progression unchanged regardless of which Pokémon hatches
+The cost is shown before you commit. Budget wisely — running low on money with a battered team is a real danger.
 
-### ⚖️ Streamlined Difficulty
-- Removed Normal/Hardcore modes
-- "Adventure Mode" (formerly Hard mode) is always active
-- Provides consistent, balanced challenge for all players
+### Randomized Starters
+Three starters are randomly selected from a pool of eight: Chikorita, Totodile, Cyndaquil, Aipom, Sudowoodo, Smeargle, Swinub, and Mareep. Each starts at level 5 holding a Berry.
 
-### 🎒 Early Game Improvements
-- Elm's aide now provides 5 Poké Balls with the Potion
-- Enables catching on Route 29 immediately
-- Moveset adjustments for early gym viability:
-  - Totodile learns Rage at level 10
-  - Geodude learns Rock Throw at level 10
+### Randomized Gym Leaders
+All eight Johto Gym Leaders have multiple possible team configurations. Even if you know Crystal inside and out, you won't know exactly what Falkner, Whitney, or Clair will throw at you.
+
+### Randomized Shops & TMs
+Mart inventories change between playthroughs. Gym TM rewards and fixed TM pickups throughout Johto are drawn from randomized pools. 34 Gen 1 TMs (TM51–TM84) have been added, expanding the move options available.
+
+### Randomized Trades, Gifts & Items
+NPC trades, gift Pokemon (Karate King, Mania, Bill), and overworld item pickups all draw from randomized pools. The Route 36 weird tree encounter is randomized too.
+
+### Catch Experience Bonus
+Catching a wild Pokemon awards 2x experience, rewarding you for building your team rather than just knocking everything out.
+
+### Improved Shiny Pokemon
+Shininess is based on a Pokemon's combined DVs (stats). A higher DV total means a shiny Pokemon genuinely has stronger stats than average. The shiny threshold has been lowered for a roughly 3% encounter rate — rare enough to be exciting, common enough that you'll see them.
+
+### Mystery Egg
+Professor Elm's egg randomly contains one of eight baby Pokemon: Togepi, Pichu, Cleffa, Igglybuff, Smoochum, Elekid, Magby, or Tyrogue.
+
+### Rival Teams
+Your rival's team composition adapts based on which starter you chose, keeping the matchup dynamic across playthroughs.
+
+### Quality of Life
+- Skippable Prof. Oak intro explaining the game's mechanics
+- Shortened early-game dialogue for faster pacing
+- Optional Route 29 catching tutorial
+- Elm's aide gives Poke Balls alongside the Potion for immediate catching
+- Wild encounter distribution rebalanced for Nuzlocke play
+- Rebalanced catch rates and repel prices
 
 ## Base Crystal Legacy Features
 
-This mod includes all improvements from Crystal Legacy v1.3.11:
-- Refined Pokémon learnsets and stats
-- Improved wild Pokémon distribution
+All improvements from Crystal Legacy are included:
+- Refined Pokemon learnsets and stats
+- Improved wild Pokemon distribution
 - Enhanced Team Rocket storyline
-- Balanced gym leader teams
+- Balanced trainer and gym leader teams
 - Quality of life improvements
 - Custom sprites and animations
-- Full documentation at: https://docs.google.com/document/d/1nFzUWtrQm85oQlPp_cxL-b2-WB2Igs9E1PmJQ23SQwQ/
+- Full Legacy documentation: [Crystal Legacy Docs](https://docs.google.com/document/d/1nFzUWtrQm85oQlPp_cxL-b2-WB2Igs9E1PmJQ23SQwQ/)
 
-## Installation
+## Building
 
-1. **Prerequisites**: Requires RGBDS version 0.5.2
-2. **Setup**: Follow instructions in [INSTALL.md](INSTALL.md)
-3. **Building**: Use `make` to compile the ROM
-
-## Technical Implementation
-
-Crystal Adventures modifies the Crystal Legacy codebase with:
-- 8-byte Nuzlocke tracking system (64 encounter zones)
-- WRAM modifications for encounter flags
-- Script system integration for healing costs
-- Modified item effect handlers for catch restrictions
+1. **Prerequisites**: RGBDS version 0.5.2
+2. **Setup**: See [INSTALL.md](INSTALL.md)
+3. **Build**: Run `make` — outputs `CrystalAdventures.gbc`
 
 ## Credits
 
-### Crystal Adventures Development
-- **Design & Implementation**: Community contribution
-- **Based on**: Pokémon Crystal Legacy v1.3.11
+### Crystal Adventures
+- **Design & Development**: altbanty
 
 ### Crystal Legacy Team
 - **Creator**: TheSmithPlays
-- **Developers**: cRz Shadows
+- **Developer**: cRz Shadows
 - **Video Editor**: Weebra
 - **Project Manager**: Jaashouh
-- Full Legacy credits preserved below
 
-### Original Crystal Legacy Credits
-
-#### Playtesters:
+### Playtesters
 Aerogod, Disq, Karlos, ZuperZACH, Regi, Isona, Bricemck, Daily, Tiberios, Sable, Niftimo, Tavros, Reader Dragon, Half1sch, Talos, Wootonmajr, Obelisk
 
-#### Sprite Artists:
-- **Overworld sprites**: Katt, Karlos
-- **Party sprites**: Chamber, Soloo993, Blue Emerald, Lake, Neslug, Pikachu25, Tom Wang, Seasick
+### Sprite Artists
+- **Overworld**: Katt, Karlos
+- **Party**: Chamber, Soloo993, Blue Emerald, Lake, Neslug, Pikachu25, Tom Wang, Seasick
 
-#### Code Contributors:
+### Code Contributors
 Rangi42, Idain, DamienDoury, Sylvie, aaaaaa123456789, SonicRay100, Edtv-thevoid, coco-bandicoot, MajorAgnostic, KDLPro, Nick-PC, XaeroChill, NobodySociety, Nayru62
 
 ### Foundation
-Built on [pret/pokecrystal](https://github.com/pret/pokecrystal) disassembly
+Built on the [pret/pokecrystal](https://github.com/pret/pokecrystal) disassembly.
 
 ## Community
 
-### Crystal Legacy Community:
-- **YouTube**: https://www.youtube.com/@smithplayspokemon
-- **Discord**: https://discord.gg/Wupx8tHRVS
-- **Twitter**: https://twitter.com/TheSmithPlays
+### Crystal Legacy
+- [YouTube](https://www.youtube.com/@smithplayspokemon)
+- [Discord](https://discord.gg/Wupx8tHRVS)
+- [Twitter](https://twitter.com/TheSmithPlays)
 
-### Pret Community:
-- **Discord**: [pret][discord]
-- **IRC**: [libera#pret][irc]
-- **Wiki**: [tutorials][tutorials]
+### Pret
+- [Discord][discord]
+- [IRC][irc]
+- [Tutorials][tutorials]
 
 ## Related Projects
-- **Pokémon Yellow Legacy**: https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy
-- **Pokémon Cursed Yellow**: https://github.com/cRz-Shadows/Pokemon_Cursed_Yellow
-- **Pokémon Battle Simulator**: https://github.com/cRz-Shadows/Pokemon_Trainer_Tournament_Simulator
+- [Pokemon Yellow Legacy](https://github.com/cRz-Shadows/Pokemon_Yellow_Legacy)
+- [Pokemon Cursed Yellow](https://github.com/cRz-Shadows/Pokemon_Cursed_Yellow)
+- [Pokemon Battle Simulator](https://github.com/cRz-Shadows/Pokemon_Trainer_Tournament_Simulator)
 
 ---
 
 *Crystal Adventures is an unofficial modification. Please support the original Crystal Legacy project and its creators.*
 
-[docs]: https://github.com/pret/pokecrystal/tree/master/docs
-[wiki]: https://github.com/pret/pokecrystal/wiki
-[tutorials]: https://github.com/pret/pokecrystal/wiki/Tutorials
 [discord]: https://discord.gg/d5dubZ3
 [irc]: https://web.libera.chat/?#pret
+[tutorials]: https://github.com/pret/pokecrystal/wiki/Tutorials
