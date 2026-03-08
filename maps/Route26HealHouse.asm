@@ -10,6 +10,15 @@ Route26HealHouseTeacherScript:
 	faceplayer
 	opentext
 	writetext Route26HealHouseRestAWhileText
+	yesorno
+	iffalse .Declined
+	special CalculateHealingCost
+	farwritetext NurseHealingCostText
+	yesorno
+	iffalse .Declined
+	special CheckHealingPayment
+	iffalse .CantAfford
+	special TakeHealingPayment
 	waitbutton
 	closetext
 	special FadeBlackQuickly
@@ -26,15 +35,25 @@ Route26HealHouseTeacherScript:
 	closetext
 	end
 
+.CantAfford:
+	farwritetext NurseNotEnoughMoneyText
+	waitbutton
+	closetext
+	end
+
+.Declined:
+	closetext
+	end
+
 Route26HealHouseBookshelf:
 	jumpstd PictureBookshelfScript
 
 Route26HealHouseRestAWhileText:
 	text "Your #MON look"
-	line "a little tired."
+	line "tired."
 
-	para "You should rest"
-	line "them a while."
+	para "Want me to heal"
+	line "them?"
 	done
 
 Route26HealHouseKeepAtItText:

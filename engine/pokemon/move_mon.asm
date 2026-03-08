@@ -677,13 +677,11 @@ SendGetMonIntoFromBox:
 	ld a, [wCurPartySpecies]
 	cp EGG
 	jr z, .egg
-	inc hl
-	inc hl
-	ld a, [hli]
-	ld [de], a
-	ld a, [hl]
+	xor a
+	ld [de], a      ; HP high = 0
 	inc de
-	ld [de], a
+	ld a, 1
+	ld [de], a      ; HP low = 1
 	jr .CloseSRAM_And_ClearCarryFlag
 
 .egg

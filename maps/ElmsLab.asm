@@ -295,11 +295,14 @@ ElmsLabHealingMachine:
 .CanHeal:
 	writetext ElmsLabHealingMachineText2
 	yesorno
-	iftrue ElmsLabHealingMachine_HealParty
-	closetext
-	end
-
-ElmsLabHealingMachine_HealParty:
+	iffalse .Declined
+	special CalculateHealingCost
+	farwritetext NurseHealingCostText
+	yesorno
+	iffalse .Declined
+	special CheckHealingPayment
+	iffalse .CantAfford
+	special TakeHealingPayment
 	special StubbedTrainerRankings_Healings
 	special HealParty
 	playmusic MUSIC_NONE
@@ -307,6 +310,16 @@ ElmsLabHealingMachine_HealParty:
 	special HealMachineAnim
 	pause 30
 	special RestartMapMusic
+	closetext
+	end
+
+.CantAfford:
+	farwritetext NurseNotEnoughMoneyText
+	waitbutton
+	closetext
+	end
+
+.Declined:
 	closetext
 	end
 

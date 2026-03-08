@@ -81,6 +81,7 @@ NurseGoodbyeText:
 	line "again."
 	done
 
+EXPORT NurseHealingCostText, NurseNotEnoughMoneyText
 NurseHealingCostText:
 	text "The healing cost"
 	line "is ¥@"
