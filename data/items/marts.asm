@@ -85,19 +85,13 @@ MartAzalea:
 	db -1 ; end
 
 MartCianwood:
-	db 12 ; # items
+	db 6 ; # items
 	db BERRY_JUICE
 	db ETHER
 	db ENERGYPOWDER
 	db ENERGY_ROOT
 	db HEAL_POWDER
 	db REVIVAL_HERB
-	db WATER_STONE
-	db FIRE_STONE
-	db LEAF_STONE
-	db THUNDERSTONE
-	db SUN_STONE
-	db MOON_STONE
 	db -1 ; end
 	
 MartGoldenrod2F1:

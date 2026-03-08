@@ -3116,9 +3116,9 @@ wMobileBattleRoomSceneID::                        db
 
 wNumBalls:: db
 wBalls:: ds MAX_BALLS * 2 + 1
-; Nuzlocke encounter flags - simplified to 64 routes (8 bytes)
-wNuzlockeEncounterFlags:: ds 8
-	; ds 49
+; Nuzlocke encounter flags - 114 encounter maps, collision-free (15 bytes)
+wNuzlockeEncounterFlags:: ds 15
+	; ds 42
 
 ; fight counts
 wJackFightCount::    db
@@ -3324,7 +3324,17 @@ wPartyMon{d:n}Nickname:: ds MON_NAME_LENGTH
 endr
 wPartyMonNicknamesEnd::
 
-	ds 15 ; reduced from 22 to make room for TM78-TM83
+wGoldenrod5FTMChoices:: ; 6 bytes - Goldenrod 5F randomized TM vendor
+; byte 0: bit 7 = initialized flag, bits 4-0 = Tier 3 slot 1 TM pool index
+; bytes 1-2: Tier 3 slots 2-3 (bits 4-0 each)
+; bytes 3-4: Tier 2 slots 1-2 (bits 4-0 each)
+; byte 5: Tier 1 slot 1 (bits 4-0)
+	ds 6
+wGoldenrod3FItemSeed:: ; 2 bytes - Goldenrod 3F randomized item vendor
+; byte 0: bit 7 = init flag, bits 6-4 = evo stone (mod 6),
+;         bits 3-2 = trade evo item, bits 1-0 = premium held
+; byte 1: bits 7-5 = type boost, bits 4-2 = vitamin/rare, bits 1-0 = unused
+	ds 2
 
 wPokedexCaught:: flag_array NUM_POKEMON
 wEndPokedexCaught::

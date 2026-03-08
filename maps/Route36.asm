@@ -15,6 +15,7 @@ Route36_MapScripts:
 	scene_script .DummyScene1 ; SCENE_ROUTE36_SUICUNE
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .TreeSpriteCallback
 	callback MAPCALLBACK_OBJECTS, .ArthurCallback
 
 .DummyScene0:
@@ -23,12 +24,14 @@ Route36_MapScripts:
 .DummyScene1:
 	end
 
-.ArthurCallback:
+.TreeSpriteCallback:
 	checkevent EVENT_FOUGHT_SUDOWOODO
 	iftrue .SkipTreeSprite
 	callasm SetWeirdTreeSprite
-	special LoadUsedSpritesGFX
 .SkipTreeSprite:
+	endcallback
+
+.ArthurCallback:
 	readvar VAR_WEEKDAY
 	ifequal THURSDAY, .ArthurAppears
 	disappear ROUTE36_ARTHUR

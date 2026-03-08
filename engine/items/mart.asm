@@ -113,6 +113,9 @@ LoadMartPointer:
 	ret
 
 GetMart:
+	ld a, d
+	and a
+	jr nz, .RawPointer
 	ld a, e
 	cp NUM_MARTS
 	jr c, .IsAMart
@@ -128,6 +131,10 @@ GetMart:
 	inc hl
 	ld d, [hl]
 	ld b, BANK(Marts)
+	ret
+
+.RawPointer:
+	ld b, 0 ; WRAM is accessible regardless of ROM bank
 	ret
 
 ; StandardMart.MartFunctions indexes

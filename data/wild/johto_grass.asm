@@ -6,28 +6,28 @@ JohtoGrassWildMons:
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
 	db 3, SUNKERN
-	db 4, BELLSPROUT
+	db 4, ODDISH
 	db 5, SUNKERN
-	db 3, BELLSPROUT
+	db 3, ODDISH
 	db 6, SUNKERN
 	db 5, BELLSPROUT
-	db 5, BELLSPROUT
+	db 6, BELLSPROUT
 	; day
 	db 3, SUNKERN
-	db 4, BELLSPROUT
+	db 4, ODDISH
 	db 5, SUNKERN	
-	db 3, BELLSPROUT
+	db 3, ODDISH
 	db 6, SUNKERN
 	db 5, BELLSPROUT
-	db 5, BELLSPROUT
+	db 6, BELLSPROUT
 	; nite
 	db 3, RATTATA
 	db 4, HOOTHOOT
 	db 5, RATTATA
-	db 3, BELLSPROUT
-	db 6, HOOTHOOT
-	db 5, BELLSPROUT
+	db 3, HOOTHOOT
+	db 6, RATTATA
 	db 5, GASTLY
+	db 6, GASTLY
 	end_grass_wildmons
 
 	def_grass_wildmons SPROUT_TOWER_3F
@@ -35,14 +35,14 @@ JohtoGrassWildMons:
 	; morn
 	db 3, SUNKERN
 	db 4, SUNKERN
-	db 5, BELLSPROUT
-	db 3, RATTATA
+	db 5, ODDISH
+	db 3, BELLSPROUT
 	db 6, BELLSPROUT
 	db 5, GASTLY
 	db 5, GASTLY
 	; day
 	db 3, SUNKERN
-	db 4, BELLSPROUT
+	db 4, ODDISH
 	db 5, SUNKERN
 	db 3, RATTATA
 	db 6, BELLSPROUT
@@ -51,11 +51,11 @@ JohtoGrassWildMons:
 	; nite
 	db 3, RATTATA
 	db 4, HOOTHOOT
-	db 5, BELLSPROUT
+	db 5, HOOTHOOT
 	db 3, RATTATA
-	db 6, GASTLY
-	db 5, BELLSPROUT
 	db 5, GASTLY
+	db 6, GASTLY
+	db 7, GASTLY
 	end_grass_wildmons
 
 	def_grass_wildmons TIN_TOWER_2F

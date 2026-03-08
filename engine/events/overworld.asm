@@ -2167,6 +2167,11 @@ BreakFishingRod:
 	ld [wCurItem], a
 	ld a, 1
 	ld [wItemQuantityChange], a
+	; HL must equal wNumItems for proper pocket detection,
+	; and wCurItemQuantity must force TossKeyItem to search by item value.
+	ld hl, wNumItems
+	ld a, $ff
+	ld [wCurItemQuantity], a
 	call TossItem
 	ret
 
@@ -2415,3 +2420,215 @@ GiveRandomItemScript::
 .FoundItemText:
 	text "You found an item!"
 	done
+
+SECTION "Goldenrod Dept Store Marts", ROMX
+
+BuildGoldenrod5FMart::
+; Called via callasm from GoldenrodDeptStore5F map script.
+; Initializes wGoldenrod5FTMChoices once, then builds mart data in wStringBuffer5.
+	; Check if already initialized
+	ld a, [wGoldenrod5FTMChoices]
+	bit 7, a
+	jr nz, .buildMart
+
+	; --- Initialize TM choices ---
+	ld hl, wGoldenrod5FTMChoices
+
+	; Slots 0-2: Tier 3 (32 TMs)
+	ld b, 3
+	ld c, 32
+	call .FillSlots
+
+	; Slots 3-4: Tier 2 (30 TMs)
+	ld b, 2
+	ld c, 30
+	call .FillSlots
+
+	; Slot 5: Tier 1 (17 TMs)
+	ld b, 1
+	ld c, 17
+	call .FillSlots
+
+	; Set initialized flag (bit 7 of byte 0)
+	ld a, [wGoldenrod5FTMChoices]
+	or %10000000
+	ld [wGoldenrod5FTMChoices], a
+
+.buildMart:
+	; Build mart data in wStringBuffer5
+	ld hl, wStringBuffer5
+	ld [hl], 6 ; item count
+	inc hl
+
+	; Write 6 TM item constants (slots 0-5)
+	ld c, 0
+.buildLoop:
+	push bc
+	push hl
+	ld a, c
+	call GetGoldenrod5FTMItem
+	pop hl
+	pop bc
+	ld [hli], a
+	inc c
+	ld a, c
+	cp 6
+	jr c, .buildLoop
+
+	ld [hl], -1 ; terminator
+	ret
+
+.FillSlots:
+; Fill b slots pointed by hl with RandomRange(c).
+	push bc
+	ld a, c
+	call RandomRange ; a = random 0..c-1
+	ld [hli], a
+	pop bc
+	dec b
+	jr nz, .FillSlots
+	ret
+
+GetGoldenrod5FTMItem:
+; Input: a = slot index (0-5).
+; Returns TM item constant in a.
+; Slots 0-2 → Tier 3, 3-4 → Tier 2, 5 → Tier 1.
+	push bc
+	push hl
+
+	; Determine tier table address
+	cp 3
+	jr c, .tier3
+	cp 5
+	jr c, .tier2
+	; slot 5 → tier 1
+	ld hl, MartTier1TMs
+	jr .lookup
+.tier2:
+	ld hl, MartTier2TMs
+	jr .lookup
+.tier3:
+	ld hl, MartTier3TMs
+
+.lookup:
+	; Get pool index from wGoldenrod5FTMChoices[slot]
+	ld e, a
+	ld d, 0
+	push hl ; save table base
+	ld hl, wGoldenrod5FTMChoices
+	add hl, de
+	ld a, [hl]
+	and %00011111 ; extract TM pool index (bits 4-0)
+	pop hl ; restore table base
+
+	; Index into tier table (in bank3)
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld a, BANK(MartTier3TMs) ; all tier tables are in bank3
+	call GetFarByte
+
+	pop hl
+	pop bc
+	ret
+
+BuildGoldenrod3FMart::
+; Called via callasm from GoldenrodDeptStore3F map script.
+; Initializes wGoldenrod3FItemSeed once, then builds mart data in wStringBuffer5.
+	; Check if already initialized
+	ld a, [wGoldenrod3FItemSeed]
+	bit 7, a
+	jr nz, .buildMart
+
+	; Initialize with random data
+	call Random
+	ld [wGoldenrod3FItemSeed], a
+	call Random
+	ld [wGoldenrod3FItemSeed + 1], a
+
+	; Set initialized flag (bit 7 of byte 0)
+	ld a, [wGoldenrod3FItemSeed]
+	or %10000000
+	ld [wGoldenrod3FItemSeed], a
+
+.buildMart:
+	; Build mart data in wStringBuffer5
+	ld hl, wStringBuffer5
+	ld [hl], 5 ; item count
+	inc hl
+
+	; Cat 0: Evolution Stone - byte0 bits 6-4, mod 6
+	ld a, [wGoldenrod3FItemSeed]
+	and $70
+	swap a
+	cp 6
+	jr c, .cat0ok
+	sub 6
+.cat0ok:
+	ld de, .EvoStones
+	call .LookupItem
+	ld [hli], a
+
+	; Cat 1: Trade Evo Item - byte0 bits 3-2
+	ld a, [wGoldenrod3FItemSeed]
+	and $0C
+	srl a
+	srl a
+	ld de, .TradeEvoItems
+	call .LookupItem
+	ld [hli], a
+
+	; Cat 2: Premium Held Item - byte0 bits 1-0
+	ld a, [wGoldenrod3FItemSeed]
+	and $03
+	ld de, .PremiumHeld
+	call .LookupItem
+	ld [hli], a
+
+	; Cat 3: Type Boost - byte1 bits 7-5
+	ld a, [wGoldenrod3FItemSeed + 1]
+	swap a
+	srl a
+	and $07
+	ld de, .TypeBoosts
+	call .LookupItem
+	ld [hli], a
+
+	; Cat 4: Vitamin/Rare - byte1 bits 4-2
+	ld a, [wGoldenrod3FItemSeed + 1]
+	and $1C
+	srl a
+	srl a
+	ld de, .VitaminsRare
+	call .LookupItem
+	ld [hli], a
+
+	ld [hl], -1 ; terminator
+	ret
+
+.LookupItem:
+; a = index, de = table base. Returns item in a. Preserves hl.
+	push hl
+	ld l, e
+	ld h, d
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld a, [hl]
+	pop hl
+	ret
+
+.EvoStones:
+	db FIRE_STONE, WATER_STONE, THUNDERSTONE, LEAF_STONE, SUN_STONE, MOON_STONE
+
+.TradeEvoItems:
+	db KINGS_ROCK, METAL_COAT, DRAGON_SCALE, UP_GRADE
+
+.PremiumHeld:
+	db LEFTOVERS, SCOPE_LENS, FOCUS_BAND, QUICK_CLAW
+
+.TypeBoosts:
+	db CHARCOAL, MYSTIC_WATER, MAGNET, MIRACLE_SEED, NEVERMELTICE, SOFT_SAND, TWISTEDSPOON, BLACKBELT_I
+
+.VitaminsRare:
+	db RARE_CANDY, PP_UP, HP_UP, PROTEIN, IRON, CARBOS, CALCIUM, LUCKY_EGG

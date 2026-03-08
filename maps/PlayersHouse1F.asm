@@ -146,9 +146,8 @@ MomScript:
 
 .FirstTimeBanking:
 	writetext ImBehindYouText
-	waitbutton
-	closetext
-	end
+	promptbutton
+	sjump .BankOfMom
 
 .GaveMysteryEgg:
 	setevent EVENT_FIRST_TIME_BANKING_WITH_MOM
