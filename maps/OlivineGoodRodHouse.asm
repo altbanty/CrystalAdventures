@@ -83,6 +83,10 @@ GaveGoodRodText:
 	para "Check them out to"
 	line "know what you"
 	cont "might catch!"
+
+	para "One thing though--"
+	line "the ROD will break"
+	cont "after one use!"
 	done
 
 DontWantGoodRodText:

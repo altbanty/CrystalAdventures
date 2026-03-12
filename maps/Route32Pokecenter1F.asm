@@ -71,6 +71,10 @@ Route32Pokecenter1FFishingGuruText_GiveOldRod:
 
 	para "stream, try out"
 	line "your ROD."
+
+	para "One thing though--"
+	line "the ROD will break"
+	cont "after one use!"
 	done
 
 Route32Pokecenter1FFishingGuruText_No:

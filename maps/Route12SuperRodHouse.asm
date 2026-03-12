@@ -69,6 +69,10 @@ GaveSuperRodText:
 
 	para "#MON using"
 	line "different RODS."
+
+	para "One thing though--"
+	line "the ROD will break"
+	cont "after one use!"
 	done
 
 DontWantSuperRodText:
