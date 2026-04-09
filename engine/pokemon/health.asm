@@ -168,26 +168,34 @@ CalculateMonHealingCost:
 	push bc
 	ld hl, MON_LEVEL
 	add hl, de
+	ld a, [hl]  ; a = level (1-100)
+
+	; Multiply level by 25 in 16-bit: level × 25 = level × 32 - level × 8 + level
+	; Max result: 100 × 25 = 2500, fits in 16 bits
+	ld l, a
+	ld h, 0     ; hl = level
+	add hl, hl  ; hl = level × 2
+	add hl, hl  ; hl = level × 4
+	add hl, hl  ; hl = level × 8
+	ld b, h
+	ld c, l     ; bc = level × 8
+	add hl, hl  ; hl = level × 16
+	add hl, hl  ; hl = level × 32
+	; hl - bc + original level = level × 32 - level × 8 + level = level × 25
+	ld a, l
+	sub c
+	ld c, a
+	ld a, h
+	sbc b
+	ld b, a     ; bc = level × 24
+	ld hl, MON_LEVEL
+	add hl, de
 	ld a, [hl]  ; a = level
-	
-	; Multiply level by 25 using simple method
-	ld b, a     ; Save original level
-	
-	; Calculate level × 25 = level × 20 + level × 5
-	; First calculate level × 5
-	add a, a    ; a = level × 2
-	add a, a    ; a = level × 4  
-	add b       ; a = level × 4 + level = level × 5
-	ld c, a     ; c = level × 5
-	
-	; Calculate level × 20 = (level × 5) × 4
-	add a, a    ; a = level × 10
-	add a, a    ; a = level × 20
-	add c       ; a = level × 20 + level × 5 = level × 25
-	
-	; Result is in a, move to bc for 16-bit addition
-	ld c, a     ; c = level × 25 (low byte)
-	ld b, 0     ; b = 0 (high byte, level × 25 < 256 for level ≤ 10)
+	add c
+	ld c, a
+	ld a, b
+	adc 0
+	ld b, a     ; bc = level × 25
 	
 	; Add revive cost to running total
 	ld a, [wStringBuffer1]
