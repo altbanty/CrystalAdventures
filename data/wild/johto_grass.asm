@@ -285,57 +285,57 @@ JohtoGrassWildMons:
 	def_grass_wildmons BURNED_TOWER_1F
 	db 4 percent, 4 percent, 4 percent ; encounter rates: morn/day/nite
 	; morn
-	db 13, MURKROW
-	db 14, KOFFING
-	db 15, MURKROW
-	db 14, MAGMAR
-	db 15, MISDREAVUS
-	db 15, MISDREAVUS
-	db 15, HOUNDOUR
+	db 17, MURKROW
+	db 18, KOFFING
+	db 19, MURKROW
+	db 18, MAGMAR
+	db 19, MISDREAVUS
+	db 19, MISDREAVUS
+	db 19, HOUNDOUR
 	; day
-	db 13, MURKROW
-	db 14, KOFFING
-	db 15, MURKROW
-	db 14, MAGMAR
-	db 15, MAGMAR
-	db 15, MISDREAVUS
-	db 15, HOUNDOUR
+	db 17, MURKROW
+	db 18, KOFFING
+	db 19, MURKROW
+	db 18, MAGMAR
+	db 19, MAGMAR
+	db 19, MISDREAVUS
+	db 19, HOUNDOUR
 	; nite
-	db 13, MURKROW
-	db 14, KOFFING
-	db 15, RATICATE
-	db 14, ZUBAT
-	db 15, MISDREAVUS
-	db 15, MISDREAVUS
-	db 15, HOUNDOUR
+	db 17, MURKROW
+	db 18, KOFFING
+	db 19, RATICATE
+	db 18, ZUBAT
+	db 19, MISDREAVUS
+	db 19, MISDREAVUS
+	db 19, HOUNDOUR
 	end_grass_wildmons
 
 	def_grass_wildmons BURNED_TOWER_B1F
 	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
 	; morn
-	db 18, MURKROW
-	db 17, KOFFING
-	db 16, KOFFING
-	db 16, MISDREAVUS
-	db 16, GASTLY
-	db 18, HOUNDOUR
-	db 18, HOUNDOUR
+	db 21, MURKROW
+	db 20, KOFFING
+	db 19, KOFFING
+	db 19, MISDREAVUS
+	db 19, GASTLY
+	db 21, HOUNDOUR
+	db 21, HOUNDOUR
 	; day
-	db 18, MURKROW
-	db 17, KOFFING
-	db 16, KOFFING
-	db 16, MISDREAVUS
-	db 16, GASTLY
-	db 18, HOUNDOUR
-	db 17, HOUNDOUR
+	db 21, MURKROW
+	db 20, KOFFING
+	db 19, KOFFING
+	db 19, MISDREAVUS
+	db 19, GASTLY
+	db 21, HOUNDOUR
+	db 20, HOUNDOUR
 	; nite
-	db 18, MURKROW
-	db 17, KOFFING
-	db 16, KOFFING
-	db 16, GASTLY
-	db 16, GASTLY
-	db 18, HOUNDOUR
-	db 18, HOUNDOUR
+	db 21, MURKROW
+	db 20, KOFFING
+	db 19, KOFFING
+	db 19, GASTLY
+	db 19, GASTLY
+	db 21, HOUNDOUR
+	db 21, HOUNDOUR
 	end_grass_wildmons
 
 	def_grass_wildmons NATIONAL_PARK
@@ -509,57 +509,57 @@ JohtoGrassWildMons:
 	def_grass_wildmons SLOWPOKE_WELL_B1F
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
-	db 5, KOFFING
-	db 6, GRIMER
-	db 7, KOFFING
-	db 6, GRIMER
-	db 8, ZUBAT
-	db 8, SLOWPOKE
-	db 8, SLOWPOKE
+	db 9, KOFFING
+	db 10, GRIMER
+	db 11, KOFFING
+	db 10, GRIMER
+	db 12, ZUBAT
+	db 12, SLOWPOKE
+	db 12, SLOWPOKE
 	; day
-	db 5, KOFFING
-	db 6, GRIMER
-	db 7, KOFFING
-	db 6, GRIMER
-	db 8, ZUBAT
-	db 8, SLOWPOKE
-	db 8, SLOWPOKE
+	db 9, KOFFING
+	db 10, GRIMER
+	db 11, KOFFING
+	db 10, GRIMER
+	db 12, ZUBAT
+	db 12, SLOWPOKE
+	db 12, SLOWPOKE
 	; nite
-	db 5, KOFFING
-	db 6, GRIMER
-	db 7, KOFFING
-	db 6, GRIMER
-	db 8, ZUBAT
-	db 8, SLOWPOKE
-	db 8, SLOWPOKE
+	db 9, KOFFING
+	db 10, GRIMER
+	db 11, KOFFING
+	db 10, GRIMER
+	db 12, ZUBAT
+	db 12, SLOWPOKE
+	db 12, SLOWPOKE
 	end_grass_wildmons
 
 	def_grass_wildmons SLOWPOKE_WELL_B2F
 	db 2 percent, 2 percent, 2 percent ; encounter rates: morn/day/nite
 	; morn
-	db 21, ZUBAT
-	db 23, ZUBAT
-	db 19, ZUBAT
-	db 21, SLOWPOKE
-	db 23, GOLBAT
+	db 22, ZUBAT
+	db 24, ZUBAT
+	db 22, ZUBAT
 	db 23, SLOWPOKE
-	db 23, SLOWPOKE
+	db 25, GOLBAT
+	db 24, SLOWPOKE
+	db 25, SLOWPOKE
 	; day
-	db 21, ZUBAT
-	db 23, ZUBAT
-	db 19, ZUBAT
-	db 21, SLOWPOKE
-	db 23, GOLBAT
+	db 22, ZUBAT
+	db 24, ZUBAT
+	db 22, ZUBAT
 	db 23, SLOWPOKE
-	db 23, SLOWPOKE
+	db 25, GOLBAT
+	db 24, SLOWPOKE
+	db 25, SLOWPOKE
 	; nite
-	db 21, ZUBAT
-	db 23, ZUBAT
-	db 19, ZUBAT
-	db 21, SLOWPOKE
-	db 23, GOLBAT
+	db 22, ZUBAT
+	db 24, ZUBAT
+	db 22, ZUBAT
 	db 23, SLOWPOKE
-	db 23, SLOWPOKE
+	db 25, GOLBAT
+	db 24, SLOWPOKE
+	db 25, SLOWPOKE
 	end_grass_wildmons
 
 	def_grass_wildmons ILEX_FOREST

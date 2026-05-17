@@ -34,7 +34,7 @@ SproutTower2FStatue:
 	jumptext SproutTower2FStatueText
 
 SproutTower2FXAccuracy:
-	randomized_item_5 ANTIDOTE, BIG_PEARL, NUGGET, REVIVE, TINYMUSHROOM
+	randomized_item_5 ANTIDOTE, BIG_PEARL, RARE_CANDY, REVIVE, TINYMUSHROOM
 
 SageNicoSeenText:
 	text "However hard we"

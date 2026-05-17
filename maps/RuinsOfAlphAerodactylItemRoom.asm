@@ -10,7 +10,7 @@ RuinsOfAlphAerodactylItemRoom_MapScripts:
 	def_callbacks
 
 RuinsOfAlphAerodactylItemRoomGoldBerry:
-	randomized_item_5 GOLD_BERRY, MIRACLEBERRY, FULL_RESTORE, BERRY_JUICE, MAX_ETHER
+	randomized_item_5 RARE_CANDY, MIRACLEBERRY, FULL_RESTORE, BERRY_JUICE, MAX_ETHER
 
 RuinsOfAlphAerodactylItemRoomMoonStone:
 	randomized_item_5 SUN_STONE, MOON_STONE, FIRE_STONE, LEAF_STONE, KINGS_ROCK

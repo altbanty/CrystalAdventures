@@ -78,6 +78,11 @@ EcruteakGymMortyScript:
 	setevent EVENT_GOT_TM30_SHADOW_BALL
 	writetext MortyText_ShadowBallSpeech
 	waitbutton
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .SkipLevelCapText
+	farwritetext LevelCapRaisedText
+	waitbutton
+.SkipLevelCapText:
 	closetext
 	end
 

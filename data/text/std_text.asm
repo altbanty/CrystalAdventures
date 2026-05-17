@@ -97,10 +97,19 @@ NurseNotEnoughMoneyText:
 	text "I'm sorry, but"
 	line "you don't have"
 	cont "enough money."
-	
+
 	para "Please come back"
 	line "when you can"
 	cont "afford it."
+	done
+
+EXPORT LevelCapRaisedText
+LevelCapRaisedText:
+	text "Your level cap has"
+	line "been raised to"
+	cont "Lv @"
+	text_decimal wLevelCap, 1, 2
+	text "!"
 	done
 
 NurseAlreadyHealedText:

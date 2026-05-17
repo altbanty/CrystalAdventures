@@ -352,7 +352,7 @@ Route43FruitTree:
 	fruittree FRUITTREE_ROUTE_43
 
 Route43MaxEther:
-	randomized_item_5 MAX_ETHER, ELIXER, ULTRA_BALL, HYPER_POTION, NUGGET
+	randomized_item_5 MAX_ETHER, ELIXER, ULTRA_BALL, HYPER_POTION, RARE_CANDY
 
 PokemaniacBenSeenText:
 	text "I love #MON!"

@@ -452,17 +452,17 @@ ClairGroup:
 	db -1 ; end
 
 Rival1Group:
-; Pokemon Crystal Adventures: 8 rival team variants (one per starter).
+; Pokemon Crystal Adventures: 11 rival team variants (one per starter).
 ; Encounter 1 (Cherrygrove, ~Lv5): Ace starter only.
 ; Encounter 2 (Azalea, ~Lv15-18): Zubat + Larvitar + ace (stage 1).
 ; Encounter 3 (Burned Tower, ~Lv22-24): Theme mon + Golbat + Larvitar + ace (stage 1).
-; Encounter 4 (Goldenrod Underground, ~Lv38-40): Theme mobs + Golbat + Pupitar + ace (stage 2).
+; Encounter 4 (Goldenrod Underground, ~Lv38-40): Theme mons + Golbat + Pupitar + ace (stage 2).
 ; Encounter 5 (Victory Road, ~Lv45-48): Full team, fully evolved, items + moves.
 ;
 ; Rival ace mapping (player starter -> rival ace):
-;   0 Chikorita  -> Cyndaquil line    4 Sudowoodo  -> Chikorita line
-;   1 Totodile   -> Chikorita line    5 Smeargle   -> Cyndaquil line
-;   2 Cyndaquil  -> Totodile line     6 Swinub     -> Totodile line
+;   0 Chikorita  -> Cyndaquil line    4 Geodude    -> Chikorita line    8 Charmander -> Totodile line
+;   1 Totodile   -> Chikorita line    5 Smeargle   -> Cyndaquil line    9 Bulbasaur  -> Cyndaquil line
+;   2 Cyndaquil  -> Totodile line     6 Swinub     -> Totodile line    10 Squirtle   -> Chikorita line
 ;   3 Aipom      -> Totodile line     7 Mareep     -> Chikorita line
 
 	; Pokemon Crystal Adventures: encounter 1 (Cherrygrove)
@@ -486,7 +486,7 @@ Rival1Group:
 	db  5, TOTODILE
 	db -1 ; end
 
-	; RIVAL1 (5) - vs Sudowoodo player
+	; RIVAL1 (5) - vs Geodude player
 	db "?@", TRAINERTYPE_NORMAL
 	db  5, CHIKORITA
 	db -1 ; end
@@ -502,6 +502,21 @@ Rival1Group:
 	db -1 ; end
 
 	; RIVAL1 (8) - vs Mareep player
+	db "?@", TRAINERTYPE_NORMAL
+	db  5, CHIKORITA
+	db -1 ; end
+
+	; RIVAL1 (9) - vs Charmander player
+	db "?@", TRAINERTYPE_NORMAL
+	db  5, TOTODILE
+	db -1 ; end
+
+	; RIVAL1 (10) - vs Bulbasaur player
+	db "?@", TRAINERTYPE_NORMAL
+	db  5, CYNDAQUIL
+	db -1 ; end
+
+	; RIVAL1 (11) - vs Squirtle player
 	db "?@", TRAINERTYPE_NORMAL
 	db  5, CHIKORITA
 	db -1 ; end
@@ -535,7 +550,7 @@ Rival1Group:
 	db 18, CROCONAW
 	db -1 ; end
 
-	; RIVAL1 (13) - vs Sudowoodo: Grass/Ground anti-Rock
+	; RIVAL1 (13) - vs Geodude: Grass/Ground anti-Rock
 	db "?@", TRAINERTYPE_NORMAL
 	db 15, ZUBAT
 	db 16, LARVITAR
@@ -557,6 +572,27 @@ Rival1Group:
 	db -1 ; end
 
 	; RIVAL1 (16) - vs Mareep: Ground/Grass anti-Elec
+	db "?@", TRAINERTYPE_NORMAL
+	db 15, ZUBAT
+	db 16, LARVITAR
+	db 18, BAYLEEF
+	db -1 ; end
+
+	; RIVAL1 (17) - vs Charmander: Physical balance
+	db "?@", TRAINERTYPE_NORMAL
+	db 15, ZUBAT
+	db 16, LARVITAR
+	db 18, CROCONAW
+	db -1 ; end
+
+	; RIVAL1 (18) - vs Bulbasaur: Fast mixed offense
+	db "?@", TRAINERTYPE_NORMAL
+	db 15, ZUBAT
+	db 16, LARVITAR
+	db 18, QUILAVA
+	db -1 ; end
+
+	; RIVAL1 (19) - vs Squirtle: Anti-Water balance
 	db "?@", TRAINERTYPE_NORMAL
 	db 15, ZUBAT
 	db 16, LARVITAR
@@ -596,7 +632,7 @@ Rival1Group:
 	db 24, CROCONAW,    BITE, ICE_PUNCH, WATER_GUN, MUD_SLAP
 	db -1 ; end
 
-	; RIVAL1 (21) - vs Sudowoodo: Grass/Ground anti-Rock
+	; RIVAL1 (21) - vs Geodude: Grass/Ground anti-Rock
 	db "?@", TRAINERTYPE_MOVES
 	db 22, LARVITAR,    BITE, ROCK_THROW, SCREECH, NO_MOVE
 	db 23, WEEPINBELL,  RAZOR_LEAF, GROWTH, SLEEP_POWDER, STUN_SPORE
@@ -628,21 +664,45 @@ Rival1Group:
 	db 24, BAYLEEF,     MEGA_DRAIN, RAZOR_LEAF, TACKLE, LEECH_SEED
 	db -1 ; end
 
+	; RIVAL1 (25) - vs Charmander: Physical balance
+	db "?@", TRAINERTYPE_MOVES
+	db 22, LARVITAR,    BITE, ROCK_THROW, SCREECH, NO_MOVE
+	db 23, GRAVELER,    ROCK_THROW, MAGNITUDE, DEFENSE_CURL, MUD_SLAP
+	db 22, GOLBAT,      BITE, CONFUSE_RAY, LEECH_LIFE, GUST
+	db 24, CROCONAW,    BITE, ICE_PUNCH, WATER_GUN, MUD_SLAP
+	db -1 ; end
+
+	; RIVAL1 (26) - vs Bulbasaur: Fast mixed offense
+	db "?@", TRAINERTYPE_MOVES
+	db 22, LARVITAR,    BITE, ROCK_THROW, SCREECH, NO_MOVE
+	db 23, DROWZEE,     HYPNOSIS, CONFUSION, HEADBUTT, DISABLE
+	db 22, GOLBAT,      BITE, CONFUSE_RAY, LEECH_LIFE, GUST
+	db 24, QUILAVA,     FLAME_WHEEL, DIG, QUICK_ATTACK, SMOKESCREEN
+	db -1 ; end
+
+	; RIVAL1 (27) - vs Squirtle: Anti-Water balance
+	db "?@", TRAINERTYPE_MOVES
+	db 22, LARVITAR,    BITE, ROCK_THROW, SCREECH, NO_MOVE
+	db 23, MAGNEMITE,   THUNDERSHOCK, SONICBOOM, THUNDER_WAVE, SUPERSONIC
+	db 22, GOLBAT,      BITE, CONFUSE_RAY, LEECH_LIFE, GUST
+	db 24, BAYLEEF,     MEGA_DRAIN, RAZOR_LEAF, TACKLE, LEECH_SEED
+	db -1 ; end
+
 	; Pokemon Crystal Adventures: encounter 4 (Goldenrod Underground)
 	; RIVAL1 (25) - vs Chikorita: Fire/Dark offense
 	db "?@", TRAINERTYPE_MOVES
 	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
 	db 39, HOUNDOOM,    FLAMETHROWER, IRON_TAIL, BITE, DOUBLE_TEAM
-	db 38, MAGCARGO,    FLAMETHROWER, ROCK_SLIDE, BODY_SLAM, CURSE
+	db 38, PILOSWINE,   EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
 	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 40, QUILAVA,     FLAME_WHEEL, DIG, QUICK_ATTACK, IRON_TAIL
 	db -1 ; end
 
-	; RIVAL1 (26) - vs Totodile: Grass/Poison stall
+	; RIVAL1 (26) - vs Totodile: Grass/Steel stall
 	db "?@", TRAINERTYPE_MOVES
 	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
 	db 39, VICTREEBEL,  SLUDGE, RAZOR_LEAF, SLEEP_POWDER, GROWTH
-	db 38, MUK,         SLUDGE_BOMB, MINIMIZE, TOXIC, FIRE_PUNCH
+	db 38, STEELIX,     EARTHQUAKE, IRON_TAIL, ROCK_SLIDE, SCREECH
 	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 40, BAYLEEF,     RAZOR_LEAF, SYNTHESIS, BODY_SLAM, LEECH_SEED
 	db -1 ; end
@@ -651,7 +711,7 @@ Rival1Group:
 	db "?@", TRAINERTYPE_MOVES
 	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
 	db 39, OCTILLERY,   OCTAZOOKA, PSYBEAM, AURORA_BEAM, NO_MOVE
-	db 38, PILOSWINE,   EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
+	db 38, DONPHAN,     EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
 	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 40, CROCONAW,    BITE, ICE_PUNCH, SURF, MUD_SLAP
 	db -1 ; end
@@ -665,7 +725,7 @@ Rival1Group:
 	db 40, CROCONAW,    BITE, ICE_PUNCH, SURF, MUD_SLAP
 	db -1 ; end
 
-	; RIVAL1 (29) - vs Sudowoodo: Grass/Ground anti-Rock
+	; RIVAL1 (29) - vs Geodude: Grass/Ground anti-Rock
 	db "?@", TRAINERTYPE_MOVES
 	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
 	db 39, VICTREEBEL,  SLUDGE, RAZOR_LEAF, SLEEP_POWDER, GROWTH
@@ -692,47 +752,74 @@ Rival1Group:
 	db 40, CROCONAW,    BITE, ICE_PUNCH, SURF, MUD_SLAP
 	db -1 ; end
 
-	; RIVAL1 (32) - vs Mareep: Ground/Grass anti-Elec
+	; RIVAL1 (32) - vs Mareep: Ground/Fire balance
 	db "?@", TRAINERTYPE_MOVES
 	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
 	db 39, DONPHAN,     EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
-	db 38, VICTREEBEL,  SLUDGE, RAZOR_LEAF, SLEEP_POWDER, GROWTH
-	db 39, NOCTOWL,     PSYCHIC_M, HYPNOSIS, REFLECT, FLY
+	db 38, ARCANINE,    FLAMETHROWER, EXTREMESPEED, BITE, ROAR
+	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 40, BAYLEEF,     RAZOR_LEAF, SYNTHESIS, BODY_SLAM, LEECH_SEED
+	db -1 ; end
+
+	; RIVAL1 (33) - vs Charmander: Physical balance
+	db "?@", TRAINERTYPE_MOVES
+	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
+	db 39, GOLEM,       EARTHQUAKE, ROCK_SLIDE, EXPLOSION, FIRE_PUNCH
+	db 38, SLOWBRO,     SURF, PSYCHIC_M, AMNESIA, HEADBUTT
+	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 40, CROCONAW,    BITE, ICE_PUNCH, SURF, MUD_SLAP
+	db -1 ; end
+
+	; RIVAL1 (34) - vs Bulbasaur: Fast mixed offense
+	db "?@", TRAINERTYPE_MOVES
+	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
+	db 39, ESPEON,      PSYCHIC_M, SHADOW_BALL, SWIFT, REFLECT
+	db 38, SNEASEL,     ICE_PUNCH, FAINT_ATTACK, QUICK_ATTACK, SCREECH
+	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 40, QUILAVA,     FLAME_WHEEL, DIG, QUICK_ATTACK, IRON_TAIL
+	db -1 ; end
+
+	; RIVAL1 (35) - vs Squirtle: Anti-Water balance
+	db "?@", TRAINERTYPE_MOVES
+	db 39, PUPITAR,     THRASH, ROCK_SLIDE, SCREECH, BITE
+	db 39, MAGNETON,    THUNDERBOLT, TRI_ATTACK, THUNDER_WAVE, LIGHT_SCREEN
+	db 38, HYPNO,       PSYCHIC_M, HYPNOSIS, DREAM_EATER, HEADBUTT
+	db 39, GOLBAT,      TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 40, BAYLEEF,     RAZOR_LEAF, SYNTHESIS, BODY_SLAM, LEECH_SEED
 	db -1 ; end
 
 	; Pokemon Crystal Adventures: encounter 5 (Victory Road)
-	; RIVAL1 (33) - vs Chikorita: Fire/Dark offense
+	; RIVAL1 (45) - vs Chikorita: Offense + Dark coverage
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 46, HOUNDOOM,    NO_ITEM,         FLAMETHROWER, IRON_TAIL, CRUNCH, SUNNY_DAY
-	db 46, MAGCARGO,    QUICK_CLAW,      FLAMETHROWER, ROCK_SLIDE, BODY_SLAM, CURSE
+	db 46, PILOSWINE,   QUICK_CLAW,      EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
 	db 47, TYPHLOSION,  CHARCOAL,        FLAMETHROWER, THUNDERPUNCH, QUICK_ATTACK, IRON_TAIL
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (34) - vs Totodile: Grass/Poison stall
+	; RIVAL1 (46) - vs Totodile: Grass/Steel stall
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 46, VICTREEBEL,  NO_ITEM,         SLUDGE_BOMB, GIGA_DRAIN, SLEEP_POWDER, GROWTH
-	db 46, MUK,         QUICK_CLAW,      SLUDGE_BOMB, FIRE_PUNCH, MINIMIZE, TOXIC
+	db 46, STEELIX,     QUICK_CLAW,      EARTHQUAKE, IRON_TAIL, ROCK_SLIDE, SCREECH
 	db 47, MEGANIUM,    MIRACLE_SEED,    SUNNY_DAY, GIGA_DRAIN, BODY_SLAM, SYNTHESIS
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (35) - vs Cyndaquil: Water/Ice bulk
+	; RIVAL1 (47) - vs Cyndaquil: Water/Ground bulk
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 46, OCTILLERY,   QUICK_CLAW,      SURF, ICE_BEAM, PSYBEAM, HYPER_BEAM
-	db 46, PILOSWINE,   NO_ITEM,         EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
+	db 46, DONPHAN,     NO_ITEM,         EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
 	db 47, FERALIGATR,  MYSTIC_WATER,    ICE_PUNCH, SURF, SLASH, EARTHQUAKE
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (36) - vs Aipom: Physical bruiser
+	; RIVAL1 (48) - vs Aipom: Physical bruiser
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
@@ -742,7 +829,7 @@ Rival1Group:
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (37) - vs Sudowoodo: Grass/Ground anti-Rock
+	; RIVAL1 (49) - vs Geodude: Grass/Ground anti-Rock
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, NOCTOWL,     NO_ITEM,         PSYCHIC_M, HYPNOSIS, REFLECT, FLY
@@ -752,7 +839,7 @@ Rival1Group:
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (38) - vs Smeargle: Speed/special
+	; RIVAL1 (50) - vs Smeargle: Speed/special
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
@@ -762,7 +849,7 @@ Rival1Group:
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (39) - vs Swinub: Water/Fire cover
+	; RIVAL1 (51) - vs Swinub: Water/Fire cover
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
 	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
@@ -772,12 +859,42 @@ Rival1Group:
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
 
-	; RIVAL1 (40) - vs Mareep: Ground/Grass anti-Elec
+	; RIVAL1 (52) - vs Mareep: Ground/Fire balance
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
-	db 45, NOCTOWL,     NO_ITEM,         PSYCHIC_M, HYPNOSIS, REFLECT, FLY
+	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 46, DONPHAN,     NO_ITEM,         EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
-	db 46, VICTREEBEL,  QUICK_CLAW,      SLUDGE_BOMB, GIGA_DRAIN, SLEEP_POWDER, GROWTH
+	db 46, ARCANINE,    QUICK_CLAW,      FLAMETHROWER, EXTREMESPEED, CRUNCH, ROAR
+	db 47, MEGANIUM,    MIRACLE_SEED,    SUNNY_DAY, GIGA_DRAIN, BODY_SLAM, SYNTHESIS
+	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
+	db -1 ; end
+
+	; RIVAL1 (53) - vs Charmander: Physical balance
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
+	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 46, GOLEM,       NO_ITEM,         EARTHQUAKE, ROCK_SLIDE, EXPLOSION, FIRE_PUNCH
+	db 46, SLOWBRO,     QUICK_CLAW,      SURF, PSYCHIC_M, AMNESIA, ICE_BEAM
+	db 47, FERALIGATR,  MYSTIC_WATER,    ICE_PUNCH, SURF, SLASH, EARTHQUAKE
+	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
+	db -1 ; end
+
+	; RIVAL1 (54) - vs Bulbasaur: Fast mixed offense
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
+	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 46, ESPEON,      NO_ITEM,         PSYCHIC_M, SHADOW_BALL, SWIFT, REFLECT
+	db 46, SNEASEL,     QUICK_CLAW,      ICE_PUNCH, FAINT_ATTACK, QUICK_ATTACK, SCREECH
+	db 47, TYPHLOSION,  CHARCOAL,        FLAMETHROWER, THUNDERPUNCH, QUICK_ATTACK, IRON_TAIL
+	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
+	db -1 ; end
+
+	; RIVAL1 (55) - vs Squirtle: Anti-Water balance
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 45, URSARING,    MIRACLEBERRY,    SLASH, FAINT_ATTACK, ROCK_SMASH, REST
+	db 45, CROBAT,      NO_ITEM,         TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 46, MAGNETON,    NO_ITEM,         THUNDERBOLT, TRI_ATTACK, THUNDER_WAVE, LIGHT_SCREEN
+	db 46, HYPNO,       QUICK_CLAW,      PSYCHIC_M, HYPNOSIS, DREAM_EATER, SHADOW_BALL
 	db 47, MEGANIUM,    MIRACLE_SEED,    SUNNY_DAY, GIGA_DRAIN, BODY_SLAM, SYNTHESIS
 	db 48, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_PUNCH
 	db -1 ; end
@@ -1106,19 +1223,20 @@ LtSurgeGroup:
 ScientistGroup:
 	; SCIENTIST (1)
 	db "ROSS@", TRAINERTYPE_NORMAL
-	db 28, KOFFING
-	db 28, RAICHU
+	db 30, KOFFING
+	db 30, RAICHU
 	db -1 ; end
 
 	; SCIENTIST (2)
 	db "MITCH@", TRAINERTYPE_NORMAL
-	db 28, ELECTRODE
+	db 30, ELECTRODE
+	db 29, VOLTORB
 	db -1 ; end
 
 	; SCIENTIST (3)
 	db "JED@", TRAINERTYPE_NORMAL
-	db 28, MAGNEMITE
-	db 28, PORYGON
+	db 30, MAGNETON
+	db 30, PORYGON
 	db -1 ; end
 
 	; SCIENTIST (4)
@@ -1145,37 +1263,37 @@ ErikaGroup:
 YoungsterGroup:
 	; YOUNGSTER (1)
 	db "JOEY@", TRAINERTYPE_NORMAL
-	db  5, RATTATA
+	db  6, RATTATA
 	db -1 ; end
 
 	; YOUNGSTER (2)
 	db "MIKEY@", TRAINERTYPE_NORMAL
-	db  4, HOOTHOOT
-	db  4, SENTRET
+	db  5, HOOTHOOT
+	db  5, SENTRET
 	db -1 ; end
 
 	; YOUNGSTER (3)
 	db "ALBERT@", TRAINERTYPE_NORMAL
-	db  7, SENTRET
-	db  7, ZUBAT
+	db  9, SENTRET
+	db  9, ZUBAT
 	db -1 ; end
 
 	; YOUNGSTER (4)
 	db "GORDON@", TRAINERTYPE_NORMAL
-	db 10, WOOPER
+	db 11, WOOPER
 	db -1 ; end
 
 	; YOUNGSTER (5)
 	db "SAMUEL@", TRAINERTYPE_NORMAL
-	db  12, TEDDIURSA
-	db  10, SANDSHREW
-	db  12, SPEAROW
+	db  14, TEDDIURSA
+	db  13, SANDSHREW
+	db  14, SPEAROW
 	db -1 ; end
 
 	; YOUNGSTER (6)
 	db "IAN@", TRAINERTYPE_NORMAL
-	db 12, MANKEY
-	db 14, DIGLETT
+	db 14, MANKEY
+	db 16, DIGLETT
 	db -1 ; end
 
 	; YOUNGSTER (7)
@@ -1223,68 +1341,68 @@ YoungsterGroup:
 
 	; JOEY1_V1
 	db "JOEY@", TRAINERTYPE_NORMAL
-	db 5, SENTRET
+	db 6, SENTRET
 	db -1 ; end
 	; JOEY1_V2
 	db "JOEY@", TRAINERTYPE_NORMAL
-	db 4, PIDGEY
-	db 4, CATERPIE
+	db 5, PIDGEY
+	db 5, CATERPIE
 	db -1 ; end
 	; MIKEY_V1
 	db "MIKEY@", TRAINERTYPE_NORMAL
-	db 4, PIDGEY
-	db 4, RATTATA
+	db 5, PIDGEY
+	db 5, RATTATA
 	db -1 ; end
 	; MIKEY_V2
 	db "MIKEY@", TRAINERTYPE_NORMAL
-	db 5, SPINARAK
+	db 6, SPINARAK
 	db -1 ; end
 	; ALBERT_V1
 	db "ALBERT@", TRAINERTYPE_NORMAL
-	db 7, RATTATA
-	db 7, GEODUDE
+	db 9, RATTATA
+	db 9, GEODUDE
 	db -1 ; end
 	; ALBERT_V2
 	db "ALBERT@", TRAINERTYPE_NORMAL
-	db 8, EKANS
+	db 10, EKANS
 	db -1 ; end
 	; GORDON_V1
 	db "GORDON@", TRAINERTYPE_NORMAL
-	db 10, POLIWAG
+	db 11, POLIWAG
 	db -1 ; end
 	; GORDON_V2
 	db "GORDON@", TRAINERTYPE_NORMAL
-	db 9, MARILL
-	db 9, GEODUDE
+	db 10, MARILL
+	db 10, GEODUDE
 	db -1 ; end
 	; SAMUEL_V1
 	db "SAMUEL@", TRAINERTYPE_NORMAL
-	db 12, NIDORAN_M
-	db 10, GEODUDE
-	db 12, PIDGEOTTO
+	db 14, NIDORAN_M
+	db 13, GEODUDE
+	db 14, PIDGEOTTO
 	db -1 ; end
 	; SAMUEL_V2
 	db "SAMUEL@", TRAINERTYPE_NORMAL
-	db 13, RATICATE
-	db 12, SPEAROW
+	db 15, RATICATE
+	db 14, SPEAROW
 	db -1 ; end
 	; IAN_V1
 	db "IAN@", TRAINERTYPE_NORMAL
-	db 12, MACHOP
-	db 14, SANDSHREW
+	db 14, MACHOP
+	db 16, SANDSHREW
 	db -1 ; end
 	; IAN_V2
 	db "IAN@", TRAINERTYPE_NORMAL
-	db 14, NIDORAN_M
-	db 12, GEODUDE
-	db 12, ZUBAT
+	db 16, NIDORAN_M
+	db 14, GEODUDE
+	db 14, ZUBAT
 	db -1 ; end
 
 SchoolboyGroup:
 	; SCHOOLBOY (1)
 	db "JACK@", TRAINERTYPE_NORMAL
-	db 16, SUNFLORA
-	db 17, VOLTORB
+	db 17, SUNFLORA
+	db 18, VOLTORB
 	db -1 ; end
 
 	; SCHOOLBOY (2)
@@ -1295,8 +1413,8 @@ SchoolboyGroup:
 
 	; SCHOOLBOY (3)
 	db "ALAN@", TRAINERTYPE_NORMAL
-	db 20, TANGELA
-	db 20, GROWLITHE
+	db 21, TANGELA
+	db 21, GROWLITHE
 	db -1 ; end
 
 	; SCHOOLBOY (4)
@@ -1437,21 +1555,21 @@ SchoolboyGroup:
 
 	; JACK1_V1
 	db "JACK@", TRAINERTYPE_NORMAL
-	db 16, GROWLITHE
-	db 17, MAGNEMITE
+	db 17, GROWLITHE
+	db 18, MAGNEMITE
 	db -1 ; end
 	; JACK1_V2
 	db "JACK@", TRAINERTYPE_NORMAL
-	db 17, ELECTRODE
+	db 18, ELECTRODE
 	db -1 ; end
 	; ALAN1_V1
 	db "ALAN@", TRAINERTYPE_NORMAL
-	db 20, WEEPINBELL
-	db 20, VULPIX
+	db 21, WEEPINBELL
+	db 21, VULPIX
 	db -1 ; end
 	; ALAN1_V2
 	db "ALAN@", TRAINERTYPE_NORMAL
-	db 21, ARCANINE
+	db 22, ARCANINE
 	db -1 ; end
 	; CHAD1_V1
 	db "CHAD@", TRAINERTYPE_NORMAL
@@ -1466,8 +1584,8 @@ SchoolboyGroup:
 BirdKeeperGroup:
 	; BIRD_KEEPER (1)
 	db "ROD@", TRAINERTYPE_NORMAL
-	db  7, PIDGEY
-	db  7, NATU
+	db  8, PIDGEY
+	db  8, NATU
 	db -1 ; end
 
 	; BIRD_KEEPER (2)
@@ -1477,14 +1595,15 @@ BirdKeeperGroup:
 
 	; BIRD_KEEPER (3)
 	db "BRYAN@", TRAINERTYPE_NORMAL
-	db 16, PIDGEY
-	db 18, PIDGEOTTO
-	db 18, SPEAROW
+	db 18, PIDGEY
+	db 20, PIDGEOTTO
+	db 20, SPEAROW
 	db -1 ; end
 
 	; BIRD_KEEPER (4)
 	db "THEO@", TRAINERTYPE_NORMAL
-	db 23, MURKROW
+	db 24, MURKROW
+	db 23, PIDGEY
 	db -1 ; end
 
 	; BIRD_KEEPER (5)
@@ -1495,8 +1614,8 @@ BirdKeeperGroup:
 
 	; BIRD_KEEPER (6)
 	db "DENIS@", TRAINERTYPE_NORMAL
-	db 24, PIDGEOTTO
-	db 24, FEAROW
+	db 25, PIDGEOTTO
+	db 25, FEAROW
 	db -1 ; end
 
 	; BIRD_KEEPER (7)
@@ -1541,8 +1660,8 @@ BirdKeeperGroup:
 
 	; BIRD_KEEPER (13)
 	db "PETER@", TRAINERTYPE_NORMAL
-	db  8, SPEAROW
-	db  8, NATU
+	db  10, SPEAROW
+	db  10, NATU
 	db -1 ; end
 
 	; BIRD_KEEPER (14)
@@ -1592,32 +1711,33 @@ BirdKeeperGroup:
 
 	; PETER_V1
 	db "PETER@", TRAINERTYPE_NORMAL
-	db 8, PIDGEY
-	db 8, HOOTHOOT
+	db 10, PIDGEY
+	db 10, HOOTHOOT
 	db -1 ; end
 	; PETER_V2
 	db "PETER@", TRAINERTYPE_NORMAL
-	db 9, SPEAROW
+	db 11, SPEAROW
 	db -1 ; end
 	; BRYAN_V1
 	db "BRYAN@", TRAINERTYPE_NORMAL
-	db 16, HOOTHOOT
-	db 18, NOCTOWL
-	db 18, MURKROW
+	db 18, HOOTHOOT
+	db 20, NOCTOWL
+	db 20, MURKROW
 	db -1 ; end
 	; BRYAN_V2
 	db "BRYAN@", TRAINERTYPE_NORMAL
-	db 18, PIDGEOTTO
-	db 18, FEAROW
+	db 20, PIDGEOTTO
+	db 20, FEAROW
 	db -1 ; end
 	; THEO_V1
 	db "THEO@", TRAINERTYPE_NORMAL
-	db 23, NOCTOWL
+	db 24, NOCTOWL
+	db 23, HOOTHOOT
 	db -1 ; end
 	; THEO_V2
 	db "THEO@", TRAINERTYPE_NORMAL
-	db 22, PIDGEOTTO
-	db 22, NATU
+	db 23, PIDGEOTTO
+	db 23, NATU
 	db -1 ; end
 	; TOBY_V1
 	db "TOBY@", TRAINERTYPE_NORMAL
@@ -1630,12 +1750,13 @@ BirdKeeperGroup:
 	db -1 ; end
 	; DENIS_V1
 	db "DENIS@", TRAINERTYPE_NORMAL
-	db 24, NOCTOWL
-	db 24, MURKROW
+	db 25, NOCTOWL
+	db 25, MURKROW
 	db -1 ; end
 	; DENIS_V2
 	db "DENIS@", TRAINERTYPE_NORMAL
-	db 25, FEAROW
+	db 26, FEAROW
+	db 25, PIDGEOTTO
 	db -1 ; end
 	; VANCE1_V1
 	db "VANCE@", TRAINERTYPE_NORMAL
@@ -1654,13 +1775,13 @@ BirdKeeperGroup:
 LassGroup:
 	; LASS (1)
 	db "CARRIE@", TRAINERTYPE_MOVES
-	db 18, SNUBBULL,   SCARY_FACE, CHARM, BITE, LICK
+	db 19, SNUBBULL,   SCARY_FACE, CHARM, BITE, LICK
 	db -1 ; end
 
 	; LASS (2)
 	db "BRIDGET@", TRAINERTYPE_NORMAL
-	db 16, AIPOM
-	db 16, TOGEPI
+	db 17, AIPOM
+	db 17, TOGEPI
 	db -1 ; end
 
 	; LASS (3)
@@ -1672,14 +1793,14 @@ LassGroup:
 
 	; LASS (4)
 	db "KRISE@", TRAINERTYPE_NORMAL
-	db 17, SKIPLOOM
-	db 16, CUBONE
+	db 18, SKIPLOOM
+	db 17, CUBONE
 	db -1 ; end
 
 	; LASS (5)
 	db "CONNIE@", TRAINERTYPE_NORMAL
-	db 21, PONYTA
-	db 22, WEEPINBELL
+	db 22, PONYTA
+	db 23, WEEPINBELL
 	db -1 ; end
 
 	; LASS (6)
@@ -1760,30 +1881,30 @@ LassGroup:
 
 	; CARRIE_V1
 	db "CARRIE@", TRAINERTYPE_MOVES
-	db 18, CLEFAIRY, GROWL, ENCORE, DOUBLESLAP, METRONOME
+	db 19, CLEFAIRY, GROWL, ENCORE, DOUBLESLAP, METRONOME
 	db -1 ; end
 	; CARRIE_V2
 	db "CARRIE@", TRAINERTYPE_NORMAL
-	db 17, JIGGLYPUFF
-	db 17, SNUBBULL
+	db 18, JIGGLYPUFF
+	db 18, SNUBBULL
 	db -1 ; end
 	; BRIDGET_V1
 	db "BRIDGET@", TRAINERTYPE_NORMAL
-	db 16, SENTRET
-	db 16, CLEFAIRY
+	db 17, SENTRET
+	db 17, CLEFAIRY
 	db -1 ; end
 	; BRIDGET_V2
 	db "BRIDGET@", TRAINERTYPE_NORMAL
-	db 17, FURRET
+	db 18, FURRET
 	db -1 ; end
 	; KRISE_V1
 	db "KRISE@", TRAINERTYPE_NORMAL
-	db 17, GLOOM
-	db 16, MARILL
+	db 18, GLOOM
+	db 17, MARILL
 	db -1 ; end
 	; KRISE_V2
 	db "KRISE@", TRAINERTYPE_NORMAL
-	db 18, WEEPINBELL
+	db 19, WEEPINBELL
 	db -1 ; end
 	; DANA1_V1
 	db "DANA@", TRAINERTYPE_MOVES
@@ -1796,12 +1917,13 @@ LassGroup:
 	db -1 ; end
 	; CONNIE1_V1
 	db "CONNIE@", TRAINERTYPE_NORMAL
-	db 21, GROWLITHE
-	db 22, GLOOM
+	db 22, GROWLITHE
+	db 23, GLOOM
 	db -1 ; end
 	; CONNIE1_V2
 	db "CONNIE@", TRAINERTYPE_NORMAL
-	db 22, RAPIDASH
+	db 23, RAPIDASH
+	db 22, PONYTA
 	db -1 ; end
 
 JanineGroup:
@@ -2045,14 +2167,14 @@ CooltrainerFGroup:
 
 	; COOLTRAINERF (5)
 	db "KATE@", TRAINERTYPE_NORMAL
-	db 26, SHELLDER
-	db 28, CLOYSTER
+	db 27, SHELLDER
+	db 29, CLOYSTER
 	db -1 ; end
 
 	; COOLTRAINERF (6)
 	db "IRENE@", TRAINERTYPE_NORMAL
-	db 22, GOLDEEN
-	db 24, SEAKING
+	db 23, GOLDEEN
+	db 25, SEAKING
 	db -1 ; end
 
 	; COOLTRAINERF (7)
@@ -2134,8 +2256,8 @@ CooltrainerFGroup:
 
 	; COOLTRAINERF (17)
 	db "JENN@", TRAINERTYPE_NORMAL
-	db 24, STARYU
-	db 26, STARMIE
+	db 25, STARYU
+	db 27, STARMIE
 	db -1 ; end
 
 	; COOLTRAINERF (18)
@@ -2175,30 +2297,30 @@ CooltrainerFGroup:
 
 	; IRENE_V1
 	db "IRENE@", TRAINERTYPE_NORMAL
-	db 22, HORSEA
-	db 24, STARMIE
+	db 23, HORSEA
+	db 25, STARMIE
 	db -1 ; end
 	; IRENE_V2
 	db "IRENE@", TRAINERTYPE_NORMAL
-	db 24, SEAKING
+	db 25, SEAKING
 	db -1 ; end
 	; JENN_V1
 	db "JENN@", TRAINERTYPE_NORMAL
-	db 24, SHELLDER
-	db 26, CLOYSTER
+	db 25, SHELLDER
+	db 27, CLOYSTER
 	db -1 ; end
 	; JENN_V2
 	db "JENN@", TRAINERTYPE_NORMAL
-	db 26, STARMIE
+	db 27, STARMIE
 	db -1 ; end
 	; KATE_V1
 	db "KATE@", TRAINERTYPE_NORMAL
-	db 26, STARYU
-	db 28, STARMIE
+	db 27, STARYU
+	db 29, STARMIE
 	db -1 ; end
 	; KATE_V2
 	db "KATE@", TRAINERTYPE_NORMAL
-	db 28, CLOYSTER
+	db 29, CLOYSTER
 	db -1 ; end
 	; GWEN_V1
 	db "GWEN@", TRAINERTYPE_NORMAL
@@ -2235,13 +2357,13 @@ CooltrainerFGroup:
 BeautyGroup:
 	; BEAUTY (1)
 	db "VICTORIA@", TRAINERTYPE_NORMAL
-	db 15, TEDDIURSA
-	db 17, FURRET
+	db 16, TEDDIURSA
+	db 18, FURRET
 	db -1 ; end
 
 	; BEAUTY (2)
 	db "SAMANTHA@", TRAINERTYPE_MOVES
-	db 18, MEOWTH,     SCRATCH, GROWL, BITE, PAY_DAY
+	db 19, MEOWTH,     SCRATCH, GROWL, BITE, PAY_DAY
 	db -1 ; end
 
 	; BEAUTY (3)
@@ -2328,21 +2450,21 @@ BeautyGroup:
 
 	; VICTORIA_V1
 	db "VICTORIA@", TRAINERTYPE_NORMAL
-	db 15, CLEFAIRY
-	db 17, SNUBBULL
+	db 16, CLEFAIRY
+	db 18, SNUBBULL
 	db -1 ; end
 	; VICTORIA_V2
 	db "VICTORIA@", TRAINERTYPE_NORMAL
-	db 17, JIGGLYPUFF
+	db 18, JIGGLYPUFF
 	db -1 ; end
 	; SAMANTHA_V1
 	db "SAMANTHA@", TRAINERTYPE_MOVES
-	db 18, AIPOM, SCRATCH, TAIL_WHIP, FURY_SWIPES, SAND_ATTACK
+	db 19, AIPOM, SCRATCH, TAIL_WHIP, FURY_SWIPES, SAND_ATTACK
 	db -1 ; end
 	; SAMANTHA_V2
 	db "SAMANTHA@", TRAINERTYPE_NORMAL
-	db 17, MEOWTH
-	db 17, SENTRET
+	db 18, MEOWTH
+	db 18, SENTRET
 	db -1 ; end
 	; VALERIE_V1
 	db "VALERIE@", TRAINERTYPE_NORMAL
@@ -2366,7 +2488,7 @@ BeautyGroup:
 PokemaniacGroup:
 	; POKEMANIAC (1)
 	db "LARRY@", TRAINERTYPE_NORMAL
-	db 12, LARVITAR
+	db 13, LARVITAR
 	db -1 ; end
 
 	; POKEMANIAC (2)
@@ -2422,13 +2544,13 @@ PokemaniacGroup:
 
 	; POKEMANIAC (11)
 	db "ISSAC@", TRAINERTYPE_MOVES
-	db 14, LICKITUNG,  LICK, SUPERSONIC, DEFENSE_CURL, NO_MOVE
+	db 15, LICKITUNG,  LICK, SUPERSONIC, DEFENSE_CURL, NO_MOVE
 	db -1 ; end
 
 	; POKEMANIAC (12)
 	db "DONALD@", TRAINERTYPE_NORMAL
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
+	db 16, SLOWPOKE
+	db 16, SLOWPOKE
 	db -1 ; end
 
 	; POKEMANIAC (13)
@@ -2452,12 +2574,12 @@ PokemaniacGroup:
 
 	; LARRY_V1
 	db "LARRY@", TRAINERTYPE_NORMAL
-	db 12, CUBONE
+	db 13, CUBONE
 	db -1 ; end
 	; LARRY_V2
 	db "LARRY@", TRAINERTYPE_NORMAL
-	db 11, SLOWPOKE
-	db 11, NIDORAN_M
+	db 12, SLOWPOKE
+	db 12, NIDORAN_M
 	db -1 ; end
 	; ANDREW_V1
 	db "ANDREW@", TRAINERTYPE_NORMAL
@@ -2515,21 +2637,21 @@ PokemaniacGroup:
 	db -1 ; end
 	; ISSAC_V1
 	db "ISSAC@", TRAINERTYPE_MOVES
-	db 14, SLOWPOKE, TACKLE, GROWL, WATER_GUN, CONFUSION
+	db 15, SLOWPOKE, TACKLE, GROWL, WATER_GUN, CONFUSION
 	db -1 ; end
 	; ISSAC_V2
 	db "ISSAC@", TRAINERTYPE_NORMAL
-	db 13, CUBONE
-	db 13, NIDORAN_M
+	db 14, CUBONE
+	db 14, NIDORAN_M
 	db -1 ; end
 	; DONALD_V1
 	db "DONALD@", TRAINERTYPE_NORMAL
-	db 15, LICKITUNG
-	db 15, CUBONE
+	db 16, LICKITUNG
+	db 16, CUBONE
 	db -1 ; end
 	; DONALD_V2
 	db "DONALD@", TRAINERTYPE_NORMAL
-	db 16, SLOWPOKE
+	db 17, SLOWPOKE
 	db -1 ; end
 	; MILLER_V1
 	db "MILLER@", TRAINERTYPE_NORMAL
@@ -2654,24 +2776,27 @@ GruntMGroup:
 
 	; GRUNTM (16)
 	db "GRUNT@", TRAINERTYPE_NORMAL
-	db 28, KANGASKHAN
+	db 29, KANGASKHAN
+	db 28, GOLBAT
 	db -1 ; end
 
 	; GRUNTM (17)
 	db "GRUNT@", TRAINERTYPE_NORMAL
-	db 29, GOLBAT
+	db 30, GOLBAT
+	db 29, GRIMER
 	db -1 ; end
 
 	; GRUNTM (18)
 	db "GRUNT@", TRAINERTYPE_NORMAL
-	db 26, RATICATE
-	db 27, GRIMER
-	db 26, GOLBAT
+	db 28, RATICATE
+	db 29, MUK
+	db 28, GOLBAT
 	db -1 ; end
 
 	; GRUNTM (19)
 	db "GRUNT@", TRAINERTYPE_NORMAL
-	db 31, VENOMOTH
+	db 32, VENOMOTH
+	db 30, KOFFING
 	db -1 ; end
 
 	; GRUNTM (20)
@@ -2752,8 +2877,8 @@ GruntMGroup:
 GentlemanGroup:
 	; GENTLEMAN (1)
 	db "PRESTON@", TRAINERTYPE_NORMAL
-	db 22, GROWLITHE
-	db 22, VULPIX
+	db 23, GROWLITHE
+	db 23, VULPIX
 	db -1 ; end
 
 	; GENTLEMAN (2)
@@ -2774,27 +2899,30 @@ GentlemanGroup:
 
 	; GENTLEMAN (5)
 	db "ALFRED@", TRAINERTYPE_NORMAL
-	db 22, NOCTOWL
+	db 23, NOCTOWL
+	db 22, GROWLITHE
 	db -1 ; end
 
 
 	; PRESTON_V1
 	db "PRESTON@", TRAINERTYPE_NORMAL
-	db 22, PONYTA
-	db 22, NOCTOWL
+	db 23, PONYTA
+	db 23, NOCTOWL
 	db -1 ; end
 	; PRESTON_V2
 	db "PRESTON@", TRAINERTYPE_NORMAL
-	db 23, NINETALES
+	db 24, NINETALES
+	db 23, GROWLITHE
 	db -1 ; end
 	; ALFRED_V1
 	db "ALFRED@", TRAINERTYPE_NORMAL
-	db 22, PONYTA
+	db 23, PONYTA
+	db 22, NOCTOWL
 	db -1 ; end
 	; ALFRED_V2
 	db "ALFRED@", TRAINERTYPE_NORMAL
-	db 21, GROWLITHE
-	db 21, NOCTOWL
+	db 22, GROWLITHE
+	db 23, NOCTOWL
 	db -1 ; end
 
 SkierGroup:
@@ -2862,8 +2990,8 @@ SECTION "Enemy Trainer Parties 2", ROMX
 BugCatcherGroup:
 	; BUG_CATCHER (1)
 	db "DON@", TRAINERTYPE_NORMAL
-	db  5, LEDYBA
-	db  5, SPINARAK
+	db  6, LEDYBA
+	db  6, SPINARAK
 	db -1 ; end
 	; BUG_CATCHER (2)
 	db "ROB@", TRAINERTYPE_NORMAL
@@ -2880,32 +3008,32 @@ BugCatcherGroup:
 
 	; BUG_CATCHER (4)
 	db "WADE@", TRAINERTYPE_NORMAL
-	db  5, WEEDLE
-	db  5, CATERPIE
-	db  6, PINECO
+	db  6, WEEDLE
+	db  6, CATERPIE
+	db  7, PINECO
 	db -1 ; end
 
 	; BUG_CATCHER (5)
 	db "BENNY@", TRAINERTYPE_NORMAL
-	db 13, BEEDRILL
 	db 14, BEEDRILL
+	db 15, BEEDRILL
 	db -1 ; end
 
 	; BUG_CATCHER (6)
 	db "AL@", TRAINERTYPE_NORMAL
-	db 13, BUTTERFREE
 	db 14, BUTTERFREE
+	db 15, BUTTERFREE
 	db -1 ; end
 
 	; BUG_CATCHER (7)
 	db "JOSH@", TRAINERTYPE_NORMAL
-	db 15, YANMA
+	db 16, YANMA
 	db -1 ; end
 
 	; BUG_CATCHER (8)
 	db "ARNIE@", TRAINERTYPE_NORMAL
-	db 18, YANMA
-	db 18, VENONAT
+	db 20, YANMA
+	db 20, VENONAT
 	db -1 ; end
 
 	; BUG_CATCHER (9)
@@ -2980,86 +3108,86 @@ BugCatcherGroup:
 
 	; BUG_CATCHER (19)
 	db "WAYNE@", TRAINERTYPE_NORMAL
-	db 16, PARAS
-	db 17, ODDISH
+	db 18, PARAS
+	db 19, ODDISH
 	db -1 ; end
 
 
 	; DON_V1
 	db "DON@", TRAINERTYPE_NORMAL
-	db 5, CATERPIE
-	db 5, WEEDLE
+	db 6, CATERPIE
+	db 6, WEEDLE
 	db -1 ; end
 	; DON_V2
 	db "DON@", TRAINERTYPE_NORMAL
-	db 6, PINECO
+	db 7, PINECO
 	db -1 ; end
 	; WADE1_V1
 	db "WADE@", TRAINERTYPE_NORMAL
-	db 5, SPINARAK
-	db 5, LEDYBA
-	db 6, WEEDLE
+	db 6, SPINARAK
+	db 6, LEDYBA
+	db 7, WEEDLE
 	db -1 ; end
 	; WADE1_V2
 	db "WADE@", TRAINERTYPE_NORMAL
-	db 6, KAKUNA
-	db 6, METAPOD
+	db 7, KAKUNA
+	db 7, METAPOD
 	db -1 ; end
 	; BUG_CATCHER_BENNY_V1
 	db "BENNY@", TRAINERTYPE_NORMAL
-	db 13, BUTTERFREE
-	db 14, ARIADOS
+	db 14, BUTTERFREE
+	db 15, ARIADOS
 	db -1 ; end
 	; BUG_CATCHER_BENNY_V2
 	db "BENNY@", TRAINERTYPE_NORMAL
-	db 15, PARASECT
+	db 16, PARASECT
 	db -1 ; end
 	; AL_V1
 	db "AL@", TRAINERTYPE_NORMAL
-	db 13, LEDIAN
-	db 14, BEEDRILL
+	db 14, LEDIAN
+	db 15, BEEDRILL
 	db -1 ; end
 	; AL_V2
 	db "AL@", TRAINERTYPE_NORMAL
-	db 15, VENONAT
+	db 16, VENONAT
 	db -1 ; end
 	; JOSH_V1
 	db "JOSH@", TRAINERTYPE_NORMAL
-	db 15, PINSIR
+	db 16, PINSIR
 	db -1 ; end
 	; JOSH_V2
 	db "JOSH@", TRAINERTYPE_NORMAL
-	db 13, LEDIAN
-	db 13, SPINARAK
+	db 14, LEDIAN
+	db 14, SPINARAK
 	db -1 ; end
 	; ARNIE1_V1
 	db "ARNIE@", TRAINERTYPE_NORMAL
-	db 18, PINSIR
-	db 17, PARAS
+	db 20, PINSIR
+	db 19, PARAS
 	db -1 ; end
 	; ARNIE1_V2
 	db "ARNIE@", TRAINERTYPE_NORMAL
-	db 19, SCYTHER
+	db 21, SCYTHER
 	db -1 ; end
 	; WAYNE_V1
 	db "WAYNE@", TRAINERTYPE_NORMAL
-	db 16, VENONAT
-	db 17, BELLSPROUT
+	db 18, VENONAT
+	db 19, BELLSPROUT
 	db -1 ; end
 	; WAYNE_V2
 	db "WAYNE@", TRAINERTYPE_NORMAL
-	db 18, PARASECT
+	db 20, PARASECT
 	db -1 ; end
 
 FisherGroup:
 	; FISHER (1)
 	db "JUSTIN@", TRAINERTYPE_NORMAL
-	db  10, TENTACOOL
+	db  11, TENTACOOL
 	db -1 ; end
 
 	; FISHER (2)
 	db "RALPH@", TRAINERTYPE_NORMAL
-	db 10, GOLDEEN
+	db 11, GOLDEEN
 	db -1 ; end
 
 	; FISHER (3)
@@ -3077,8 +3205,8 @@ FisherGroup:
 
 	; FISHER (5)
 	db "HENRY@", TRAINERTYPE_NORMAL
-	db  9, MARILL
-	db  9, POLIWAG
+	db  10, MARILL
+	db  10, POLIWAG
 	db -1 ; end
 
 	; FISHER (6)
@@ -3214,30 +3342,30 @@ FisherGroup:
 
 	; JUSTIN_V1
 	db "JUSTIN@", TRAINERTYPE_NORMAL
-	db 10, POLIWAG
+	db 11, POLIWAG
 	db -1 ; end
 	; JUSTIN_V2
 	db "JUSTIN@", TRAINERTYPE_NORMAL
-	db 9, MAGIKARP
-	db 9, GOLDEEN
+	db 10, MAGIKARP
+	db 10, GOLDEEN
 	db -1 ; end
 	; RALPH1_V1
 	db "RALPH@", TRAINERTYPE_NORMAL
-	db 10, TENTACOOL
+	db 11, TENTACOOL
 	db -1 ; end
 	; RALPH1_V2
 	db "RALPH@", TRAINERTYPE_NORMAL
-	db 9, POLIWAG
-	db 9, MAGIKARP
+	db 10, POLIWAG
+	db 10, MAGIKARP
 	db -1 ; end
 	; HENRY_V1
 	db "HENRY@", TRAINERTYPE_NORMAL
-	db 9, GOLDEEN
-	db 9, TENTACOOL
+	db 10, GOLDEEN
+	db 10, TENTACOOL
 	db -1 ; end
 	; HENRY_V2
 	db "HENRY@", TRAINERTYPE_NORMAL
-	db 10, MARILL
+	db 11, MARILL
 	db -1 ; end
 	; TULLY1_V1
 	db "TULLY@", TRAINERTYPE_NORMAL
@@ -3687,26 +3815,28 @@ SailorGroup:
 
 	; SAILOR (2)
 	db "HUEY@", TRAINERTYPE_NORMAL
-	db 20, POLIWHIRL
-	db 22, MACHOP
+	db 21, POLIWHIRL
+	db 23, MACHOP
+	db 22, TENTACOOL
 	db -1 ; end
 
 	; SAILOR (3)
 	db "TERRELL@", TRAINERTYPE_NORMAL
-	db 24, POLIWHIRL
+	db 25, POLIWHIRL
+	db 24, MACHOP
 	db -1 ; end
 
 	; SAILOR (4)
 	db "KENT@", TRAINERTYPE_NORMAL
-	db 23, SHELLDER 
-	db 23, CHINCHOU
+	db 24, SHELLDER
+	db 24, CHINCHOU
 	db -1 ; end
 
 	; SAILOR (5)
 	db "ERNEST@", TRAINERTYPE_NORMAL
-	db 22, MACHOP
-	db 24, POLIWHIRL
-	db 24, QUAGSIRE
+	db 23, MACHOP
+	db 25, POLIWHIRL
+	db 25, QUAGSIRE
 	db -1 ; end
 
 	; SAILOR (6)
@@ -3770,41 +3900,45 @@ SailorGroup:
 	db -1 ; end
 	; HUEY1_V1
 	db "HUEY@", TRAINERTYPE_NORMAL
-	db 20, KINGLER
-	db 22, POLIWHIRL
+	db 21, KINGLER
+	db 23, POLIWHIRL
+	db 22, SHELLDER
 	db -1 ; end
 	; HUEY1_V2
 	db "HUEY@", TRAINERTYPE_NORMAL
-	db 22, MACHOKE
+	db 23, MACHOKE
+	db 22, POLIWAG
 	db -1 ; end
 	; TERRELL_V1
 	db "TERRELL@", TRAINERTYPE_NORMAL
-	db 24, MACHOKE
+	db 25, MACHOKE
+	db 24, TENTACOOL
 	db -1 ; end
 	; TERRELL_V2
 	db "TERRELL@", TRAINERTYPE_NORMAL
-	db 23, POLIWHIRL
-	db 23, TENTACOOL
+	db 24, POLIWHIRL
+	db 24, TENTACOOL
 	db -1 ; end
 	; KENT_V1
 	db "KENT@", TRAINERTYPE_NORMAL
-	db 23, KRABBY
-	db 23, TENTACOOL
+	db 24, KRABBY
+	db 24, TENTACOOL
 	db -1 ; end
 	; KENT_V2
 	db "KENT@", TRAINERTYPE_NORMAL
-	db 24, LANTURN
+	db 25, LANTURN
+	db 24, SHELLDER
 	db -1 ; end
 	; ERNEST_V1
 	db "ERNEST@", TRAINERTYPE_NORMAL
-	db 22, TENTACOOL
-	db 24, MACHOKE
-	db 24, KINGLER
+	db 23, TENTACOOL
+	db 25, MACHOKE
+	db 25, KINGLER
 	db -1 ; end
 	; ERNEST_V2
 	db "ERNEST@", TRAINERTYPE_NORMAL
-	db 24, POLIWRATH
-	db 24, QUAGSIRE
+	db 25, POLIWRATH
+	db 25, QUAGSIRE
 	db -1 ; end
 	; HARRY_V1
 	db "HARRY@", TRAINERTYPE_NORMAL
@@ -3824,8 +3958,8 @@ SuperNerdGroup:
 
 	; SUPER_NERD (2)
 	db "ERIC@", TRAINERTYPE_NORMAL
-	db 15, GRIMER
-	db 15, CUBONE
+	db 16, GRIMER
+	db 16, CUBONE
 	db -1 ; end
 
 	; SUPER_NERD (3)
@@ -3874,9 +4008,9 @@ SuperNerdGroup:
 
 	; SUPER_NERD (10)
 	db "TERU@", TRAINERTYPE_NORMAL
-	db 14, VOLTORB
-	db 14, MAGNEMITE
-	db 14, PORYGON
+	db 15, VOLTORB
+	db 15, MAGNEMITE
+	db 15, PORYGON
 	db -1 ; end
 
 	; SUPER_NERD (11)
@@ -3904,23 +4038,23 @@ SuperNerdGroup:
 
 	; ERIC_V1
 	db "ERIC@", TRAINERTYPE_NORMAL
-	db 15, MAGNEMITE
-	db 15, VOLTORB
+	db 16, MAGNEMITE
+	db 16, VOLTORB
 	db -1 ; end
 	; ERIC_V2
 	db "ERIC@", TRAINERTYPE_NORMAL
-	db 16, PORYGON
+	db 17, PORYGON
 	db -1 ; end
 	; TERU_V1
 	db "TERU@", TRAINERTYPE_NORMAL
-	db 14, GRIMER
-	db 14, KOFFING
-	db 14, CUBONE
+	db 15, GRIMER
+	db 15, KOFFING
+	db 15, CUBONE
 	db -1 ; end
 	; TERU_V2
 	db "TERU@", TRAINERTYPE_NORMAL
-	db 15, MAGNEMITE
-	db 15, VOLTORB
+	db 16, MAGNEMITE
+	db 16, VOLTORB
 	db -1 ; end
 	; MARKUS_V1
 	db "MARKUS@", TRAINERTYPE_MOVES
@@ -3943,35 +4077,35 @@ SuperNerdGroup:
 
 Rival2Group:
 ; Pokemon Crystal Adventures: encounters 6-7 (Mt. Moon, Indigo Plateau).
-; Same 8 team themes as RIVAL1, fully evolved with best movesets.
+; Same 11 team themes as RIVAL1, fully evolved with best movesets.
 
 	; Pokemon Crystal Adventures: encounter 6 (Mt. Moon)
-	; RIVAL2 (1) - vs Chikorita: Fire/Dark offense
+	; RIVAL2 (1) - vs Chikorita: Offense + Dark coverage
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 64, HOUNDOOM,    CHARCOAL,        FIRE_BLAST, IRON_TAIL, CRUNCH, SUNNY_DAY
-	db 64, MAGCARGO,    QUICK_CLAW,      FLAMETHROWER, ROCK_SLIDE, BODY_SLAM, CURSE
+	db 64, PILOSWINE,   QUICK_CLAW,      EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
 	db 64, TYPHLOSION,  SCOPE_LENS,      FIRE_BLAST, THUNDERPUNCH, QUICK_ATTACK, IRON_TAIL
 	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (2) - vs Totodile: Grass/Poison stall
+	; RIVAL2 (2) - vs Totodile: Grass/Steel stall
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 64, VICTREEBEL,  SCOPE_LENS,      SLUDGE_BOMB, RAZOR_LEAF, SLEEP_POWDER, GROWTH
-	db 64, MUK,         QUICK_CLAW,      SLUDGE_BOMB, FIRE_PUNCH, MINIMIZE, TOXIC
+	db 64, STEELIX,     QUICK_CLAW,      EARTHQUAKE, IRON_TAIL, ROCK_SLIDE, SCREECH
 	db 64, MEGANIUM,    MIRACLE_SEED,    REFLECT, GIGA_DRAIN, SOLARBEAM, BODY_SLAM
 	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (3) - vs Cyndaquil: Water/Ice bulk
+	; RIVAL2 (3) - vs Cyndaquil: Water/Ground bulk
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 64, OCTILLERY,   NEVERMELTICE,    SURF, ICE_BEAM, PSYBEAM, HYPER_BEAM
-	db 64, PILOSWINE,   QUICK_CLAW,      EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
+	db 64, DONPHAN,     QUICK_CLAW,      EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
 	db 64, FERALIGATR,  MYSTIC_WATER,    ICE_BEAM, SURF, SLASH, EARTHQUAKE
 	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
@@ -3986,7 +4120,7 @@ Rival2Group:
 	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (5) - vs Sudowoodo: Grass/Ground anti-Rock
+	; RIVAL2 (5) - vs Geodude: Grass/Ground anti-Rock
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 64, NOCTOWL,     LEFTOVERS,       PSYCHIC_M, HYPNOSIS, REFLECT, FLY
@@ -4016,48 +4150,78 @@ Rival2Group:
 	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (8) - vs Mareep: Ground/Grass anti-Elec
+	; RIVAL2 (8) - vs Mareep: Ground/Fire balance
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
-	db 64, NOCTOWL,     LEFTOVERS,       PSYCHIC_M, HYPNOSIS, REFLECT, FLY
+	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
 	db 64, DONPHAN,     SCOPE_LENS,      EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
-	db 64, VICTREEBEL,  QUICK_CLAW,      SLUDGE_BOMB, GIGA_DRAIN, SLEEP_POWDER, GROWTH
+	db 64, ARCANINE,    QUICK_CLAW,      FLAMETHROWER, EXTREMESPEED, CRUNCH, ROAR
+	db 64, MEGANIUM,    MIRACLE_SEED,    REFLECT, GIGA_DRAIN, SOLARBEAM, BODY_SLAM
+	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
+	db -1 ; end
+
+	; RIVAL2 (9) - vs Charmander: Physical balance
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
+	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 64, GOLEM,       SCOPE_LENS,      EARTHQUAKE, ROCK_SLIDE, EXPLOSION, FIRE_PUNCH
+	db 64, SLOWBRO,     QUICK_CLAW,      SURF, PSYCHIC_M, AMNESIA, ICE_BEAM
+	db 64, FERALIGATR,  MYSTIC_WATER,    ICE_BEAM, SURF, SLASH, EARTHQUAKE
+	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
+	db -1 ; end
+
+	; RIVAL2 (10) - vs Bulbasaur: Fast mixed offense
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
+	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 64, ESPEON,      SCOPE_LENS,      PSYCHIC_M, SHADOW_BALL, SWIFT, REFLECT
+	db 64, SNEASEL,     QUICK_CLAW,      ICE_PUNCH, FAINT_ATTACK, QUICK_ATTACK, SCREECH
+	db 64, TYPHLOSION,  CHARCOAL,        FIRE_BLAST, THUNDERPUNCH, QUICK_ATTACK, IRON_TAIL
+	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
+	db -1 ; end
+
+	; RIVAL2 (11) - vs Squirtle: Anti-Water balance
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 64, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
+	db 64, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, WING_ATTACK
+	db 64, MAGNETON,    SCOPE_LENS,      THUNDERBOLT, TRI_ATTACK, THUNDER_WAVE, LIGHT_SCREEN
+	db 64, HYPNO,       QUICK_CLAW,      PSYCHIC_M, HYPNOSIS, DREAM_EATER, SHADOW_BALL
 	db 64, MEGANIUM,    MIRACLE_SEED,    REFLECT, GIGA_DRAIN, SOLARBEAM, BODY_SLAM
 	db 64, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
 	; Pokemon Crystal Adventures: encounter 7 (Indigo Plateau)
-	; RIVAL2 (9) - vs Chikorita: Fire/Dark offense
+	; RIVAL2 (12) - vs Chikorita: Offense + Dark coverage
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
 	db 68, HOUNDOOM,    CHARCOAL,        FIRE_BLAST, IRON_TAIL, CRUNCH, SUNNY_DAY
-	db 68, MAGCARGO,    QUICK_CLAW,      FLAMETHROWER, ROCK_SLIDE, BODY_SLAM, CURSE
+	db 68, PILOSWINE,   QUICK_CLAW,      EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
 	db 68, TYPHLOSION,  SCOPE_LENS,      FIRE_BLAST, THUNDERPUNCH, QUICK_ATTACK, IRON_TAIL
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (10) - vs Totodile: Grass/Poison stall
+	; RIVAL2 (13) - vs Totodile: Grass/Steel stall
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
 	db 68, VICTREEBEL,  SCOPE_LENS,      SLUDGE_BOMB, RAZOR_LEAF, SLEEP_POWDER, GROWTH
-	db 68, MUK,         QUICK_CLAW,      SLUDGE_BOMB, FIRE_PUNCH, MINIMIZE, TOXIC
+	db 68, STEELIX,     QUICK_CLAW,      EARTHQUAKE, IRON_TAIL, ROCK_SLIDE, SCREECH
 	db 68, MEGANIUM,    MIRACLE_SEED,    REFLECT, GIGA_DRAIN, SOLARBEAM, BODY_SLAM
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (11) - vs Cyndaquil: Water/Ice bulk
+	; RIVAL2 (14) - vs Cyndaquil: Water/Ground bulk
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
 	db 68, OCTILLERY,   NEVERMELTICE,    SURF, ICE_BEAM, PSYBEAM, HYPER_BEAM
-	db 68, PILOSWINE,   QUICK_CLAW,      EARTHQUAKE, ICE_BEAM, ROCK_SLIDE, REST
+	db 68, DONPHAN,     QUICK_CLAW,      EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
 	db 68, FERALIGATR,  MYSTIC_WATER,    ICE_BEAM, SURF, SLASH, EARTHQUAKE
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (12) - vs Aipom: Physical bruiser
+	; RIVAL2 (15) - vs Aipom: Physical bruiser
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
@@ -4067,7 +4231,7 @@ Rival2Group:
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (13) - vs Sudowoodo: Grass/Ground anti-Rock
+	; RIVAL2 (16) - vs Geodude: Grass/Ground anti-Rock
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, NOCTOWL,     LEFTOVERS,       PSYCHIC_M, HYPNOSIS, REFLECT, FLY
@@ -4077,7 +4241,7 @@ Rival2Group:
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (14) - vs Smeargle: Speed/special
+	; RIVAL2 (17) - vs Smeargle: Speed/special
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
@@ -4087,7 +4251,7 @@ Rival2Group:
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (15) - vs Swinub: Water/Fire cover
+	; RIVAL2 (18) - vs Swinub: Water/Fire cover
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
 	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
@@ -4097,12 +4261,42 @@ Rival2Group:
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
 
-	; RIVAL2 (16) - vs Mareep: Ground/Grass anti-Elec
+	; RIVAL2 (19) - vs Mareep: Ground/Fire balance
 	db "?@", TRAINERTYPE_ITEM_MOVES
 	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
-	db 68, NOCTOWL,     LEFTOVERS,       PSYCHIC_M, HYPNOSIS, REFLECT, FLY
+	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
 	db 68, DONPHAN,     SCOPE_LENS,      EARTHQUAKE, ROCK_SLIDE, DEFENSE_CURL, ROLLOUT
-	db 68, VICTREEBEL,  QUICK_CLAW,      SLUDGE_BOMB, GIGA_DRAIN, SLEEP_POWDER, GROWTH
+	db 68, ARCANINE,    QUICK_CLAW,      FLAMETHROWER, EXTREMESPEED, CRUNCH, ROAR
+	db 68, MEGANIUM,    MIRACLE_SEED,    REFLECT, GIGA_DRAIN, SOLARBEAM, BODY_SLAM
+	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
+	db -1 ; end
+
+	; RIVAL2 (20) - vs Charmander: Physical balance
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
+	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
+	db 68, GOLEM,       SCOPE_LENS,      EARTHQUAKE, ROCK_SLIDE, EXPLOSION, FIRE_PUNCH
+	db 68, SLOWBRO,     QUICK_CLAW,      SURF, PSYCHIC_M, AMNESIA, ICE_BEAM
+	db 68, FERALIGATR,  MYSTIC_WATER,    ICE_BEAM, SURF, SLASH, EARTHQUAKE
+	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
+	db -1 ; end
+
+	; RIVAL2 (21) - vs Bulbasaur: Fast mixed offense
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
+	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
+	db 68, ESPEON,      SCOPE_LENS,      PSYCHIC_M, SHADOW_BALL, SWIFT, REFLECT
+	db 68, SNEASEL,     QUICK_CLAW,      ICE_PUNCH, FAINT_ATTACK, QUICK_ATTACK, SCREECH
+	db 68, TYPHLOSION,  CHARCOAL,        FIRE_BLAST, THUNDERPUNCH, QUICK_ATTACK, IRON_TAIL
+	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
+	db -1 ; end
+
+	; RIVAL2 (22) - vs Squirtle: Anti-Water balance
+	db "?@", TRAINERTYPE_ITEM_MOVES
+	db 68, URSARING,    SCOPE_LENS,      SLASH, FAINT_ATTACK, ROCK_SMASH, HYPER_BEAM
+	db 68, CROBAT,      LEFTOVERS,       TOXIC, DOUBLE_TEAM, CONFUSE_RAY, FLY
+	db 68, MAGNETON,    SCOPE_LENS,      THUNDERBOLT, TRI_ATTACK, THUNDER_WAVE, LIGHT_SCREEN
+	db 68, HYPNO,       QUICK_CLAW,      PSYCHIC_M, HYPNOSIS, DREAM_EATER, SHADOW_BALL
 	db 68, MEGANIUM,    MIRACLE_SEED,    REFLECT, GIGA_DRAIN, SOLARBEAM, BODY_SLAM
 	db 68, TYRANITAR,   NO_ITEM,         CRUNCH, EARTHQUAKE, ROCK_SLIDE, FIRE_BLAST
 	db -1 ; end
@@ -4130,8 +4324,8 @@ HikerGroup:
 
 	; HIKER (2)
 	db "RUSSELL@", TRAINERTYPE_NORMAL
-	db  9, GEODUDE
-	db  10, CUBONE
+	db  10, GEODUDE
+	db  11, CUBONE
 	db -1 ; end
 
 	; HIKER (3)
@@ -4149,8 +4343,8 @@ HikerGroup:
 
 	; HIKER (5)
 	db "ANTHONY@", TRAINERTYPE_NORMAL
-	db 11, GEODUDE
-	db 11, MACHOP
+	db 12, GEODUDE
+	db 12, MACHOP
 	db -1 ; end
 
 	; HIKER (6)
@@ -4238,7 +4432,7 @@ HikerGroup:
 
 	; HIKER (18)
 	db "DANIEL@", TRAINERTYPE_NORMAL
-	db 12, ONIX
+	db 13, ONIX
 	db -1 ; end
 
 	; HIKER (19)
@@ -4272,21 +4466,21 @@ HikerGroup:
 
 	; RUSSELL_V1
 	db "RUSSELL@", TRAINERTYPE_NORMAL
-	db 9, SANDSHREW
-	db 10, ONIX
+	db 10, SANDSHREW
+	db 11, ONIX
 	db -1 ; end
 	; RUSSELL_V2
 	db "RUSSELL@", TRAINERTYPE_NORMAL
-	db 10, GEODUDE
+	db 11, GEODUDE
 	db -1 ; end
 	; DANIEL_V1
 	db "DANIEL@", TRAINERTYPE_NORMAL
-	db 12, GEODUDE
+	db 13, GEODUDE
 	db -1 ; end
 	; DANIEL_V2
 	db "DANIEL@", TRAINERTYPE_NORMAL
-	db 11, MACHOP
-	db 11, GEODUDE
+	db 12, MACHOP
+	db 12, GEODUDE
 	db -1 ; end
 	; ANTHONY1_V1
 	db "ANTHONY@", TRAINERTYPE_NORMAL
@@ -4501,18 +4695,18 @@ FirebreatherGroup:
 
 	; FIREBREATHER (5)
 	db "BILL@", TRAINERTYPE_NORMAL
-	db  12, GROWLITHE
+	db  13, GROWLITHE
 	db -1 ; end
 
 	; FIREBREATHER (6)
 	db "WALT@", TRAINERTYPE_NORMAL
-	db 15, MAGMAR
-	db 15, MAGMAR
+	db 17, MAGMAR
+	db 17, MAGMAR
 	db -1 ; end
 
 	; FIREBREATHER (7)
 	db "RAY@", TRAINERTYPE_NORMAL
-	db  11, VULPIX
+	db  12, VULPIX
 	db -1 ; end
 
 	; FIREBREATHER (8)
@@ -4525,38 +4719,38 @@ FirebreatherGroup:
 
 	; BILL_V1
 	db "BILL@", TRAINERTYPE_NORMAL
-	db 12, VULPIX
+	db 13, VULPIX
 	db -1 ; end
 	; BILL_V2
 	db "BILL@", TRAINERTYPE_NORMAL
-	db 11, KOFFING
-	db 11, SLUGMA
+	db 12, KOFFING
+	db 12, SLUGMA
 	db -1 ; end
 	; WALT_V1
 	db "WALT@", TRAINERTYPE_NORMAL
-	db 15, GROWLITHE
-	db 15, VULPIX
+	db 17, GROWLITHE
+	db 17, VULPIX
 	db -1 ; end
 	; WALT_V2
 	db "WALT@", TRAINERTYPE_NORMAL
-	db 16, MAGMAR
+	db 18, MAGMAR
 	db -1 ; end
 	; RAY_V1
 	db "RAY@", TRAINERTYPE_NORMAL
-	db 11, KOFFING
+	db 12, KOFFING
 	db -1 ; end
 	; RAY_V2
 	db "RAY@", TRAINERTYPE_NORMAL
-	db 10, SLUGMA
-	db 10, GROWLITHE
+	db 11, SLUGMA
+	db 11, GROWLITHE
 	db -1 ; end
 
 JugglerGroup:
 	; JUGGLER (1)
 	db "IRWIN@", TRAINERTYPE_NORMAL
-	db 16, VOLTORB
-	db 16, PINECO
-	db 16, VOLTORB
+	db 18, VOLTORB
+	db 18, PINECO
+	db 18, VOLTORB
 	db -1 ; end
 
 	; JUGGLER (2)
@@ -4600,14 +4794,14 @@ JugglerGroup:
 
 	; IRWIN1_V1
 	db "IRWIN@", TRAINERTYPE_NORMAL
-	db 16, MAGNEMITE
-	db 16, VOLTORB
-	db 16, MAGNEMITE
+	db 18, MAGNEMITE
+	db 18, VOLTORB
+	db 18, MAGNEMITE
 	db -1 ; end
 	; IRWIN1_V2
 	db "IRWIN@", TRAINERTYPE_NORMAL
-	db 17, ELECTRODE
-	db 16, PINECO
+	db 19, ELECTRODE
+	db 18, PINECO
 	db -1 ; end
 
 BlackbeltGroup:
@@ -4781,7 +4975,7 @@ PsychicGroup:
 
 	; PSYCHIC_T (5)
 	db "GREG@", TRAINERTYPE_MOVES
-	db 22, STANTLER,   NIGHTMARE, HYPNOSIS, LEER, HEADBUTT
+	db 23, STANTLER,   NIGHTMARE, HYPNOSIS, LEER, HEADBUTT
 	db -1 ; end
 
 	; PSYCHIC_T (6)
@@ -4792,9 +4986,9 @@ PsychicGroup:
 
 	; PSYCHIC_T (7)
 	db "MARK@", TRAINERTYPE_MOVES
-	db 15, ABRA,       TELEPORT, FLASH, NO_MOVE, NO_MOVE
-	db 15, ABRA,       TELEPORT, FLASH, NO_MOVE, NO_MOVE
-	db 16, KADABRA,    TELEPORT, KINESIS, CONFUSION, NO_MOVE
+	db 16, ABRA,       TELEPORT, FLASH, NO_MOVE, NO_MOVE
+	db 16, ABRA,       TELEPORT, FLASH, NO_MOVE, NO_MOVE
+	db 17, KADABRA,    TELEPORT, KINESIS, CONFUSION, NO_MOVE
 	db -1 ; end
 
 	; PSYCHIC_T (8)
@@ -4834,12 +5028,12 @@ PsychicGroup:
 
 	; GREG_V1
 	db "GREG@", TRAINERTYPE_MOVES
-	db 22, DROWZEE, HYPNOSIS, DREAM_EATER, HEADBUTT, DISABLE
+	db 23, DROWZEE, HYPNOSIS, DREAM_EATER, HEADBUTT, DISABLE
 	db -1 ; end
 	; GREG_V2
 	db "GREG@", TRAINERTYPE_NORMAL
-	db 21, ABRA
-	db 21, SLOWPOKE
+	db 22, ABRA
+	db 22, SLOWPOKE
 	db -1 ; end
 	; NORMAN_V1
 	db "NORMAN@", TRAINERTYPE_MOVES
@@ -4852,14 +5046,14 @@ PsychicGroup:
 	db -1 ; end
 	; MARK_V1
 	db "MARK@", TRAINERTYPE_MOVES
-	db 15, DROWZEE, HYPNOSIS, POUND, DISABLE, NO_MOVE
-	db 15, SLOWPOKE, TACKLE, GROWL, WATER_GUN, NO_MOVE
-	db 16, ABRA, TELEPORT, FLASH, NO_MOVE, NO_MOVE
+	db 16, DROWZEE, HYPNOSIS, POUND, DISABLE, NO_MOVE
+	db 16, SLOWPOKE, TACKLE, GROWL, WATER_GUN, NO_MOVE
+	db 17, ABRA, TELEPORT, FLASH, NO_MOVE, NO_MOVE
 	db -1 ; end
 	; MARK_V2
 	db "MARK@", TRAINERTYPE_MOVES
-	db 16, KADABRA, CONFUSION, KINESIS, TELEPORT, NO_MOVE
-	db 16, DROWZEE, HYPNOSIS, POUND, DISABLE, CONFUSION
+	db 17, KADABRA, CONFUSION, KINESIS, TELEPORT, NO_MOVE
+	db 17, DROWZEE, HYPNOSIS, POUND, DISABLE, CONFUSION
 	db -1 ; end
 	; PHIL_V1
 	db "PHIL@", TRAINERTYPE_MOVES
@@ -4876,23 +5070,23 @@ PsychicGroup:
 PicnickerGroup:
 	; PICNICKER (1)
 	db "LIZ@", TRAINERTYPE_NORMAL
-	db  9, NIDORAN_F
+	db  11, NIDORAN_F
 	db -1 ; end
 
 	; PICNICKER (2)
 	db "GINA@", TRAINERTYPE_NORMAL
-	db 14, SKIPLOOM
-	db 14, BULBASAUR
+	db 16, SKIPLOOM
+	db 16, BULBASAUR
 	db -1 ; end
 
 	; PICNICKER (3)
 	db "BROOKE@", TRAINERTYPE_MOVES
-	db 18, PIKACHU,    THUNDERSHOCK, GROWL, QUICK_ATTACK, DOUBLE_TEAM
+	db 20, PIKACHU,    THUNDERSHOCK, GROWL, QUICK_ATTACK, DOUBLE_TEAM
 	db -1 ; end
 
 	; PICNICKER (4)
 	db "KIM@", TRAINERTYPE_NORMAL
-	db 18, VULPIX
+	db 20, VULPIX
 	db -1 ; end
 
 	; PICNICKER (5)
@@ -5040,39 +5234,39 @@ PicnickerGroup:
 
 	; LIZ1_V1
 	db "LIZ@", TRAINERTYPE_NORMAL
-	db 9, ODDISH
+	db 11, ODDISH
 	db -1 ; end
 	; LIZ1_V2
 	db "LIZ@", TRAINERTYPE_NORMAL
-	db 8, NIDORAN_F
-	db 8, BELLSPROUT
+	db 10, NIDORAN_F
+	db 10, BELLSPROUT
 	db -1 ; end
 	; GINA1_V1
 	db "GINA@", TRAINERTYPE_NORMAL
-	db 14, GLOOM
-	db 14, CHIKORITA
+	db 16, GLOOM
+	db 16, CHIKORITA
 	db -1 ; end
 	; GINA1_V2
 	db "GINA@", TRAINERTYPE_NORMAL
-	db 15, BAYLEEF
+	db 17, BAYLEEF
 	db -1 ; end
 	; BROOKE_V1
 	db "BROOKE@", TRAINERTYPE_MOVES
-	db 18, CLEFAIRY, POUND, GROWL, ENCORE, DOUBLESLAP
+	db 20, CLEFAIRY, POUND, GROWL, ENCORE, DOUBLESLAP
 	db -1 ; end
 	; BROOKE_V2
 	db "BROOKE@", TRAINERTYPE_NORMAL
-	db 17, PIKACHU
-	db 17, MAREEP
+	db 19, PIKACHU
+	db 19, MAREEP
 	db -1 ; end
 	; KIM_V1
 	db "KIM@", TRAINERTYPE_NORMAL
-	db 18, GROWLITHE
+	db 20, GROWLITHE
 	db -1 ; end
 	; KIM_V2
 	db "KIM@", TRAINERTYPE_NORMAL
-	db 17, VULPIX
-	db 17, PONYTA
+	db 19, VULPIX
+	db 19, PONYTA
 	db -1 ; end
 	; TIFFANY1_V1
 	db "TIFFANY@", TRAINERTYPE_MOVES
@@ -5100,24 +5294,24 @@ PicnickerGroup:
 CamperGroup:
 	; CAMPER (1)
 	db "ROLAND@", TRAINERTYPE_NORMAL
-	db  9, NIDORAN_M
+	db  11, NIDORAN_M
 	db -1 ; end
 
 	; CAMPER (2)
 	db "TODD@", TRAINERTYPE_NORMAL
-	db 15, AZUMARILL
+	db 17, AZUMARILL
 	db -1 ; end
 
 	; CAMPER (3)
 	db "IVAN@", TRAINERTYPE_NORMAL
-	db 16, EEVEE
-	db 16, DIGLETT
+	db 18, EEVEE
+	db 18, DIGLETT
 	db -1 ; end
 
 	; CAMPER (4)
 	db "ELLIOT@", TRAINERTYPE_NORMAL
-	db 16, SANDSHREW
-	db 16, MARILL
+	db 18, SANDSHREW
+	db 18, MARILL
 	db -1 ; end
 
 	; CAMPER (5)
@@ -5247,39 +5441,39 @@ CamperGroup:
 
 	; ROLAND_V1
 	db "ROLAND@", TRAINERTYPE_NORMAL
-	db 9, GEODUDE
+	db 11, GEODUDE
 	db -1 ; end
 	; ROLAND_V2
 	db "ROLAND@", TRAINERTYPE_NORMAL
-	db 8, NIDORAN_M
-	db 8, ZUBAT
+	db 10, NIDORAN_M
+	db 10, ZUBAT
 	db -1 ; end
 	; TODD1_V1
 	db "TODD@", TRAINERTYPE_NORMAL
-	db 15, QUAGSIRE
+	db 17, QUAGSIRE
 	db -1 ; end
 	; TODD1_V2
 	db "TODD@", TRAINERTYPE_NORMAL
-	db 14, PSYDUCK
-	db 14, GEODUDE
+	db 16, PSYDUCK
+	db 16, GEODUDE
 	db -1 ; end
 	; IVAN_V1
 	db "IVAN@", TRAINERTYPE_NORMAL
-	db 16, GROWLITHE
-	db 16, SANDSHREW
+	db 18, GROWLITHE
+	db 18, SANDSHREW
 	db -1 ; end
 	; IVAN_V2
 	db "IVAN@", TRAINERTYPE_NORMAL
-	db 17, FURRET
+	db 19, FURRET
 	db -1 ; end
 	; ELLIOT_V1
 	db "ELLIOT@", TRAINERTYPE_NORMAL
-	db 16, GEODUDE
-	db 16, POLIWAG
+	db 18, GEODUDE
+	db 18, POLIWAG
 	db -1 ; end
 	; ELLIOT_V2
 	db "ELLIOT@", TRAINERTYPE_NORMAL
-	db 17, QUAGSIRE
+	db 19, QUAGSIRE
 	db -1 ; end
 	; SPENCER_V1
 	db "SPENCER@", TRAINERTYPE_NORMAL
@@ -5327,36 +5521,36 @@ ExecutiveFGroup:
 
 	; EXECUTIVEF (2)
 	db "ARIANA@", TRAINERTYPE_MOVES
-	db 31, ARBOK,          WRAP, LEER, SLUDGE_BOMB, BITE
-	db 30, PERSIAN,        SLASH, FAINT_ATTACK, PAY_DAY, MUD_SLAP
-	db 30, VILEPLUME,      GIGA_DRAIN, SWEET_SCENT, SLEEP_POWDER, SLUDGE_BOMB
-	db 31, MURKROW,        FLY, PURSUIT, TOXIC, FAINT_ATTACK
+	db 32, ARBOK,          WRAP, LEER, SLUDGE_BOMB, BITE
+	db 31, PERSIAN,        SLASH, FAINT_ATTACK, PAY_DAY, MUD_SLAP
+	db 31, VILEPLUME,      GIGA_DRAIN, SWEET_SCENT, SLEEP_POWDER, SLUDGE_BOMB
+	db 32, MURKROW,        FLY, PURSUIT, TOXIC, FAINT_ATTACK
 	db -1 ; end
 
 SageGroup:
 	; SAGE (1)
 	db "CHOW@", TRAINERTYPE_NORMAL
-	db  5, BELLSPROUT
-	db  5, SUNKERN
 	db  6, BELLSPROUT
+	db  6, SUNKERN
+	db  7, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (2)
 	db "NICO@", TRAINERTYPE_NORMAL
-	db  5, BELLSPROUT
-	db  6, HOPPIP
 	db  6, BELLSPROUT
+	db  7, HOPPIP
+	db  7, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (3)
 	db "JIN@", TRAINERTYPE_NORMAL
-	db  8, BELLSPROUT
+	db  9, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (4)
 	db "TROY@", TRAINERTYPE_NORMAL
-	db  7, HOPPIP
-	db  8, BELLSPROUT
+	db  8, HOPPIP
+	db  9, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (5)
@@ -5373,21 +5567,21 @@ SageGroup:
 
 	; SAGE (7)
 	db "EDMOND@", TRAINERTYPE_NORMAL
-	db  5, BELLSPROUT
 	db  6, BELLSPROUT
 	db  7, BELLSPROUT
+	db  8, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (8)
 	db "NEAL@", TRAINERTYPE_NORMAL
-	db  8, BELLSPROUT
+	db  9, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (9)
 	db "LI@", TRAINERTYPE_NORMAL
-	db  7, ODDISH
-	db  8, SUNKERN
-	db  9, BELLSPROUT
+	db  8, ODDISH
+	db  9, SUNKERN
+	db  10, BELLSPROUT
 	db -1 ; end
 
 	; SAGE (10)
@@ -5414,73 +5608,73 @@ SageGroup:
 
 	; CHOW_V1
 	db "CHOW@", TRAINERTYPE_NORMAL
-	db 5, HOPPIP
-	db 5, ODDISH
 	db 6, HOPPIP
+	db 6, ODDISH
+	db 7, HOPPIP
 	db -1 ; end
 	; CHOW_V2
 	db "CHOW@", TRAINERTYPE_NORMAL
-	db 6, BELLSPROUT
-	db 6, SUNKERN
+	db 7, BELLSPROUT
+	db 7, SUNKERN
 	db -1 ; end
 	; NICO_V1
 	db "NICO@", TRAINERTYPE_NORMAL
-	db 5, SUNKERN
-	db 6, BELLSPROUT
-	db 6, ODDISH
+	db 6, SUNKERN
+	db 7, BELLSPROUT
+	db 7, ODDISH
 	db -1 ; end
 	; NICO_V2
 	db "NICO@", TRAINERTYPE_NORMAL
-	db 7, BELLSPROUT
+	db 8, BELLSPROUT
 	db -1 ; end
 	; EDMOND_V1
 	db "EDMOND@", TRAINERTYPE_NORMAL
-	db 5, ODDISH
-	db 6, HOPPIP
-	db 7, SUNKERN
+	db 6, ODDISH
+	db 7, HOPPIP
+	db 8, SUNKERN
 	db -1 ; end
 	; EDMOND_V2
 	db "EDMOND@", TRAINERTYPE_NORMAL
-	db 7, BELLSPROUT
-	db 7, ODDISH
+	db 8, BELLSPROUT
+	db 8, ODDISH
 	db -1 ; end
 	; JIN_V1
 	db "JIN@", TRAINERTYPE_NORMAL
-	db 8, ODDISH
+	db 9, ODDISH
 	db -1 ; end
 	; JIN_V2
 	db "JIN@", TRAINERTYPE_NORMAL
-	db 7, HOPPIP
-	db 7, SUNKERN
+	db 8, HOPPIP
+	db 8, SUNKERN
 	db -1 ; end
 	; TROY_V1
 	db "TROY@", TRAINERTYPE_NORMAL
-	db 7, SUNKERN
-	db 8, ODDISH
+	db 8, SUNKERN
+	db 9, ODDISH
 	db -1 ; end
 	; TROY_V2
 	db "TROY@", TRAINERTYPE_NORMAL
-	db 9, BELLSPROUT
+	db 10, BELLSPROUT
 	db -1 ; end
 	; NEAL_V1
 	db "NEAL@", TRAINERTYPE_NORMAL
-	db 8, HOPPIP
+	db 9, HOPPIP
 	db -1 ; end
 	; NEAL_V2
 	db "NEAL@", TRAINERTYPE_NORMAL
-	db 7, BELLSPROUT
-	db 7, ODDISH
+	db 8, BELLSPROUT
+	db 8, ODDISH
 	db -1 ; end
 	; LI_V1
 	db "LI@", TRAINERTYPE_NORMAL
-	db 7, HOPPIP
-	db 8, BELLSPROUT
-	db 9, ODDISH
+	db 8, HOPPIP
+	db 9, BELLSPROUT
+	db 10, ODDISH
 	db -1 ; end
 	; LI_V2
 	db "LI@", TRAINERTYPE_NORMAL
-	db 9, BELLSPROUT
-	db 9, SUNKERN
+	db 10, BELLSPROUT
+	db 10, SUNKERN
 	db -1 ; end
 	; JEFFREY_V1
 	db "JEFFREY@", TRAINERTYPE_NORMAL
@@ -5620,7 +5814,7 @@ BoarderGroup:
 PokefanMGroup:
 	; POKEFANM (1)
 	db "WILLIAM@", TRAINERTYPE_ITEM
-	db 15, RAICHU,     BERRY
+	db 16, RAICHU,     BERRY
 	db -1 ; end
 
 	; POKEFANM (2)
@@ -5655,7 +5849,7 @@ PokefanMGroup:
 
 	; POKEFANM (7)
 	db "BRANDON@", TRAINERTYPE_ITEM
-	db 15, SNUBBULL,   BERRY
+	db 17, SNUBBULL,   BERRY
 	db -1 ; end
 
 	; POKEFANM (8)
@@ -5702,12 +5896,12 @@ PokefanMGroup:
 
 	; WILLIAM_V1
 	db "WILLIAM@", TRAINERTYPE_ITEM
-	db 15, PIKACHU, BERRY
+	db 16, PIKACHU, BERRY
 	db -1 ; end
 	; WILLIAM_V2
 	db "WILLIAM@", TRAINERTYPE_ITEM
-	db 14, PIKACHU, BERRY
-	db 14, MARILL, BERRY
+	db 15, PIKACHU, BERRY
+	db 15, MARILL, BERRY
 	db -1 ; end
 	; DEREK1_V1
 	db "DEREK@", TRAINERTYPE_ITEM
@@ -5720,12 +5914,12 @@ PokefanMGroup:
 	db -1 ; end
 	; BRANDON_V1
 	db "BRANDON@", TRAINERTYPE_ITEM
-	db 15, TEDDIURSA, BERRY
+	db 17, TEDDIURSA, BERRY
 	db -1 ; end
 	; BRANDON_V2
 	db "BRANDON@", TRAINERTYPE_ITEM
-	db 14, SNUBBULL, BERRY
-	db 14, SENTRET, BERRY
+	db 16, SNUBBULL, BERRY
+	db 16, SENTRET, BERRY
 	db -1 ; end
 
 KimonoGirlGroup:
@@ -5764,26 +5958,26 @@ KimonoGirlGroup:
 TwinsGroup:
 	; TWINS (1)
 	db "AMY & MAY@", TRAINERTYPE_NORMAL
-	db 13, LEDYBA
-	db 14, SPINARAK
+	db 14, LEDYBA
+	db 15, SPINARAK
 	db -1 ; end
 
 	; TWINS (2)
 	db "ANN & ANNE@", TRAINERTYPE_MOVES
-	db 18, CLEFAIRY,  GROWL, ENCORE, DOUBLESLAP, METRONOME
-	db 18, FURRET,    QUICK_ATTACK, DEFENSE_CURL, FURY_SWIPES, NO_MOVE
+	db 19, CLEFAIRY,  GROWL, ENCORE, DOUBLESLAP, METRONOME
+	db 19, FURRET,    QUICK_ATTACK, DEFENSE_CURL, FURY_SWIPES, NO_MOVE
 	db -1 ; end
 
 	; TWINS (3)
 	db "ANN & ANNE@", TRAINERTYPE_MOVES
-	db 18, FURRET,    QUICK_ATTACK, DEFENSE_CURL, FURY_SWIPES, NO_MOVE
-	db 18, CLEFAIRY,  GROWL, ENCORE, DOUBLESLAP, METRONOME
+	db 19, FURRET,    QUICK_ATTACK, DEFENSE_CURL, FURY_SWIPES, NO_MOVE
+	db 19, CLEFAIRY,  GROWL, ENCORE, DOUBLESLAP, METRONOME
 	db -1 ; end
 
 	; TWINS (4)
 	db "AMY & MAY@", TRAINERTYPE_NORMAL
-	db 12, SPINARAK
-	db 12, LEDYBA
+	db 13, SPINARAK
+	db 13, LEDYBA
 	db -1 ; end
 
 	; TWINS (5)
@@ -5829,27 +6023,27 @@ TwinsGroup:
 
 	; AMYANDMAY1_V1
 	db "AMY & MAY@", TRAINERTYPE_NORMAL
-	db 13, SPINARAK
-	db 14, LEDYBA
+	db 14, SPINARAK
+	db 15, LEDYBA
 	db -1 ; end
 	; AMYANDMAY1_V2
 	db "AMY & MAY@", TRAINERTYPE_NORMAL
-	db 14, BUTTERFREE
+	db 15, BUTTERFREE
 	db -1 ; end
 	; ANNANDANNE1_V1
 	db "ANN & ANNE@", TRAINERTYPE_MOVES
-	db 18, JIGGLYPUFF, SING, POUND, DEFENSE_CURL, ROLLOUT
-	db 18, SENTRET, QUICK_ATTACK, DEFENSE_CURL, FURY_SWIPES, NO_MOVE
+	db 19, JIGGLYPUFF, SING, POUND, DEFENSE_CURL, ROLLOUT
+	db 19, SENTRET, QUICK_ATTACK, DEFENSE_CURL, FURY_SWIPES, NO_MOVE
 	db -1 ; end
 	; ANNANDANNE1_V2
 	db "ANN & ANNE@", TRAINERTYPE_MOVES
-	db 19, CLEFABLE, METRONOME, ENCORE, DOUBLESLAP, GROWL
+	db 20, CLEFABLE, METRONOME, ENCORE, DOUBLESLAP, GROWL
 	db -1 ; end
 
 PokefanFGroup:
 	; POKEFANF (1)
 	db "BEVERLY@", TRAINERTYPE_ITEM
-	db 20, SNUBBULL,   BERRY
+	db 21, SNUBBULL,   BERRY
 	db -1 ; end
 
 	; POKEFANF (2)
@@ -5859,7 +6053,7 @@ PokefanFGroup:
 
 	; POKEFANF (3)
 	db "BEVERLY@", TRAINERTYPE_ITEM
-	db 18, SNUBBULL,   BERRY
+	db 19, SNUBBULL,   BERRY
 	db -1 ; end
 
 	; POKEFANF (4)
@@ -5884,12 +6078,12 @@ PokefanFGroup:
 
 	; BEVERLY1_V1
 	db "BEVERLY@", TRAINERTYPE_ITEM
-	db 20, CLEFAIRY, BERRY
+	db 21, CLEFAIRY, BERRY
 	db -1 ; end
 	; BEVERLY1_V2
 	db "BEVERLY@", TRAINERTYPE_ITEM
-	db 19, SNUBBULL, BERRY
-	db 19, SENTRET, BERRY
+	db 20, SNUBBULL, BERRY
+	db 20, SENTRET, BERRY
 	db -1 ; end
 	; RUTH_V1
 	db "RUTH@", TRAINERTYPE_ITEM
@@ -5969,13 +6163,13 @@ BlueGroup:
 OfficerGroup:
 	; OFFICER (1)
 	db "KEITH@", TRAINERTYPE_NORMAL
-	db 16, GROWLITHE
+	db 18, GROWLITHE
 	db -1 ; end
 
 	; OFFICER (2)
 	db "DIRK@", TRAINERTYPE_NORMAL
-	db 16, GROWLITHE
-	db 16, HOUNDOUR
+	db 17, GROWLITHE
+	db 17, HOUNDOUR
 	db -1 ; end
 
 GruntFGroup:

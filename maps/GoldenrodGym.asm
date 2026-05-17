@@ -89,6 +89,11 @@ GoldenrodGymWhitneyScript:
 	setevent EVENT_GOT_TM45_ATTRACT
 	writetext WhitneyAttractText
 	waitbutton
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .SkipLevelCapText
+	farwritetext LevelCapRaisedText
+	waitbutton
+.SkipLevelCapText:
 	closetext
 	end
 

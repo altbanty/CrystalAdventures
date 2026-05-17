@@ -378,7 +378,9 @@ ArthurScript:
 .MetArthur:
 	writetext ArthurGivesGiftText
 	promptbutton
-	verbosegiveitem HARD_STONE
+	callasm PickRandomItems
+	db 5, HARD_STONE, SOFT_SAND, METAL_COAT, CHARCOAL, NEVERMELTICE
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .BagFull
 	setevent EVENT_GOT_HARD_STONE_FROM_ARTHUR
 	writetext ArthurGaveGiftText

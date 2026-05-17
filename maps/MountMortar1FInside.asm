@@ -50,7 +50,7 @@ MountMortar1FInsideHyperPotion:
 	randomized_item_5 HYPER_POTION, MAX_POTION, ULTRA_BALL, REVIVE, BIG_PEARL
 
 MountMortar1FInsideMaxPotion:
-	randomized_item_5 MAX_POTION, FULL_RESTORE, MAX_REVIVE, ELIXER, NUGGET
+	randomized_item_5 MAX_POTION, FULL_RESTORE, MAX_REVIVE, ELIXER, RARE_CANDY
 
 MountMortar1FInsideNugget:
 	randomized_item_5 NUGGET, STAR_PIECE, BIG_PEARL, BIG_MUSHROOM, RARE_CANDY

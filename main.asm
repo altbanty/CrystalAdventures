@@ -58,6 +58,14 @@ INCLUDE "engine/events/forced_movement.asm"
 INCLUDE "engine/events/itemfinder.asm"
 INCLUDE "engine/menus/start_menu.asm"
 INCLUDE "engine/pokemon/mon_menu.asm"
+
+
+; "bank4" overflows when all original includes share one ROMX bank,
+; so the remaining files (which have no intra-bank calls into the
+; pack/start_menu/mon_menu cluster above) are placed in a separate
+; floating section.
+SECTION "bank4 extras", ROMX
+
 INCLUDE "engine/overworld/select_menu.asm"
 INCLUDE "engine/events/elevator.asm"
 INCLUDE "engine/events/bug_contest/contest.asm"

@@ -202,7 +202,9 @@ MysticWaterGuy:
 	iftrue .After
 	writetext MysticWaterGuyTextBefore
 	promptbutton
-	verbosegiveitem MYSTIC_WATER
+	callasm PickRandomItems
+	db 5, MYSTIC_WATER, CHARCOAL, MIRACLE_SEED, PINK_BOW, BERRY_JUICE
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .Exit
 	setevent EVENT_GOT_MYSTIC_WATER_IN_CHERRYGROVE
 .After:

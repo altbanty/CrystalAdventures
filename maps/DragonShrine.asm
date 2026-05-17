@@ -173,6 +173,11 @@ DragonShrine_MapScripts:
 	promptbutton
 	writetext DragonShrineRisingBadgeExplanationText
 	waitbutton
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .SkipLevelCapText
+	farwritetext LevelCapRaisedText
+	waitbutton
+.SkipLevelCapText:
 	closetext
 	applymovement DRAGONSHRINE_ELDER1, DragonShrineElderWalkAway1Movement
 	turnobject DRAGONSHRINE_CLAIR, UP

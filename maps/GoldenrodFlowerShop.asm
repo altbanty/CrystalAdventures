@@ -31,7 +31,9 @@ FlowerShopTeacherScript:
 	faceplayer
 	writetext GoldenrodFlowerShopTeacherHeresTheGoldBerryText
 	promptbutton
-	verbosegiveitem GOLD_BERRY
+	callasm PickRandomItems
+	db 5, GOLD_BERRY, MIRACLEBERRY, MYSTERYBERRY, BERRY_JUICE, MIRACLE_SEED
+	verbosegiveitem ITEM_FROM_MEM, 1
 	setevent EVENT_GOT_GOLD_BERRY_FROM_FLOWER_SHOP
 	setevent EVENT_FLORIA_AT_FLOWER_SHOP
 	closetext

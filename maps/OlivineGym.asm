@@ -77,6 +77,11 @@ OlivineGymJasmineScript:
 	setevent EVENT_GOT_TM23_IRON_TAIL
 	writetext Jasmine_IronTailSpeech
 	waitbutton
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .SkipLevelCapText
+	farwritetext LevelCapRaisedText
+	waitbutton
+.SkipLevelCapText:
 	closetext
 	end
 

@@ -85,6 +85,7 @@ HealPartyMonDaycare: ; yes this suplicate code is inefficient but ehh, we're not
 	farcall RestoreAllPP
 	ret
 
+
 CalculateHealingCost::
 ; Calculate total healing cost for all party Pokemon
 ; Store in wStringBuffer2 for display (big-endian)

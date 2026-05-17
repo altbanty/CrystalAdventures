@@ -15,7 +15,9 @@ DarkCaveBlackthornEntrancePharmacistScript:
 	iftrue .GotBlackglasses
 	writetext DarkCaveBlackthornEntrancePharmacistText1
 	promptbutton
-	verbosegiveitem BLACKGLASSES
+	callasm PickRandomItems
+	db 5, BLACKGLASSES, SPELL_TAG, POISON_BARB, NEVERMELTICE, QUICK_CLAW
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .PackFull
 	setevent EVENT_GOT_BLACKGLASSES_IN_DARK_CAVE
 .GotBlackglasses:

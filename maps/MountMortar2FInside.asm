@@ -30,7 +30,7 @@ MountMortar2FInsideRareCandy:
 	randomized_item_5 RARE_CANDY, PP_UP, FULL_RESTORE, MAX_ELIXER, STAR_PIECE
 
 MountMortar2FInsideEther:
-	randomized_item_5 ETHER, ELIXER, MAX_ETHER, REVIVE, BIG_PEARL
+	randomized_item_5 ETHER, ELIXER, MAX_ETHER, REVIVE, RARE_CANDY
 
 MountMortar2FInsideDragonScale:
 	randomized_item_5 DRAGON_SCALE, METAL_COAT, KINGS_ROCK, LEFTOVERS, TM_EXPLOSION

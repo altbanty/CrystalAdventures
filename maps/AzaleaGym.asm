@@ -66,6 +66,11 @@ AzaleaGymBugsyScript:
 	setevent EVENT_GOT_TM49_FURY_CUTTER
 	writetext BugsyText_FuryCutterSpeech
 	waitbutton
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .SkipLevelCapText
+	farwritetext LevelCapRaisedText
+	waitbutton
+.SkipLevelCapText:
 	closetext
 	end
 

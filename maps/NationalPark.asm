@@ -32,7 +32,9 @@ NationalParkTeacher1Script:
 	iftrue .GotQuickClaw
 	writetext NationalParkTeacher1Text
 	promptbutton
-	verbosegiveitem QUICK_CLAW
+	callasm PickRandomItems
+	db 5, QUICK_CLAW, FOCUS_BAND, SCOPE_LENS, KINGS_ROCK, BRIGHTPOWDER
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoom
 	setevent EVENT_GOT_QUICK_CLAW
 .GotQuickClaw:
@@ -317,7 +319,7 @@ NationalParkTrainerTipsSign:
 	jumptext NationalParkTrainerTipsText
 
 NationalParkParlyzHeal:
-	randomized_item_5 NUGGET, TM_FURY_CUTTER, FULL_HEAL, ULTRA_BALL, PROTEIN
+	randomized_item_5 RARE_CANDY, TM_FURY_CUTTER, FULL_HEAL, ULTRA_BALL, PROTEIN
 
 NationalParkTMDig:
 	randomized_item_5 TM_DIG, TM_MUD_SLAP, REVIVE, SUPER_POTION, CALCIUM

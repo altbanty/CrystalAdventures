@@ -78,7 +78,9 @@ SunnyScript:
 	writetext SunnyGivesGiftText2
 	promptbutton
 .next
-	verbosegiveitem MAGNET
+	callasm PickRandomItems
+	db 5, MAGNET, TWISTEDSPOON, SPELL_TAG, MIRACLE_SEED, MYSTIC_WATER
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse SunnyDoneScript
 	setevent EVENT_GOT_MAGNET_FROM_SUNNY
 	writetext SunnyGaveGiftText

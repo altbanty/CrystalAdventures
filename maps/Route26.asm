@@ -274,7 +274,7 @@ Route26FruitTree:
 	fruittree FRUITTREE_ROUTE_26
 
 Route26MaxElixer:
-	randomized_item_5 MAX_ELIXER, FULL_RESTORE, MAX_REVIVE, PP_UP, STAR_PIECE
+	randomized_item_5 MAX_ELIXER, FULL_RESTORE, MAX_REVIVE, PP_UP, RARE_CANDY
 
 CooltrainermJakeSeenText:
 	text "I'm making my"

@@ -100,7 +100,9 @@ SantosScript:
 .MetSantos:
 	writetext SantosGivesGiftText
 	promptbutton
-	verbosegiveitem SPELL_TAG
+	callasm PickRandomItems
+	db 5, SPELL_TAG, DRAGON_SCALE, BLACKGLASSES, TWISTEDSPOON, LEFTOVERS
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .Done
 	setevent EVENT_GOT_SPELL_TAG_FROM_SANTOS
 	writetext SantosGaveGiftText

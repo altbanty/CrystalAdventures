@@ -43,22 +43,9 @@ Route36NationalParkGate_MapScripts:
 	endcallback
 
 .CheckIfContestAvailable:
-	checkevent EVENT_WARPED_FROM_ROUTE_35_NATIONAL_PARK_GATE
-	iftrue .Return
-	readvar VAR_WEEKDAY
-	ifequal TUESDAY, .SetContestOfficer
-	ifequal THURSDAY, .SetContestOfficer
-	ifequal SATURDAY, .SetContestOfficer
-	checkflag ENGINE_BUG_CONTEST_TIMER
-	iftrue .SetContestOfficer
+	; Bug Catching Contest disabled
 	disappear ROUTE36NATIONALPARKGATE_OFFICER1
 	appear ROUTE36NATIONALPARKGATE_OFFICER2
-	endcallback
-
-.SetContestOfficer:
-	appear ROUTE36NATIONALPARKGATE_OFFICER1
-	disappear ROUTE36NATIONALPARKGATE_OFFICER2
-.Return:
 	endcallback
 
 .LeavingContestEarly:

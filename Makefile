@@ -172,6 +172,7 @@ pokecrystal11_debug_base = dbg
 	$(RGBLINK) -n $*.sym -m $*.map -l layout.link -o $@ $(filter %.o,$^)
 	$(RGBFIX) $($*_opt) $@
 	tools/stadium --base $($*_base) $@
+	python3 tools/verify_bank_layout.py $*.map
 
 
 ### LZ compression rules

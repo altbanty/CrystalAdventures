@@ -2208,7 +2208,7 @@ DistributeExperiencePoints:
 	ret
 
 GiveCatchExperience::
-; Award 2x exp for catching. Temporarily doubles wEnemyMonLevel.
+; Award 2.5x exp for catching. Temporarily sets wEnemyMonLevel to level*2.5.
 ; Prepare screen same as normal faint-exp path (lines 2166-2167).
 	call EmptyBattleTextbox
 	call LoadTilemapToTempTilemap
@@ -2222,7 +2222,10 @@ GiveCatchExperience::
 	push af
 	ld a, [wEnemyMonLevel]
 	push af
-	add a               ; double level (max 100->200, fits in byte)
+	ld b, a             ; b = level
+	add a               ; a = level * 2
+	srl b               ; b = level / 2 (rounds down)
+	add b               ; a = level * 2.5 (max 100->250, fits in byte)
 	ld [wEnemyMonLevel], a
 	call DistributeExperiencePoints
 	pop af

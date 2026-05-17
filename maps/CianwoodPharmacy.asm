@@ -56,7 +56,8 @@ CianwoodPharmacist:
 	writetext CianwoodPharmacyBagFullTMText
 	promptbutton
 .SkipTM:
-	pokemart MARTTYPE_PHARMACY, MART_CIANWOOD
+	callasm BuildCianwoodMart
+	pokemart MARTTYPE_PHARMACY, wStringBuffer5
 	closetext
 	end
 
@@ -120,6 +121,60 @@ CianwoodPharmacyBagFullTMText:
 	text "You can't carry"
 	line "any more items."
 	done
+
+BuildCianwoodMart::
+; Copies fixed pharmacy items + 1 random evo stone into wStringBuffer5.
+; The evo stone is offset +3 from Goldenrod 3F's stone so they never overlap.
+	ld a, [wGoldenrod3FItemSeed]
+	bit 7, a
+	jr nz, .buildMart
+	call Random
+	ld [wGoldenrod3FItemSeed], a
+	call Random
+	ld [wGoldenrod3FItemSeed + 1], a
+	ld a, [wGoldenrod3FItemSeed]
+	or %10000000
+	ld [wGoldenrod3FItemSeed], a
+.buildMart:
+	ld hl, wStringBuffer5
+	ld [hl], 7
+	inc hl
+	ld [hl], BERRY_JUICE
+	inc hl
+	ld [hl], ETHER
+	inc hl
+	ld [hl], ENERGYPOWDER
+	inc hl
+	ld [hl], ENERGY_ROOT
+	inc hl
+	ld [hl], HEAL_POWDER
+	inc hl
+	ld [hl], REVIVAL_HERB
+	inc hl
+	ld a, [wGoldenrod3FItemSeed]
+	and $70
+	swap a
+	cp 6
+	jr c, .modOk
+	sub 6
+.modOk:
+	add 3
+	cp 6
+	jr c, .noWrap
+	sub 6
+.noWrap:
+	push hl
+	ld hl, .CianwoodEvoStones
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld a, [hl]
+	pop hl
+	ld [hli], a
+	ld [hl], -1
+	ret
+.CianwoodEvoStones:
+	db FIRE_STONE, WATER_STONE, THUNDERSTONE, LEAF_STONE, SUN_STONE, MOON_STONE
 
 CianwoodPharmacy_MapEvents:
 	db 0, 0 ; filler

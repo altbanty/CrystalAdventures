@@ -11,10 +11,14 @@ Script_Whiteout:
 	waitbutton
 	special FadeOutPalettes
 	pause 40
-	special HealParty
+	callasm WhiteoutReviveOne
 	checkflag ENGINE_BUG_CONTEST_TIMER
 	iftrue .bug_contest
+	; Adventure Mode uses paid healing as the punishment, so skip HalveMoney
+	checkflag ENGINE_ADVENTURE_MODE
+	iftrue .skip_halve
 	callasm HalveMoney
+.skip_halve
 	checkflag ENGINE_UNUSED_DIFFICULTY
 	iftrue .reset
 	callasm GetWhiteoutSpawn
@@ -75,3 +79,45 @@ GetWhiteoutSpawn:
 .yes
 	ld [wDefaultSpawnpoint], a
 	ret
+
+PUSHS
+SECTION "Whiteout Revive One", ROMX
+
+WhiteoutReviveOne::
+; After a whiteout, revive ONLY the first non-egg party mon to 1 HP.
+; All other mons stay at 0 HP, forcing the player to pay for healing.
+; PP is intentionally NOT restored.
+	xor a
+	ld [wCurPartyMon], a
+	ld hl, wPartySpecies
+.find_loop
+	ld a, [hl]
+	cp -1
+	ret z              ; end of party — nothing to revive (shouldn't happen)
+	cp EGG
+	jr nz, .found
+	inc hl
+	ld a, [wCurPartyMon]
+	inc a
+	ld [wCurPartyMon], a
+	jr .find_loop
+.found
+	; wCurPartyMon is the slot of the first non-egg
+	ld a, MON_SPECIES
+	call GetPartyParamLocation
+	ld d, h
+	ld e, l
+	; Clear status
+	ld hl, MON_STATUS
+	add hl, de
+	xor a
+	ld [hl], a
+	; Set HP to 1 (big-endian: high=0, low=1)
+	ld hl, MON_HP
+	add hl, de
+	xor a
+	ld [hli], a
+	ld a, 1
+	ld [hl], a
+	ret
+POPS

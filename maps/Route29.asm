@@ -186,7 +186,9 @@ TuscanyScript:
 .MetTuscany:
 	writetext TuscanyGivesGiftText
 	promptbutton
-	verbosegiveitem PINK_BOW
+	callasm PickRandomItems
+	db 5, PINK_BOW, BERRY_JUICE, ETHER, NUGGET, POKE_BALL
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse TuscanyDoneScript
 	setevent EVENT_GOT_PINK_BOW_FROM_TUSCANY
 	writetext TuscanyGaveGiftText

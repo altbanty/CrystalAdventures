@@ -72,7 +72,7 @@ UnionCaveB2FElixer:
 	randomized_item_5 ELIXER, MAX_ETHER, HYPER_POTION, ULTRA_BALL, NUGGET
 
 UnionCaveB2FHyperPotion:
-	randomized_item_5 HYPER_POTION, MAX_POTION, REVIVE, FULL_HEAL, BIG_PEARL
+	randomized_item_5 HYPER_POTION, MAX_POTION, REVIVE, FULL_HEAL, RARE_CANDY
 
 CooltrainermNickSeenText:
 	text "There are two"

@@ -52,7 +52,9 @@ MagikarpLengthRaterScript:
 .GetReward:
 	writetext MagikarpLengthRaterText_Memento
 	promptbutton
-	verbosegiveitem ELIXER
+	callasm PickRandomItems
+	db 5, ELIXER, MAX_ETHER, RARE_CANDY, PP_UP, FULL_RESTORE
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoom
 	writetext MagikarpLengthRaterText_Bonus
 	waitbutton

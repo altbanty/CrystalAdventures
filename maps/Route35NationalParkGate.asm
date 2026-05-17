@@ -34,21 +34,10 @@ Route35NationalParkGate_MapScripts:
 	endcallback
 
 .CheckIfContestAvailable:
-	readvar VAR_WEEKDAY
-	ifequal TUESDAY, .SetContestOfficer
-	ifequal THURSDAY, .SetContestOfficer
-	ifequal SATURDAY, .SetContestOfficer
-	checkflag ENGINE_BUG_CONTEST_TIMER
-	iftrue .BugContestIsRunning
+	; Bug Catching Contest disabled
 	disappear ROUTE35NATIONALPARKGATE_OFFICER1
 	appear ROUTE35NATIONALPARKGATE_YOUNGSTER
 	appear ROUTE35NATIONALPARKGATE_OFFICER2
-	endcallback
-
-.SetContestOfficer:
-	appear ROUTE35NATIONALPARKGATE_OFFICER1
-	disappear ROUTE35NATIONALPARKGATE_YOUNGSTER
-	disappear ROUTE35NATIONALPARKGATE_OFFICER2
 	endcallback
 
 .LeavingContestEarly:

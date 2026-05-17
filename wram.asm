@@ -3010,8 +3010,8 @@ wUndergroundSwitchPositions:: db
 wFarfetchdPosition:: db
 
 wStarterChoices:: ; 2 bytes - randomized starter indices
-; byte 0: bit 7 = initialized, bits 2-0 = ball 1 species index (0-7)
-; byte 1: bits 5-3 = ball 3 species index (0-7), bits 2-0 = ball 2 species index (0-7)
+; byte 0: bit 7 = initialized, bits 3-0 = ball 1 species index (0-10)
+; byte 1: bits 7-4 = ball 3 species index (0-10), bits 3-0 = ball 2 species index (0-10)
 	ds 2
 wMartTMChoices:: ; 9 bytes - randomized TM mart data
 ; byte 0: bit 7 = initialized flag

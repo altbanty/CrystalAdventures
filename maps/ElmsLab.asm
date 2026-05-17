@@ -344,6 +344,11 @@ ElmAfterTheftScript:
 	promptbutton
 	writetext ElmAfterTheftText5
 	promptbutton
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .SkipLevelCapMention
+	writetext ElmLevelCapText
+	waitbutton
+.SkipLevelCapMention:
 	setevent EVENT_GAVE_MYSTERY_EGG_TO_ELM
 	setflag ENGINE_MAIN_MENU_MOBILE_CHOICES
 	clearevent EVENT_ROUTE_30_YOUNGSTER_JOEY
@@ -946,6 +951,19 @@ ElmAfterTheftText6:
 	para "Before you leave,"
 	line "make sure that you"
 	cont "talk to your mom."
+	done
+
+ElmLevelCapText:
+	text "ELM: One more"
+	line "thing--right now,"
+
+	para "your #MON can"
+	line "only reach Lv @"
+	text_decimal wLevelCap, 1, 2
+	text "."
+
+	para "It'll go up as you"
+	line "earn GYM BADGES."
 	done
 
 ElmStudyingEggText:

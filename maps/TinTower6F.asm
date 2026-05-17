@@ -7,7 +7,7 @@ TinTower6F_MapScripts:
 	def_callbacks
 
 TinTower6FMaxPotion:
-	randomized_item_5 MAX_POTION, FULL_RESTORE, MAX_REVIVE, ELIXER, NUGGET
+	randomized_item_5 MAX_POTION, FULL_RESTORE, MAX_REVIVE, ELIXER, RARE_CANDY
 
 TinTower6F_MapEvents:
 	db 0, 0 ; filler

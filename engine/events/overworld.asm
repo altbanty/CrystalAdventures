@@ -1642,30 +1642,28 @@ InitStarterChoices::
 	; a = slot 3 index
 
 	; Pack into 2 bytes:
-	; byte 0: bit 7 = initialized, bits 2-0 = slot 1
-	; byte 1: bits 5-3 = slot 3, bits 2-0 = slot 2
+	; byte 0: bit 7 = initialized, bits 3-0 = slot 1
+	; byte 1: bits 7-4 = slot 3, bits 3-0 = slot 2
 	push af ; save slot 3
 	ld a, d
 	or %10000000 ; set initialized flag
 	ld [wStarterChoices], a
 	pop af ; restore slot 3
-	rlca
-	rlca
-	rlca ; shift slot 3 to bits 5-3
-	or e ; combine with slot 2 in bits 2-0
+	swap a ; shift slot 3 to bits 7-4
+	or e ; combine with slot 2 in bits 3-0
 	ld [wStarterChoices + 1], a
 	ret
 
 .RollWeightedSpecies:
-; Returns a species index 0-7 in a, equally weighted.
-	ld a, 8
+; Returns a species index 0-10 in a, equally weighted.
+	ld a, NUM_STARTERS
 	call RandomRange
 	ret
 
 GetStarterSlot1::
 ; Put species constant for ball 1 into wScriptVar.
 	ld a, [wStarterChoices]
-	and %00000111
+	and %00001111
 	call LookupStarterSpecies
 	ld [wScriptVar], a
 	ret
@@ -1673,7 +1671,7 @@ GetStarterSlot1::
 GetStarterSlot2::
 ; Put species constant for ball 2 into wScriptVar.
 	ld a, [wStarterChoices + 1]
-	and %00000111
+	and %00001111
 	call LookupStarterSpecies
 	ld [wScriptVar], a
 	ret
@@ -1681,10 +1679,8 @@ GetStarterSlot2::
 GetStarterSlot3::
 ; Put species constant for ball 3 into wScriptVar.
 	ld a, [wStarterChoices + 1]
-	rrca
-	rrca
-	rrca
-	and %00000111
+	swap a
+	and %00001111
 	call LookupStarterSpecies
 	ld [wScriptVar], a
 	ret
@@ -1718,16 +1714,20 @@ StarterSpeciesTable:
 	db TOTODILE   ; 1
 	db CYNDAQUIL  ; 2
 	db AIPOM      ; 3
-	db SUDOWOODO  ; 4
+	db GEODUDE    ; 4
 	db SMEARGLE   ; 5
 	db SWINUB     ; 6
 	db MAREEP     ; 7
+	db CHARMANDER ; 8
+	db BULBASAUR  ; 9
+	db SQUIRTLE   ; 10
+NUM_STARTERS EQU 11
 
 
 GetPlayerStarterIndex::
-; Returns the player's starter index (0-7) in a and wScriptVar.
+; Returns the player's starter index (0-10) in a and wScriptVar.
 ; Checks which ball slot was picked, then extracts that slot's species index.
-	ld a, [wStarterChoices + 1]     ; byte contains slot 2 (bits 2-0) and slot 3 (bits 5-3)
+	ld a, [wStarterChoices + 1]     ; byte contains slot 2 (bits 3-0) and slot 3 (bits 7-4)
 	ld [wScriptVar], a             ; temporarily stash packed byte
 	ld de, EVENT_GOT_SMEARGLE_FROM_ELM  ; slot 2
 	ld b, CHECK_FLAG
@@ -1743,20 +1743,18 @@ GetPlayerStarterIndex::
 	jr nz, .slot3
 	; default: slot 1
 	ld a, [wStarterChoices]
-	and %00000111
+	and %00001111
 	ld [wScriptVar], a
 	ret
 .slot2
 	ld a, [wScriptVar]
-	and %00000111
+	and %00001111
 	ld [wScriptVar], a
 	ret
 .slot3
 	ld a, [wScriptVar]
-	rrca
-	rrca
-	rrca
-	and %00000111
+	swap a
+	and %00001111
 	ld [wScriptVar], a
 	ret
 
@@ -1765,16 +1763,14 @@ LoadRivalTrainer::
 ; Sets wBattleScriptFlags, wOtherTrainerClass, wOtherTrainerID.
 	ld a, [wScriptVar]
 	push af                          ; save encounter number
-	call GetPlayerStarterIndex       ; a = starter index 0-7
+	call GetPlayerStarterIndex       ; a = starter index 0-10
 	ld b, a                          ; b = starter index
 	pop af                           ; a = encounter number 1-7
 	cp 6
 	jr nc, .rival2
 	; RIVAL1: encounters 1-5
 	dec a                            ; 0-4
-	sla a
-	sla a
-	sla a                            ; (encounter-1) * 8
+	call .MultiplyByNumStarters      ; a = (encounter-1) * NUM_STARTERS
 	add b                            ; + starter index
 	inc a                            ; 1-based ID
 	ld [wOtherTrainerID], a
@@ -1784,9 +1780,7 @@ LoadRivalTrainer::
 .rival2
 	; RIVAL2: encounters 6-7
 	sub 6                            ; 0-1
-	sla a
-	sla a
-	sla a                            ; (encounter-6) * 8
+	call .MultiplyByNumStarters      ; a = (encounter-6) * NUM_STARTERS
 	add b
 	inc a
 	ld [wOtherTrainerID], a
@@ -1795,6 +1789,19 @@ LoadRivalTrainer::
 .done
 	ld a, (1 << 7) | 1
 	ld [wBattleScriptFlags], a
+	ret
+
+.MultiplyByNumStarters:
+; a = value, returns a * NUM_STARTERS (11) = a*8 + a*2 + a
+	ld c, a
+	sla a
+	sla a
+	sla a         ; a * 8
+	ld d, a
+	ld a, c
+	sla a         ; a * 2
+	add d         ; a * 10
+	add c         ; a * 11
 	ret
 
 ; --- End Randomized Starter Selection ---
@@ -2632,3 +2639,4 @@ BuildGoldenrod3FMart::
 
 .VitaminsRare:
 	db RARE_CANDY, PP_UP, HP_UP, PROTEIN, IRON, CARBOS, CALCIUM, LUCKY_EGG
+

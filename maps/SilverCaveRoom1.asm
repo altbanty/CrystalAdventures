@@ -19,7 +19,7 @@ SilverCaveRoom1EscapeRope:
 	randomized_item_5 ESCAPE_ROPE, MAX_REPEL, ULTRA_BALL, MAX_POTION, ELIXER
 
 SilverCaveRoom1UltraBall:
-	randomized_item_5 ULTRA_BALL, MAX_POTION, FULL_RESTORE, MAX_REVIVE, NUGGET
+	randomized_item_5 ULTRA_BALL, MAX_POTION, FULL_RESTORE, MAX_REVIVE, RARE_CANDY
 
 SilverCaveRoom1HiddenDireHit:
 	hiddenitem MAX_REVIVE, EVENT_SILVER_CAVE_ROOM_1_HIDDEN_DIRE_HIT

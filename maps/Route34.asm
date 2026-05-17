@@ -504,7 +504,9 @@ TrainerCooltrainerfKate:
 	iftrue .GotSoftSand
 	writetext CooltrainerfKateOfferSoftSandText
 	promptbutton
-	verbosegiveitem SOFT_SAND
+	callasm PickRandomItems
+	db 5, SOFT_SAND, SHARP_BEAK, POISON_BARB, TWISTEDSPOON, BLACKBELT_I
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .BagFull
 	setevent EVENT_GOT_SOFT_SAND_FROM_KATE
 .GotSoftSand:
@@ -527,7 +529,7 @@ DayCareSign:
 	jumptext DayCareSignText
 
 Route34Nugget:
-	randomized_item_5 NUGGET, TM_MEGA_PUNCH, ULTRA_BALL, TM_PSYCH_UP, CARBOS
+	randomized_item_5 RARE_CANDY, TM_MEGA_PUNCH, ULTRA_BALL, TM_PSYCH_UP, CARBOS
 
 Route34HiddenRareCandy:
 	hiddenitem RARE_CANDY, EVENT_ROUTE_34_HIDDEN_RARE_CANDY

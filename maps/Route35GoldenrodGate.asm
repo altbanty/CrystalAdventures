@@ -52,7 +52,9 @@ RandyScript:
 .questcomplete
 	writetext Route35GoldenrodGateRandySomethingForYourTroubleText
 	promptbutton
-	verbosegiveitem HP_UP
+	callasm PickRandomItems
+	db 5, HP_UP, PROTEIN, IRON, CARBOS, CALCIUM
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .bagfull
 	setevent EVENT_GOT_HP_UP_FROM_RANDY
 .gothpup

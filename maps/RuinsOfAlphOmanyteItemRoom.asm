@@ -19,7 +19,7 @@ RuinsOfAlphOmanyteItemRoomStardust:
 	randomized_item_5 NUGGET, STAR_PIECE, BIG_PEARL, BIG_MUSHROOM, RARE_CANDY
 
 RuinsOfAlphOmanyteItemRoomStarPiece:
-	randomized_item_5 MIRACLEBERRY, GOLD_BERRY, FULL_RESTORE, BERRY_JUICE, ELIXER
+	randomized_item_5 MIRACLEBERRY, RARE_CANDY, FULL_RESTORE, BERRY_JUICE, ELIXER
 
 RuinsOfAlphOmanyteItemRoomAncientReplica:
 	jumptext RuinsOfAlphOmanyteItemRoomAncientReplicaText

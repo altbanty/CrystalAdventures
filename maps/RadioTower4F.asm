@@ -30,7 +30,9 @@ RadioTower4FDJMaryScript:
 .ClearedRockets:
 	writetext RadioTower4FDJMaryText_ClearedRockets
 	promptbutton
-	verbosegiveitem PINK_BOW
+	callasm PickRandomItems
+	db 5, PINK_BOW, LEFTOVERS, BERRY_JUICE, GOLD_BERRY, NUGGET
+	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoom
 	writetext RadioTower4FDJMaryText_GivePinkBow
 	waitbutton
