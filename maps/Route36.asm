@@ -106,7 +106,12 @@ WateredWeirdTreeScript:: ; export (for when you use Squirtbottle from pack)
 	loadwildmon CHANSEY, 28
 
 .StartTreeBattle:
+	; The Squirt Bottle tree is its own special one-time encounter, separate
+	; from Route 36's grass. Flag it as the "first encounter" so the catch is
+	; allowed, then clear it so the route's Nuzlocke grass slot stays free.
+	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
+	loadmem wNuzlockeFirstEncounter, 0
 	setevent EVENT_FOUGHT_SUDOWOODO
 	ifequal DRAW, DidntCatchSudowoodo
 	disappear ROUTE36_WEIRD_TREE
