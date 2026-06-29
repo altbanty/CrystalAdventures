@@ -148,6 +148,41 @@ CheckNuzlockeForBattle::
 	ld [wNuzlockeFirstEncounter], a
 	ret
 
+CheckNuzlockeCatchBlock::
+; Decide whether a ball throw should be blocked by the Nuzlocke per-map rule.
+; Returns carry SET   = block the catch (already caught on this map)
+;         carry CLEAR = allow the catch
+; Battle-type bypass list MUST mirror CheckNuzlockeForBattle's skip list.
+	ld a, [wNuzlockeFirstEncounter]
+	and a
+	jr nz, .allow ; First encounter on this map, allow catch
+
+	ld a, [wBattleType]
+	cp BATTLETYPE_SHINY
+	jr z, .allow
+	cp BATTLETYPE_SUICUNE
+	jr z, .allow
+	cp BATTLETYPE_ROAMING
+	jr z, .allow
+	cp BATTLETYPE_TREE
+	jr z, .allow
+	cp BATTLETYPE_TRAP
+	jr z, .allow
+	cp BATTLETYPE_CELEBI
+	jr z, .allow
+	cp BATTLETYPE_TUTORIAL
+	jr z, .allow
+	cp BATTLETYPE_FISH
+	jr z, .allow ; Rods break after one use; not per-map limited
+	cp BATTLETYPE_CONTEST
+	jr z, .allow ; Bug Contest has its own catch rules
+	; Not the first encounter and not a bypassed battle type: block
+	scf
+	ret
+.allow
+	and a ; clear carry
+	ret
+
 ; Lookup table of all 114 maps with wild encounters
 ; Each entry: db GROUP_X, MAP_X
 ; Terminated by $FF sentinel

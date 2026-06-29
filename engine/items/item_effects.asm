@@ -172,35 +172,18 @@ PokeBallEffect:
 	dec a
 	jp nz, UseBallInTrainerBattle
 
-	; Check for Nuzlocke encounter rule
-	ld a, [wNuzlockeFirstEncounter]
-	and a
-	jr nz, .skip_nuzlocke_check ; This is the first encounter, allow catch
-	
-	; Check if special battle type that bypasses Nuzlocke
-	ld a, [wBattleType]
-	cp BATTLETYPE_SHINY
-	jr z, .skip_nuzlocke_check
-	cp BATTLETYPE_SUICUNE
-	jr z, .skip_nuzlocke_check
-	cp BATTLETYPE_ROAMING
-	jr z, .skip_nuzlocke_check
-	cp BATTLETYPE_TREE
-	jr z, .skip_nuzlocke_check
-	cp BATTLETYPE_TRAP
-	jr z, .skip_nuzlocke_check
-	cp BATTLETYPE_CELEBI
-	jr z, .skip_nuzlocke_check
-	cp BATTLETYPE_TUTORIAL
-	jr z, .skip_nuzlocke_check
-	
-	; Not the first encounter and not a special battle, block the catch
+	; Check for Nuzlocke encounter rule. The decision logic lives in bankA
+	; (CheckNuzlockeCatchBlock) so this bank-3 section stays within size.
+	farcall CheckNuzlockeCatchBlock
+	jr nc, .skip_nuzlocke_check ; carry clear = catch allowed
+
+	; Blocked by the Nuzlocke per-map rule
 	ld hl, NuzlockeBlockText
 	call PrintText
 	ld a, $ff
 	ld [wItemEffectSucceeded], a
 	ret
-	
+
 .skip_nuzlocke_check
 	ld a, [wBattleType]
 	cp BATTLETYPE_TUTORIAL
