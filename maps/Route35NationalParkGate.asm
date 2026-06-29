@@ -67,6 +67,8 @@ Route35NationalParkGate_MapScripts:
 	end
 
 Route35OfficerScriptContest:
+	; Bug-Catching Contest temporarily disabled
+	jumptextfaceplayer Route35NationalParkGateContestDisabledText
 	readvar VAR_WEEKDAY
 	ifequal SUNDAY, Route35NationalParkGate_NoContestToday
 	ifequal MONDAY, Route35NationalParkGate_NoContestToday
@@ -177,14 +179,8 @@ Route35NationalParkGate_NoContestToday:
 	jumptextfaceplayer Route35NationalParkGateOfficer1WeHoldContestsText
 
 Route35NationalParkGateOfficerScript:
-	faceplayer
-	opentext
-	checkflag ENGINE_DAILY_BUG_CONTEST
-	iftrue Route35NationalParkGate_ContestIsOver
-	writetext Route35NationalParkGateOfficer1WeHoldContestsText
-	waitbutton
-	closetext
-	end
+	; Bug-Catching Contest temporarily disabled
+	jumptextfaceplayer Route35NationalParkGateContestDisabledText
 
 Route35NationalParkGateYoungsterScript:
 	jumptextfaceplayer Route35NationalParkGateYoungsterText
@@ -388,6 +384,18 @@ Route35NationalParkGateOfficer1ContestIsOverText:
 
 	para "will participate"
 	line "in the future."
+	done
+
+Route35NationalParkGateContestDisabledText:
+	text "The Bug-Catching"
+	line "Contest is having"
+
+	para "technical trouble"
+	line "right now."
+
+	para "We hope to have it"
+	line "up and running"
+	cont "again soon!"
 	done
 
 Route35NationalParkGateOfficer1WeHoldContestsText:

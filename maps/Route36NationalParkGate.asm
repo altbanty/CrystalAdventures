@@ -126,6 +126,8 @@ Route36NationalParkGate_MapScripts:
 	end
 
 Route36OfficerScriptContest:
+	; Bug-Catching Contest temporarily disabled
+	jumptextfaceplayer Route36NationalParkGateContestDisabledText
 	readvar VAR_WEEKDAY
 	ifequal SUNDAY, _ContestNotOn
 	ifequal MONDAY, _ContestNotOn
@@ -277,14 +279,8 @@ _ContestNotOn:
 	jumptextfaceplayer Route36NationalParkGateOfficer1SomeMonOnlySeenInParkText
 
 Route36NationalParkGateOfficerScript:
-	faceplayer
-	opentext
-	checkflag ENGINE_DAILY_BUG_CONTEST
-	iftrue Route36Officer_ContestHasConcluded
-	writetext Route36NationalParkGateOfficer1SomeMonOnlySeenInParkText
-	waitbutton
-	closetext
-	end
+	; Bug-Catching Contest temporarily disabled
+	jumptextfaceplayer Route36NationalParkGateContestDisabledText
 
 Route36ParkGate_DayToText:
 	jumpstd DayToTextScript
@@ -643,6 +639,18 @@ Route36NationalParkGateOfficer1SomeMonOnlySeenInParkText:
 	text "Some #MON can"
 	line "only be seen in"
 	cont "the PARK."
+	done
+
+Route36NationalParkGateContestDisabledText:
+	text "The Bug-Catching"
+	line "Contest is having"
+
+	para "technical trouble"
+	line "right now."
+
+	para "We hope to have it"
+	line "up and running"
+	cont "again soon!"
 	done
 
 BugCatchingContestant1BText:
