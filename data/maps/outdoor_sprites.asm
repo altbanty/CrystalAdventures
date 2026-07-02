@@ -165,7 +165,12 @@ EcruteakGroupSprites:
 	db SPRITE_SUPER_NERD
 	db SPRITE_TWIN
 	; 8 of max 9 walking sprites
-	db SPRITE_SUDOWOODO
+	; Variable sprite for the Route 36 weird tree, resolved through
+	; wVariableSprites at GFX-load time (see SetWeirdTreeSprite). The raw
+	; id must be in this list for GetSpriteVTile to bind the tree object
+	; to its VRAM slot — otherwise the object falls back to the player's
+	; tiles.
+	db SPRITE_WEIRD_TREE
 	db SPRITE_POKE_BALL
 	db SPRITE_FRUIT_TREE
 	db SPRITE_SUICUNE
