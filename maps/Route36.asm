@@ -24,6 +24,8 @@ Route36_MapScripts:
 .DummyScene1:
 	end
 
+; Runs from LoadUsedSpritesGFX, right before GetUsedSprites resolves the
+; variable sprite — covers Warp/Continue/ReloadMap entries.
 .TreeSpriteCallback:
 	checkevent EVENT_FOUGHT_SUDOWOODO
 	iftrue .SkipTreeSprite
@@ -32,6 +34,16 @@ Route36_MapScripts:
 	endcallback
 
 .ArthurCallback:
+	; Connection entries (walking in from Violet City / Route 37) never run
+	; LoadMapGraphics, so the SPRITES callback above doesn't fire and the
+	; weird tree's variable sprite slot resolves to 0 = the player's walking
+	; sprite. Force a sprite GFX reload here — LoadUsedSpritesGFX runs the
+	; SPRITES callback (rolling the tree) before loading GFX. Same pattern
+	; as Copycat's house / Fuchsia Gym.
+	checkevent EVENT_FOUGHT_SUDOWOODO
+	iftrue .SkipTreeGfx
+	special LoadUsedSpritesGFX
+.SkipTreeGfx:
 	readvar VAR_WEEKDAY
 	ifequal THURSDAY, .ArthurAppears
 	disappear ROUTE36_ARTHUR
