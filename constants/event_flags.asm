@@ -1473,6 +1473,7 @@
 	const EVENT_BEAT_LANCE_FIRST_TIME
 	const EVENT_ROUTE_24_MEW
 	const EVENT_ROUTE_24_MEW_CAUGHT
+	const EVENT_ROUTE_36_WEIRD_TREE_CHOICE_LOCKED ; weird tree rolled once; no rerolls
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800

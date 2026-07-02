@@ -274,7 +274,8 @@ PickWeirdTree::
 	ret
 
 ; Pick random weird tree, store choice in wGymTeamChoices2 bits 6-4, set variable sprite.
-; Called from Route 36 MAPCALLBACK_OBJECTS.
+; Only called for the roll that locks the choice (see Route 36's map callbacks —
+; EVENT_ROUTE_36_WEIRD_TREE_CHOICE_LOCKED gates rerolls).
 SetWeirdTreeSprite::
 	call PickWeirdTree       ; result in wScriptVar (0-4)
 	ld a, [wScriptVar]
@@ -286,6 +287,16 @@ SetWeirdTreeSprite::
 	and %10001111            ; clear bits 6-4
 	or b
 	ld [wGymTeamChoices2], a
+	jr ApplyWeirdTreeSprite.set_sprite
+
+; Re-apply the stored weird tree choice to the variable sprite without rerolling.
+; Called on later Route 36 entries once the choice is locked.
+ApplyWeirdTreeSprite::
+	ld a, [wGymTeamChoices2]
+	and %01110000            ; isolate bits 6-4
+	swap a
+	ld c, a                  ; c = stored choice (0-4)
+.set_sprite
 	; Map choice to sprite
 	ld hl, .SpriteTable
 	ld b, 0

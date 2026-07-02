@@ -26,10 +26,19 @@ Route36_MapScripts:
 
 ; Runs from LoadUsedSpritesGFX, right before GetUsedSprites resolves the
 ; variable sprite — covers Warp/Continue/ReloadMap entries.
+; The tree is rolled exactly once per save: the first time the player enters
+; Route 36 (and would see the sprite), the choice is locked so re-entering
+; the map can't reroll the encounter.
 .TreeSpriteCallback:
 	checkevent EVENT_FOUGHT_SUDOWOODO
 	iftrue .SkipTreeSprite
+	checkevent EVENT_ROUTE_36_WEIRD_TREE_CHOICE_LOCKED
+	iftrue .ReapplyTreeSprite
+	setevent EVENT_ROUTE_36_WEIRD_TREE_CHOICE_LOCKED
 	callasm SetWeirdTreeSprite
+	endcallback
+.ReapplyTreeSprite:
+	callasm ApplyWeirdTreeSprite
 .SkipTreeSprite:
 	endcallback
 
