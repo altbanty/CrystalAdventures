@@ -25,7 +25,11 @@ ZapdosScript:
 	waitbutton
 	closetext
 	loadwildmon ZAPDOS, 60
+	; Static encounter: bypass the Nuzlocke route rule without consuming
+	; this map's catch slot (same pattern as the Route 36 weird tree)
+	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
+	loadmem wNuzlockeFirstEncounter, 0
 	disappear ROUTE_10_ZAPDOS
 	setevent EVENT_CAUGHT_ZAPDOS
 	reloadmapafterbattle

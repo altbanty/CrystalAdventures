@@ -1,9 +1,9 @@
 ; Nuzlocke encounter tracking functions
-; Uses a collision-free lookup table mapping 114 encounter maps to unique bit indices
+; Uses a collision-free lookup table mapping 117 encounter maps to unique bit indices
 
 GetNuzlockeMapIndex::
 ; Look up current map in the encounter map table
-; Returns: a = map index (0-113), carry set if found
+; Returns: a = map index (0-116), carry set if found
 ;          carry clear if map not in table
 	ld a, [wMapGroup]
 	ld d, a
@@ -38,7 +38,7 @@ CheckNuzlockeEncounter::
 	call GetNuzlockeMapIndex
 	jr nc, .not_encounter_map
 
-	; a = map index (0-113)
+	; a = map index (0-116)
 	; Calculate byte offset (index / 8) and bit position (index & 7)
 	ld b, a
 	srl a
@@ -79,7 +79,7 @@ SetNuzlockeEncounter::
 	call GetNuzlockeMapIndex
 	ret nc ; Map not in encounter table, nothing to set
 
-	; a = map index (0-113)
+	; a = map index (0-116)
 	ld b, a
 	srl a
 	srl a
@@ -128,10 +128,10 @@ CheckNuzlockeForBattle::
 	ret z
 	cp BATTLETYPE_ROAMING
 	ret z
-	cp BATTLETYPE_TREE
-	ret z
 	cp BATTLETYPE_TRAP
 	ret z
+	cp BATTLETYPE_FORCEITEM
+	ret z ; static legendaries (Ho-Oh, Lugia, Snorlax)
 	cp BATTLETYPE_CELEBI
 	ret z
 	cp BATTLETYPE_TUTORIAL
@@ -164,10 +164,10 @@ CheckNuzlockeCatchBlock::
 	jr z, .allow
 	cp BATTLETYPE_ROAMING
 	jr z, .allow
-	cp BATTLETYPE_TREE
-	jr z, .allow
 	cp BATTLETYPE_TRAP
 	jr z, .allow
+	cp BATTLETYPE_FORCEITEM
+	jr z, .allow ; static legendaries (Ho-Oh, Lugia, Snorlax)
 	cp BATTLETYPE_CELEBI
 	jr z, .allow
 	cp BATTLETYPE_TUTORIAL
@@ -183,7 +183,7 @@ CheckNuzlockeCatchBlock::
 	and a ; clear carry
 	ret
 
-; Lookup table of all 114 maps with wild encounters
+; Lookup table of all 117 maps with wild or headbutt encounters
 ; Each entry: db GROUP_X, MAP_X
 ; Terminated by $FF sentinel
 NuzlockeEncounterMapTable:
@@ -305,4 +305,12 @@ NuzlockeEncounterMapTable:
 	db GROUP_CELADON_CITY, MAP_CELADON_CITY
 	db GROUP_FUCHSIA_CITY, MAP_FUCHSIA_CITY
 	db GROUP_CINNABAR_ISLAND, MAP_CINNABAR_ISLAND
+; --- Headbutt-tree-only maps (indices 114-116) ---
+; Appended so headbutt encounters participate in the one-catch rule on maps
+; with no grass/water. MUST append new entries at the end: the bit index in
+; wNuzlockeEncounterFlags is the table position, so inserting mid-table would
+; corrupt existing saves. Capacity: 15 flag bytes = 120 maps.
+	db GROUP_AZALEA_TOWN, MAP_AZALEA_TOWN
+	db GROUP_GOLDENROD_CITY, MAP_GOLDENROD_CITY
+	db GROUP_MAHOGANY_TOWN, MAP_MAHOGANY_TOWN
 	db $FF ; sentinel

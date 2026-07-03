@@ -29,7 +29,11 @@ UnionCaveLapras:
 	faceplayer
 	cry LAPRAS
 	loadwildmon LAPRAS, 20
+	; Static encounter: bypass the Nuzlocke route rule without consuming
+	; this map's catch slot (same pattern as the Route 36 weird tree)
+	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
+	loadmem wNuzlockeFirstEncounter, 0
 	disappear UNIONCAVEB2F_LAPRAS
 	setflag ENGINE_UNION_CAVE_LAPRAS
 	reloadmapafterbattle

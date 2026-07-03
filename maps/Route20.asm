@@ -57,7 +57,11 @@ ArticunoScript:
 	waitbutton
 	closetext
 	loadwildmon ARTICUNO, 60
+	; Static encounter: bypass the Nuzlocke route rule without consuming
+	; this map's catch slot (same pattern as the Route 36 weird tree)
+	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
+	loadmem wNuzlockeFirstEncounter, 0
 	disappear ROUTE_20_ARTICUNO
 	setevent EVENT_CAUGHT_ARTICUNO
 	reloadmapafterbattle

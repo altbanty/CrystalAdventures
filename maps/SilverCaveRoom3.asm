@@ -83,7 +83,11 @@ MewtwoScript:
 	waitbutton
 	closetext
 	loadwildmon MEWTWO, 75
+	; Static encounter: bypass the Nuzlocke route rule without consuming
+	; this map's catch slot (same pattern as the Route 36 weird tree)
+	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
+	loadmem wNuzlockeFirstEncounter, 0
 	disappear SILVERCAVEROOM3_RED
 	disappear CERULEANCAVEB1F_MEWTWO
 	setevent EVENT_RED_IN_MT_SILVER
