@@ -15,12 +15,27 @@ Route42_MapScripts:
 	scene_script .DummyScene1 ; SCENE_ROUTE42_SUICUNE
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .BeastSpriteCallback
+	callback MAPCALLBACK_OBJECTS, .BeastGfxCallback
 
 .DummyScene0:
 	end
 
 .DummyScene1:
 	end
+
+.BeastSpriteCallback:
+	callasm ApplyLegendaryBeastSprite
+	endcallback
+
+; Connection entries never reload sprite GFX; force it while the beast
+; sighting can still occur (see the Route 36 weird tree pattern).
+.BeastGfxCallback:
+	checkevent EVENT_SAW_SUICUNE_ON_ROUTE_42
+	iftrue .NoBeast
+	special LoadUsedSpritesGFX
+.NoBeast:
+	endcallback
 
 Route42SuicuneScript:
 	showemote EMOTE_SHOCK, PLAYER, 15
@@ -361,4 +376,4 @@ Route42_MapEvents:
 	object_event 29, 16, SPRITE_FRUIT_TREE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route42FruitTree3, -1
 	object_event  6,  4, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route42UltraBall, EVENT_ROUTE_42_ULTRA_BALL
 	object_event 33,  8, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route42SuperPotion, EVENT_ROUTE_42_SUPER_POTION
-	object_event 26, 16, SPRITE_SUICUNE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_SAW_SUICUNE_ON_ROUTE_42
+	object_event 26, 16, SPRITE_LEGENDARY_BEAST, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_SAW_SUICUNE_ON_ROUTE_42

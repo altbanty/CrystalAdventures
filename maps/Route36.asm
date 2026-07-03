@@ -30,6 +30,8 @@ Route36_MapScripts:
 ; Route 36 (and would see the sprite), the choice is locked so re-entering
 ; the map can't reroll the encounter.
 .TreeSpriteCallback:
+	; Beast sighting sprite is independent of the tree state
+	callasm ApplyLegendaryBeastSprite
 	checkevent EVENT_FOUGHT_SUDOWOODO
 	iftrue .SkipTreeSprite
 	checkevent EVENT_ROUTE_36_WEIRD_TREE_CHOICE_LOCKED
@@ -50,7 +52,10 @@ Route36_MapScripts:
 	; SPRITES callback (rolling the tree) before loading GFX. Same pattern
 	; as Copycat's house / Fuchsia Gym.
 	checkevent EVENT_FOUGHT_SUDOWOODO
-	iftrue .SkipTreeGfx
+	iffalse .ReloadSprites ; tree still present
+	checkevent EVENT_SAW_SUICUNE_ON_ROUTE_36
+	iftrue .SkipTreeGfx ; and no beast sighting pending
+.ReloadSprites:
 	special LoadUsedSpritesGFX
 .SkipTreeGfx:
 	readvar VAR_WEEKDAY
@@ -757,4 +762,4 @@ Route36_MapEvents:
 	object_event 21,  4, SPRITE_FRUIT_TREE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Route36FruitTree, -1
 	object_event 46,  6, SPRITE_YOUNGSTER, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ArthurScript, EVENT_ROUTE_36_ARTHUR_OF_THURSDAY
 	object_event 33, 12, SPRITE_LASS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, Route36FloriaScript, EVENT_FLORIA_AT_SUDOWOODO
-	object_event 21,  6, SPRITE_SUICUNE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_SAW_SUICUNE_ON_ROUTE_36
+	object_event 21,  6, SPRITE_LEGENDARY_BEAST, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_SAW_SUICUNE_ON_ROUTE_36

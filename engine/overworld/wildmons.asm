@@ -492,10 +492,18 @@ LookUpWildmonsForMapDE:
 InitRoamMons:
 ; initialize wRoamMon structs
 
-; species
-	ld a, RAIKOU
+; species: the two beasts NOT chosen for the Tin Tower encounter roam
+	farcall GetLegendaryBeastChoice
+	ld a, [wScriptVar]
+	ld c, a
+	ld b, 0
+	ld hl, .Roamer1Species
+	add hl, bc
+	ld a, [hl]
 	ld [wRoamMon1Species], a
-	ld a, ENTEI
+	ld hl, .Roamer2Species
+	add hl, bc
+	ld a, [hl]
 	ld [wRoamMon2Species], a
 
 ; level
@@ -521,6 +529,15 @@ InitRoamMons:
 	ld [wRoamMon2HP], a
 
 	ret
+
+.Roamer1Species:
+	db RAIKOU  ; chosen: Suicune
+	db SUICUNE ; chosen: Raikou
+	db RAIKOU  ; chosen: Entei
+.Roamer2Species:
+	db ENTEI   ; chosen: Suicune
+	db ENTEI   ; chosen: Raikou
+	db SUICUNE ; chosen: Entei
 
 CheckEncounterRoamMon:
 	push hl

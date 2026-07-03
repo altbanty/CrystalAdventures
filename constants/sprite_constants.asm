@@ -201,3 +201,4 @@ SPRITE_VARS EQU const_value
 	const SPRITE_RADIOTOWER_GIOVANNI
 	const SPRITE_TRAINER_HOUSE_PKMN_TRAINER
 	const SPRITE_WEIRD_TREE
+	const SPRITE_LEGENDARY_BEAST ; rolled Tin Tower beast (see gym_tms.asm)

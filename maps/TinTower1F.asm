@@ -18,6 +18,7 @@ TinTower1F_MapScripts:
 	def_callbacks
 	callback MAPCALLBACK_OBJECTS, .NPCsCallback
 	callback MAPCALLBACK_TILES, .StairsCallback
+	callback MAPCALLBACK_SPRITES, .BeastSpriteCallback
 
 .FaceSuicune:
 	sdefer .SuicuneBattle
@@ -25,6 +26,10 @@ TinTower1F_MapScripts:
 
 .DummyScene:
 	end
+
+.BeastSpriteCallback:
+	callasm ApplyLegendaryBeastSprite
+	endcallback
 
 .NPCsCallback:
 	checkevent EVENT_GOT_RAINBOW_WING
@@ -46,6 +51,8 @@ TinTower1F_MapScripts:
 	checkevent EVENT_FOUGHT_SUICUNE
 	iftrue .FoughtSuicune
 	appear TINTOWER1F_SUICUNE
+	callasm GetLegendaryBeastChoice
+	ifequal 1, .NoRaikou ; Raikou is the battler, no cameo
 	setval RAIKOU
 	special MonCheck
 	iftrue .NoRaikou
@@ -55,6 +62,8 @@ TinTower1F_MapScripts:
 .NoRaikou:
 	disappear TINTOWER1F_RAIKOU
 .CheckEntei:
+	callasm GetLegendaryBeastChoice
+	ifequal 2, .NoEntei ; Entei is the battler, no cameo
 	setval ENTEI
 	special MonCheck
 	iftrue .NoEntei
@@ -84,6 +93,9 @@ TinTower1F_MapScripts:
 .SuicuneBattle:
 	applymovement PLAYER, TinTower1FPlayerEntersMovement
 	pause 15
+	; The rolled battler doesn't cameo; the other two (the roamers) do
+	callasm GetLegendaryBeastChoice
+	ifequal 1, .Next1 ; Raikou is the battler
 	setval RAIKOU
 	special MonCheck
 	iftrue .Next1 ; if player caught Raikou, it doesn't appear in Tin Tower
@@ -99,6 +111,8 @@ TinTower1F_MapScripts:
 	playsound SFX_EXIT_BUILDING
 	waitsfx
 .Next1:
+	callasm GetLegendaryBeastChoice
+	ifequal 2, .Next2 ; Entei is the battler
 	setval ENTEI
 	special MonCheck
 	iftrue .Next2 ; if player caught Entei, it doesn't appear in Tin Tower
@@ -118,9 +132,26 @@ TinTower1F_MapScripts:
 	pause 10
 	applymovement PLAYER, TinTower1FPlayerBacksUpMovement
 	applymovement TINTOWER1F_SUICUNE, TinTower1FSuicuneApproachesMovement
+	callasm GetLegendaryBeastChoice
+	ifequal 1, .BattleRaikou
+	ifequal 2, .BattleEntei
 	cry SUICUNE
 	pause 20
 	loadwildmon SUICUNE, 40
+	sjump .StartBeastBattle
+
+.BattleRaikou:
+	cry RAIKOU
+	pause 20
+	loadwildmon RAIKOU, 40
+	sjump .StartBeastBattle
+
+.BattleEntei:
+	cry ENTEI
+	pause 20
+	loadwildmon ENTEI, 40
+
+.StartBeastBattle:
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SUICUNE
 	startbattle
 	dontrestartmapmusic
@@ -537,7 +568,7 @@ TinTower1F_MapEvents:
 	def_bg_events
 
 	def_object_events
-	object_event  9,  9, SPRITE_SUICUNE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_TIN_TOWER_1F_SUICUNE
+	object_event  9,  9, SPRITE_LEGENDARY_BEAST, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_TIN_TOWER_1F_SUICUNE
 	object_event  7,  9, SPRITE_RAIKOU, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_TIN_TOWER_1F_RAIKOU
 	object_event 12,  9, SPRITE_ENTEI, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_TIN_TOWER_1F_ENTEI
 	object_event  8,  3, SPRITE_SUPER_NERD, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, TinTower1FEusine, EVENT_TIN_TOWER_1F_EUSINE

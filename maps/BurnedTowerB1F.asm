@@ -81,6 +81,9 @@ ReleaseTheBeasts:
 	special RestartMapMusic
 	setscene SCENE_FINISHED
 	setevent EVENT_RELEASED_THE_BEASTS
+	; Roll which beast waits at the Tin Tower; InitRoamMons reads the
+	; choice and sets the other two roaming.
+	callasm RollLegendaryBeast
 	special InitRoamMons
 	setmapscene ECRUTEAK_GYM, SCENE_FINISHED
 	setmapscene CIANWOOD_CITY, SCENE_CIANWOODCITY_SUICUNE_AND_EUSINE

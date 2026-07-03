@@ -19,12 +19,27 @@ CianwoodCity_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_NEWMAP, .FlyPointAndSuicune
+	callback MAPCALLBACK_SPRITES, .BeastSpriteCallback
+	callback MAPCALLBACK_OBJECTS, .BeastGfxCallback
 
 .DummyScene0:
 	end
 
 .DummyScene1:
 	end
+
+.BeastSpriteCallback:
+	callasm ApplyLegendaryBeastSprite
+	endcallback
+
+; Connection entries never reload sprite GFX; force it while the beast
+; sighting can still occur (see the Route 36 weird tree pattern).
+.BeastGfxCallback:
+	checkevent EVENT_SAW_SUICUNE_AT_CIANWOOD_CITY
+	iftrue .NoBeast
+	special LoadUsedSpritesGFX
+.NoBeast:
+	endcallback
 
 .FlyPointAndSuicune:
 	setflag ENGINE_FLYPOINT_CIANWOOD
@@ -418,4 +433,4 @@ CianwoodCity_MapEvents:
 	object_event  4, 19, SPRITE_ROCK, SPRITEMOVEDATA_SMASHABLE_ROCK, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodCityRock, -1
 	object_event 10, 46, SPRITE_POKEFAN_F, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodCityChucksWife, -1
 	object_event 11, 21, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_CIANWOOD_CITY_EUSINE
-	object_event 10, 14, SPRITE_SUICUNE, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_SAW_SUICUNE_AT_CIANWOOD_CITY
+	object_event 10, 14, SPRITE_LEGENDARY_BEAST, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_SAW_SUICUNE_AT_CIANWOOD_CITY

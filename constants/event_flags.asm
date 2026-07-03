@@ -1474,6 +1474,10 @@
 	const EVENT_ROUTE_24_MEW
 	const EVENT_ROUTE_24_MEW_CAUGHT
 	const EVENT_ROUTE_36_WEIRD_TREE_CHOICE_LOCKED ; weird tree rolled once; no rerolls
+; Tin Tower beast choice, stored as (choice+1) across two bits:
+; 00 = not rolled (old saves -> Suicune), 01 Suicune, 10 Raikou, 11 Entei
+	const EVENT_TIN_TOWER_BEAST_CHOICE_BIT0
+	const EVENT_TIN_TOWER_BEAST_CHOICE_BIT1
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800

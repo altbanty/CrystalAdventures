@@ -320,3 +320,78 @@ GetWeirdTreeChoice::
 	swap a                   ; shift to bits 2-0
 	ld [wScriptVar], a
 	ret
+
+; --- Randomized Tin Tower Legendary Beast ---
+; The Tin Tower static encounter is a random beast (Suicune/Raikou/Entei),
+; rolled once when the beasts awaken in the Burned Tower; the other two
+; become the roamers. Choice encoding: 0 Suicune / 1 Raikou / 2 Entei,
+; stored as (choice+1) across two saved event flags so old saves (flags
+; clear) resolve to Suicune. All results returned via wScriptVar because
+; farcall does not preserve a across the return.
+
+RollLegendaryBeast::
+; Roll the beast and store the choice. Leaves the roll in wScriptVar.
+	ld a, 3
+	call RandomRange         ; a = 0-2, equal odds
+	ld [wScriptVar], a
+	inc a                    ; encode as choice+1 (1-3)
+	and 1
+	jr z, .bit1
+	ld b, SET_FLAG
+	ld de, EVENT_TIN_TOWER_BEAST_CHOICE_BIT0
+	call EventFlagAction
+.bit1
+	ld a, [wScriptVar]
+	inc a
+	and 2
+	ret z
+	ld b, SET_FLAG
+	ld de, EVENT_TIN_TOWER_BEAST_CHOICE_BIT1
+	call EventFlagAction
+	ret
+
+GetLegendaryBeastChoice::
+; Read the stored choice into wScriptVar (0 Suicune / 1 Raikou / 2 Entei).
+	ld b, CHECK_FLAG
+	ld de, EVENT_TIN_TOWER_BEAST_CHOICE_BIT1
+	call EventFlagAction
+	ld a, c
+	and a
+	ld a, 0
+	jr z, .noBit1
+	ld a, 2
+.noBit1
+	ld [wScriptVar], a
+	ld b, CHECK_FLAG
+	ld de, EVENT_TIN_TOWER_BEAST_CHOICE_BIT0
+	call EventFlagAction
+	ld a, c
+	and a
+	jr z, .noBit0
+	ld a, [wScriptVar]
+	inc a
+	ld [wScriptVar], a
+.noBit0
+	ld a, [wScriptVar]
+	and a
+	ret z                    ; 0 = never rolled -> Suicune
+	dec a
+	ld [wScriptVar], a
+	ret
+
+ApplyLegendaryBeastSprite::
+; Point the legendary variable sprite at the chosen beast.
+	call GetLegendaryBeastChoice
+	ld a, [wScriptVar]
+	ld c, a
+	ld b, 0
+	ld hl, .BeastSpriteTable
+	add hl, bc
+	ld a, [hl]
+	ld [wVariableSprites + SPRITE_LEGENDARY_BEAST - SPRITE_VARS], a
+	ret
+
+.BeastSpriteTable:
+	db SPRITE_SUICUNE ; 0
+	db SPRITE_RAIKOU  ; 1
+	db SPRITE_ENTEI   ; 2

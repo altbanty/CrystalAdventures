@@ -173,7 +173,7 @@ EcruteakGroupSprites:
 	db SPRITE_WEIRD_TREE
 	db SPRITE_POKE_BALL
 	db SPRITE_FRUIT_TREE
-	db SPRITE_SUICUNE
+	db SPRITE_LEGENDARY_BEAST ; variable: the rolled Tin Tower beast (sightings)
 	db 0 ; end
 
 AzaleaGroupSprites:
@@ -225,7 +225,7 @@ CianwoodGroupSprites:
 	db SPRITE_FRUIT_TREE
 	db SPRITE_ROCK
 	db SPRITE_YOUNGSTER
-	db SPRITE_SUICUNE
+	db SPRITE_LEGENDARY_BEAST ; variable: the rolled Tin Tower beast (sightings)
 	db 0 ; end
 
 LakeOfRageGroupSprites:
@@ -258,7 +258,7 @@ MahoganyGroupSprites:
 	; 8 of max 9 walking sprites
 	db SPRITE_FRUIT_TREE
 	db SPRITE_POKE_BALL
-	db SPRITE_SUICUNE
+	db SPRITE_LEGENDARY_BEAST ; variable: the rolled Tin Tower beast (sightings)
 	db 0 ; end
 
 BlackthornGroupSprites:
