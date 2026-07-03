@@ -226,11 +226,7 @@ TrainerGruntM19:
 RocketElectrode1:
 	cry ELECTRODE
 	loadwildmon ELECTRODE, 23
-	; Static encounter: bypass the Nuzlocke route rule without consuming
-	; this map's catch slot (same pattern as the Route 36 weird tree)
-	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
-	loadmem wNuzlockeFirstEncounter, 0
 	iftrue TeamRocketBaseB2FReloadMap
 	disappear TEAMROCKETBASEB2F_ELECTRODE1
 	disappear TEAMROCKETBASEB2F_ELECTRODE4
@@ -248,11 +244,7 @@ RocketElectrode1:
 RocketElectrode2:
 	cry ELECTRODE
 	loadwildmon ELECTRODE, 23
-	; Static encounter: bypass the Nuzlocke route rule without consuming
-	; this map's catch slot (same pattern as the Route 36 weird tree)
-	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
-	loadmem wNuzlockeFirstEncounter, 0
 	iftrue TeamRocketBaseB2FReloadMap
 	disappear TEAMROCKETBASEB2F_ELECTRODE2
 	disappear TEAMROCKETBASEB2F_ELECTRODE5
@@ -270,11 +262,7 @@ RocketElectrode2:
 RocketElectrode3:
 	cry ELECTRODE
 	loadwildmon ELECTRODE, 23
-	; Static encounter: bypass the Nuzlocke route rule without consuming
-	; this map's catch slot (same pattern as the Route 36 weird tree)
-	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
-	loadmem wNuzlockeFirstEncounter, 0
 	iftrue TeamRocketBaseB2FReloadMap
 	disappear TEAMROCKETBASEB2F_ELECTRODE3
 	disappear TEAMROCKETBASEB2F_ELECTRODE6

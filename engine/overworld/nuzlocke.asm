@@ -129,7 +129,7 @@ CheckNuzlockeForBattle::
 	cp BATTLETYPE_ROAMING
 	ret z
 	cp BATTLETYPE_TRAP
-	ret z
+	ret z ; ambushes never consume a slot (and are not catchable)
 	cp BATTLETYPE_FORCEITEM
 	ret z ; static legendaries (Ho-Oh, Lugia, Snorlax)
 	cp BATTLETYPE_CELEBI
@@ -152,7 +152,10 @@ CheckNuzlockeCatchBlock::
 ; Decide whether a ball throw should be blocked by the Nuzlocke per-map rule.
 ; Returns carry SET   = block the catch (already caught on this map)
 ;         carry CLEAR = allow the catch
-; Battle-type bypass list MUST mirror CheckNuzlockeForBattle's skip list.
+; Bypass list mirrors CheckNuzlockeForBattle's skip list, with one
+; deliberate exception: BATTLETYPE_TRAP (Rocket Base ambushes) never
+; consumes a route slot but is NOT catchable - Voltorb/Geodude/Koffing
+; are wild elsewhere and Electrode evolves from Voltorb.
 	ld a, [wNuzlockeFirstEncounter]
 	and a
 	jr nz, .allow ; First encounter on this map, allow catch
@@ -163,8 +166,6 @@ CheckNuzlockeCatchBlock::
 	cp BATTLETYPE_SUICUNE
 	jr z, .allow
 	cp BATTLETYPE_ROAMING
-	jr z, .allow
-	cp BATTLETYPE_TRAP
 	jr z, .allow
 	cp BATTLETYPE_FORCEITEM
 	jr z, .allow ; static legendaries (Ho-Oh, Lugia, Snorlax)
