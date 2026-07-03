@@ -483,3 +483,37 @@ ApplyWaterVisitorSprite::
 	db SPRITE_AZUMARILL ; 3
 	db SPRITE_GOLDUCK   ; 4
 	db SPRITE_CORSOLA   ; 5
+
+; --- Gym Leader Swap ---
+; Each swapped gym pair rolls a coin once per save (script-side, via the
+; EVENT_GYM_PAIR_N_ROLLED/SWAPPED flags). The gym SLOT keeps its badge,
+; TM, level cap, and story events; only the person differs. One shared
+; variable sprite serves every gym, since only one gym map is loaded at
+; a time: each gym's SPRITES callback calls its Apply function below.
+
+ApplyVioletGymLeaderSprite::
+; Falkner at home; Brock when pair 1 is swapped.
+	ld a, SPRITE_FALKNER
+	ld b, SPRITE_BROCK
+	jr ApplyGymLeaderSprite
+
+ApplyPewterGymLeaderSprite::
+; Brock at home; Falkner when pair 1 is swapped.
+	ld a, SPRITE_BROCK
+	ld b, SPRITE_FALKNER
+	; fallthrough
+
+ApplyGymLeaderSprite:
+; a = home leader sprite, b = guest sprite.
+	ld [wVariableSprites + SPRITE_GYM_LEADER - SPRITE_VARS], a
+	ld a, b
+	ld [wScriptVar], a       ; stash the guest across EventFlagAction
+	ld b, CHECK_FLAG
+	ld de, EVENT_GYM_PAIR_1_SWAPPED
+	call EventFlagAction
+	ld a, c
+	and a
+	ret z                    ; not swapped: home leader stays
+	ld a, [wScriptVar]
+	ld [wVariableSprites + SPRITE_GYM_LEADER - SPRITE_VARS], a
+	ret

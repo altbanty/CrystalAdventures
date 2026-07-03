@@ -207,3 +207,4 @@ SPRITE_VARS EQU const_value
 	const SPRITE_WEIRD_TREE
 	const SPRITE_LEGENDARY_BEAST ; rolled Tin Tower beast (see gym_tms.asm)
 	const SPRITE_WATER_VISITOR ; rolled Union Cave B2F visitor (see gym_tms.asm)
+	const SPRITE_GYM_LEADER ; per-gym leader, set by each gym's SPRITES callback

@@ -8,12 +8,29 @@ VioletGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+; Gym swap pair 1: roll the coin once per save (first gym of the pair
+; entered), then point the shared gym leader sprite at whoever holds
+; this gym.
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_1_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_1_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_1_SWAPPED
+.SetSprite:
+	callasm ApplyVioletGymLeaderSprite
+	endcallback
 
 VioletGymFalknerScript:
 	faceplayer
 	opentext
 	checkevent EVENT_BEAT_FALKNER
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestBrock
 	writetext FalknerIntroText
 	waitbutton
 	closetext
@@ -28,6 +45,25 @@ VioletGymFalknerScript:
 	sjump .FalknerLoadEnd
 .Team3:
 	loadtrainer FALKNER, FALKNER3
+	sjump .FalknerLoadEnd
+
+; Brock holds Violet Gym this run. Badge, TM, level cap, and story events
+; are the slot's and unchanged; the per-save team roll picks his variant.
+.GuestBrock:
+	writetext BrockGuestIntroText
+	waitbutton
+	closetext
+	winlosstext BrockGuestWinLossText, 0
+	callasm GetFalknerTeam
+	ifequal 3, .BrockTeam3
+	ifequal 2, .BrockTeam2
+	loadtrainer BROCK, BROCK2
+	sjump .FalknerLoadEnd
+.BrockTeam2:
+	loadtrainer BROCK, BROCK3
+	sjump .FalknerLoadEnd
+.BrockTeam3:
+	loadtrainer BROCK, BROCK4
 .FalknerLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_FALKNER1
@@ -74,15 +110,43 @@ VioletGymFalknerScript:
 .SpeechAfterTM:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext FalknerRematchText
 	yesorno
 	iftrue .FalknerRematch
 	sjump .NoRoomForMudSlap
+.GuestRematchAsk:
+	writetext BrockGuestRematchText
+	yesorno
+	iftrue .GuestBrockRematch
+	sjump .NoRoomForMudSlap
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestFightDone
 	writetext FalknerFightDoneText
 	waitbutton
 .NoRoomForMudSlap:
 	closetext
+	end
+
+.GuestFightDone:
+	writetext BrockGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Brock brings his real (Kanto-tier) team.
+.GuestBrockRematch:
+	special HealParty
+	winlosstext BrockGuestWinLossText, 0
+	loadtrainer BROCK, BROCK1
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest_rematch
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest_rematch
+	startbattle
+	reloadmapafterbattle
 	end
 
 .FalknerRematch:
@@ -353,6 +417,44 @@ VioletGymGuideWinText:
 	line "time at all!"
 	done
 
+BrockGuestIntroText:
+	text "BROCK: Hey there!"
+
+	para "Surprised? FALKNER"
+	line "and I traded GYMS"
+	cont "for a while."
+
+	para "My rock-hard"
+	line "#MON are as"
+	cont "stubborn as I am!"
+	done
+
+BrockGuestWinLossText:
+	text "Wow, you're strong"
+	line "as stone!"
+
+	para "The ZEPHYRBADGE"
+	line "is yours!"
+	done
+
+BrockGuestFightDoneText:
+	text "Bird #MON fly"
+	line "off… but rocks"
+	cont "stay put."
+
+	para "That's why I like"
+	line "them!"
+	done
+
+BrockGuestRematchText:
+	text "BROCK: <PLAYER>!"
+	line "The CHAMPION!"
+
+	para "My real team's"
+	line "itching for a"
+	cont "battle. Ready?"
+	done
+
 VioletGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -367,7 +469,7 @@ VioletGym_MapEvents:
 	bg_event  6, 13, BGEVENT_READ, VioletGymStatue
 
 	def_object_events
-	object_event  5,  1, SPRITE_FALKNER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, VioletGymFalknerScript, -1
+	object_event  5,  1, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VioletGymFalknerScript, -1
 	object_event  7,  6, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_LEFT, 2, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerBirdKeeperRod, -1
 	object_event  2, 10, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_RIGHT, 2, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerBirdKeeperAbe, -1
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, VioletGymGuideScript, -1

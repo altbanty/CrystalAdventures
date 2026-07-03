@@ -33,6 +33,7 @@ KRIS EQU __trainer_class__
 	const FALKNER2
 	const FALKNER3
 	const FALKNER4 ; rematch
+	const FALKNER5 ; Pewter Gym guest (gym swap)
 
 	trainerclass WHITNEY ; 2
 	const WHITNEY1
@@ -166,6 +167,9 @@ KRIS EQU __trainer_class__
 
 	trainerclass BROCK ; 11
 	const BROCK1
+	const BROCK2 ; Violet Gym guest team 1 (gym swap)
+	const BROCK3 ; Violet Gym guest team 2
+	const BROCK4 ; Violet Gym guest team 3
 
 	trainerclass MISTY ; 12
 	const MISTY1

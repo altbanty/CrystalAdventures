@@ -7,17 +7,43 @@ PewterGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+; Gym swap pair 1 (see VioletGym.asm): roll if this gym is reached first,
+; then show whoever holds this gym.
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_1_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_1_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_1_SWAPPED
+.SetSprite:
+	callasm ApplyPewterGymLeaderSprite
+	endcallback
 
 PewterGymBrockScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_BOULDERBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestFalkner
 	writetext BrockIntroText
 	waitbutton
 	closetext
 	winlosstext BrockWinLossText, 0
 	loadtrainer BROCK, BROCK1
+	sjump .BrockLoadEnd
+
+; Falkner holds Pewter Gym this run; the Boulder Badge flow is unchanged.
+.GuestFalkner:
+	writetext FalknerGuestIntroText
+	waitbutton
+	closetext
+	winlosstext FalknerGuestWinLossText, 0
+	loadtrainer FALKNER, FALKNER5
+.BrockLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BROCK1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -40,15 +66,42 @@ PewterGymBrockScript:
 .FightDone:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext BrockRematchText
 	yesorno
 	iftrue .BrockRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext FalknerGuestRematchText
+	yesorno
+	iftrue .GuestFalknerRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestTalk
 	writetext BrockFightDoneText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext FalknerGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestFalknerRematch:
+	special HealParty
+	winlosstext FalknerGuestWinLossText, 0
+	loadtrainer FALKNER, FALKNER5
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .BrockRematch:
@@ -255,6 +308,42 @@ PewterGymGuideWinText:
 	line "that seriously."
 	done
 
+FalknerGuestIntroText:
+	text "FALKNER: Welcome!"
+
+	para "BROCK and I traded"
+	line "GYMS for a while."
+
+	para "Here, my dad's"
+	line "cherished bird"
+	cont "#MON and I"
+	cont "rule the sky!"
+	done
+
+FalknerGuestWinLossText:
+	text "…Grounded again!"
+
+	para "Take the"
+	line "BOULDERBADGE."
+	done
+
+FalknerGuestFightDoneText:
+	text "Stone walls block"
+	line "the wind here…"
+
+	para "I miss VIOLET's"
+	line "open sky."
+	done
+
+FalknerGuestRematchText:
+	text "FALKNER: The sky"
+	line "called you"
+	cont "CHAMPION…"
+
+	para "My birds and I"
+	line "want a rematch!"
+	done
+
 PewterGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -269,6 +358,6 @@ PewterGym_MapEvents:
 	bg_event  7, 11, BGEVENT_READ, PewterGymStatue
 
 	def_object_events
-	object_event  5,  1, SPRITE_BROCK, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, PewterGymBrockScript, -1
+	object_event  5,  1, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PewterGymBrockScript, -1
 	object_event  2,  5, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_TRAINER, 3, TrainerCamperJerry, -1
 	object_event  6, 11, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 1, PewterGymGuideScript, -1

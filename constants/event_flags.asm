@@ -1484,6 +1484,9 @@
 	const EVENT_UNION_CAVE_VISITOR_CHOICE_BIT1
 	const EVENT_UNION_CAVE_VISITOR_CHOICE_BIT2
 	const EVENT_FOUGHT_UNION_CAVE_VISITOR
+; Gym swap pair 1: Falkner (Violet) <-> Brock (Pewter)
+	const EVENT_GYM_PAIR_1_ROLLED
+	const EVENT_GYM_PAIR_1_SWAPPED
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800
