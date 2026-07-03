@@ -395,3 +395,91 @@ ApplyLegendaryBeastSprite::
 	db SPRITE_SUICUNE ; 0
 	db SPRITE_RAIKOU  ; 1
 	db SPRITE_ENTEI   ; 2
+
+; --- Randomized Union Cave B2F Water Visitor ---
+; A one-time encounter that waits in the B2F pool until fought (the old
+; Friday-only Lapras). Rolled at first sight and locked via saved event
+; flags: choice 0-5 in three bits, plus a "rolled" flag so old saves
+; (all clear) roll on their next visit. Choice order: Lapras, Poliwrath,
+; Slowking, Azumarill, Golduck, Corsola.
+
+RollWaterVisitor::
+; Roll the visitor (equal odds) and store the choice. Leaves it in wScriptVar.
+	ld a, 6
+	call RandomRange         ; a = 0-5
+	ld [wScriptVar], a
+	and 1
+	jr z, .bit1
+	ld b, SET_FLAG
+	ld de, EVENT_UNION_CAVE_VISITOR_CHOICE_BIT0
+	call EventFlagAction
+.bit1
+	ld a, [wScriptVar]
+	and 2
+	jr z, .bit2
+	ld b, SET_FLAG
+	ld de, EVENT_UNION_CAVE_VISITOR_CHOICE_BIT1
+	call EventFlagAction
+.bit2
+	ld a, [wScriptVar]
+	and 4
+	ret z
+	ld b, SET_FLAG
+	ld de, EVENT_UNION_CAVE_VISITOR_CHOICE_BIT2
+	call EventFlagAction
+	ret
+
+GetWaterVisitorChoice::
+; Read the stored choice into wScriptVar (0-5).
+	xor a
+	ld [wScriptVar], a
+	ld b, CHECK_FLAG
+	ld de, EVENT_UNION_CAVE_VISITOR_CHOICE_BIT0
+	call EventFlagAction
+	ld a, c
+	and a
+	jr z, .no0
+	ld a, [wScriptVar]
+	inc a
+	ld [wScriptVar], a
+.no0
+	ld b, CHECK_FLAG
+	ld de, EVENT_UNION_CAVE_VISITOR_CHOICE_BIT1
+	call EventFlagAction
+	ld a, c
+	and a
+	jr z, .no1
+	ld a, [wScriptVar]
+	add 2
+	ld [wScriptVar], a
+.no1
+	ld b, CHECK_FLAG
+	ld de, EVENT_UNION_CAVE_VISITOR_CHOICE_BIT2
+	call EventFlagAction
+	ld a, c
+	and a
+	ret z
+	ld a, [wScriptVar]
+	add 4
+	ld [wScriptVar], a
+	ret
+
+ApplyWaterVisitorSprite::
+; Point the water visitor variable sprite at the chosen species' icon.
+	call GetWaterVisitorChoice
+	ld a, [wScriptVar]
+	ld c, a
+	ld b, 0
+	ld hl, .VisitorSpriteTable
+	add hl, bc
+	ld a, [hl]
+	ld [wVariableSprites + SPRITE_WATER_VISITOR - SPRITE_VARS], a
+	ret
+
+.VisitorSpriteTable:
+	db SPRITE_LAPRAS    ; 0
+	db SPRITE_POLIWRATH ; 1
+	db SPRITE_SLOWKING  ; 2
+	db SPRITE_AZUMARILL ; 3
+	db SPRITE_GOLDUCK   ; 4
+	db SPRITE_CORSOLA   ; 5

@@ -10,32 +10,79 @@ UnionCaveB2F_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
-	callback MAPCALLBACK_OBJECTS, .Lapras
+	callback MAPCALLBACK_OBJECTS, .Visitor
+	callback MAPCALLBACK_SPRITES, .VisitorSprite
 
-.Lapras:
-	checkflag ENGINE_UNION_CAVE_LAPRAS
+; A random water Pokemon lives in the B2F pool until fought - a one-time
+; encounter (formerly the Friday-only Lapras).
+.Visitor:
+	checkevent EVENT_FOUGHT_UNION_CAVE_VISITOR
 	iftrue .NoAppear
-	readvar VAR_WEEKDAY
-	ifequal FRIDAY, .Appear
+	appear UNIONCAVEB2F_LAPRAS
+	endcallback
+
 .NoAppear:
 	disappear UNIONCAVEB2F_LAPRAS
 	endcallback
 
-.Appear:
-	appear UNIONCAVEB2F_LAPRAS
+; Roll once the first time the player could see it, then re-apply the
+; locked choice (weird-tree pattern).
+.VisitorSprite:
+	checkevent EVENT_FOUGHT_UNION_CAVE_VISITOR
+	iftrue .SkipSprite
+	checkevent EVENT_UNION_CAVE_VISITOR_ROLLED
+	iftrue .ApplySprite
+	setevent EVENT_UNION_CAVE_VISITOR_ROLLED
+	callasm RollWaterVisitor
+.ApplySprite:
+	callasm ApplyWaterVisitorSprite
+.SkipSprite:
 	endcallback
 
 UnionCaveLapras:
 	faceplayer
+	callasm GetWaterVisitorChoice
+	ifequal 1, .Poliwrath
+	ifequal 2, .Slowking
+	ifequal 3, .Azumarill
+	ifequal 4, .Golduck
+	ifequal 5, .Corsola
 	cry LAPRAS
 	loadwildmon LAPRAS, 20
+	sjump .StartVisitorBattle
+
+.Poliwrath:
+	cry POLIWRATH
+	loadwildmon POLIWRATH, 20
+	sjump .StartVisitorBattle
+
+.Slowking:
+	cry SLOWKING
+	loadwildmon SLOWKING, 20
+	sjump .StartVisitorBattle
+
+.Azumarill:
+	cry AZUMARILL
+	loadwildmon AZUMARILL, 20
+	sjump .StartVisitorBattle
+
+.Golduck:
+	cry GOLDUCK
+	loadwildmon GOLDUCK, 20
+	sjump .StartVisitorBattle
+
+.Corsola:
+	cry CORSOLA
+	loadwildmon CORSOLA, 20
+
+.StartVisitorBattle:
 	; Static encounter: bypass the Nuzlocke route rule without consuming
 	; this map's catch slot (same pattern as the Route 36 weird tree)
 	loadmem wNuzlockeFirstEncounter, 1
 	startbattle
 	loadmem wNuzlockeFirstEncounter, 0
 	disappear UNIONCAVEB2F_LAPRAS
-	setflag ENGINE_UNION_CAVE_LAPRAS
+	setevent EVENT_FOUGHT_UNION_CAVE_VISITOR
 	reloadmapafterbattle
 	end
 
@@ -159,4 +206,4 @@ UnionCaveB2F_MapEvents:
 	object_event  3, 30, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerCooltrainerfEmma, -1
 	object_event 16,  2, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, UnionCaveB2FElixer, EVENT_UNION_CAVE_B2F_ELIXER
 	object_event 12, 19, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, UnionCaveB2FHyperPotion, EVENT_UNION_CAVE_B2F_HYPER_POTION
-	object_event 11, 31, SPRITE_SURF, SPRITEMOVEDATA_SWIM_WANDER, 1, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, UnionCaveLapras, EVENT_UNION_CAVE_B2F_LAPRAS
+	object_event 11, 31, SPRITE_WATER_VISITOR, SPRITEMOVEDATA_SWIM_WANDER, 1, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, UnionCaveLapras, EVENT_UNION_CAVE_B2F_LAPRAS

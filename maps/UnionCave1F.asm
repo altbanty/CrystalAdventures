@@ -124,8 +124,8 @@ PokemaniacLarryBeatenText:
 	done
 
 PokemaniacLarryAfterBattleText:
-	text "Every Friday, you"
-	line "can hear #MON"
+	text "Sometimes you can"
+	line "hear #MON"
 
 	para "roars from deep"
 	line "inside the cave."

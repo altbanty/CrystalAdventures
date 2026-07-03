@@ -178,6 +178,10 @@ SPRITE_POKEMON EQU const_value
 	const SPRITE_SENTRET
 	const SPRITE_MEW
 	const SPRITE_KANGASKHAN
+	const SPRITE_SLOWKING
+	const SPRITE_AZUMARILL
+	const SPRITE_GOLDUCK
+	const SPRITE_CORSOLA
 NUM_POKEMON_SPRITES EQU const_value - SPRITE_POKEMON
 
 ; special GetMonSprite values (see engine/overworld/overworld.asm)
@@ -202,3 +206,4 @@ SPRITE_VARS EQU const_value
 	const SPRITE_TRAINER_HOUSE_PKMN_TRAINER
 	const SPRITE_WEIRD_TREE
 	const SPRITE_LEGENDARY_BEAST ; rolled Tin Tower beast (see gym_tms.asm)
+	const SPRITE_WATER_VISITOR ; rolled Union Cave B2F visitor (see gym_tms.asm)

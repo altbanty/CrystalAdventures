@@ -63,4 +63,8 @@ SpriteMons:
 	db SENTRET
 	db MEW
 	db KANGASKHAN
+	db SLOWKING
+	db AZUMARILL
+	db GOLDUCK
+	db CORSOLA
 	assert_table_length NUM_POKEMON_SPRITES

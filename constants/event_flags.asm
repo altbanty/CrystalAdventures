@@ -1478,6 +1478,12 @@
 ; 00 = not rolled (old saves -> Suicune), 01 Suicune, 10 Raikou, 11 Entei
 	const EVENT_TIN_TOWER_BEAST_CHOICE_BIT0
 	const EVENT_TIN_TOWER_BEAST_CHOICE_BIT1
+; Union Cave B2F water visitor: one-time encounter, rolled at first sight
+	const EVENT_UNION_CAVE_VISITOR_ROLLED
+	const EVENT_UNION_CAVE_VISITOR_CHOICE_BIT0
+	const EVENT_UNION_CAVE_VISITOR_CHOICE_BIT1
+	const EVENT_UNION_CAVE_VISITOR_CHOICE_BIT2
+	const EVENT_FOUGHT_UNION_CAVE_VISITOR
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800
