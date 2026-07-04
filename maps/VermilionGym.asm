@@ -59,7 +59,16 @@ VermilionGymSurgeScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_THUNDERBADGE
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestBadgeSpeech
 	writetext LtSurgeThunderBadgeText
+	waitbutton
+	closetext
+	jumpstd KantoLevelCapUpdateScript
+	end
+
+.GuestBadgeSpeech:
+	writetext WhitneyGuestBadgeSpeechText
 	waitbutton
 	closetext
 	jumpstd KantoLevelCapUpdateScript
@@ -352,6 +361,17 @@ VermilionGymGuideWinText:
 VermilionGymTrashCanText:
 	text "Nope! Nothing here"
 	line "but trash."
+	done
+
+WhitneyGuestBadgeSpeechText:
+	text "WHITNEY: The"
+	line "THUNDERBADGE"
+	cont "makes #MON"
+	cont "speedier!"
+
+	para "And it looks"
+	line "super cute on"
+	cont "you!"
 	done
 
 WhitneyGuestIntroText:

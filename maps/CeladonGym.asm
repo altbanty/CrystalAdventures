@@ -67,8 +67,15 @@ CeladonGymErikaScript:
 .FightDone:
 	checkevent EVENT_GOT_TM19_GIGA_DRAIN
 	iftrue .GotGigaDrain
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestTMText
 	writetext ErikaExplainTMText
 	promptbutton
+	sjump .GiveTM
+.GuestTMText:
+	writetext MortyGuestTMText
+	promptbutton
+.GiveTM:
 	verbosegiveitem TM_GIGA_DRAIN
 	iffalse .GotGigaDrain
 	setevent EVENT_GOT_TM19_GIGA_DRAIN
@@ -373,6 +380,16 @@ TwinsJoAndZoe2BeatenText:
 TwinsJoAndZoe2AfterBattleText:
 	text "ERIKA is much,"
 	line "much stronger!"
+	done
+
+MortyGuestTMText:
+	text "MORTY: A fine"
+	line "match. Take this"
+	cont "TM as proof."
+
+	para "GIGA DRAIN feeds"
+	line "on the foe's"
+	cont "life force…"
 	done
 
 MortyGuestIntroText:

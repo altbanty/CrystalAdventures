@@ -57,7 +57,16 @@ PewterGymBrockScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_BOULDERBADGE
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .GuestBadgeSpeech
 	writetext BrockBoulderBadgeText
+	waitbutton
+	closetext
+	jumpstd KantoLevelCapUpdateScript
+	end
+
+.GuestBadgeSpeech:
+	writetext FalknerGuestBadgeSpeechText
 	waitbutton
 	closetext
 	jumpstd KantoLevelCapUpdateScript
@@ -306,6 +315,15 @@ PewterGymGuideWinText:
 
 	para "inspiring. I mean"
 	line "that seriously."
+	done
+
+FalknerGuestBadgeSpeechText:
+	text "FALKNER: A fine"
+	line "battle. Thank you."
+
+	para "The BOULDERBADGE"
+	line "will strengthen"
+	cont "your #MON."
 	done
 
 FalknerGuestIntroText:
