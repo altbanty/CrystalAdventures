@@ -11,12 +11,26 @@ AzaleaGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_2_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_2_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_2_SWAPPED
+.SetSprite:
+	callasm ApplyAzaleaGymLeaderSprite
+	endcallback
 
 AzaleaGymBugsyScript:
 	faceplayer
 	opentext
 	checkevent EVENT_BEAT_BUGSY
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestMisty
 	writetext BugsyText_INeverLose
 	waitbutton
 	closetext
@@ -31,6 +45,24 @@ AzaleaGymBugsyScript:
 	sjump .BugsyLoadEnd
 .Team3:
 	loadtrainer BUGSY, BUGSY3
+	sjump .BugsyLoadEnd
+
+; Misty holds Azalea Gym this run (gym swap pair 2).
+.GuestMisty:
+	writetext MistyGuestIntroText
+	waitbutton
+	closetext
+	winlosstext MistyGuestWinLossText, 0
+	callasm GetBugsyTeam
+	ifequal 3, .MistyTeam3
+	ifequal 2, .MistyTeam2
+	loadtrainer MISTY, MISTY2
+	sjump .BugsyLoadEnd
+.MistyTeam2:
+	loadtrainer MISTY, MISTY3
+	sjump .BugsyLoadEnd
+.MistyTeam3:
+	loadtrainer MISTY, MISTY4
 .BugsyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BUGSY1
@@ -77,15 +109,43 @@ AzaleaGymBugsyScript:
 .GotFuryCutter:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext BugsyRematchText
 	yesorno
 	iftrue .BugsyRematch
 	sjump .NoRoomForFuryCutter
+.GuestRematchAsk:
+	writetext MistyGuestRematchText
+	yesorno
+	iftrue .GuestMistyRematch
+	sjump .NoRoomForFuryCutter
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestFightDone
 	writetext BugsyText_BugMonsAreDeep
 	waitbutton
 .NoRoomForFuryCutter:
 	closetext
+	end
+
+.GuestFightDone:
+	writetext MistyGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Misty brings her real Kanto-tier team.
+.GuestMistyRematch:
+	special HealParty
+	winlosstext MistyGuestWinLossText, 0
+	loadtrainer MISTY, MISTY1
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .BugsyRematch:
@@ -464,6 +524,45 @@ AzaleaGymGuideWinText:
 	cont "#MON is bright!"
 	done
 
+MistyGuestIntroText:
+	text "MISTY: Hi! BUGSY"
+	line "and I traded GYMS"
+	cont "for a while."
+
+	para "The tomboyish"
+	line "mermaid of"
+	cont "CERULEAN is here!"
+
+	para "My WATER types"
+	line "will wash you"
+	cont "away!"
+	done
+
+MistyGuestWinLossText:
+	text "Wow, totally"
+	line "washed out!"
+
+	para "The HIVEBADGE"
+	line "is yours!"
+	done
+
+MistyGuestFightDoneText:
+	text "Not a single pool"
+	line "in this GYM…"
+
+	para "I miss CERULEAN's"
+	line "clear water."
+	done
+
+MistyGuestRematchText:
+	text "MISTY: The"
+	line "CHAMPION visits!"
+
+	para "My real team came"
+	line "with me this"
+	cont "time. Let's go!"
+	done
+
 AzaleaGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -478,7 +577,7 @@ AzaleaGym_MapEvents:
 	bg_event  6, 13, BGEVENT_READ, AzaleaGymStatue
 
 	def_object_events
-	object_event  5,  7, SPRITE_BUGSY, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, AzaleaGymBugsyScript, -1
+	object_event  5,  7, SPRITE_GYM_LEADER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, AzaleaGymBugsyScript, -1
 	object_event  5,  3, SPRITE_BUG_CATCHER, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 2, TrainerBugCatcherBenny, -1
 	object_event  8,  8, SPRITE_BUG_CATCHER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerBugCatcherAl, -1
 	object_event  0,  2, SPRITE_BUG_CATCHER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerBugCatcherJosh, -1

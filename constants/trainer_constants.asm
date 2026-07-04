@@ -40,18 +40,21 @@ KRIS EQU __trainer_class__
 	const WHITNEY2
 	const WHITNEY3
 	const WHITNEY4 ; rematch
+	const WHITNEY5 ; Vermilion Gym guest (gym swap)
 
 	trainerclass BUGSY ; 3
 	const BUGSY1
 	const BUGSY2
 	const BUGSY3
 	const BUGSY4 ; rematch
+	const BUGSY5 ; Cerulean Gym guest (gym swap)
 
 	trainerclass MORTY ; 4
 	const MORTY1
 	const MORTY2
 	const MORTY3
 	const MORTY4 ; rematch
+	const MORTY5 ; Celadon Gym guest (gym swap)
 
 	trainerclass PRYCE ; 5
 	const PRYCE1  ; tier 1 variant A
@@ -173,9 +176,15 @@ KRIS EQU __trainer_class__
 
 	trainerclass MISTY ; 12
 	const MISTY1
+	const MISTY2 ; Azalea Gym guest team 1 (gym swap)
+	const MISTY3 ; Azalea Gym guest team 2
+	const MISTY4 ; Azalea Gym guest team 3
 
 	trainerclass LT_SURGE ; 13
 	const LT_SURGE1
+	const LT_SURGE2 ; Goldenrod Gym guest team 1 (gym swap)
+	const LT_SURGE3 ; Goldenrod Gym guest team 2
+	const LT_SURGE4 ; Goldenrod Gym guest team 3
 
 	trainerclass SCIENTIST ; 14
 	const ROSS
@@ -186,6 +195,9 @@ KRIS EQU __trainer_class__
 
 	trainerclass ERIKA ; 15
 	const ERIKA1
+	const ERIKA2 ; Ecruteak Gym guest team 1 (gym swap)
+	const ERIKA3 ; Ecruteak Gym guest team 2
+	const ERIKA4 ; Ecruteak Gym guest team 3
 
 	trainerclass YOUNGSTER ; 16
 	const JOEY1

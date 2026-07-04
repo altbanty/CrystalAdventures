@@ -327,6 +327,8 @@ InitializeWorld:
 	farcall _InitializeStartDay
 	; Clear Nuzlocke encounter flags for new game
 	farcall ClearAllNuzlockeEncounters
+	; Roll all gym leader swap pairs before the player can see any of them
+	farcall RollGymSwaps
 	ret
 
 LoadOrRegenerateLuckyIDNumber:

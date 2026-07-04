@@ -492,24 +492,59 @@ ApplyWaterVisitorSprite::
 ; a time: each gym's SPRITES callback calls its Apply function below.
 
 ApplyVioletGymLeaderSprite::
-; Falkner at home; Brock when pair 1 is swapped.
 	ld a, SPRITE_FALKNER
 	ld b, SPRITE_BROCK
+	ld de, EVENT_GYM_PAIR_1_SWAPPED
 	jr ApplyGymLeaderSprite
 
 ApplyPewterGymLeaderSprite::
-; Brock at home; Falkner when pair 1 is swapped.
 	ld a, SPRITE_BROCK
 	ld b, SPRITE_FALKNER
+	ld de, EVENT_GYM_PAIR_1_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyAzaleaGymLeaderSprite::
+	ld a, SPRITE_BUGSY
+	ld b, SPRITE_MISTY
+	ld de, EVENT_GYM_PAIR_2_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyCeruleanGymLeaderSprite::
+	ld a, SPRITE_MISTY
+	ld b, SPRITE_BUGSY
+	ld de, EVENT_GYM_PAIR_2_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyGoldenrodGymLeaderSprite::
+	ld a, SPRITE_WHITNEY
+	ld b, SPRITE_SURGE
+	ld de, EVENT_GYM_PAIR_3_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyVermilionGymLeaderSprite::
+	ld a, SPRITE_SURGE
+	ld b, SPRITE_WHITNEY
+	ld de, EVENT_GYM_PAIR_3_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyEcruteakGymLeaderSprite::
+	ld a, SPRITE_MORTY
+	ld b, SPRITE_ERIKA
+	ld de, EVENT_GYM_PAIR_4_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyCeladonGymLeaderSprite::
+	ld a, SPRITE_ERIKA
+	ld b, SPRITE_MORTY
+	ld de, EVENT_GYM_PAIR_4_SWAPPED
 	; fallthrough
 
 ApplyGymLeaderSprite:
-; a = home leader sprite, b = guest sprite.
+; a = home leader sprite, b = guest sprite, de = pair's SWAPPED event flag.
 	ld [wVariableSprites + SPRITE_GYM_LEADER - SPRITE_VARS], a
 	ld a, b
 	ld [wScriptVar], a       ; stash the guest across EventFlagAction
 	ld b, CHECK_FLAG
-	ld de, EVENT_GYM_PAIR_1_SWAPPED
 	call EventFlagAction
 	ld a, c
 	and a
@@ -517,3 +552,46 @@ ApplyGymLeaderSprite:
 	ld a, [wScriptVar]
 	ld [wVariableSprites + SPRITE_GYM_LEADER - SPRITE_VARS], a
 	ret
+
+RollGymSwaps::
+; Roll every gym swap pair at new game, before the player can observe or
+; save-scum any outcome. The lazy rolls in the gym SPRITES callbacks remain
+; only as a migration fallback for saves from before this feature.
+	ld hl, .PairFlags
+.loop
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	and e
+	inc a
+	jr z, .done              ; dw -1 sentinel
+	push hl
+	ld b, SET_FLAG
+	call EventFlagAction     ; mark pair rolled
+	pop hl
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	push hl
+	push de
+	ld a, 2
+	call RandomRange
+	pop de
+	and a
+	jr z, .next              ; heads: home leaders
+	ld b, SET_FLAG
+	call EventFlagAction     ; tails: swapped
+.next
+	pop hl
+	jr .loop
+.done
+	ret
+
+.PairFlags:
+	dw EVENT_GYM_PAIR_1_ROLLED, EVENT_GYM_PAIR_1_SWAPPED
+	dw EVENT_GYM_PAIR_2_ROLLED, EVENT_GYM_PAIR_2_SWAPPED
+	dw EVENT_GYM_PAIR_3_ROLLED, EVENT_GYM_PAIR_3_SWAPPED
+	dw EVENT_GYM_PAIR_4_ROLLED, EVENT_GYM_PAIR_4_SWAPPED
+	dw -1, -1

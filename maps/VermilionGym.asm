@@ -9,17 +9,41 @@ VermilionGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_3_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_3_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_3_SWAPPED
+.SetSprite:
+	callasm ApplyVermilionGymLeaderSprite
+	endcallback
 
 VermilionGymSurgeScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_THUNDERBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestWhitney
 	writetext LtSurgeIntroText
 	waitbutton
 	closetext
 	winlosstext LtSurgeWinLossText, 0
 	loadtrainer LT_SURGE, LT_SURGE1
+	sjump .SurgeLoadEnd
+
+; Whitney holds Vermilion Gym this run (gym swap pair 3).
+.GuestWhitney:
+	writetext WhitneyGuestIntroText
+	waitbutton
+	closetext
+	winlosstext WhitneyGuestWinLossText, 0
+	loadtrainer WHITNEY, WHITNEY5
+.SurgeLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_LT_SURGE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -44,15 +68,42 @@ VermilionGymSurgeScript:
 .FightDone:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext SurgeRematchText
 	yesorno
 	iftrue .SurgeRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext WhitneyGuestRematchText
+	yesorno
+	iftrue .GuestWhitneyRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestTalk
 	writetext LtSurgeFightDoneText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext WhitneyGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestWhitneyRematch:
+	special HealParty
+	winlosstext WhitneyGuestWinLossText, 0
+	loadtrainer WHITNEY, WHITNEY5
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .SurgeRematch:
@@ -303,6 +354,42 @@ VermilionGymTrashCanText:
 	line "but trash."
 	done
 
+WhitneyGuestIntroText:
+	text "WHITNEY: Hi hi!"
+
+	para "SURGE and I traded"
+	line "GYMS for a while."
+
+	para "His GYM is all"
+	line "zappy and rude…"
+
+	para "But my #MON"
+	line "are seriously"
+	cont "cute AND tough!"
+	done
+
+WhitneyGuestWinLossText:
+	text "Waaaah! You're"
+	line "too strong!"
+
+	para "Sniff… Here, the"
+	line "THUNDERBADGE…"
+	done
+
+WhitneyGuestFightDoneText:
+	text "No crying this"
+	line "time! I promised"
+	cont "SURGE I wouldn't."
+	done
+
+WhitneyGuestRematchText:
+	text "WHITNEY: The"
+	line "CHAMPION! Eek!"
+
+	para "My cuties want"
+	line "another shot!"
+	done
+
 VermilionGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -332,7 +419,7 @@ VermilionGym_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, VermilionGymStatue
 
 	def_object_events
-	object_event  5,  2, SPRITE_SURGE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, VermilionGymSurgeScript, -1
+	object_event  5,  2, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VermilionGymSurgeScript, -1
 	object_event  8,  8, SPRITE_GENTLEMAN, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 4, TrainerGentlemanGregory, -1
 	object_event  4,  7, SPRITE_ROCKER, SPRITEMOVEDATA_STANDING_DOWN, 3, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerGuitaristVincent, -1
 	object_event  0, 10, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 4, TrainerJugglerHorton, -1

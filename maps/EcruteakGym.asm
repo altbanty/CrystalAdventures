@@ -13,6 +13,18 @@ EcruteakGym_MapScripts:
 	scene_script .DummyScene ; SCENE_FINISHED
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_4_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_4_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_4_SWAPPED
+.SetSprite:
+	callasm ApplyEcruteakGymLeaderSprite
+	endcallback
 
 .ForcedToLeave:
 	sdefer EcruteakGymClosed
@@ -26,6 +38,8 @@ EcruteakGymMortyScript:
 	opentext
 	checkevent EVENT_BEAT_MORTY
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestErika
 	writetext MortyIntroText
 	waitbutton
 	closetext
@@ -40,6 +54,24 @@ EcruteakGymMortyScript:
 	sjump .MortyLoadEnd
 .Team3:
 	loadtrainer MORTY, MORTY3
+	sjump .MortyLoadEnd
+
+; Erika holds Ecruteak Gym this run (gym swap pair 4).
+.GuestErika:
+	writetext ErikaGuestIntroText
+	waitbutton
+	closetext
+	winlosstext ErikaGuestWinLossText, 0
+	callasm GetMortyTeam
+	ifequal 3, .ErikaTeam3
+	ifequal 2, .ErikaTeam2
+	loadtrainer ERIKA, ERIKA2
+	sjump .MortyLoadEnd
+.ErikaTeam2:
+	loadtrainer ERIKA, ERIKA3
+	sjump .MortyLoadEnd
+.ErikaTeam3:
+	loadtrainer ERIKA, ERIKA4
 .MortyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_MORTY1
@@ -89,15 +121,43 @@ EcruteakGymMortyScript:
 .GotShadowBall:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext MortyRematchText
 	yesorno
 	iftrue .MortyRematch
 	sjump .NoRoomForShadowBall
+.GuestRematchAsk:
+	writetext ErikaGuestRematchText
+	yesorno
+	iftrue .GuestErikaRematch
+	sjump .NoRoomForShadowBall
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestFightDone
 	writetext MortyFightDoneText
 	waitbutton
 .NoRoomForShadowBall:
 	closetext
+	end
+
+.GuestFightDone:
+	writetext ErikaGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Erika brings her real Kanto-tier team.
+.GuestErikaRematch:
+	special HealParty
+	winlosstext ErikaGuestWinLossText, 0
+	loadtrainer ERIKA, ERIKA1
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .MortyRematch:
@@ -469,6 +529,44 @@ EcruteakGymClosedText:
 	para "Hohohoho."
 	done
 
+ErikaGuestIntroText:
+	text "ERIKA: Oh…"
+	line "Welcome."
+
+	para "MORTY and I have"
+	line "traded GYMS for"
+	cont "a time."
+
+	para "I am ERIKA of"
+	line "CELADON. My"
+	cont "flowers bloom"
+	cont "even here."
+	done
+
+ErikaGuestWinLossText:
+	text "Oh! Splendid…"
+
+	para "The FOGBADGE"
+	line "is yours."
+	done
+
+ErikaGuestFightDoneText:
+	text "The candlelight"
+	line "here is lovely…"
+
+	para "But I do miss my"
+	line "sunlit garden."
+	done
+
+ErikaGuestRematchText:
+	text "ERIKA: Ah, the"
+	line "CHAMPION…"
+
+	para "My garden's team"
+	line "is in full bloom."
+	cont "Shall we?"
+	done
+
 EcruteakGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -514,7 +612,7 @@ EcruteakGym_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, EcruteakGymStatue
 
 	def_object_events
-	object_event  5,  1, SPRITE_MORTY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, EcruteakGymMortyScript, -1
+	object_event  5,  1, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, EcruteakGymMortyScript, -1
 	object_event  2,  7, SPRITE_SAGE, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, TrainerSageJeffrey, -1
 	object_event  3, 13, SPRITE_SAGE, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerSagePing, -1
 	object_event  7,  5, SPRITE_GRANNY, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 1, TrainerMediumMartha, -1

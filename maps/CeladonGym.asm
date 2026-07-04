@@ -10,17 +10,41 @@ CeladonGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_4_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_4_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_4_SWAPPED
+.SetSprite:
+	callasm ApplyCeladonGymLeaderSprite
+	endcallback
 
 CeladonGymErikaScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_RAINBOWBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestMorty
 	writetext ErikaBeforeBattleText
 	waitbutton
 	closetext
 	winlosstext ErikaBeatenText, 0
 	loadtrainer ERIKA, ERIKA1
+	sjump .ErikaLoadEnd
+
+; Morty holds Celadon Gym this run (gym swap pair 4).
+.GuestMorty:
+	writetext MortyGuestIntroText
+	waitbutton
+	closetext
+	winlosstext MortyGuestWinLossText, 0
+	loadtrainer MORTY, MORTY5
+.ErikaLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ERIKA1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -51,15 +75,42 @@ CeladonGymErikaScript:
 .GotGigaDrain:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext ErikaRematchText
 	yesorno
 	iftrue .ErikaRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext MortyGuestRematchText
+	yesorno
+	iftrue .GuestMortyRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .GuestTalk
 	writetext ErikaAfterBattleText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext MortyGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestMortyRematch:
+	special HealParty
+	winlosstext MortyGuestWinLossText, 0
+	loadtrainer MORTY, MORTY5
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .ErikaRematch:
@@ -324,6 +375,45 @@ TwinsJoAndZoe2AfterBattleText:
 	line "much stronger!"
 	done
 
+MortyGuestIntroText:
+	text "MORTY: …Welcome."
+
+	para "ERIKA and I have"
+	line "traded GYMS for"
+	cont "a time."
+
+	para "Even in this"
+	line "garden, I see"
+	cont "what others"
+	cont "cannot see…"
+	done
+
+MortyGuestWinLossText:
+	text "…I see. It was"
+	line "your victory."
+
+	para "The RAINBOWBADGE"
+	line "is yours."
+	done
+
+MortyGuestFightDoneText:
+	text "The flowers here"
+	line "hold old spirits…"
+
+	para "This garden is"
+	line "not so different"
+	cont "from ECRUTEAK."
+	done
+
+MortyGuestRematchText:
+	text "MORTY: I foresaw"
+	line "your arrival,"
+	cont "CHAMPION…"
+
+	para "Shall we test"
+	line "that vision?"
+	done
+
 CeladonGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -338,7 +428,7 @@ CeladonGym_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, CeladonGymStatue
 
 	def_object_events
-	object_event  5,  3, SPRITE_ERIKA, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, CeladonGymErikaScript, -1
+	object_event  5,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CeladonGymErikaScript, -1
 	object_event  7,  8, SPRITE_LASS, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 2, TrainerLassMichelle, -1
 	object_event  2,  8, SPRITE_LASS, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_TRAINER, 2, TrainerPicnickerTanya, -1
 	object_event  3,  5, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 2, TrainerBeautyJulia, -1

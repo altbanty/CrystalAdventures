@@ -12,6 +12,18 @@ CeruleanGym_MapScripts:
 	scene_script .GruntRunsOut ; SCENE_CERULEANGYM_GRUNT_RUNS_OUT
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_2_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_2_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_2_SWAPPED
+.SetSprite:
+	callasm ApplyCeruleanGymLeaderSprite
+	endcallback
 
 .DummyScene0:
 	end
@@ -61,11 +73,23 @@ CeruleanGymMistyScript:
 	opentext
 	checkflag ENGINE_CASCADEBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestBugsy
 	writetext MistyIntroText
 	waitbutton
 	closetext
 	winlosstext MistyWinLossText, 0
 	loadtrainer MISTY, MISTY1
+	sjump .MistyLoadEnd
+
+; Bugsy holds Cerulean Gym this run (gym swap pair 2).
+.GuestBugsy:
+	writetext BugsyGuestIntroText
+	waitbutton
+	closetext
+	winlosstext BugsyGuestWinLossText, 0
+	loadtrainer BUGSY, BUGSY5
+.MistyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_MISTY1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -87,15 +111,42 @@ CeruleanGymMistyScript:
 .FightDone:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext MistyRematchText
 	yesorno
 	iftrue .MistyRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext BugsyGuestRematchText
+	yesorno
+	iftrue .GuestBugsyRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestTalk
 	writetext MistyFightDoneText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext BugsyGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestBugsyRematch:
+	special HealParty
+	winlosstext BugsyGuestWinLossText, 0
+	loadtrainer BUGSY, BUGSY5
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .MistyRematch:
@@ -408,6 +459,42 @@ CeruleanGymGuideWinText:
 	cont "great battle!"
 	done
 
+BugsyGuestIntroText:
+	text "BUGSY: Oh, hi!"
+
+	para "MISTY and I traded"
+	line "GYMS for a while."
+
+	para "KANTO's bugs are"
+	line "fascinating! My"
+	cont "research is"
+	cont "nearly complete!"
+	done
+
+BugsyGuestWinLossText:
+	text "Amazing data…"
+
+	para "The CASCADEBADGE"
+	line "is yours!"
+	done
+
+BugsyGuestFightDoneText:
+	text "Water bugs skate"
+	line "on this pool!"
+
+	para "My research here"
+	line "never gets dull."
+	done
+
+BugsyGuestRematchText:
+	text "BUGSY: My bug"
+	line "#MON research"
+	cont "is complete!"
+
+	para "Want to see the"
+	line "results, CHAMPION?"
+	done
+
 CeruleanGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -424,7 +511,7 @@ CeruleanGym_MapEvents:
 
 	def_object_events
 	object_event  4, 10, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_CERULEAN_GYM_ROCKET
-	object_event  5,  3, SPRITE_MISTY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, CeruleanGymMistyScript, EVENT_TRAINERS_IN_CERULEAN_GYM
+	object_event  5,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CeruleanGymMistyScript, EVENT_TRAINERS_IN_CERULEAN_GYM
 	object_event  4,  6, SPRITE_SWIMMER_GIRL, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_TRAINER, 3, TrainerSwimmerfDiana, EVENT_TRAINERS_IN_CERULEAN_GYM
 	object_event  1,  9, SPRITE_SWIMMER_GIRL, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_TRAINER, 1, TrainerSwimmerfBriana, EVENT_TRAINERS_IN_CERULEAN_GYM
 	object_event  8,  9, SPRITE_SWIMMER_GUY, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerSwimmermParker, EVENT_TRAINERS_IN_CERULEAN_GYM

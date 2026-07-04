@@ -12,6 +12,18 @@ GoldenrodGym_MapScripts:
 	scene_script .DummyScene1 ; SCENE_GOLDENRODGYM_WHITNEY_STOPS_CRYING
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_3_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_3_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_3_SWAPPED
+.SetSprite:
+	callasm ApplyGoldenrodGymLeaderSprite
+	endcallback
 
 .DummyScene0:
 	end
@@ -24,6 +36,8 @@ GoldenrodGymWhitneyScript:
 	checkevent EVENT_BEAT_WHITNEY
 	iftrue .FightDone
 	opentext
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestSurge
 	writetext WhitneyBeforeText
 	waitbutton
 	closetext
@@ -38,6 +52,24 @@ GoldenrodGymWhitneyScript:
 	sjump .WhitneyLoadEnd
 .Team3:
 	loadtrainer WHITNEY, WHITNEY3
+	sjump .WhitneyLoadEnd
+
+; Lt. Surge holds Goldenrod Gym this run (gym swap pair 3).
+.GuestSurge:
+	writetext SurgeGuestIntroText
+	waitbutton
+	closetext
+	winlosstext SurgeGuestWinLossText, 0
+	callasm GetWhitneyTeam
+	ifequal 3, .SurgeTeam3
+	ifequal 2, .SurgeTeam2
+	loadtrainer LT_SURGE, LT_SURGE2
+	sjump .WhitneyLoadEnd
+.SurgeTeam2:
+	loadtrainer LT_SURGE, LT_SURGE3
+	sjump .WhitneyLoadEnd
+.SurgeTeam3:
+	loadtrainer LT_SURGE, LT_SURGE4
 .WhitneyLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_WHITNEY1
@@ -46,8 +78,11 @@ GoldenrodGymWhitneyScript:
 	startbattle
 	reloadmapafterbattle
 	setevent EVENT_BEAT_WHITNEY
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .SkipCrying ; guest leader doesn't do Whitney's crying scene
 	setevent EVENT_MADE_WHITNEY_CRY
 	setscene SCENE_GOLDENRODGYM_WHITNEY_STOPS_CRYING
+.SkipCrying:
 	setevent EVENT_BEAT_BEAUTY_VICTORIA
 	setevent EVENT_BEAT_BEAUTY_SAMANTHA
 	setevent EVENT_BEAT_LASS_CARRIE
@@ -66,8 +101,15 @@ GoldenrodGymWhitneyScript:
 	iftrue .GotAttract
 	checkflag ENGINE_PLAINBADGE
 	iftrue .GotPlainBadge
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestBadgeAward
 	writetext WhitneyWhatDoYouWantText
 	promptbutton
+	sjump .AwardBadge
+.GuestBadgeAward:
+	writetext SurgeGuestBadgeText
+	promptbutton
+.AwardBadge:
 	waitsfx
 	writetext PlayerReceivedPlainBadgeText
 	playsound SFX_GET_BADGE
@@ -100,11 +142,20 @@ GoldenrodGymWhitneyScript:
 .GotAttract:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext WhitneyRematchText
 	yesorno
 	iftrue .WhitneyRematch
 	sjump .NoRoomForAttract
+.GuestRematchAsk:
+	writetext SurgeGuestRematchText
+	yesorno
+	iftrue .GuestSurgeRematch
+	sjump .NoRoomForAttract
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .GuestFightDone
 	writetext WhitneyGoodCryText
 	waitbutton
 .NoRoomForAttract:
@@ -119,6 +170,25 @@ GoldenrodGymWhitneyScript:
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
 .normalmode_2
+	startbattle
+	reloadmapafterbattle
+	end
+
+.GuestFightDone:
+	writetext SurgeGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Surge brings his real Kanto-tier team.
+.GuestSurgeRematch:
+	special HealParty
+	winlosstext SurgeGuestWinLossText, 0
+	loadtrainer LT_SURGE, LT_SURGE1
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
 	startbattle
 	reloadmapafterbattle
 	end
@@ -450,6 +520,55 @@ GoldenrodGymGuideWinText:
 	cont "the ladies here."
 	done
 
+SurgeGuestIntroText:
+	text "SURGE: Hey, kid!"
+
+	para "WHITNEY and I"
+	line "traded GYMS for"
+	cont "a while."
+
+	para "The LIGHTNING"
+	line "AMERICAN is in"
+	cont "charge here now!"
+
+	para "My electric"
+	line "#MON will"
+	cont "shock you!"
+	done
+
+SurgeGuestWinLossText:
+	text "WHOA! You blew"
+	line "me away!"
+
+	para "Take the"
+	line "PLAINBADGE!"
+	done
+
+SurgeGuestBadgeText:
+	text "SURGE: A deal's a"
+	line "deal, kid."
+
+	para "You earned this"
+	line "fair and square!"
+	done
+
+SurgeGuestFightDoneText:
+	text "Baby! Your skills"
+	line "are shocking!"
+
+	para "Even my troops"
+	line "would salute you."
+	done
+
+SurgeGuestRematchText:
+	text "SURGE: CHAMPION,"
+	line "huh?"
+
+	para "My real squad is"
+	line "wired and ready."
+	cont "Battle me!"
+	done
+
 GoldenrodGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -465,7 +584,7 @@ GoldenrodGym_MapEvents:
 	bg_event  4, 15, BGEVENT_READ, GoldenrodGymStatue
 
 	def_object_events
-	object_event  8,  3, SPRITE_WHITNEY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, GoldenrodGymWhitneyScript, -1
+	object_event  8,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodGymWhitneyScript, -1
 	object_event  9, 13, SPRITE_LASS, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 4, TrainerLassCarrie, -1
 	object_event  9,  6, SPRITE_LASS, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, TrainerLassBridget, -1
 	object_event  0,  2, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerBeautyVictoria, -1

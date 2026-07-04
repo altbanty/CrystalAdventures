@@ -1487,6 +1487,15 @@
 ; Gym swap pair 1: Falkner (Violet) <-> Brock (Pewter)
 	const EVENT_GYM_PAIR_1_ROLLED
 	const EVENT_GYM_PAIR_1_SWAPPED
+; Gym swap pair 2: Bugsy (Azalea) <-> Misty (Cerulean)
+	const EVENT_GYM_PAIR_2_ROLLED
+	const EVENT_GYM_PAIR_2_SWAPPED
+; Gym swap pair 3: Whitney (Goldenrod) <-> Lt. Surge (Vermilion)
+	const EVENT_GYM_PAIR_3_ROLLED
+	const EVENT_GYM_PAIR_3_SWAPPED
+; Gym swap pair 4: Morty (Ecruteak) <-> Erika (Celadon)
+	const EVENT_GYM_PAIR_4_ROLLED
+	const EVENT_GYM_PAIR_4_SWAPPED
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800

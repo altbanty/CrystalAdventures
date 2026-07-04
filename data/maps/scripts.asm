@@ -195,7 +195,7 @@ INCLUDE "maps/WiseTriosRoom.asm"
 INCLUDE "maps/EcruteakPokecenter1F.asm"
 INCLUDE "maps/EcruteakLugiaSpeechHouse.asm"
 INCLUDE "maps/DanceTheatre.asm"
-INCLUDE "maps/EcruteakGym.asm"
+; EcruteakGym moved to Map Scripts 13 (this section was full; gym swap texts)
 INCLUDE "maps/EcruteakItemfinderHouse.asm"
 INCLUDE "maps/ViridianGym.asm"
 INCLUDE "maps/ViridianNicknameSpeechHouse.asm"
@@ -246,6 +246,8 @@ INCLUDE "maps/HallOfFame.asm"
 
 
 SECTION "Map Scripts 14", ROMX
+
+INCLUDE "maps/EcruteakGym.asm"
 
 INCLUDE "maps/CeruleanCity.asm"
 INCLUDE "maps/SproutTower1F.asm"
