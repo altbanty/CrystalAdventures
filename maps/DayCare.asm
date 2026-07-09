@@ -49,10 +49,122 @@ DayCareManScript_Inside:
 	end
 
 .AlreadyHaveOddEgg:
+	writetext DayCareManServicesText
+	loadmenu .ServicesMenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .DayCareService
+	ifequal 2, .Training
+	closetext
+	end
+
+.DayCareService:
 	special DayCareMan
 	waitbutton
 	closetext
 	end
+
+; --- Instant paid training: pay to level a party Pokemon on the spot.
+; Cost: each level gained costs (level reached) x 50. Capped by wLevelCap.
+.Training:
+	writetext TrainingIntroText
+	waitbutton
+	closetext
+	callasm TrainingSelectMon
+	ifequal 0, .TrainingDone
+	ifequal 2, .TrainingEgg
+	opentext
+	writetext TrainingChooseAmountText
+	loadmenu .TrainingMenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .Plus1
+	ifequal 2, .Plus5
+	ifequal 3, .ToCap
+	closetext
+	end
+
+.Plus1:
+	setval 1
+	sjump .Quote
+.Plus5:
+	setval 5
+	sjump .Quote
+.ToCap:
+	setval 255
+.Quote:
+	callasm CalculateTrainingCost
+	ifequal 0, .AtCap
+	writetext TrainingCostText
+	yesorno
+	iffalse .TrainingDeclined
+	callasm CheckTrainingPayment
+	iffalse .TrainingNoMoney
+	callasm TakeTrainingPayment
+	playsound SFX_TRANSACTION
+	waitsfx
+	writetext TrainingWorkoutText
+	waitbutton
+	writetext TrainingDoneText
+	waitbutton
+	closetext
+	callasm TrainingEvolveCheck
+	end
+
+.AtCap:
+	writetext TrainingAtCapText
+	waitbutton
+	closetext
+	end
+
+.TrainingNoMoney:
+	writetext TrainingNoMoneyText
+	waitbutton
+	closetext
+	end
+
+.TrainingDeclined:
+	writetext TrainingDeclinedText
+	waitbutton
+	closetext
+	end
+
+.TrainingEgg:
+	opentext
+	writetext TrainingEggText
+	waitbutton
+	closetext
+	end
+
+.TrainingDone:
+	end
+
+.ServicesMenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 2, 13, TEXTBOX_Y - 1
+	dw .ServicesMenuData
+	db 1 ; default option
+
+.ServicesMenuData:
+	db STATICMENU_CURSOR ; flags
+	db 3 ; items
+	db "DAY-CARE@"
+	db "TRAINING@"
+	db "CANCEL@"
+
+.TrainingMenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 2, 13, TEXTBOX_Y - 1
+	dw .TrainingMenuData
+	db 1 ; default option
+
+.TrainingMenuData:
+	db STATICMENU_CURSOR ; flags
+	db 4 ; items
+	db "+1 LEVEL@"
+	db "+5 LEVELS@"
+	db "TO THE CAP@"
+	db "CANCEL@"
 
 DayCareLadyScript:
 	faceplayer
@@ -76,6 +188,89 @@ DayCareBookshelf:
 Text_GrampsLookingForYou:
 	text "Gramps was looking"
 	line "for you."
+	done
+
+DayCareManServicesText:
+	text "I can watch a"
+	line "#MON for you…"
+
+	para "Or, for a fee, we"
+	line "can power train"
+	cont "one on the spot!"
+	done
+
+TrainingIntroText:
+	text "Power training!"
+
+	para "Pay up front, and"
+	line "your #MON"
+	cont "levels up right"
+	cont "away."
+
+	para "We can't train"
+	line "past the level"
+	cont "cap, mind you."
+
+	para "Which #MON"
+	line "should we train?"
+	done
+
+TrainingChooseAmountText:
+	text "How much training"
+	line "should it get?"
+	done
+
+TrainingCostText:
+	text "That's @"
+	text_decimal wStringBuffer2 + 3, 1, 3
+	text " level(s)"
+	line "of training."
+
+	para "It'll cost ¥@"
+	text_decimal wStringBuffer2, 3, 6
+	text "."
+	line "Deal?"
+	done
+
+TrainingWorkoutText:
+	text "Hup! Hyah!"
+	line "One, two! Hup!"
+
+	para "…Whew!"
+	done
+
+TrainingDoneText:
+	text "All done! It grew"
+	line "to level @"
+	text_decimal wStringBuffer2 + 4, 1, 3
+	text "!"
+	done
+
+TrainingAtCapText:
+	text "That #MON is"
+	line "already at the"
+	cont "level cap."
+
+	para "I can't train it"
+	line "any further!"
+	done
+
+TrainingNoMoneyText:
+	text "You're short on"
+	line "cash, friend."
+	done
+
+TrainingDeclinedText:
+	text "No? Come back"
+	line "anytime."
+	done
+
+TrainingEggText:
+	text "That's an EGG!"
+
+	para "Training an EGG"
+	line "would just crack"
+	cont "it!"
 	done
 
 Text_DayCareManTalksAboutEggTicket: ; unreferenced

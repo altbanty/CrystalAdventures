@@ -60,7 +60,10 @@ HealPartyMon:
 	farcall RestoreAllPP
 	ret
 
-HealPartyMonDaycare: ; yes this suplicate code is inefficient but ehh, we're not using the extra space
+HealPartyMonDaycare:
+; Withdrawn Day-Care Pokemon come back at 1 HP with no PP restored -
+; the old full HP + status + all-PP restore was a free-healing bypass
+; of the paid-healing economy (same class as the PC withdraw patch).
 	ld a, MON_SPECIES
 	call GetPartyParamLocation
 	ld d, h
@@ -70,19 +73,12 @@ HealPartyMonDaycare: ; yes this suplicate code is inefficient but ehh, we're not
 	xor a
 	ld [hli], a
 	ld [hl], a
-	ld hl, MON_MAXHP
+	ld hl, MON_HP
 	add hl, de
-	; bc = MON_HP
-	ld b, h
-	ld c, l
-	dec bc
-	dec bc
-	ld a, [hli]
-	ld [bc], a
-	inc bc
-	ld a, [hl]
-	ld [bc], a
-	farcall RestoreAllPP
+	xor a
+	ld [hli], a
+	ld a, 1
+	ld [hl], a
 	ret
 
 

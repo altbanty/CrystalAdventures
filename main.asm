@@ -78,6 +78,7 @@ INCLUDE "engine/events/bug_contest/contest_2.asm"
 INCLUDE "engine/pokemon/correct_party_errors.asm"
 INCLUDE "engine/math/get_square_root.asm"
 INCLUDE "engine/events/gym_tms.asm"
+INCLUDE "engine/events/daycare_training.asm"
 
 
 SECTION "bank5", ROMX

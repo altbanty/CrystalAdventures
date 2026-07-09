@@ -140,52 +140,9 @@ StepHappiness::
 	ret
 
 DayCareStep::
-; Raise the experience of Day-Care Pokémon every step cycle.
-
-	ld a, [wDayCareMan]
-	bit DAYCAREMAN_HAS_MON_F, a
-	jr z, .day_care_lady
-
-	ld a, [wLevelCap]
-	ld b, a
-	ld a, [wBreedMon1Level] ; level
-	cp b
-	jr nc, .day_care_lady
-	ld hl, wBreedMon1Exp + 2 ; exp
-	inc [hl]
-	jr nz, .day_care_lady
-	dec hl
-	inc [hl]
-	jr nz, .day_care_lady
-	dec hl
-	inc [hl]
-	ld a, [hl]
-	cp HIGH(MAX_DAY_CARE_EXP >> 8)
-	jr c, .day_care_lady
-	ld a, HIGH(MAX_DAY_CARE_EXP >> 8)
-	ld [hl], a
-
-.day_care_lady
-	ld a, [wDayCareLady]
-	bit DAYCARELADY_HAS_MON_F, a
-	jr z, .check_egg
-
-	ld a, [wBreedMon2Level] ; level
-	cp b
-	jr nc, .check_egg
-	ld hl, wBreedMon2Exp + 2 ; exp
-	inc [hl]
-	jr nz, .check_egg
-	dec hl
-	inc [hl]
-	jr nz, .check_egg
-	dec hl
-	inc [hl]
-	ld a, [hl]
-	cp HIGH(MAX_DAY_CARE_EXP >> 8)
-	jr c, .check_egg
-	ld a, HIGH(MAX_DAY_CARE_EXP >> 8)
-	ld [hl], a
+; Day-Care Pokemon no longer grow from walking - the Day-Care Man's
+; instant paid training replaced step growth. Steps still drive egg
+; generation below.
 
 .check_egg
 	ld hl, wDayCareMan
