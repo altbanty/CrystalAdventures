@@ -138,36 +138,37 @@ Training_CostToMoneyTemp:
 	ret
 
 ApplyTraining::
-; Level wCurPartyMon up to wStringBuffer2+4 instantly. Mirrors old daycare
-; growth: silent catch-up move learning (FillMoves pushes the top slot out),
-; current HP rises by the max-HP delta only (no free heal), PP untouched.
-	; remember the old level for FillMoves' skip logic
+; Level wCurPartyMon up to wStringBuffer2+4, one level at a time, with
+; the standard prompted move learning after each level - the Rare Candy
+; experience (mirrors RareCandyEffect exactly, minus the stats textbox).
+; HP rises by the max-HP delta only; no free heal. EXP and stats are
+; kept in sync at every level so nothing can desync mid-parade.
+; The move-learn prompts clobber the wStringBuffer scratch, so the
+; target level is stashed in hMoneyTemp (payment is already complete).
+	ld a, [wStringBuffer2 + 4]
+	ldh [hMoneyTemp], a
+.level_loop
 	ld a, MON_LEVEL
 	call GetPartyParamLocation
 	ld a, [hl]
-	ld [wPrevPartyLevel], a
-	; species and base data
+	ld b, a
+	ldh a, [hMoneyTemp]
+	cp b
+	jp z, .levels_done
+	jp c, .levels_done       ; safety: never exceed the target
+	; +1 level
+	inc b
+	ld a, b
+	ld [hl], a
+	ld [wCurPartyLevel], a
+	; refresh species context - the prompts can clobber it between laps
 	ld a, MON_SPECIES
 	call GetPartyParamLocation
 	ld a, [hl]
 	ld [wCurSpecies], a
 	ld [wCurPartySpecies], a
 	call GetBaseData
-	; write the new level
-	ld a, MON_LEVEL
-	call GetPartyParamLocation
-	ld a, [wStringBuffer2 + 4]
-	ld [hl], a
-	ld [wCurPartyLevel], a
-	; save old max HP
-	ld a, MON_MAXHP
-	call GetPartyParamLocation
-	ld a, [hli]
-	ld d, a
-	ld a, [hl]
-	ld e, a
-	push de
-	; exp = exact threshold of the new level
+	; exp = exact threshold of this level
 	ld a, [wCurPartyLevel]
 	ld d, a
 	farcall CalcExpAtLevel
@@ -179,7 +180,14 @@ ApplyTraining::
 	ld [hli], a
 	ldh a, [hMultiplicand + 2]
 	ld [hl], a
-	; recalculate stats (with stat exp, like the daycare withdrawal)
+	; save old max HP, recalculate stats, add the delta to current HP
+	ld a, MON_MAXHP
+	call GetPartyParamLocation
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	ld e, a
+	push de
 	ld a, MON_MAXHP
 	call GetPartyParamLocation
 	ld d, h
@@ -188,42 +196,49 @@ ApplyTraining::
 	call GetPartyParamLocation
 	ld b, TRUE
 	predef CalcMonStats
-	; current HP += (new max HP - old max HP)
-	pop de                   ; old max
+	pop de
 	ld a, MON_MAXHP
 	call GetPartyParamLocation
 	ld a, [hli]
 	ld b, a
 	ld a, [hl]
-	ld c, a                  ; bc = new max
+	ld c, a
 	ld a, c
 	sub e
 	ld e, a
 	ld a, b
 	sbc d
-	ld d, a                  ; de = delta
+	ld d, a
 	ld a, MON_HP
 	call GetPartyParamLocation
-	inc hl                   ; low byte
+	inc hl
 	ld a, [hl]
 	add e
 	ld [hld], a
 	ld a, [hl]
 	adc d
 	ld [hl], a
-	; learn the level-up moves for the purchased range, silently
-	ld a, MON_MOVES
+	; happiness, then the prompted move learning (Rare Candy path)
+	farcall LevelUpHappinessMod
+	xor a ; PARTYMON
+	ld [wMonType], a
+	ld a, [wCurPartySpecies]
+	ld [wTempSpecies], a
+	predef LearnLevelMoves
+	jp .level_loop
+
+.levels_done
+	; the prompts clobber the string buffers; restore the level byte
+	; that TrainingDoneText displays
+	ld a, MON_LEVEL
 	call GetPartyParamLocation
-	ld d, h
-	ld e, l
-	ld a, TRUE
-	ld [wSkipMovesBeforeLevelUp], a
-	predef FillMoves
-	xor a
-	ld [wSkipMovesBeforeLevelUp], a
+	ld a, [hl]
+	ld [wStringBuffer2 + 4], a
 	ret
 
 TrainingEvolveCheck::
 ; Run the standard evolution ceremony for the trained mon, if due.
+	xor a
+	ld [wForceEvolution], a
 	farcall EvolvePokemon
 	ret

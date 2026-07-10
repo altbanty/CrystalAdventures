@@ -105,6 +105,7 @@ DayCareManScript_Inside:
 	waitsfx
 	writetext TrainingWorkoutText
 	waitbutton
+	callasm ApplyTraining
 	writetext TrainingDoneText
 	waitbutton
 	closetext
