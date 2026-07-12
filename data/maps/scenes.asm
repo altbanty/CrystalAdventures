@@ -83,5 +83,5 @@ MapScenes::
 	scene_var FAST_SHIP_B1F,                               wFastShipB1FSceneID
 	scene_var MOUNT_MOON_SQUARE,                           wMountMoonSquareSceneID
 	scene_var ROUTE_30,                                    wRoute30SceneID ; reclaimed from MOBILE_TRADE_ROOM (dead mobile map)
-	scene_var MOBILE_BATTLE_ROOM,                          wMobileBattleRoomSceneID
+	scene_var PLAYERS_HOUSE_2F,                            wPlayersHouse2FSceneID ; reclaimed from MOBILE_BATTLE_ROOM (dead mobile map)
 	db -1 ; end

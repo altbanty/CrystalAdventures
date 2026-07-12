@@ -3112,7 +3112,7 @@ wFastShip1FSceneID::                              db
 wFastShipB1FSceneID::                             db
 wMountMoonSquareSceneID::                         db
 wRoute30SceneID::                                 db ; was wMobileTradeRoomSceneID (dead mobile map)
-wMobileBattleRoomSceneID::                        db
+wPlayersHouse2FSceneID::                          db ; was wMobileBattleRoomSceneID (dead mobile map)
 
 wNumBalls:: db
 wBalls:: ds MAX_BALLS * 2 + 1

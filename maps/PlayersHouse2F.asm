@@ -6,12 +6,31 @@
 
 PlayersHouse2F_MapScripts:
 	def_scene_scripts
+	scene_script .DummyScene ; SCENE_PLAYERSHOUSE2F_NOTHING
+	scene_script .WakeUp ; SCENE_PLAYERSHOUSE2F_WAKEUP
 
 	def_callbacks
 	callback MAPCALLBACK_NEWMAP, .InitializeRoom
 	callback MAPCALLBACK_TILES, .SetUpTileDecorations
 
-.DummyScene: ; unreferenced
+.DummyScene:
+	end
+
+; You black out when the rival shoves you on Route 30; a traveler
+; carries you home and you come to in your own bed. Mom's talk fires
+; downstairs (armed below).
+.WakeUp:
+	sdefer .WakeUpScene
+	end
+
+.WakeUpScene:
+	pause 30
+	opentext
+	writetext BedWakeUpText
+	waitbutton
+	closetext
+	setscene SCENE_PLAYERSHOUSE2F_NOTHING
+	setmapscene PLAYERS_HOUSE_1F, SCENE_PLAYERSHOUSE1F_WAKEUP
 	end
 
 .InitializeRoom:
@@ -110,6 +129,17 @@ PlayersRadioText3:
 PlayersRadioText4:
 	text "#MON!"
 	line "#MON CHANNEL…"
+	done
+
+BedWakeUpText:
+	text "…"
+
+	para "You're in your"
+	line "own bed."
+
+	para "Someone must have"
+	line "carried you all"
+	cont "the way home."
 	done
 
 PlayersHouse2F_MapEvents:

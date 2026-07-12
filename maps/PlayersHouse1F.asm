@@ -26,7 +26,7 @@ PlayersHouse1F_MapScripts:
 	end
 
 .WakeUpScene:
-	pause 30
+	pause 10
 	opentext
 	writetext MomWakeUpText
 	waitbutton
@@ -394,29 +394,53 @@ PlayersHouse1FTVText:
 
 MomWakeUpText:
 	text "MOM: <PLAY_G>!"
-	line "You're awake!"
+	line "Thank goodness,"
+	cont "you're up!"
 
-	para "A kind traveler"
-	line "found you out"
+	para "A traveler found"
+	line "you out cold on"
+	cont "ROUTE 30…"
 
-	para "cold on ROUTE 30"
-	line "and carried you"
-	cont "home."
+	para "When they carried"
+	line "you through that"
+
+	para "door, my heart"
+	line "just about"
+	cont "stopped."
 
 	para "Your #MON"
-	line "were worn out,"
+	line "fought so hard"
+	cont "to protect you."
 
-	para "so I patched"
-	line "them right up."
+	para "I patched them"
+	line "all up while"
+	cont "you slept."
 	done
 
 MomWakeUpHealedText:
-	text "PROF.ELM called."
-	line "He sounded"
-	cont "worried sick!"
+	text "…Listen, dear."
 
-	para "You should hurry"
-	line "next door, dear."
+	para "The world out"
+	line "there can be"
+	cont "rough."
+
+	para "But I have"
+	line "watched you grow"
+
+	para "up strong and"
+	line "kind, your whole"
+	cont "life."
+
+	para "I believe in"
+	line "you, <PLAY_G>."
+
+	para "No bully is"
+	line "going to keep"
+	cont "you down."
+
+	para "Now go on. PROF."
+	line "ELM needs you"
+	cont "next door!"
 	done
 
 PlayersHouse1F_MapEvents:

@@ -336,8 +336,8 @@ Route30RivalAmbush:
 	disappear ROUTE30_SILVER
 	pause 10
 	setscene SCENE_ROUTE30_NOTHING
-	setmapscene PLAYERS_HOUSE_1F, SCENE_PLAYERSHOUSE1F_WAKEUP
-	warpfacing RIGHT, PLAYERS_HOUSE_1F, 6, 4
+	setmapscene PLAYERS_HOUSE_2F, SCENE_PLAYERSHOUSE2F_WAKEUP
+	warpfacing DOWN, PLAYERS_HOUSE_2F, 0, 4
 	end
 
 Route30_RivalApproaches:

@@ -167,4 +167,9 @@ SCENE_ALWAYS   EQU -1
 ; wPlayersHouse1FSceneID (0/1 are the generic SCENE_DEFAULT/SCENE_FINISHED)
 	const_def 2
 	const SCENE_PLAYERSHOUSE1F_WAKEUP ; 2
+
+; wPlayersHouse2FSceneID
+	const_def
+	const SCENE_PLAYERSHOUSE2F_NOTHING ; 0
+	const SCENE_PLAYERSHOUSE2F_WAKEUP  ; 1
 	
