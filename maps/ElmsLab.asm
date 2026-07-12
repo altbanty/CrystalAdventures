@@ -786,8 +786,9 @@ ElmText_MissionFromMrPokemon:
 	cont "useful items."
 
 	para "Take one of these"
-	line "starter #MON and"
-	cont "head over to him!"
+	line "starter #MON"
+	cont "and head over"
+	cont "to him!"
 	done
 
 ElmText_ChooseAPokemon:
