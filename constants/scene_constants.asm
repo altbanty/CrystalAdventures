@@ -158,4 +158,13 @@ SCENE_ALWAYS   EQU -1
 	const_def 1
 	const SCENE_FASTSHIP1F_ENTER_SHIP   ; 1
 	const SCENE_FASTSHIP1F_MEET_GRANDPA ; 2
+
+; wRoute30SceneID
+	const_def
+	const SCENE_ROUTE30_NOTHING      ; 0
+	const SCENE_ROUTE30_RIVAL_AMBUSH ; 1
+
+; wPlayersHouse1FSceneID (0/1 are the generic SCENE_DEFAULT/SCENE_FINISHED)
+	const_def 2
+	const SCENE_PLAYERSHOUSE1F_WAKEUP ; 2
 	

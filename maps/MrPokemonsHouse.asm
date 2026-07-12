@@ -126,7 +126,9 @@ MrPokemonsHouse_OakScript:
 	setevent EVENT_PLAYERS_HOUSE_1F_NEIGHBOR
 	clearevent EVENT_PLAYERS_NEIGHBORS_HOUSE_NEIGHBOR
 	setscene SCENE_FINISHED
-	setmapscene CHERRYGROVE_CITY, SCENE_CHERRYGROVECITY_MEET_RIVAL
+	; The rival now ambushes you right outside on Route 30 instead of at
+	; Cherrygrove - kills the early-game backtrack (you wake up at home).
+	setmapscene ROUTE_30, SCENE_ROUTE30_RIVAL_AMBUSH
 	setmapscene ELMS_LAB, SCENE_ELMSLAB_MEET_OFFICER
 	specialphonecall SPECIALCALL_ROBBED
 	clearevent EVENT_COP_IN_ELMS_LAB

@@ -9,6 +9,7 @@ PlayersHouse1F_MapScripts:
 	def_scene_scripts
 	scene_script .DummyScene0 ; SCENE_DEFAULT
 	scene_script .DummyScene1 ; SCENE_FINISHED
+	scene_script .WakeUp ; SCENE_PLAYERSHOUSE1F_WAKEUP
 
 	def_callbacks
 
@@ -16,6 +17,26 @@ PlayersHouse1F_MapScripts:
 	end
 
 .DummyScene1:
+	end
+
+; The rival shoved you off your feet on Route 30; a traveler carried you
+; home. One-shot: armed by the ambush script, disarmed below.
+.WakeUp:
+	sdefer .WakeUpScene
+	end
+
+.WakeUpScene:
+	pause 30
+	opentext
+	writetext MomWakeUpText
+	waitbutton
+	special HealParty
+	playsound SFX_FULL_HEAL
+	waitsfx
+	writetext MomWakeUpHealedText
+	waitbutton
+	closetext
+	setscene SCENE_FINISHED
 	end
 
 MeetMomLeftScript:
@@ -369,6 +390,33 @@ PlayersHouse1FTVText:
 
 	para "I'd better get"
 	line "rolling too!"
+	done
+
+MomWakeUpText:
+	text "MOM: <PLAY_G>!"
+	line "You're awake!"
+
+	para "A kind traveler"
+	line "found you out"
+
+	para "cold on ROUTE 30"
+	line "and carried you"
+	cont "home."
+
+	para "Your #MON"
+	line "were worn out,"
+
+	para "so I patched"
+	line "them right up."
+	done
+
+MomWakeUpHealedText:
+	text "PROF.ELM called."
+	line "He sounded"
+	cont "worried sick!"
+
+	para "You should hurry"
+	line "next door, dear."
 	done
 
 PlayersHouse1F_MapEvents:

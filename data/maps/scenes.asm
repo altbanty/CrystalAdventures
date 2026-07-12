@@ -82,6 +82,6 @@ MapScenes::
 	scene_var FAST_SHIP_1F,                                wFastShip1FSceneID
 	scene_var FAST_SHIP_B1F,                               wFastShipB1FSceneID
 	scene_var MOUNT_MOON_SQUARE,                           wMountMoonSquareSceneID
-	scene_var MOBILE_TRADE_ROOM,                           wMobileTradeRoomSceneID
+	scene_var ROUTE_30,                                    wRoute30SceneID ; reclaimed from MOBILE_TRADE_ROOM (dead mobile map)
 	scene_var MOBILE_BATTLE_ROOM,                          wMobileBattleRoomSceneID
 	db -1 ; end

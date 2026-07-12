@@ -3111,7 +3111,7 @@ wVermilionPortSceneID::                           db
 wFastShip1FSceneID::                              db
 wFastShipB1FSceneID::                             db
 wMountMoonSquareSceneID::                         db
-wMobileTradeRoomSceneID::                         db
+wRoute30SceneID::                                 db ; was wMobileTradeRoomSceneID (dead mobile map)
 wMobileBattleRoomSceneID::                        db
 
 wNumBalls:: db

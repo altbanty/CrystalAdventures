@@ -10,11 +10,20 @@
 	const ROUTE30_FRUIT_TREE2
 	const ROUTE30_COOLTRAINER_F
 	const ROUTE30_POKE_BALL
+	const ROUTE30_SILVER
 
 Route30_MapScripts:
 	def_scene_scripts
+	scene_script .DummyScene0 ; SCENE_ROUTE30_NOTHING
+	scene_script .DummyScene1 ; SCENE_ROUTE30_RIVAL_AMBUSH
 
 	def_callbacks
+
+.DummyScene0:
+	end
+
+.DummyScene1:
+	end
 
 YoungsterJoey_ImportantBattleScript:
 	waitsfx
@@ -244,6 +253,142 @@ Route30YoungsterScript:
 Route30CooltrainerFScript:
 	jumptextfaceplayer Route30CooltrainerFText
 
+; --- Rival ambush: fires once, right after leaving Mr. Pokemon's house
+; with the egg (replaces the old Cherrygrove meet-rival backtrack fight).
+; Win or lose, he shoves you; you black out and wake up at home with Mom.
+Route30RivalAmbush14:
+	moveobject ROUTE30_SILVER, 14, 10
+	sjump Route30RivalAmbush
+Route30RivalAmbush15:
+	moveobject ROUTE30_SILVER, 15, 10
+	sjump Route30RivalAmbush
+Route30RivalAmbush16:
+	moveobject ROUTE30_SILVER, 16, 10
+	sjump Route30RivalAmbush
+Route30RivalAmbush17:
+	moveobject ROUTE30_SILVER, 17, 10
+	sjump Route30RivalAmbush
+Route30RivalAmbush18:
+	moveobject ROUTE30_SILVER, 18, 10
+	sjump Route30RivalAmbush
+Route30RivalAmbush19:
+	moveobject ROUTE30_SILVER, 19, 10
+
+Route30RivalAmbush:
+	turnobject PLAYER, DOWN
+	showemote EMOTE_SHOCK, PLAYER, 15
+	special FadeOutMusic
+	pause 15
+	appear ROUTE30_SILVER
+	applymovement ROUTE30_SILVER, Route30_RivalApproaches
+	turnobject PLAYER, DOWN
+	playmusic MUSIC_RIVAL_ENCOUNTER
+	opentext
+	writetext Route30RivalText_Ambush
+	waitbutton
+	closetext
+	winlosstext Route30RivalWinText, Route30RivalLossText
+	setlasttalked ROUTE30_SILVER
+	setval 1
+	callasm LoadRivalTrainer
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	checkflag ENGINE_UNUSED_DIFFICULTY
+	iftrue .LoadHardcoreModeBattle
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE_SETNOITEMS
+.normalmode
+	startbattle
+	dontrestartmapmusic
+	reloadmap
+	iftrue .AfterVictorious
+	sjump .AfterYourDefeat
+
+.LoadHardcoreModeBattle
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+	startbattle
+	dontrestartmapmusic
+	reloadmapafterbattle
+	iftrue .AfterVictorious
+	sjump .AfterYourDefeat
+
+.AfterVictorious:
+	playmusic MUSIC_RIVAL_AFTER
+	opentext
+	writetext Route30RivalText_YouWon
+	waitbutton
+	closetext
+	sjump .ShovePlayer
+
+.AfterYourDefeat:
+	playmusic MUSIC_RIVAL_AFTER
+	opentext
+	writetext Route30RivalText_YouLost
+	waitbutton
+	closetext
+.ShovePlayer:
+	; No tile displacement here - a jump/step could land the player on
+	; Mr. Pokemon's door warp or a wall. Impact = sound + screen shake.
+	playsound SFX_TACKLE
+	earthquake 24
+	pause 20
+	special FadeOutPalettes
+	disappear ROUTE30_SILVER
+	pause 10
+	setscene SCENE_ROUTE30_NOTHING
+	setmapscene PLAYERS_HOUSE_1F, SCENE_PLAYERSHOUSE1F_WAKEUP
+	warpfacing RIGHT, PLAYERS_HOUSE_1F, 6, 4
+	end
+
+Route30_RivalApproaches:
+	step UP
+	step UP
+	step_end
+
+Route30RivalText_Ambush:
+	text "…You. You got a"
+	line "#MON at the"
+	cont "LAB."
+
+	para "What a waste."
+	line "That #MON is"
+	cont "too good for a"
+	cont "wimp like you."
+
+	para "…And what's that"
+	line "EGG you're"
+	cont "clutching?"
+
+	para "Hand it over!"
+	done
+
+Route30RivalWinText:
+	text "…Why? Why would"
+	line "I lose to a wimp"
+	cont "like you?"
+	done
+
+Route30RivalLossText:
+	text "Humph. That was"
+	line "no fun at all."
+	done
+
+Route30RivalText_YouWon:
+	text "Tch… Keep your"
+	line "stupid EGG."
+
+	para "But don't think"
+	line "this is over!"
+	done
+
+Route30RivalText_YouLost:
+	text "A weakling like"
+	line "you doesn't"
+
+	para "deserve rare"
+	line "#MON."
+	done
+
 Route30Sign:
 	jumptext Route30SignText
 
@@ -432,6 +577,12 @@ Route30_MapEvents:
 	warp_event 17,  5, MR_POKEMONS_HOUSE, 1
 
 	def_coord_events
+	coord_event 14,  7, SCENE_ROUTE30_RIVAL_AMBUSH, Route30RivalAmbush14
+	coord_event 15,  7, SCENE_ROUTE30_RIVAL_AMBUSH, Route30RivalAmbush15
+	coord_event 16,  7, SCENE_ROUTE30_RIVAL_AMBUSH, Route30RivalAmbush16
+	coord_event 17,  7, SCENE_ROUTE30_RIVAL_AMBUSH, Route30RivalAmbush17
+	coord_event 18,  7, SCENE_ROUTE30_RIVAL_AMBUSH, Route30RivalAmbush18
+	coord_event 19,  7, SCENE_ROUTE30_RIVAL_AMBUSH, Route30RivalAmbush19
 
 	def_bg_events
 	bg_event  9, 43, BGEVENT_READ, Route30Sign
@@ -445,6 +596,7 @@ Route30_MapEvents:
 	object_event  2, 28, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerYoungsterJoey, EVENT_ROUTE_30_YOUNGSTER_JOEY
 	object_event  5, 23, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, TrainerYoungsterMikey, -1
 	object_event  1,  7, SPRITE_BUG_CATCHER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerBugCatcherDon, -1
+	object_event 17, 10, SPRITE_SILVER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_RIVAL_CHERRYGROVE_CITY
 	object_event  7, 30, SPRITE_YOUNGSTER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, Route30YoungsterScript, -1
 	object_event  5, 24, SPRITE_RATTATA_OVERWORLD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_SILVER, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_ROUTE_30_BATTLE
 	object_event  5, 25, SPRITE_RATTATA_OVERWORLD, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_ROUTE_30_BATTLE
