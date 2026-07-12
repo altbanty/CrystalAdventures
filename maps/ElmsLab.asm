@@ -939,6 +939,19 @@ ElmAfterTheftText5:
 	para "The closest GYM"
 	line "would be the one"
 	cont "in VIOLET CITY."
+
+	para "Oh, and have you"
+	line "heard? JOHTO's"
+
+	para "GYMS are running"
+	line "an exchange with"
+	cont "KANTO this year."
+
+	para "Don't be shocked"
+	line "if an unfamiliar"
+
+	para "LEADER greets you"
+	line "at some GYMS!"
 	done
 
 ElmAfterTheftText6:

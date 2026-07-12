@@ -1597,4 +1597,22 @@ _OakTextRandom::
 	para "Even Gym Leaders"
 	line "will surprise you"
 	cont "with new teams!"
+
+	para "And this year,"
+	line "JOHTO and KANTO"
+
+	para "GYMS are holding"
+	line "a LEADER exchange"
+	cont "program!"
+
+	para "Some GYM LEADERS"
+	line "may have traded"
+
+	para "places with a"
+	line "LEADER from the"
+	cont "other region."
+
+	para "Who swapped where?"
+	line "That changes with"
+	cont "every journey!"
 	prompt
