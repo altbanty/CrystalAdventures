@@ -1615,7 +1615,7 @@ PutTheRodAway:
 
 InitStarterChoices::
 ; Initialize the 3 starter choices if not already done.
-; Uses weighted random selection from a pool of 8 species.
+; Uniform random selection from the pool of NUM_STARTERS (11) species.
 ; Results packed into wStarterChoices (2 bytes).
 	ld a, [wStarterChoices]
 	bit 7, a
