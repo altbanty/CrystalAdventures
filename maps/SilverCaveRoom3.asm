@@ -25,7 +25,7 @@ Red:
 	winlosstext RedWinLossText, RedWinLossText
 	checkevent EVENT_CERULEAN_CAVE_B1F_MEWTWO ; if rematch
 	iftrue .rematchteam ; skip loading base team
-	loadtrainer RED, RED1
+	callasm LoadRedTrainer
 	sjump .EndLoadTrainerRed
 .rematchteam
 	loadtrainer RED, 2

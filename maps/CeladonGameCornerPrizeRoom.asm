@@ -1,13 +1,13 @@
 CELADONGAMECORNERPRIZEROOM_TM32_COINS EQU 1500
 CELADONGAMECORNERPRIZEROOM_TM29_COINS EQU 3500
 CELADONGAMECORNERPRIZEROOM_TM15_COINS EQU 7500
-CELADONGAMECORNERPRIZEROOM_PIKACHU_COINS  EQU 2222
-CELADONGAMECORNERPRIZEROOM_PORYGON_COINS  EQU 5555
-CELADONGAMECORNERPRIZEROOM_LARVITAR_COINS EQU 8888
+CELADONGAMECORNERPRIZEROOM_TIER1_COINS  EQU 2222
+CELADONGAMECORNERPRIZEROOM_TIER2_COINS  EQU 5555
+CELADONGAMECORNERPRIZEROOM_TIER3_COINS EQU 8888
 
-EXPORT CELADONGAMECORNERPRIZEROOM_PIKACHU_COINS
-EXPORT CELADONGAMECORNERPRIZEROOM_PORYGON_COINS
-EXPORT CELADONGAMECORNERPRIZEROOM_LARVITAR_COINS
+EXPORT CELADONGAMECORNERPRIZEROOM_TIER1_COINS
+EXPORT CELADONGAMECORNERPRIZEROOM_TIER2_COINS
+EXPORT CELADONGAMECORNERPRIZEROOM_TIER3_COINS
 
 	object_const_def
 	const CELADONGAMECORNERPRIZEROOM_GENTLEMAN
@@ -132,6 +132,10 @@ CeladonGameCornerPrizeRoomPokemonVendor:
 	waitbutton
 	checkitem COIN_CASE
 	iffalse CeladonPrizeRoom_NoCoinCase
+	setval 1
+	callasm GetGameCornerLineup
+	ifequal 2, .loopB
+	ifequal 3, .loopC
 .loop
 	writetext CeladonPrizeRoom_AskWhichPrizeText
 	special DisplayCoinCaseBalance
@@ -144,7 +148,7 @@ CeladonGameCornerPrizeRoomPokemonVendor:
 	sjump CeladonPrizeRoom_CancelPurchaseScript
 
 .Pikachu:
-	checkcoins CELADONGAMECORNERPRIZEROOM_PIKACHU_COINS
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER1_COINS
 	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
@@ -158,11 +162,11 @@ CeladonGameCornerPrizeRoomPokemonVendor:
 	setval PIKACHU
 	special GameCornerPrizeMonCheckDex
 	givepoke PIKACHU, 25
-	takecoins CELADONGAMECORNERPRIZEROOM_PIKACHU_COINS
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER1_COINS
 	sjump .loop
 
 .Porygon:
-	checkcoins CELADONGAMECORNERPRIZEROOM_PORYGON_COINS
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER2_COINS
 	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
@@ -176,11 +180,11 @@ CeladonGameCornerPrizeRoomPokemonVendor:
 	setval WOBBUFFET
 	special GameCornerPrizeMonCheckDex
 	givepoke WOBBUFFET, 15
-	takecoins CELADONGAMECORNERPRIZEROOM_PORYGON_COINS
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER2_COINS
 	sjump .loop
 
 .Larvitar:
-	checkcoins CELADONGAMECORNERPRIZEROOM_LARVITAR_COINS
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER3_COINS
 	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
@@ -194,7 +198,7 @@ CeladonGameCornerPrizeRoomPokemonVendor:
 	setval LARVITAR
 	special GameCornerPrizeMonCheckDex
 	givepoke LARVITAR, 40
-	takecoins CELADONGAMECORNERPRIZEROOM_LARVITAR_COINS
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER3_COINS
 	sjump .loop
 
 .MenuHeader:
@@ -206,10 +210,169 @@ CeladonGameCornerPrizeRoomPokemonVendor:
 .MenuData:
 	db STATICMENU_CURSOR ; flags
 	db 4 ; items
-	db "PIKACHU    {d:CELADONGAMECORNERPRIZEROOM_PIKACHU_COINS}@"
-	db "WOBBUFFET  {d:CELADONGAMECORNERPRIZEROOM_PORYGON_COINS}@"
-	db "LARVITAR   {d:CELADONGAMECORNERPRIZEROOM_LARVITAR_COINS}@"
+	db "PIKACHU    {d:CELADONGAMECORNERPRIZEROOM_TIER1_COINS}@"
+	db "WOBBUFFET  {d:CELADONGAMECORNERPRIZEROOM_TIER2_COINS}@"
+	db "LARVITAR   {d:CELADONGAMECORNERPRIZEROOM_TIER3_COINS}@"
 	db "CANCEL@"
+
+.loopB
+	writetext CeladonPrizeRoom_AskWhichPrizeText
+	special DisplayCoinCaseBalance
+	loadmenu .MenuHeaderB
+	verticalmenu
+	closewindow
+	ifequal 1, .Growlithe
+	ifequal 2, .MrMime
+	ifequal 3, .Chansey
+	sjump CeladonPrizeRoom_CancelPurchaseScript
+
+.Growlithe:
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER1_COINS
+	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
+	getmonname STRING_BUFFER_3, GROWLITHE
+	scall CeladonPrizeRoom_askbuy
+	iffalse CeladonPrizeRoom_CancelPurchaseScript
+	waitsfx
+	playsound SFX_TRANSACTION
+	writetext CeladonPrizeRoom_HereYouGoText
+	waitbutton
+	setval GROWLITHE
+	special GameCornerPrizeMonCheckDex
+	givepoke GROWLITHE, 25
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER1_COINS
+	sjump .loopB
+
+.MrMime:
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER2_COINS
+	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
+	getmonname STRING_BUFFER_3, MR__MIME
+	scall CeladonPrizeRoom_askbuy
+	iffalse CeladonPrizeRoom_CancelPurchaseScript
+	waitsfx
+	playsound SFX_TRANSACTION
+	writetext CeladonPrizeRoom_HereYouGoText
+	waitbutton
+	setval MR__MIME
+	special GameCornerPrizeMonCheckDex
+	givepoke MR__MIME, 15
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER2_COINS
+	sjump .loopB
+
+.Chansey:
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER3_COINS
+	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
+	getmonname STRING_BUFFER_3, CHANSEY
+	scall CeladonPrizeRoom_askbuy
+	iffalse CeladonPrizeRoom_CancelPurchaseScript
+	waitsfx
+	playsound SFX_TRANSACTION
+	writetext CeladonPrizeRoom_HereYouGoText
+	waitbutton
+	setval CHANSEY
+	special GameCornerPrizeMonCheckDex
+	givepoke CHANSEY, 40
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER3_COINS
+	sjump .loopB
+
+.loopC
+	writetext CeladonPrizeRoom_AskWhichPrizeText
+	special DisplayCoinCaseBalance
+	loadmenu .MenuHeaderC
+	verticalmenu
+	closewindow
+	ifequal 1, .Vulpix
+	ifequal 2, .Sneasel
+	ifequal 3, .Kangaskhan
+	sjump CeladonPrizeRoom_CancelPurchaseScript
+
+.Vulpix:
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER1_COINS
+	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
+	getmonname STRING_BUFFER_3, VULPIX
+	scall CeladonPrizeRoom_askbuy
+	iffalse CeladonPrizeRoom_CancelPurchaseScript
+	waitsfx
+	playsound SFX_TRANSACTION
+	writetext CeladonPrizeRoom_HereYouGoText
+	waitbutton
+	setval VULPIX
+	special GameCornerPrizeMonCheckDex
+	givepoke VULPIX, 25
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER1_COINS
+	sjump .loopC
+
+.Sneasel:
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER2_COINS
+	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
+	getmonname STRING_BUFFER_3, SNEASEL
+	scall CeladonPrizeRoom_askbuy
+	iffalse CeladonPrizeRoom_CancelPurchaseScript
+	waitsfx
+	playsound SFX_TRANSACTION
+	writetext CeladonPrizeRoom_HereYouGoText
+	waitbutton
+	setval SNEASEL
+	special GameCornerPrizeMonCheckDex
+	givepoke SNEASEL, 15
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER2_COINS
+	sjump .loopC
+
+.Kangaskhan:
+	checkcoins CELADONGAMECORNERPRIZEROOM_TIER3_COINS
+	ifequal HAVE_LESS, CeladonPrizeRoom_notenoughcoins
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, CeladonPrizeRoom_notenoughroom
+	getmonname STRING_BUFFER_3, KANGASKHAN
+	scall CeladonPrizeRoom_askbuy
+	iffalse CeladonPrizeRoom_CancelPurchaseScript
+	waitsfx
+	playsound SFX_TRANSACTION
+	writetext CeladonPrizeRoom_HereYouGoText
+	waitbutton
+	setval KANGASKHAN
+	special GameCornerPrizeMonCheckDex
+	givepoke KANGASKHAN, 40
+	takecoins CELADONGAMECORNERPRIZEROOM_TIER3_COINS
+	sjump .loopC
+
+.MenuHeaderB:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 2, 17, TEXTBOX_Y - 1
+	dw .MenuDataB
+	db 1 ; default option
+
+.MenuDataB:
+	db STATICMENU_CURSOR ; flags
+	db 4 ; items
+	db "GROWLITHE  {d:CELADONGAMECORNERPRIZEROOM_TIER1_COINS}@"
+	db "MR.MIME    {d:CELADONGAMECORNERPRIZEROOM_TIER2_COINS}@"
+	db "CHANSEY    {d:CELADONGAMECORNERPRIZEROOM_TIER3_COINS}@"
+	db "CANCEL@"
+
+.MenuHeaderC:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 2, 17, TEXTBOX_Y - 1
+	dw .MenuDataC
+	db 1 ; default option
+
+.MenuDataC:
+	db STATICMENU_CURSOR ; flags
+	db 4 ; items
+	db "VULPIX     {d:CELADONGAMECORNERPRIZEROOM_TIER1_COINS}@"
+	db "SNEASEL    {d:CELADONGAMECORNERPRIZEROOM_TIER2_COINS}@"
+	db "KANGASKHAN {d:CELADONGAMECORNERPRIZEROOM_TIER3_COINS}@"
+	db "CANCEL@"
+
 
 CeladonGameCornerPrizeRoomGentlemanText:
 	text "I wanted WOBBUFFET,"

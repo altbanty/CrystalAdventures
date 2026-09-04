@@ -8,9 +8,19 @@ PewterGym_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
 
 ; Gym swap pair 1 (see VioletGym.asm): roll if this gym is reached first,
 ; then show whoever holds this gym.
+; Reassert the swapped leader sprite at object-spawn time. The SPRITES
+; callback sets it for GFX loading, but only the OBJECTS callback is
+; guaranteed to run on every re-entry (sprite GFX can be cached and the
+; SPRITES pass skipped), so without this the Kanto guest reverted to the
+; home leader after the gym was beaten and re-entered.
+.LeaderSpriteObjects:
+	callasm ApplyPewterGymLeaderSprite
+	endcallback
+
 .LeaderSprite:
 	checkevent EVENT_GYM_PAIR_1_ROLLED
 	iftrue .SetSprite
@@ -33,7 +43,8 @@ PewterGymBrockScript:
 	waitbutton
 	closetext
 	winlosstext BrockWinLossText, 0
-	loadtrainer BROCK, BROCK1
+	setval 0
+	callasm LoadKantoGymTrainer
 	sjump .BrockLoadEnd
 
 ; Falkner holds Pewter Gym this run; the Boulder Badge flow is unchanged.
@@ -42,7 +53,8 @@ PewterGymBrockScript:
 	waitbutton
 	closetext
 	winlosstext FalknerGuestWinLossText, 0
-	loadtrainer FALKNER, FALKNER5
+	setval 1
+	callasm LoadKantoGymTrainer
 .BrockLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BROCK1
@@ -104,7 +116,8 @@ PewterGymBrockScript:
 .GuestFalknerRematch:
 	special HealParty
 	winlosstext FalknerGuestWinLossText, 0
-	loadtrainer FALKNER, FALKNER5
+	setval 1
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_guest
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -116,7 +129,8 @@ PewterGymBrockScript:
 .BrockRematch:
 	special HealParty
 	winlosstext Brock_RematchDefeatText, 0
-	loadtrainer BROCK, BROCK1
+	setval 0
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

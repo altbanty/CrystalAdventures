@@ -2397,6 +2397,81 @@ GetBoxCount:
 	dba sBox14
 	assert_table_length NUM_BOXES
 
+EnsureBoxHasRoom::
+; If the active box is full, switch the active box to the first box that has
+; room (saving the current box and loading the new one, exactly like a manual
+; box change). Returns carry set only if EVERY box is full (no room anywhere).
+; Used so a full current box no longer blocks catching when other boxes are open.
+	ld a, [wCurBox]
+	call .BoxCount           ; a = count of the active box
+	cp MONS_PER_BOX
+	jr nc, .activeFull
+	and a                    ; active box has room: nothing to do
+	ret
+
+.activeFull
+	ld d, 0                  ; scan every box for one with room
+.find
+	ld a, d
+	call .BoxCount
+	cp MONS_PER_BOX
+	jr c, .found
+	inc d
+	ld a, d
+	cp NUM_BOXES
+	jr c, .find
+	scf                      ; all boxes full
+	ret
+
+.found
+; d = a box with room (never the active box, which we know is full)
+	push de
+	farcall SaveBox
+	pop de
+	ld a, d
+	ld [wCurBox], a
+	farcall LoadBox
+	and a                    ; success
+	ret
+
+.BoxCount:
+; input:  a = box index (0 to NUM_BOXES-1)
+; output: a = number of mons in that box
+	ld b, a
+	ld a, [wCurBox]
+	cp b
+	jr z, .activeCount
+	ld a, [wSavedAtLeastOnce]
+	and a
+	jr z, .emptyCount        ; stored box data not valid until first save
+	ld a, b
+	ld c, a
+	ld b, 0
+	ld hl, GetBoxCount.BoxBankAddresses
+	add hl, bc
+	add hl, bc
+	add hl, bc
+	ld a, [hli]
+	ld b, a
+	call OpenSRAM
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, [hl]
+	call CloseSRAM
+	ret
+
+.emptyCount
+	xor a
+	ret
+
+.activeCount
+	ld a, BANK(sBoxCount)
+	call OpenSRAM
+	ld a, [sBoxCount]
+	call CloseSRAM
+	ret
+
 BillsPC_PrintBoxName:
 	hlcoord 0, 0
 	ld b, 2

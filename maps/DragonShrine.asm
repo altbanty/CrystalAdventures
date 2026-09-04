@@ -219,10 +219,20 @@ DragonShrineElder1Script:
 	waitbutton
 	readvar VAR_PARTYCOUNT
 	ifequal PARTY_LENGTH, .PartyFull
+	callasm PickShrineDragon
 	writetext DragonShrinePlayerReceivedDratiniText
 	playsound SFX_CAUGHT_MON
 	waitsfx
+	ifequal 1, .GiveLarvitar
+	ifequal 2, .GiveHorsea
 	givepoke DRATINI, 15
+	sjump .QuizReward
+.GiveLarvitar:
+	givepoke LARVITAR, 15
+	sjump .QuizReward
+.GiveHorsea:
+	givepoke HORSEA, 15
+.QuizReward:
 	checkevent EVENT_ANSWERED_DRAGON_MASTER_QUIZ_WRONG
 	special GiveDratini
 	setevent EVENT_GOT_DRATINI
@@ -512,7 +522,7 @@ DragonShrineTakeThisDratiniText:
 	para "I have something"
 	line "for you."
 
-	para "Take this DRATINI"
+	para "Take this #MON"
 	line "as proof that I"
 
 	para "have recognized"
@@ -521,7 +531,9 @@ DragonShrineTakeThisDratiniText:
 
 DragonShrinePlayerReceivedDratiniText:
 	text "<PLAYER> received"
-	line "DRATINI!"
+	line "@"
+	text_ram wStringBuffer1
+	text "!"
 	done
 
 DragonShrinePartyFullText:

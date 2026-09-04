@@ -20,7 +20,8 @@ SaffronGymSabrinaScript:
 	waitbutton
 	closetext
 	winlosstext SabrinaWinLossText, 0
-	loadtrainer SABRINA, SABRINA1
+	setval 9
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_SABRINA1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -60,7 +61,8 @@ SaffronGymSabrinaScript:
 .SabrinaRematch:
 	special HealParty
 	winlosstext Sabrina_RematchDefeatText, 0
-	loadtrainer SABRINA, SABRINA1
+	setval 9
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

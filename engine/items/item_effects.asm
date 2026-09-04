@@ -193,12 +193,10 @@ PokeBallEffect:
 	cp PARTY_LENGTH
 	jr nz, .room_in_party
 
-	ld a, BANK(sBoxCount)
-	call OpenSRAM
-	ld a, [sBoxCount]
-	cp MONS_PER_BOX
-	call CloseSRAM
-	jp z, Ball_BoxIsFullMessage
+	; A full current box no longer blocks the catch: switch to any box that
+	; has room. Only refuse if every box is full.
+	farcall EnsureBoxHasRoom
+	jp c, Ball_BoxIsFullMessage
 
 .room_in_party
 	xor a

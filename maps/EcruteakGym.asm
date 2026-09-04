@@ -14,6 +14,16 @@ EcruteakGym_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Reassert the swapped leader sprite at object-spawn time. The SPRITES
+; callback sets it for GFX loading, but only the OBJECTS callback is
+; guaranteed to run on every re-entry (sprite GFX can be cached and the
+; SPRITES pass skipped), so without this the Kanto guest reverted to the
+; home leader after the gym was beaten and re-entered.
+.LeaderSpriteObjects:
+	callasm ApplyEcruteakGymLeaderSprite
+	endcallback
 
 .LeaderSprite:
 	checkevent EVENT_GYM_PAIR_4_ROLLED
@@ -151,7 +161,8 @@ EcruteakGymMortyScript:
 .GuestErikaRematch:
 	special HealParty
 	winlosstext ErikaGuestWinLossText, 0
-	loadtrainer ERIKA, ERIKA1
+	setval 6
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_guest
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -336,16 +347,10 @@ Text_ReceivedFogBadge:
 	done
 
 MortyText_FogBadgeSpeech:
-	text "By having FOG-"
-	line "BADGE, #MON up"
+	text "FOGBADGE lets"
+	line "#MON that know"
 
-	para "to L50 will obey"
-	line "you."
-
-	para "Also, #MON that"
-	line "know SURF will be"
-
-	para "able to use that"
+	para "SURF use that"
 	line "move anytime."
 
 	para "I want you to have"

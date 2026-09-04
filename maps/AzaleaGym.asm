@@ -12,6 +12,16 @@ AzaleaGym_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Reassert the swapped leader sprite at object-spawn time. The SPRITES
+; callback sets it for GFX loading, but only the OBJECTS callback is
+; guaranteed to run on every re-entry (sprite GFX can be cached and the
+; SPRITES pass skipped), so without this the Kanto guest reverted to the
+; home leader after the gym was beaten and re-entered.
+.LeaderSpriteObjects:
+	callasm ApplyAzaleaGymLeaderSprite
+	endcallback
 
 .LeaderSprite:
 	checkevent EVENT_GYM_PAIR_2_ROLLED
@@ -139,7 +149,8 @@ AzaleaGymBugsyScript:
 .GuestMistyRematch:
 	special HealParty
 	winlosstext MistyGuestWinLossText, 0
-	loadtrainer MISTY, MISTY1
+	setval 2
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_guest
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -298,12 +309,6 @@ BugsyText_HiveBadgeSpeech:
 	text "Do you know the"
 	line "benefits of HIVE-"
 	cont "BADGE?"
-
-	para "If you have it,"
-	line "#MON up to L30"
-
-	para "will obey you,"
-	line "even traded ones."
 
 	para "#MON that know"
 	line "CUT will be able"

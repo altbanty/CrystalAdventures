@@ -199,12 +199,16 @@ FossilScientist:
 	faceplayer
 	opentext
 	checkevent EVENT_GAVE_SCIENTIST_OLD_AMBER
-	iftrue .GiveAerodactyl
+	iftrue .MachineUsed
 	checkevent EVENT_GAVE_SCIENTIST_DOME_FOSSIL
-	iftrue .GiveKabuto
+	iftrue .MachineUsed
 	checkevent EVENT_GAVE_SCIENTIST_HELIX_FOSSIL
-	iftrue .GiveOmanyte
+	iftrue .MachineUsed
 	writetext FossilScientistIntroText
+	waitbutton
+	readvar VAR_BADGES
+	if_less_than 4, .NotEnoughBadges
+	writetext FossilScientistOneShotText
 	waitbutton
 	loadmenu .MoveMenuHeader
 	verticalmenu
@@ -220,17 +224,18 @@ FossilScientist:
 	getmonname STRING_BUFFER_3, AERODACTYL
 	writetext FossilScientistMonText
 	promptbutton
-	readvar VAR_BADGES
-	if_greater_than 6, .GotSevenBadges
-	writetext MightTakeAWhileText
+	writetext FossilScientistConfirmText
 	yesorno
 	iffalse .No
-.GotSevenBadges:
-	setevent EVENT_GAVE_SCIENTIST_OLD_AMBER
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, .NoRoom
 	takeitem OLD_AMBER
-	writetext FossilScientistGiveText
-	waitbutton
-	sjump .GaveScientistFossil
+	setevent EVENT_GAVE_SCIENTIST_OLD_AMBER
+	scall .ReviveDrama
+	givepoke AERODACTYL, 20
+	callasm FinishFossilRevival
+	closetext
+	end
 
 .DomeFossil:
 	checkitem DOME_FOSSIL
@@ -238,12 +243,18 @@ FossilScientist:
 	getmonname STRING_BUFFER_3, KABUTO
 	writetext FossilScientistMonText
 	promptbutton
-	setevent EVENT_GAVE_SCIENTIST_DOME_FOSSIL
+	writetext FossilScientistConfirmText
+	yesorno
+	iffalse .No
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, .NoRoom
 	takeitem DOME_FOSSIL
-	opentext
-	writetext FossilScientistGiveText
-	waitbutton
-	sjump .GaveScientistFossil
+	setevent EVENT_GAVE_SCIENTIST_DOME_FOSSIL
+	scall .ReviveDrama
+	givepoke KABUTO, 20
+	callasm FinishFossilRevival
+	closetext
+	end
 
 .HelixFossil:
 	checkitem HELIX_FOSSIL
@@ -251,11 +262,34 @@ FossilScientist:
 	getmonname STRING_BUFFER_3, OMANYTE
 	writetext FossilScientistMonText
 	promptbutton
-	setevent EVENT_GAVE_SCIENTIST_HELIX_FOSSIL
+	writetext FossilScientistConfirmText
+	yesorno
+	iffalse .No
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, .NoRoom
 	takeitem HELIX_FOSSIL
+	setevent EVENT_GAVE_SCIENTIST_HELIX_FOSSIL
+	scall .ReviveDrama
+	givepoke OMANYTE, 20
+	callasm FinishFossilRevival
+	closetext
+	end
+
+.ReviveDrama:
 	writetext FossilScientistGiveText
 	waitbutton
-	sjump .GaveScientistFossil
+	closetext
+	special FadeBlackQuickly
+	special ReloadSpritesNoPalettes
+	playsound SFX_WARP_TO
+	waitsfx
+	pause 35
+	opentext
+	writetext FossilScientistReceiveText
+	playsound SFX_CAUGHT_MON
+	waitsfx
+	waitbutton
+	end
 
 .No
 	writetext FossilScientistNoText
@@ -263,68 +297,14 @@ FossilScientist:
 	closetext
 	end
 
-.GaveScientistFossil:
-	closetext
-	special FadeBlackQuickly
-	special ReloadSpritesNoPalettes
-	playsound SFX_WARP_TO
-	waitsfx
-	pause 35
-	sjump FossilScientist
-
-.GiveAerodactyl:
-	readvar VAR_BADGES
-	if_less_than 7, .NotEnoughBadges
-	readvar VAR_PARTYCOUNT
-	ifequal PARTY_LENGTH, .NoRoom
-	clearevent EVENT_GAVE_SCIENTIST_OLD_AMBER
-	writetext FossilScientistDoneText
-	promptbutton
-	getmonname STRING_BUFFER_3, AERODACTYL
-	writetext FossilScientistReceiveText
-	playsound SFX_CAUGHT_MON
-	waitsfx
+.MachineUsed:
+	writetext FossilScientistMachineUsedText
 	waitbutton
-	givepoke AERODACTYL, 25
 	closetext
 	end
 
-.GiveKabuto:
-	readvar VAR_BADGES
-	if_less_than 3, .NotEnoughBadges
-	readvar VAR_PARTYCOUNT
-	ifequal PARTY_LENGTH, .NoRoom
-	clearevent EVENT_GAVE_SCIENTIST_DOME_FOSSIL
-	writetext FossilScientistDoneText
-	promptbutton
-	getmonname STRING_BUFFER_3, KABUTO
-	writetext FossilScientistReceiveText
-	playsound SFX_CAUGHT_MON
-	waitsfx
-	waitbutton
-	givepoke KABUTO, 15
-	closetext
-	end
-
-.GiveOmanyte:
-	readvar VAR_BADGES
-	if_less_than 4, .NotEnoughBadges
-	readvar VAR_PARTYCOUNT
-	ifequal PARTY_LENGTH, .NoRoom
-	clearevent EVENT_GAVE_SCIENTIST_HELIX_FOSSIL
-	writetext FossilScientistDoneText
-	promptbutton
-	getmonname STRING_BUFFER_3, OMANYTE
-	writetext FossilScientistReceiveText
-	playsound SFX_CAUGHT_MON
-	waitsfx
-	waitbutton
-	givepoke OMANYTE, 20
-	closetext
-	end
-	
 .NotEnoughBadges
-	writetext FossilScientistTimeText
+	writetext FossilScientistBadgeGateText
 	waitbutton
 	closetext
 	end
@@ -368,15 +348,53 @@ FossilScientistIntroText:
 	line "fossil for me?"
 	done
 
-MightTakeAWhileText:
-	text "But this one"
-	line "could take a"
-	cont "long time."
+FossilScientistOneShotText:
+	text "But listen! My"
+	line "machine is old!"
 
-	para "Are you sure"
-	line "you don't want"
-	cont "any other fossils"
-	cont "revived first?"
+	para "It survive only"
+	line "ONE revival, then"
+	cont "kaput forever!"
+
+	para "One fossil come"
+	line "back. The others"
+	cont "stay stone!"
+
+	para "Choose careful!"
+	done
+
+FossilScientistConfirmText:
+	text "Revive @"
+	text_ram wStringBuffer3
+	text "?"
+
+	para "Machine break"
+	line "after! No other"
+	cont "fossil can ever"
+	cont "be revived!"
+
+	para "You are sure?"
+	done
+
+FossilScientistBadgeGateText:
+	text "But my machine"
+	line "need big power!"
+
+	para "You come back"
+	line "when you have 4"
+	cont "GYM BADGES!"
+	done
+
+FossilScientistMachineUsedText:
+	text "Machine is kaput!"
+
+	para "It revive one"
+	line "fossil, then no"
+	cont "more forever."
+
+	para "You take good"
+	line "care of ancient"
+	cont "#MON!"
 	done
 
 FossilScientistNoText:
@@ -390,24 +408,6 @@ FossilScientistPartyFullText:
 
 	para "Your party is"
 	line "already full!"
-	done
-
-FossilScientistTimeText:
-	text "Wow this one is"
-	line "quite complex..."
-
-	para "I take a little"
-	line "time!"
-
-	para "You go for walk a"
-	line "little while!"
-	done
-
-FossilScientistDoneText:
-	text "Where were you?"
-
-	para "Your fossil is"
-	line "back to life!"
 	done
 
 FossilScientistMonText:

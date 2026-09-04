@@ -57,7 +57,7 @@ KogaScript_Battle:
 	winlosstext KogaScript_KogaBeatenText, 0
 	readvar VAR_BADGES
 	if_greater_than 15, .Rematch
-	loadtrainer KOGA, KOGA1
+	callasm LoadKogaTrainer
 	sjump .LoadtrainerEnd
 .Rematch:
 	loadtrainer KOGA, 2

@@ -3230,8 +3230,19 @@ wUnusedTwoDayTimer:: db
 wUnusedTwoDayTimerStartDate:: db
 	ds 4
 wMobileOrCable_LastSelection:: db
-wdc41:: ds 1
-wdc42:: ds 8
+; wdc41/wdc42 are only used by the unreachable JP mobile-adapter code;
+; their first two bytes are repurposed for the Elite Four team rolls.
+wdc41::
+wEliteFourTeamChoices:: ds 1 ; bit 7 = init flag, bits 5-4 = Will, bits 3-2 = Koga, bits 1-0 = Bruno
+wdc42::
+wEliteFourTeamChoices2:: ds 1 ; bits 3-2 = Karen, bits 1-0 = Lance
+wKantoGymTeamChoices::  ds 1 ; bit 7 = init, bits 5-4 Pewter, 3-2 Cerulean, 1-0 Vermilion
+wKantoGymTeamChoices2:: ds 1 ; bits 7-6 Celadon, 5-4 Fuchsia, 3-2 Saffron, 1-0 Seafoam
+wKantoGymTeamChoices3:: ds 1 ; bits 1-0 Viridian
+wGameCornerLineups::    ds 1 ; bit 7 = init, bits 5-4/3-2/1-0 = Goldenrod 500/800/1500-coin prize
+wRedTeamChoice::        ds 1 ; bit 7 = init, bits 2-0 Red's team variant (0-4)
+wGameCornerLineups2::   ds 1 ; bits 1-0 Celadon lineup
+	ds 1
 wBuenasPassword:: db
 wBlueCardBalance:: db
 wDailyRematchFlags:: ds 4

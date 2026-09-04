@@ -16,7 +16,8 @@ ViridianGymBlueScript:
 	waitbutton
 	closetext
 	winlosstext LeaderBlueWinText, 0
-	loadtrainer BLUE, BLUE1
+	setval 11
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BLUE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -60,7 +61,7 @@ ViridianGymBlueScript:
 .BlueRematch:
 	special HealParty
 	winlosstext Blue_RematchDefeatText, 0
-	loadtrainer BLUE, BLUE1
+	loadtrainer BLUE, 2
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

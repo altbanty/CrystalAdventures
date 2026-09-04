@@ -18,7 +18,7 @@ OlivineGymJasmineScript:
 	winlosstext Jasmine_BetterTrainer, 0
 	;  Level scaling + team randomization
 	readvar VAR_BADGES
-	ifequal 6, .SevenBadges
+	ifgreater 5, .SevenBadges
 	ifequal 5, .SixBadges
 .FiveBadges:
 	setval 0           ; tier 1 base

@@ -10,6 +10,16 @@ VermilionGym_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Reassert the swapped leader sprite at object-spawn time. The SPRITES
+; callback sets it for GFX loading, but only the OBJECTS callback is
+; guaranteed to run on every re-entry (sprite GFX can be cached and the
+; SPRITES pass skipped), so without this the Kanto guest reverted to the
+; home leader after the gym was beaten and re-entered.
+.LeaderSpriteObjects:
+	callasm ApplyVermilionGymLeaderSprite
+	endcallback
 
 .LeaderSprite:
 	checkevent EVENT_GYM_PAIR_3_ROLLED
@@ -33,7 +43,8 @@ VermilionGymSurgeScript:
 	waitbutton
 	closetext
 	winlosstext LtSurgeWinLossText, 0
-	loadtrainer LT_SURGE, LT_SURGE1
+	setval 4
+	callasm LoadKantoGymTrainer
 	sjump .SurgeLoadEnd
 
 ; Whitney holds Vermilion Gym this run (gym swap pair 3).
@@ -42,7 +53,8 @@ VermilionGymSurgeScript:
 	waitbutton
 	closetext
 	winlosstext WhitneyGuestWinLossText, 0
-	loadtrainer WHITNEY, WHITNEY5
+	setval 5
+	callasm LoadKantoGymTrainer
 .SurgeLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_LT_SURGE1
@@ -106,7 +118,8 @@ VermilionGymSurgeScript:
 .GuestWhitneyRematch:
 	special HealParty
 	winlosstext WhitneyGuestWinLossText, 0
-	loadtrainer WHITNEY, WHITNEY5
+	setval 5
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_guest
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -118,7 +131,8 @@ VermilionGymSurgeScript:
 .SurgeRematch:
 	special HealParty
 	winlosstext Surge_RematchDefeatText, 0
-	loadtrainer LT_SURGE, LT_SURGE1
+	setval 4
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

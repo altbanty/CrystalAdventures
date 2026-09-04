@@ -7191,6 +7191,7 @@ GiveExperiencePoints:
 	ldh [hDivisor], a
 	ld b, 4
 	call Divide
+	farcall ApplyExpTuning
 ; Boost Experience for traded Pokemon
 	pop bc
 	ld hl, MON_ID

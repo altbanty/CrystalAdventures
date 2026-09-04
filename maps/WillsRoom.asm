@@ -57,7 +57,7 @@ WillScript_Battle:
 	winlosstext WillScript_WillBeatenText, 0
 	readvar VAR_BADGES
 	if_greater_than 15, .Rematch
-	loadtrainer WILL, WILL1
+	callasm LoadWillTrainer
 	sjump .LoadtrainerEnd
 .Rematch:
 	loadtrainer WILL, 2

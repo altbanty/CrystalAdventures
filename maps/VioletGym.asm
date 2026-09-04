@@ -9,10 +9,20 @@ VioletGym_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
 
 ; Gym swap pair 1: roll the coin once per save (first gym of the pair
 ; entered), then point the shared gym leader sprite at whoever holds
 ; this gym.
+; Reassert the swapped leader sprite at object-spawn time. The SPRITES
+; callback sets it for GFX loading, but only the OBJECTS callback is
+; guaranteed to run on every re-entry (sprite GFX can be cached and the
+; SPRITES pass skipped), so without this the Kanto guest reverted to the
+; home leader after the gym was beaten and re-entered.
+.LeaderSpriteObjects:
+	callasm ApplyVioletGymLeaderSprite
+	endcallback
+
 .LeaderSprite:
 	checkevent EVENT_GYM_PAIR_1_ROLLED
 	iftrue .SetSprite
@@ -140,7 +150,8 @@ VioletGymFalknerScript:
 .GuestBrockRematch:
 	special HealParty
 	winlosstext BrockGuestWinLossText, 0
-	loadtrainer BROCK, BROCK1
+	setval 0
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_guest_rematch
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

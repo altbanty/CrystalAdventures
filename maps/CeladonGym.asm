@@ -11,6 +11,16 @@ CeladonGym_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Reassert the swapped leader sprite at object-spawn time. The SPRITES
+; callback sets it for GFX loading, but only the OBJECTS callback is
+; guaranteed to run on every re-entry (sprite GFX can be cached and the
+; SPRITES pass skipped), so without this the Kanto guest reverted to the
+; home leader after the gym was beaten and re-entered.
+.LeaderSpriteObjects:
+	callasm ApplyCeladonGymLeaderSprite
+	endcallback
 
 .LeaderSprite:
 	checkevent EVENT_GYM_PAIR_4_ROLLED
@@ -34,7 +44,8 @@ CeladonGymErikaScript:
 	waitbutton
 	closetext
 	winlosstext ErikaBeatenText, 0
-	loadtrainer ERIKA, ERIKA1
+	setval 6
+	callasm LoadKantoGymTrainer
 	sjump .ErikaLoadEnd
 
 ; Morty holds Celadon Gym this run (gym swap pair 4).
@@ -43,7 +54,8 @@ CeladonGymErikaScript:
 	waitbutton
 	closetext
 	winlosstext MortyGuestWinLossText, 0
-	loadtrainer MORTY, MORTY5
+	setval 7
+	callasm LoadKantoGymTrainer
 .ErikaLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_ERIKA1
@@ -111,7 +123,8 @@ CeladonGymErikaScript:
 .GuestMortyRematch:
 	special HealParty
 	winlosstext MortyGuestWinLossText, 0
-	loadtrainer MORTY, MORTY5
+	setval 7
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_guest
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -123,7 +136,8 @@ CeladonGymErikaScript:
 .ErikaRematch:
 	special HealParty
 	winlosstext Erika_RematchDefeatText, 0
-	loadtrainer ERIKA, ERIKA1
+	setval 6
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

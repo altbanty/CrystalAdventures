@@ -40,7 +40,7 @@ CianwoodGymChuckScript:
 	winlosstext ChuckLossText, 0
 	;  Level scaling + team randomization
 	readvar VAR_BADGES
-	ifequal 6, .SevenBadges
+	ifgreater 5, .SevenBadges
 	ifequal 5, .SixBadges
 .FiveBadges:
 	setval 0           ; tier 1 base
@@ -263,17 +263,11 @@ GetStormBadgeText:
 	done
 
 ChuckExplainBadgeText:
-	text "STORMBADGE makes"
-	line "all #MON up to"
+	text "STORMBADGE lets"
+	line "your #MON use"
 
-	para "L70 obey, even"
-	line "traded ones."
-
-	para "It also lets your"
-	line "#MON use FLY"
-
-	para "when you're not in"
-	line "a battle."
+	para "FLY when you're"
+	line "not in a battle."
 
 	para "Here, take this"
 	line "too!"

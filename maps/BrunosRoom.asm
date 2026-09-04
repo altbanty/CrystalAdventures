@@ -57,7 +57,7 @@ BrunoScript_Battle:
 	winlosstext BrunoScript_BrunoBeatenText, 0
 	readvar VAR_BADGES
 	if_greater_than 15, .Rematch
-	loadtrainer BRUNO, BRUNO1
+	callasm LoadBrunoTrainer
 	sjump .LoadtrainerEnd
 .Rematch:
 	loadtrainer BRUNO, 2

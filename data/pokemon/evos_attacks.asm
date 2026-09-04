@@ -2513,14 +2513,16 @@ SpinarakEvosAttacks:
 	db 1, STRING_SHOT
 	db 6, SCARY_FACE
 	db 9, LEECH_LIFE
-	db 12, CONSTRICT
+	db 12, PURSUIT
 	db 17, NIGHT_SHADE
 	db 21, TWINEEDLE
 	db 25, FURY_SWIPES
+	db 29, FAINT_ATTACK
 	db 33, SPIDER_WEB
 	db 38, GIGA_DRAIN
 	db 43, PSYCHIC_M
 	db 47, MEGAHORN
+	db 50, CRUNCH
 	db 53, AGILITY
 	db 0 ; no more level-up moves
 
@@ -2530,14 +2532,16 @@ AriadosEvosAttacks:
 	db 1, STRING_SHOT
 	db 1, SCARY_FACE
 	db 1, LEECH_LIFE
-	db 12, CONSTRICT
+	db 12, PURSUIT
 	db 17, NIGHT_SHADE
 	db 21, TWINEEDLE
 	db 25, FURY_SWIPES
+	db 29, FAINT_ATTACK
 	db 33, SPIDER_WEB
 	db 38, GIGA_DRAIN
 	db 43, PSYCHIC_M
 	db 47, MEGAHORN
+	db 50, CRUNCH
 	db 53, AGILITY
 	db 0 ; no more level-up moves
 

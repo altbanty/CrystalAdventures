@@ -67,7 +67,7 @@ LancesRoomLanceScript:
 	setlasttalked LANCESROOM_LANCE
 	readvar VAR_BADGES
 	if_greater_than 15, .Rematch
-	loadtrainer CHAMPION, LANCE
+	callasm LoadLanceTrainer
 	sjump .LoadtrainerEnd
 .Rematch:
 	loadtrainer CHAMPION, 2

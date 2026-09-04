@@ -57,7 +57,7 @@ KarenScript_Battle:
 	winlosstext KarenScript_KarenBeatenText, 0
 	readvar VAR_BADGES
 	if_greater_than 15, .Rematch
-	loadtrainer KAREN, KAREN1
+	callasm LoadKarenTrainer
 	sjump .LoadtrainerEnd
 .Rematch:
 	loadtrainer KAREN, 2

@@ -145,8 +145,13 @@ ApplyTraining::
 ; kept in sync at every level so nothing can desync mid-parade.
 ; The move-learn prompts clobber the wStringBuffer scratch, so the
 ; target level is stashed in hMoneyTemp (payment is already complete).
+; Map sprites are hidden for the duration: the move-forget menu comes
+; from the pack/battle flow and draws with no BG priority, so live OAM
+; sprites would render on top of it (they're restored at .levels_done).
 	ld a, [wStringBuffer2 + 4]
 	ldh [hMoneyTemp], a
+	call ClearSprites
+	call DisableSpriteUpdates
 .level_loop
 	ld a, MON_LEVEL
 	call GetPartyParamLocation
@@ -228,6 +233,8 @@ ApplyTraining::
 	jp .level_loop
 
 .levels_done
+	call EnableSpriteUpdates
+	call UpdateSprites
 	; the prompts clobber the string buffers; restore the level byte
 	; that TrainingDoneText displays
 	ld a, MON_LEVEL

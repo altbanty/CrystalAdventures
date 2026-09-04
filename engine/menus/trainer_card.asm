@@ -292,6 +292,7 @@ TrainerCard_Page1_PrintDexCaught_GameTime:
 	lb bc, 1, 3
 	call PrintNum
 	call TrainerCard_Page1_PrintGameTime
+	call TrainerCard_Page1_PrintLevelCap
 	hlcoord 2, 8
 	ld de, .StatusTilemap
 	call TrainerCardSetup_PlaceTilemapString
@@ -470,6 +471,38 @@ TrainerCard_Page1_PrintGameTime:
 	xor " " ^ $2e ; alternate between space and small colon ($2e) tiles
 	ld [hl], a
 	ret
+
+TrainerCard_Page1_PrintLevelCap:
+; Adventure Mode only: show the current level cap under PLAY TIME.
+	ld de, ENGINE_ADVENTURE_MODE
+	ld b, CHECK_FLAG
+	farcall EngineFlagAction
+	ld a, c
+	and a
+	ret z                    ; not Adventure Mode: no cap line
+	hlcoord 2, 14
+	ld de, .Cap
+	call PlaceString
+	ld a, [wLevelCap]
+	cp 100
+	jr nc, .maxed
+	hlcoord 7, 14
+	ld de, .LevelPrefix
+	call PlaceString
+	ld de, wLevelCap
+	hlcoord 8, 14
+	lb bc, 1, 2
+	call PrintNum
+	ret
+.maxed
+	hlcoord 7, 14
+	ld de, .Maxed
+	call PlaceString
+	ret
+
+.Cap:         db "CAP:@"
+.LevelPrefix: db "L@"
+.Maxed:       db "MAX@"
 
 TrainerCard_Page2_3_AnimateBadges:
 	ldh a, [hVBlankCounter]

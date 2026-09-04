@@ -27,6 +27,9 @@ InitGymTMs:
 
 BuildRandomByte:
 ; Build a byte with c packed 2-bit random values (0-2).
+; DelayFrame between draws: back-to-back Random calls advance the seed
+; by a near-constant rDIV delta, correlating the packed fields. A frame
+; apart, the VBlank RNG stir makes each draw independent.
 	xor a
 	ld b, a
 .loop:
@@ -34,6 +37,7 @@ BuildRandomByte:
 	rlca
 	rlca
 	ld b, a
+	call DelayFrame
 	ld a, 3
 	call RandomRange
 	or b
@@ -557,6 +561,13 @@ RollGymSwaps::
 ; Roll every gym swap pair at new game, before the player can observe or
 ; save-scum any outcome. The lazy rolls in the gym SPRITES callbacks remain
 ; only as a migration fallback for saves from before this feature.
+;
+; All four coin flips come from separate bits of ONE Random sample.
+; Back-to-back Random calls are correlated (rDIV barely advances between
+; them, and RandomRange 2 reduces to parity), which used to make all four
+; pairs swap - or stay home - together far too often.
+	call Random
+	ld c, a                  ; c = flip bits; pair N uses bit N
 	ld hl, .PairFlags
 .loop
 	ld a, [hli]
@@ -566,25 +577,25 @@ RollGymSwaps::
 	and e
 	inc a
 	jr z, .done              ; dw -1 sentinel
+	push bc
 	push hl
 	ld b, SET_FLAG
 	call EventFlagAction     ; mark pair rolled
 	pop hl
+	pop bc
 	ld a, [hli]
 	ld e, a
 	ld a, [hli]
 	ld d, a
+	srl c                    ; this pair's flip -> carry
+	jr nc, .next             ; heads: home leaders
+	push bc
 	push hl
-	push de
-	ld a, 2
-	call RandomRange
-	pop de
-	and a
-	jr z, .next              ; heads: home leaders
 	ld b, SET_FLAG
 	call EventFlagAction     ; tails: swapped
-.next
 	pop hl
+	pop bc
+.next
 	jr .loop
 .done
 	ret
@@ -595,3 +606,196 @@ RollGymSwaps::
 	dw EVENT_GYM_PAIR_3_ROLLED, EVENT_GYM_PAIR_3_SWAPPED
 	dw EVENT_GYM_PAIR_4_ROLLED, EVENT_GYM_PAIR_4_SWAPPED
 	dw -1, -1
+
+; --- Elite Four / Champion team variants ---
+; Rolled once per save (same pattern as InitScaledGymTeams). Party IDs within
+; each class: 1 = original first fight, 2 = badge-16 rematch, 3/4 = variants.
+InitEliteFourTeams:
+	ld a, [wEliteFourTeamChoices]
+	bit 7, a
+	ret nz
+	ld c, 3
+	call BuildRandomByte
+	or %10000000             ; set init flag
+	ld [wEliteFourTeamChoices], a
+	ld c, 2
+	call BuildRandomByte
+	ld [wEliteFourTeamChoices2], a
+	ret
+
+LoadWillTrainer::
+	ld hl, wEliteFourTeamChoices
+	ld c, %00110000          ; Will mask (bits 5-4)
+	ld b, 4                  ; shift count
+	ld e, WILL
+	jr _LoadEliteFourTrainer
+
+LoadKogaTrainer::
+	ld hl, wEliteFourTeamChoices
+	ld c, %00001100          ; Koga mask (bits 3-2)
+	ld b, 2
+	ld e, KOGA
+	jr _LoadEliteFourTrainer
+
+LoadBrunoTrainer::
+	ld hl, wEliteFourTeamChoices
+	ld c, %00000011          ; Bruno mask (bits 1-0)
+	ld b, 0
+	ld e, BRUNO
+	jr _LoadEliteFourTrainer
+
+LoadKarenTrainer::
+	ld hl, wEliteFourTeamChoices2
+	ld c, %00001100          ; Karen mask (bits 3-2)
+	ld b, 2
+	ld e, KAREN
+	jr _LoadEliteFourTrainer
+
+LoadLanceTrainer::
+	ld hl, wEliteFourTeamChoices2
+	ld c, %00000011          ; Lance mask (bits 1-0)
+	ld b, 0
+	ld e, CHAMPION
+	; fall through
+
+_LoadEliteFourTrainer:
+	push bc
+	push de
+	push hl
+	call InitEliteFourTeams
+	pop hl
+	pop de
+	pop bc
+	ld a, [hl]
+	and c                    ; mask the relevant bits
+	inc b
+.shift_loop:
+	dec b
+	jr z, .shift_done
+	srl a
+	jr .shift_loop
+.shift_done:
+	cp 3                     ; guard against corrupt saves
+	jr c, .valid
+	xor a
+.valid:
+	; a = variant (0-2) -> party ID: 0 -> 1, 1 -> 3, 2 -> 4
+	and a
+	jr z, .first
+	inc a                    ; skip the rematch slot (ID 2)
+.first:
+	inc a                    ; 1-based trainer ID
+	ld [wOtherTrainerID], a
+	ld a, e
+	ld [wOtherTrainerClass], a
+	ld a, (1 << 7) | 1
+	ld [wBattleScriptFlags], a
+	ret
+
+; --- Randomized Dragon Shrine Gift Pokemon ---
+; 40% Dratini, 30% Larvitar, 30% Horsea
+; Output: wScriptVar = 0-2 index; species name in wStringBuffer1
+PickShrineDragon::
+	ld a, 100
+	call RandomRange ; a = 0-99
+	cp 40
+	jr c, .dratini     ; 0-39 (40%)
+	cp 70
+	jr c, .larvitar    ; 40-69 (30%)
+	; 70-99 (30%)
+	ld b, 2
+	ld a, HORSEA
+	jr .done_shrine
+.dratini:
+	ld b, 0
+	ld a, DRATINI
+	jr .done_shrine
+.larvitar:
+	ld b, 1
+	ld a, LARVITAR
+.done_shrine:
+	ld [wNamedObjectIndex], a
+	ld a, b
+	ld [wScriptVar], a
+	call GetPokemonName
+	ret
+
+; --- Fossil revival bonus roll ---
+; Called right after the revived fossil Pokemon is added to the party.
+; Uses the save's trainer ID as a per-save roll (no save-scumming):
+; bits 1-0 pick the held item, bit 2 awards the "awakened" AncientPower
+; moveset (50% of saves).
+FinishFossilRevival::
+	ld a, [wPartyCount]
+	dec a
+	ld hl, wPartyMon1Species
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+	; hl = species byte of the revived mon
+	push hl
+	ld a, [wPlayerID + 1]
+	and %11
+	ld c, a
+	ld b, 0
+	ld hl, .ItemPool
+	add hl, bc
+	ld a, [hl]
+	pop hl
+	push hl
+	inc hl                   ; MON_ITEM
+	ld [hl], a
+	pop hl
+	ld a, [wPlayerID + 1]
+	bit 2, a
+	ret z                    ; this save keeps natural level-up moves
+	ld a, [hl]
+	push hl
+	ld hl, .KabutoMoves
+	cp KABUTO
+	jr z, .apply
+	ld hl, .OmanyteMoves
+	cp OMANYTE
+	jr z, .apply
+	ld hl, .AerodactylMoves
+	cp AERODACTYL
+	jr z, .apply
+	pop hl
+	ret
+
+.apply:
+	pop de
+	inc de
+	inc de                   ; MON_MOVES
+
+.CopyMoves:
+	ld a, [hl]
+	and a ; end of moveset?
+	ret z
+	push hl
+	push de
+	ld [de], a
+	; look up and set the move's PP
+	dec a
+	ld hl, Moves + MOVE_PP
+	ld bc, MOVE_LENGTH
+	call AddNTimes
+	ld a, BANK(Moves)
+	call GetFarByte
+	ld hl, MON_PP - MON_MOVES
+	add hl, de
+	ld [hl], a
+	pop de
+	pop hl
+	inc de
+	inc hl
+	jr .CopyMoves
+
+.ItemPool:
+	db HARD_STONE, MYSTIC_WATER, QUICK_CLAW, GOLD_BERRY
+
+.KabutoMoves:
+	db ABSORB, SLASH, ANCIENTPOWER, HARDEN, 0
+.OmanyteMoves:
+	db WATER_GUN, ANCIENTPOWER, BITE, WITHDRAW, 0
+.AerodactylMoves:
+	db WING_ATTACK, ANCIENTPOWER, BITE, AGILITY, 0

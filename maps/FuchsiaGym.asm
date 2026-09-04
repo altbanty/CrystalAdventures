@@ -21,7 +21,8 @@ FuchsiaGymJanineScript:
 	waitbutton
 	closetext
 	winlosstext JanineText_ToughOne, 0
-	loadtrainer JANINE, JANINE1
+	setval 8
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JANINE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -75,7 +76,8 @@ FuchsiaGymJanineScript:
 .JanineRematch:
 	special HealParty
 	winlosstext Janine_RematchDefeatText, 0
-	loadtrainer JANINE, JANINE1
+	setval 8
+	callasm LoadKantoGymTrainer
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_2
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS

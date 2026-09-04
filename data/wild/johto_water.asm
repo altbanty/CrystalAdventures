@@ -32,9 +32,9 @@ JohtoWaterWildMons:
 
 	def_water_wildmons SLOWPOKE_WELL_B1F
 	db 2 percent ; encounter rate
-	db 15, SLOWPOKE
-	db 20, PSYDUCK
-	db 10, SLOWPOKE
+	db 16, SLOWPOKE
+	db 21, PSYDUCK
+	db 11, SLOWPOKE
 	end_water_wildmons
 
 	def_water_wildmons SLOWPOKE_WELL_B2F
