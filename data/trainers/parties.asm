@@ -6236,11 +6236,9 @@ FalknerGroup:
 	db  10, XATU,     BERRY,    PECK, NIGHT_SHADE, CONFUSION, LEER
 	db -1 ; end
 
-	; FALKNER (2): Spearow / Pidgeotto / Xatu
+	; FALKNER (2): lone Skarmory (lucky short roll)
 	db "FALKNER@", TRAINERTYPE_ITEM_MOVES
-	db  8,  SPEAROW,   NO_ITEM,  PECK, GROWL, LEER, NO_MOVE
-	db  9,  PIDGEOTTO, NO_ITEM,  TACKLE, SAND_ATTACK, GUST, QUICK_ATTACK
-	db  10, XATU,      BERRY,    PECK, NIGHT_SHADE, CONFUSION, LEER
+	db  10, SKARMORY,  BERRY,    PECK, LEER, MUD_SLAP, NO_MOVE
 	db -1 ; end
 
 	; FALKNER (3): Natu / Pidgeotto / Noctowl
