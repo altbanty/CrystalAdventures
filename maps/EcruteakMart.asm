@@ -66,6 +66,12 @@ EcruteakMartGrannyText:
 
 	para "fainted will wake"
 	line "right up."
+
+	para "But the only shop"
+	line "that stocks them"
+
+	para "is up at INDIGO"
+	line "PLATEAU."
 	done
 
 EcruteakMartTMOfferText:

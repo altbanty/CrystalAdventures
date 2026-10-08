@@ -562,11 +562,39 @@ RollGymSwaps::
 ; save-scum any outcome. The lazy rolls in the gym SPRITES callbacks remain
 ; only as a migration fallback for saves from before this feature.
 ;
-; All four coin flips come from separate bits of ONE Random sample.
+; All four coin flips come from separate bits of ONE mixed byte.
 ; Back-to-back Random calls are correlated (rDIV barely advances between
 ; them, and RandomRange 2 reduces to parity), which used to make all four
 ; pairs swap - or stay home - together far too often.
+;
+; A lone Random sample here depends only on the frame count since power-on,
+; so two new games played through with the same button timing (a save state
+; at the title screen, held fast-forward, or just a well-rehearsed intro)
+; land on the same flips. XOR in sources that vary on their own: the
+; cartridge clock's seconds and minutes (wall-clock time, never written by
+; the game), the player ID (rolled at a different moment of the intro), and
+; the RNG's second accumulator. A missing or stuck clock just XORs a
+; constant and costs nothing.
+	call GetClock            ; refresh hRTCSeconds/hRTCMinutes
 	call Random
+	ld c, a
+	ldh a, [hRandomAdd]
+	swap a
+	xor c
+	ld c, a
+	ldh a, [hRTCSeconds]
+	xor c
+	ld c, a
+	ldh a, [hRTCMinutes]
+	swap a
+	xor c
+	ld c, a
+	ld a, [wPlayerID]
+	xor c
+	ld c, a
+	ld a, [wPlayerID + 1]
+	swap a
+	xor c
 	ld c, a                  ; c = flip bits; pair N uses bit N
 	ld hl, .PairFlags
 .loop

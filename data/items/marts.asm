@@ -106,13 +106,12 @@ MartGoldenrod2F1:
 	db -1 ; end
 
 MartGoldenrod2F2:
-	db 9 ; # items
+	db 8 ; # items
 	db POKE_BALL
 	db GREAT_BALL
 	db ESCAPE_ROPE
     db REPEL
 	db SUPER_REPEL
-	db REVIVE
 	db FULL_HEAL
 	db POKE_DOLL
 	db FLOWER_MAIL
@@ -178,7 +177,7 @@ MartOlivine:
 	db -1 ; end
 
 MartEcruteak:
-	db 11 ; # items
+	db 10 ; # items
 	db POKE_BALL
 	db GREAT_BALL
 	db POTION
@@ -189,7 +188,6 @@ MartEcruteak:
 	db AWAKENING
 	db BURN_HEAL
 	db ICE_HEAL
-	db REVIVE
 	db -1 ; end
 
 MartMahogany1:
@@ -233,11 +231,10 @@ MartBlackthorn:
 	db -1 ; end
 
 MartViridian:
-	db 9 ; # items
+	db 8 ; # items
 	db ULTRA_BALL
 	db HYPER_POTION
 	db FULL_HEAL
-	db REVIVE
 	db ANTIDOTE
 	db PARLYZ_HEAL
 	db AWAKENING
@@ -279,11 +276,10 @@ MartLavender:
 	db -1 ; end
 
 MartVermilion:
-	db 8 ; # items
+	db 7 ; # items
 	db ULTRA_BALL
 	db SUPER_POTION
 	db HYPER_POTION
-	db REVIVE
 	db PARLYZ_HEAL
 	db AWAKENING
 	db BURN_HEAL
@@ -291,12 +287,11 @@ MartVermilion:
 	db -1 ; end
 
 MartCeladon2F1:
-	db 7 ; # items
+	db 6 ; # items
 	db POTION
 	db SUPER_POTION
 	db HYPER_POTION
 	db MAX_POTION
-	db REVIVE
 	db SUPER_REPEL
 	db MAX_REPEL
 	db -1 ; end

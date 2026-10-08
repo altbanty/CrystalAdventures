@@ -81,7 +81,9 @@ ItemAttributes:
 ; FULL_HEAL
 	item_attribute 600, HELD_NONE, 0, CANT_SELECT, ITEM, ITEMMENU_PARTY, ITEMMENU_PARTY
 ; REVIVE
-	item_attribute 1500, HELD_NONE, 0, CANT_SELECT, ITEM, ITEMMENU_PARTY, ITEMMENU_PARTY
+; Priced to match reviving a fainted level-40 #MON at a #MON CENTER
+; (CalculateMonHealingCost: level x 25). Sold only at Indigo Plateau.
+	item_attribute 1000, HELD_NONE, 0, CANT_SELECT, ITEM, ITEMMENU_PARTY, ITEMMENU_PARTY
 ; MAX_REVIVE
 	item_attribute 4000, HELD_NONE, 0, CANT_SELECT, ITEM, ITEMMENU_PARTY, ITEMMENU_PARTY
 ; SUPER_REPEL
