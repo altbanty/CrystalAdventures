@@ -135,6 +135,22 @@ LoadJasmineTrainer::
 	ld e, JASMINE
 	jr _LoadScaledGymTrainer
 
+; Sabrina holding Olivine Gym (swap pair 6).
+LoadSabrinaGuestTrainer::
+	ld c, %00001100          ; Jasmine's slot (bits 3-2)
+	ld b, 2
+	ld d, SABRINA4
+	ld e, SABRINA
+	jr _LoadScaledGymTrainer
+
+; Blaine holding Mahogany Gym (swap pair 7).
+LoadBlaineGuestTrainer::
+	ld c, %00000011          ; Pryce's slot (bits 1-0)
+	ld b, 0
+	ld d, BLAINE4
+	ld e, BLAINE
+	jr _LoadScaledGymTrainer
+
 LoadPryceTrainer::
 	ld c, %00000011          ; Pryce mask (bits 1-0)
 	ld b, 0                  ; shift count
@@ -566,6 +582,30 @@ ApplyFuchsiaGymLeaderSprite::
 	ld a, SPRITE_JANINE
 	ld b, SPRITE_CHUCK
 	ld de, EVENT_GYM_PAIR_5_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyOlivineGymLeaderSprite::
+	ld a, SPRITE_JASMINE
+	ld b, SPRITE_SABRINA
+	ld de, EVENT_GYM_PAIR_6_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplySaffronGymLeaderSprite::
+	ld a, SPRITE_SABRINA
+	ld b, SPRITE_JASMINE
+	ld de, EVENT_GYM_PAIR_6_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyMahoganyGymLeaderSprite::
+	ld a, SPRITE_PRYCE
+	ld b, SPRITE_BLAINE
+	ld de, EVENT_GYM_PAIR_7_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplySeafoamGymLeaderSprite::
+	ld a, SPRITE_BLAINE
+	ld b, SPRITE_PRYCE
+	ld de, EVENT_GYM_PAIR_7_SWAPPED
 	; fallthrough
 
 ApplyGymLeaderSprite:
@@ -659,6 +699,8 @@ RollGymSwaps::
 	dw EVENT_GYM_PAIR_3_ROLLED, EVENT_GYM_PAIR_3_SWAPPED
 	dw EVENT_GYM_PAIR_4_ROLLED, EVENT_GYM_PAIR_4_SWAPPED
 	dw EVENT_GYM_PAIR_5_ROLLED, EVENT_GYM_PAIR_5_SWAPPED
+	dw EVENT_GYM_PAIR_6_ROLLED, EVENT_GYM_PAIR_6_SWAPPED
+	dw EVENT_GYM_PAIR_7_ROLLED, EVENT_GYM_PAIR_7_SWAPPED
 	dw -1, -1
 
 ; --- Elite Four / Champion team variants ---

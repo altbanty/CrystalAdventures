@@ -1499,6 +1499,12 @@
 ; Gym swap pair 5: Chuck (Cianwood) <-> Janine (Fuchsia)
 	const EVENT_GYM_PAIR_5_ROLLED
 	const EVENT_GYM_PAIR_5_SWAPPED
+; Gym swap pair 6: Jasmine (Olivine) <-> Sabrina (Saffron)
+	const EVENT_GYM_PAIR_6_ROLLED
+	const EVENT_GYM_PAIR_6_SWAPPED
+; Gym swap pair 7: Pryce (Mahogany) <-> Blaine (Seafoam)
+	const EVENT_GYM_PAIR_7_ROLLED
+	const EVENT_GYM_PAIR_7_SWAPPED
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800

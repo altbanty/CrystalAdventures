@@ -120,6 +120,8 @@ LoadKantoGymTrainer::
 	db 6, BLAINE,   1, 2, 3  ; 10: Seafoam - Blaine
 	db 7, BLUE,     1, 3, 4  ; 11: Viridian - Blue
 	db 4, CHUCK,    11, 12, 13 ; 12: Fuchsia - guest Chuck
+	db 5, JASMINE,  11, 12, 13 ; 13: Saffron - guest Jasmine
+	db 6, PRYCE,    11, 12, 13 ; 14: Seafoam - guest Pryce
 
 ; --- Game Corner prize rolls ---
 ; Goldenrod stocks one prize per price tier, each rolled independently

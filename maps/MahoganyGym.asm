@@ -11,30 +11,65 @@ MahoganyGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 7 (Pryce <-> Blaine; see CianwoodGym.asm).
+.LeaderSpriteObjects:
+	callasm ApplyMahoganyGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_7_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_7_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_7_SWAPPED
+.SetSprite:
+	callasm ApplyMahoganyGymLeaderSprite
+	endcallback
 
 MahoganyGymPryceScript:
 	faceplayer
 	opentext
 	checkevent EVENT_BEAT_PRYCE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestBlaine
 	writetext PryceText_Intro
 	waitbutton
 	closetext
 	winlosstext PryceText_Impressed, 0
 	;  Level scaling + team randomization
+	scall .PickTier
+	callasm LoadPryceTrainer
+	sjump .MahoganyGymPryceScriptEnd
+
+.GuestBlaine:
+	writetext BlaineGuestIntroText
+	waitbutton
+	closetext
+	winlosstext BlaineGuestWinLossText, 0
+	scall .PickTier
+	callasm LoadBlaineGuestTrainer
+	sjump .MahoganyGymPryceScriptEnd
+
+; Tier base in wScriptVar from the badge count (subroutine: checkevent
+; clobbers wScriptVar, so the swap branch comes first).
+.PickTier:
 	readvar VAR_BADGES
 	ifgreater 5, .SevenBadges
 	ifequal 5, .SixBadges
-.FiveBadges:
 	setval 0           ; tier 1 base
-	sjump .LoadTeam
+	end
 .SixBadges:
 	setval 3           ; tier 2 base
-	sjump .LoadTeam
+	end
 .SevenBadges:
 	setval 6           ; tier 3 base
-.LoadTeam:
-	callasm LoadPryceTrainer
+	end
+
 .MahoganyGymPryceScriptEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
@@ -85,7 +120,13 @@ MahoganyGymPryceScript:
 	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse MahoganyGym_NoRoomForIcyWind
 	setevent EVENT_GOT_TM16_ICY_WIND
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestTMText
 	writetext PryceText_IcyWindSpeech
+	sjump .AfterTMText
+.GuestTMText:
+	writetext BlaineGuestTMText
+.AfterTMText:
 	waitbutton
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .SkipLevelCapText
@@ -98,15 +139,44 @@ MahoganyGymPryceScript:
 PryceScript_Defeat:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext PryceRematchText
 	yesorno
 	iftrue .PryceRematch
 	sjump .CantRematchYet
+.GuestRematchAsk:
+	writetext BlaineGuestRematchText
+	yesorno
+	iftrue .GuestBlaineRematch
+	sjump .CantRematchYet
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestFightDone
 	writetext PryceText_CherishYourPokemon
 	waitbutton
 .CantRematchYet:
 	closetext
+	end
+
+.GuestFightDone:
+	writetext BlaineGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Blaine brings his real (Kanto-tier) team.
+.GuestBlaineRematch:
+	special HealParty
+	winlosstext BlaineGuestWinLossText, 0
+	setval 10
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest_rematch
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest_rematch
+	startbattle
+	reloadmapafterbattle
 	end
 
 .PryceRematch:
@@ -196,7 +266,15 @@ MahoganyGymGuideScript:
 	opentext
 	checkevent EVENT_BEAT_PRYCE
 	iftrue .MahoganyGymGuideWinScript
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestGuide
 	writetext MahoganyGymGuideText
+	waitbutton
+	closetext
+	end
+
+.GuestGuide:
+	writetext MahoganyGymGuideGuestText
 	waitbutton
 	closetext
 	end
@@ -471,6 +549,66 @@ MahoganyGymGuideWinText:
 	line "eration gap!"
 	done
 
+BlaineGuestIntroText:
+	text "BLAINE: Waaah!"
+
+	para "PRYCE and I"
+	line "traded GYMS for a"
+	cont "while."
+
+	para "An ice rink! My"
+	line "poor #MON are"
+	cont "shivering!"
+
+	para "Time to turn up"
+	line "the heat!"
+	done
+
+BlaineGuestWinLossText:
+	text "BLAINE: Awesome."
+	line "I've burned out…"
+
+	para "You've earned"
+	line "GLACIERBADGE!"
+	done
+
+BlaineGuestTMText:
+	text "BLAINE: PRYCE left"
+	line "that TM for the"
+	cont "winner. Use it!"
+	done
+
+BlaineGuestFightDoneText:
+	text "BLAINE: Brrr!"
+
+	para "When this is over"
+	line "I'm going back to"
+	cont "my volcano!"
+	done
+
+BlaineGuestRematchText:
+	text "BLAINE: Whoa! The"
+	line "JOHTO CHAMPION!"
+
+	para "My real team is"
+	line "fired up. Ready?"
+	done
+
+MahoganyGymGuideGuestText:
+	text "BLAINE from KANTO"
+	line "holds this GYM"
+	cont "for now."
+
+	para "His FIRE-types"
+	line "melt the ice, so"
+
+	para "bring WATER, ROCK"
+	line "or GROUND moves,"
+
+	para "and watch out for"
+	line "burns!"
+	done
+
 MahoganyGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -485,7 +623,7 @@ MahoganyGym_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, MahoganyGymStatue
 
 	def_object_events
-	object_event  5,  3, SPRITE_PRYCE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, MahoganyGymPryceScript, -1
+	object_event  5,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, MahoganyGymPryceScript, -1
 	object_event  4,  6, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerSkierRoxanne, -1
 	object_event  0, 17, SPRITE_ROCKER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, TrainerBoarderRonald, -1
 	object_event  9, 17, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerSkierClarissa, -1

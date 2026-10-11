@@ -10,18 +10,49 @@ SaffronGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 6 (see OlivineGym.asm).
+.LeaderSpriteObjects:
+	callasm ApplySaffronGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_6_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_6_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_6_SWAPPED
+.SetSprite:
+	callasm ApplySaffronGymLeaderSprite
+	endcallback
 
 SaffronGymSabrinaScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_MARSHBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestJasmine
 	writetext SabrinaIntroText
 	waitbutton
 	closetext
 	winlosstext SabrinaWinLossText, 0
 	setval 9
 	callasm LoadKantoGymTrainer
+	sjump .SabrinaLoadEnd
+
+; Jasmine holds Saffron Gym this run; the Marsh Badge flow is unchanged.
+.GuestJasmine:
+	writetext JasmineGuestIntroText
+	waitbutton
+	closetext
+	winlosstext JasmineGuestWinLossText, 0
+	setval 13
+	callasm LoadKantoGymTrainer
+.SabrinaLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_SABRINA1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -38,7 +69,16 @@ SaffronGymSabrinaScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_MARSHBADGE
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestBadgeSpeech
 	writetext SabrinaMarshBadgeText
+	waitbutton
+	closetext
+	jumpstd KantoLevelCapUpdateScript
+	end
+
+.GuestBadgeSpeech:
+	writetext JasmineGuestBadgeSpeechText
 	waitbutton
 	closetext
 	jumpstd KantoLevelCapUpdateScript
@@ -47,15 +87,43 @@ SaffronGymSabrinaScript:
 .FightDone:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext SabrinaRematchText
 	yesorno
 	iftrue .SabrinaRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext JasmineGuestRematchText
+	yesorno
+	iftrue .GuestJasmineRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestTalk
 	writetext SabrinaFightDoneText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext JasmineGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestJasmineRematch:
+	special HealParty
+	winlosstext JasmineGuestWinLossText, 0
+	setval 13
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .SabrinaRematch:
@@ -120,7 +188,15 @@ SaffronGymGuideScript:
 	opentext
 	checkevent EVENT_BEAT_SABRINA
 	iftrue .SaffronGymGuideWinScript
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestGuide
 	writetext SaffronGymGuideText
+	waitbutton
+	closetext
+	end
+
+.GuestGuide:
+	writetext SaffronGymGuideGuestText
 	waitbutton
 	closetext
 	end
@@ -335,6 +411,73 @@ SaffronGymGuideText:
 	para "Good luck!"
 	done
 
+SaffronGymGuideGuestText:
+	text "Yo, CHAMP in"
+	line "making!"
+
+	para "JASMINE from JOHTO"
+	line "holds this GYM"
+	cont "for now."
+
+	para "STEEL-types laugh"
+	line "at most attacks."
+
+	para "Hit them with"
+	line "FIRE, FIGHTING,"
+	cont "or GROUND moves!"
+	done
+
+JasmineGuestIntroText:
+	text "…Um… Hello."
+
+	para "I am JASMINE. I"
+	line "lead OLIVINE GYM…"
+
+	para "but SABRINA and I"
+	line "traded for a"
+	cont "while."
+
+	para "I use the STEEL-"
+	line "type. …May I"
+	cont "begin?"
+	done
+
+JasmineGuestWinLossText:
+	text "…You are a better"
+	line "trainer than me."
+
+	para "Please take the"
+	line "MARSHBADGE."
+	done
+
+JasmineGuestBadgeSpeechText:
+	text "JASMINE: MARSH-"
+	line "BADGE draws out"
+
+	para "your subliminal"
+	line "powers…"
+
+	para "…Um… That is what"
+	line "SABRINA told me"
+	cont "to say."
+	done
+
+JasmineGuestFightDoneText:
+	text "JASMINE: SAFFRON"
+	line "is so busy…"
+
+	para "I hope AMPHY is"
+	line "doing well."
+	done
+
+JasmineGuestRematchText:
+	text "JASMINE: KANTO"
+	line "CHAMPION…"
+
+	para "…Um… Would you"
+	line "like a rematch?"
+	done
+
 SaffronGymGuideWinText:
 	text "That was another"
 	line "fantastic battle!"
@@ -383,7 +526,7 @@ SaffronGym_MapEvents:
 	bg_event  8, 15, BGEVENT_READ, SaffronGymStatue
 
 	def_object_events
-	object_event  9,  8, SPRITE_SABRINA, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, SaffronGymSabrinaScript, -1
+	object_event  9,  8, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SaffronGymSabrinaScript, -1
 	object_event 17, 16, SPRITE_GRANNY, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerMediumRebecca, -1
 	object_event  3, 16, SPRITE_YOUNGSTER, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerPsychicFranklin, -1
 	object_event  3,  4, SPRITE_GRANNY, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 2, TrainerMediumDoris, -1

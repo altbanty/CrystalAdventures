@@ -211,7 +211,6 @@ INCLUDE "maps/OlivinePokecenter1F.asm"
 
 SECTION "Map Scripts 12", ROMX
 
-INCLUDE "maps/OlivineGym.asm"
 INCLUDE "maps/OlivineTimsHouse.asm"
 INCLUDE "maps/OlivineHouseBeta.asm"
 INCLUDE "maps/OlivinePunishmentSpeechHouse.asm"
@@ -379,7 +378,6 @@ INCLUDE "maps/AzaleaTown.asm"
 INCLUDE "maps/GoldenrodCity.asm"
 INCLUDE "maps/SaffronCity.asm"
 INCLUDE "maps/MahoganyRedGyaradosSpeechHouse.asm"
-INCLUDE "maps/MahoganyGym.asm"
 INCLUDE "maps/MahoganyPokecenter1F.asm"
 INCLUDE "maps/Route42EcruteakGate.asm"
 INCLUDE "maps/LakeOfRageHiddenPowerHouse.asm"
@@ -453,6 +451,8 @@ INCLUDE "maps/SeafoamGym.asm"
 
 
 SECTION "Map Scripts 24", ROMX
+INCLUDE "maps/OlivineGym.asm"
+INCLUDE "maps/MahoganyGym.asm"
 
 INCLUDE "maps/Route33.asm"
 INCLUDE "maps/Route2.asm"

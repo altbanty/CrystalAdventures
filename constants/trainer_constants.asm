@@ -67,6 +67,9 @@ KRIS EQU __trainer_class__
 	const PRYCE8  ; tier 3 variant B
 	const PRYCE9  ; tier 3 variant C
 	const PRYCE10 ; rematch
+	const PRYCE11 ; Seafoam guest (Kanto tier) variant A
+	const PRYCE12 ; Seafoam guest (Kanto tier) variant B
+	const PRYCE13 ; Seafoam guest (Kanto tier) variant C
 
 	trainerclass JASMINE ; 6
 	const JASMINE1  ; tier 1 variant A
@@ -79,6 +82,9 @@ KRIS EQU __trainer_class__
 	const JASMINE8  ; tier 3 variant B
 	const JASMINE9  ; tier 3 variant C
 	const JASMINE10 ; rematch
+	const JASMINE11 ; Saffron guest (Kanto tier) variant A
+	const JASMINE12 ; Saffron guest (Kanto tier) variant B
+	const JASMINE13 ; Saffron guest (Kanto tier) variant C
 
 	trainerclass CHUCK ; 7
 	const CHUCK1  ; tier 1 variant A
@@ -527,7 +533,18 @@ KRIS EQU __trainer_class__
 	const SHIRLEY
 
 	trainerclass SABRINA ; 23
-	const SABRINA1
+	const SABRINA1  ; Saffron variant A (original)
+	const SABRINA2  ; Saffron variant B
+	const SABRINA3  ; Saffron variant C
+	const SABRINA4  ; Olivine guest tier 1 variant A
+	const SABRINA5  ; Olivine guest tier 1 variant B
+	const SABRINA6  ; Olivine guest tier 1 variant C
+	const SABRINA7  ; Olivine guest tier 2 variant A
+	const SABRINA8  ; Olivine guest tier 2 variant B
+	const SABRINA9  ; Olivine guest tier 2 variant C
+	const SABRINA10 ; Olivine guest tier 3 variant A
+	const SABRINA11 ; Olivine guest tier 3 variant B
+	const SABRINA12 ; Olivine guest tier 3 variant C
 
 	trainerclass BUG_CATCHER ; 24
 	const DON
@@ -810,7 +827,18 @@ KRIS EQU __trainer_class__
 	const GLENN
 
 	trainerclass BLAINE ; 2e
-	const BLAINE1
+	const BLAINE1  ; Seafoam variant A (original)
+	const BLAINE2  ; Seafoam variant B
+	const BLAINE3  ; Seafoam variant C
+	const BLAINE4  ; Mahogany guest tier 1 variant A
+	const BLAINE5  ; Mahogany guest tier 1 variant B
+	const BLAINE6  ; Mahogany guest tier 1 variant C
+	const BLAINE7  ; Mahogany guest tier 2 variant A
+	const BLAINE8  ; Mahogany guest tier 2 variant B
+	const BLAINE9  ; Mahogany guest tier 2 variant C
+	const BLAINE10 ; Mahogany guest tier 3 variant A
+	const BLAINE11 ; Mahogany guest tier 3 variant B
+	const BLAINE12 ; Mahogany guest tier 3 variant C
 
 	trainerclass BURGLAR ; 2f
 	const DUNCAN

@@ -7,21 +7,53 @@ SeafoamGym_MapScripts:
 	scene_script .DummyScene
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
 
 .DummyScene:
 	end
+
+; Gym swap pair 7 (see MahoganyGym.asm).
+.LeaderSpriteObjects:
+	callasm ApplySeafoamGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_7_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_7_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_7_SWAPPED
+.SetSprite:
+	callasm ApplySeafoamGymLeaderSprite
+	endcallback
 
 SeafoamGymBlaineScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_VOLCANOBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestPryce
 	writetext BlaineIntroText
 	waitbutton
 	closetext
 	winlosstext BlaineWinLossText, 0
 	setval 10
 	callasm LoadKantoGymTrainer
+	sjump .BlaineLoadEnd
+
+; Pryce holds the cave this run. He minds Moltres for Blaine, so every
+; guest team carries it and the slot's Moltres release still fits.
+.GuestPryce:
+	writetext PryceGuestIntroText
+	waitbutton
+	closetext
+	winlosstext PryceGuestWinLossText, 0
+	setval 14
+	callasm LoadKantoGymTrainer
+.BlaineLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BLAINE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -45,7 +77,16 @@ SeafoamGymBlaineScript:
 ; .MoltresAlreadyReleased
 
 	setevent EVENT_BEAT_BLAINE
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestAfterBattle
 	writetext BlaineAfterBattleText
+	waitbutton
+	closetext
+	jumpstd KantoLevelCapUpdateScript
+	end
+
+.GuestAfterBattle:
+	writetext PryceGuestAfterBattleText
 	waitbutton
 	closetext
 	jumpstd KantoLevelCapUpdateScript
@@ -54,15 +95,43 @@ SeafoamGymBlaineScript:
 .FightDone:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext BlaineRematchText
 	yesorno
 	iftrue .BlaineRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext PryceGuestRematchText
+	yesorno
+	iftrue .GuestPryceRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .GuestTalk
 	writetext BlaineFightDoneText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext PryceGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestPryceRematch:
+	special HealParty
+	winlosstext PryceGuestWinLossText, 0
+	setval 14
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .BlaineRematch:
@@ -204,6 +273,65 @@ Blaine_RematchDefeatText:
 	cont "my defenses."
 	done
 
+PryceGuestIntroText:
+	text "PRYCE: Hm. So you"
+	line "found this cave."
+
+	para "BLAINE and I"
+	line "traded GYMS for a"
+	cont "while."
+
+	para "He left MOLTRES in"
+	line "my care. A fire"
+
+	para "bird with an ice"
+	line "trainer… It has"
+	cont "much to teach me."
+
+	para "I do not lose"
+	line "easily. Come!"
+	done
+
+PryceGuestWinLossText:
+	text "Ah, I am impressed"
+	line "by your prowess."
+
+	para "You are worthy of"
+	line "VOLCANOBADGE!"
+	done
+
+PryceGuestAfterBattleText:
+	text "PRYCE: MOLTRES"
+	line "flies free again."
+
+	para "When the ice and"
+	line "snow melt, spring"
+	cont "arrives."
+
+	para "Go. Your journey"
+	line "is not over."
+	done
+
+PryceGuestFightDoneText:
+	text "PRYCE: This cave"
+	line "is pleasantly"
+	cont "cool."
+
+	para "I may stay a"
+	line "while longer."
+	done
+
+PryceGuestRematchText:
+	text "PRYCE: Ah, KANTO"
+	line "CHAMPION!"
+
+	para "I still have a"
+	line "few tricks left."
+
+	para "Want to have a"
+	line "rematch with me?"
+	done
+
 SeafoamGymGuideWinText:
 	text "Yo!"
 
@@ -247,5 +375,5 @@ SeafoamGym_MapEvents:
 	def_bg_events
 
 	def_object_events
-	object_event  5,  2, SPRITE_BLAINE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, SeafoamGymBlaineScript, -1
+	object_event  5,  2, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SeafoamGymBlaineScript, -1
 	object_event  6,  5, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, SeafoamGymGuideScript, EVENT_SEAFOAM_GYM_GYM_GUIDE

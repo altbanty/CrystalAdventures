@@ -6,30 +6,67 @@ OlivineGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 6 (Jasmine <-> Sabrina; see CianwoodGym.asm). The leader
+; object stays hidden until the lighthouse is resolved whoever holds the
+; gym - the guest went along to see Amphy.
+.LeaderSpriteObjects:
+	callasm ApplyOlivineGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_6_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_6_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_6_SWAPPED
+.SetSprite:
+	callasm ApplyOlivineGymLeaderSprite
+	endcallback
 
 OlivineGymJasmineScript:
 	faceplayer
 	opentext
 	checkevent EVENT_BEAT_JASMINE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestSabrina
 	writetext Jasmine_SteelTypeIntro
 	waitbutton
 	closetext
 	winlosstext Jasmine_BetterTrainer, 0
 	;  Level scaling + team randomization
+	scall .PickTier
+	callasm LoadJasmineTrainer
+	sjump .OlivineGymJasmineScriptEnd
+
+.GuestSabrina:
+	writetext SabrinaGuestIntroText
+	waitbutton
+	closetext
+	winlosstext SabrinaGuestWinLossText, 0
+	scall .PickTier
+	callasm LoadSabrinaGuestTrainer
+	sjump .OlivineGymJasmineScriptEnd
+
+; Tier base in wScriptVar from the badge count (subroutine: checkevent
+; clobbers wScriptVar, so the swap branch comes first).
+.PickTier:
 	readvar VAR_BADGES
 	ifgreater 5, .SevenBadges
 	ifequal 5, .SixBadges
-.FiveBadges:
 	setval 0           ; tier 1 base
-	sjump .LoadTeam
+	end
 .SixBadges:
 	setval 3           ; tier 2 base
-	sjump .LoadTeam
+	end
 .SevenBadges:
 	setval 6           ; tier 3 base
-.LoadTeam:
-	callasm LoadJasmineTrainer
+	end
+
 .OlivineGymJasmineScriptEnd
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
@@ -75,7 +112,13 @@ OlivineGymJasmineScript:
 	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .NoRoomForIronTail
 	setevent EVENT_GOT_TM23_IRON_TAIL
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestTMText
 	writetext Jasmine_IronTailSpeech
+	sjump .AfterTMText
+.GuestTMText:
+	writetext SabrinaGuestTMText
+.AfterTMText:
 	waitbutton
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .SkipLevelCapText
@@ -88,15 +131,44 @@ OlivineGymJasmineScript:
 .GotIronTail:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext JasmineRematchText
 	yesorno
 	iftrue .JasmineRematch
 	sjump .NoRoomForIronTail
+.GuestRematchAsk:
+	writetext SabrinaGuestRematchText
+	yesorno
+	iftrue .GuestSabrinaRematch
+	sjump .NoRoomForIronTail
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestFightDone
 	writetext Jasmine_GoodLuck
 	waitbutton
 .NoRoomForIronTail:
 	closetext
+	end
+
+.GuestFightDone:
+	writetext SabrinaGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Sabrina brings her real (Kanto-tier) team.
+.GuestSabrinaRematch:
+	special HealParty
+	winlosstext SabrinaGuestWinLossText, 0
+	setval 9
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest_rematch
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest_rematch
+	startbattle
+	reloadmapafterbattle
 	end
 
 .JasmineRematch:
@@ -129,7 +201,15 @@ OlivineGymGuideScript:
 	checkevent EVENT_JASMINE_RETURNED_TO_GYM
 	iffalse .OlivineGymGuidePreScript
 	opentext
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestGuide
 	writetext OlivineGymGuideText
+	waitbutton
+	closetext
+	end
+
+.GuestGuide:
+	writetext OlivineGymGuideGuestText
 	waitbutton
 	closetext
 	end
@@ -143,7 +223,15 @@ OlivineGymGuideScript:
 
 .OlivineGymGuidePreScript:
 	opentext
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .GuestPreGuide
 	writetext OlivineGymGuidePreText
+	waitbutton
+	closetext
+	end
+
+.GuestPreGuide:
+	writetext OlivineGymGuidePreGuestText
 	waitbutton
 	closetext
 	end
@@ -313,6 +401,83 @@ OlivineGymGuidePreText:
 	cont "sionate."
 	done
 
+SabrinaGuestIntroText:
+	text "SABRINA: I foresaw"
+	line "you coming here."
+
+	para "JASMINE and I"
+	line "traded GYMS for a"
+	cont "while."
+
+	para "Your kindness at"
+	line "the LIGHTHOUSE…"
+
+	para "I sensed it too."
+	line "Now show me your"
+	cont "power!"
+	done
+
+SabrinaGuestWinLossText:
+	text "SABRINA: Beyond"
+	line "what I foresaw…"
+
+	para "MINERALBADGE is"
+	line "yours."
+	done
+
+SabrinaGuestTMText:
+	text "SABRINA: I see"
+	line "that TM in your"
+	cont "future battles."
+	done
+
+SabrinaGuestFightDoneText:
+	text "SABRINA: The sea"
+	line "air clears the"
+	cont "mind."
+
+	para "Still, I miss the"
+	line "quiet of SAFFRON."
+	done
+
+SabrinaGuestRematchText:
+	text "SABRINA: JOHTO"
+	line "CHAMPION… I knew."
+
+	para "My true team is"
+	line "ready. Rematch?"
+	done
+
+OlivineGymGuideGuestText:
+	text "SABRINA from KANTO"
+	line "holds this GYM"
+	cont "for now."
+
+	para "Her PSYCHIC-types"
+	line "hit hard and fast."
+
+	para "BUG and GHOST"
+	line "moves are your"
+	cont "best friends,"
+
+	para "and a DARK-type"
+	line "shrugs them off."
+	done
+
+OlivineGymGuidePreGuestText:
+	text "SABRINA, our guest"
+	line "LEADER, went to"
+	cont "the LIGHTHOUSE"
+
+	para "with JASMINE to"
+	line "tend to a sick"
+	cont "#MON."
+
+	para "A strong trainer"
+	line "has to be compas-"
+	cont "sionate."
+	done
+
 OlivineGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -327,5 +492,5 @@ OlivineGym_MapEvents:
 	bg_event  6, 13, BGEVENT_READ, OlivineGymStatue
 
 	def_object_events
-	object_event  5,  3, SPRITE_JASMINE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, OlivineGymJasmineScript, EVENT_OLIVINE_GYM_JASMINE
+	object_event  5,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, OlivineGymJasmineScript, EVENT_OLIVINE_GYM_JASMINE
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, OlivineGymGuideScript, -1
