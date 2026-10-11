@@ -38,6 +38,8 @@ Route25MistyDate1Script:
 	applymovement ROUTE25_MISTY, Route25MistyApproachesPlayerMovement1
 	opentext
 	writetext Route25MistyDateText
+	promptbutton
+	scall Route25Scene_WhichGym
 	waitbutton
 	closetext
 	turnobject PLAYER, DOWN
@@ -64,6 +66,8 @@ Route25MistyDate2Script:
 	applymovement ROUTE25_MISTY, Route25MistyApproachesPlayerMovement2
 	opentext
 	writetext Route25MistyDateText
+	promptbutton
+	scall Route25Scene_WhichGym
 	waitbutton
 	closetext
 	turnobject PLAYER, UP
@@ -239,6 +243,15 @@ Route25MistyLeavesMovement:
 	step LEFT
 	step_end
 
+Route25Scene_WhichGym:
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .Guest
+	writetext Route25MistyDateGymText
+	end
+.Guest:
+	writetext Route25MistyDateGuestGymText
+	end
+
 Route25MistyDateText:
 	text "MISTY: Aww! Why"
 	line "did you have to"
@@ -267,10 +280,18 @@ Route25MistyDateText:
 
 	para "I'll be happy to"
 	line "take you on."
+	done
 
-	para "I'm MISTY, the"
+Route25MistyDateGymText:
+	text "I'm MISTY, the"
 	line "GYM LEADER in"
 	cont "CERULEAN."
+	done
+
+Route25MistyDateGuestGymText:
+	text "I'm MISTY. I run"
+	line "AZALEA's GYM on"
+	cont "exchange now."
 	done
 
 SchoolboyDudleySeenText:

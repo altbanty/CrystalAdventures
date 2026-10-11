@@ -55,7 +55,11 @@ CeladonCitySign:
 	jumptext CeladonCitySignText
 
 CeladonGymSign:
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .Guest
 	jumptext CeladonGymSignText
+.Guest:
+	jumptext CeladonGymSignGuestText
 
 CeladonCityDeptStoreSign:
 	jumptext CeladonCityDeptStoreSignText
@@ -204,6 +208,15 @@ CeladonGymSignText:
 
 	para "The Nature-Loving"
 	line "Princess"
+	done
+
+CeladonGymSignGuestText:
+	text "CELADON CITY"
+	line "#MON GYM"
+	cont "LEADER: MORTY"
+
+	para "The Mystic Seer of"
+	line "the Future"
 	done
 
 CeladonCityDeptStoreSignText:

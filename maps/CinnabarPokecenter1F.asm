@@ -12,7 +12,11 @@ CinnabarPokecenter1FNurseScript:
 	jumpstd PokecenterNurseScript
 
 CinnabarPokecenter1FCooltrainerFScript:
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer CinnabarPokecenter1FCooltrainerFText
+.Guest:
+	jumptextfaceplayer CinnabarPokecenter1FCooltrainerFGuestText
 
 CinnabarPokecenter1FFisherScript:
 	jumptextfaceplayer CinnabarPokecenter1FFisherText
@@ -24,6 +28,15 @@ CinnabarPokecenter1FCooltrainerFText:
 	para "lives alone in the"
 	line "SEAFOAM ISLANDS"
 	cont "cave…"
+	done
+
+CinnabarPokecenter1FCooltrainerFGuestText:
+	text "CINNABAR GYM's"
+	line "stand-in, PRYCE,"
+
+	para "apparently loves"
+	line "the cold of the"
+	cont "SEAFOAM cave…"
 	done
 
 CinnabarPokecenter1FFisherText:

@@ -67,7 +67,11 @@ EcruteakPokecenter1FPokefanMScript:
 	jumptextfaceplayer EcruteakPokecenter1FPokefanMTextMobile
 
 EcruteakPokecenter1FCooltrainerFScript:
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer EcruteakPokecenter1FCooltrainerFText
+.Guest:
+	jumptextfaceplayer EcruteakPokecenter1FCooltrainerFGuestText
 
 EcruteakPokecenter1FGymGuideScript:
 	jumptextfaceplayer EcruteakPokecenter1FGymGuideText
@@ -191,6 +195,15 @@ EcruteakPokecenter1FCooltrainerFText:
 	cont "cool."
 
 	para "His #MON are"
+	line "really tough too."
+	done
+
+EcruteakPokecenter1FCooltrainerFGuestText:
+	text "ERIKA, the GYM"
+	line "LEADER, is soooo"
+	cont "elegant."
+
+	para "Her #MON are"
 	line "really tough too."
 	done
 

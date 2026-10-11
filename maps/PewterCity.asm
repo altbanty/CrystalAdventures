@@ -43,7 +43,11 @@ PewterCitySign:
 	jumptext PewterCitySignText
 
 PewterGymSign:
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .Guest
 	jumptext PewterGymSignText
+.Guest:
+	jumptext PewterGymSignGuestText
 
 PewterMuseumSign:
 	jumptext PewterMuseumSignText
@@ -126,6 +130,15 @@ PewterGymSignText:
 
 	para "The Rock Solid"
 	line "#MON Trainer"
+	done
+
+PewterGymSignGuestText:
+	text "PEWTER CITY"
+	line "#MON GYM"
+	cont "LEADER: FALKNER"
+
+	para "The Elegant Master"
+	line "of Flying #MON"
 	done
 
 PewterMuseumSignText:

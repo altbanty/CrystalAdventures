@@ -486,11 +486,11 @@ CooltrainermAllenAfterBattleText:
 	para "I wonder if"
 	line "ECRUTEAK GYM's"
 
-	para "MORTY is still in"
-	line "training?"
+	para "LEADER is still"
+	line "in training?"
 
-	para "He really hammered"
-	line "me."
+	para "I got hammered"
+	line "there."
 	done
 
 CooltrainerfCybilSeenText:

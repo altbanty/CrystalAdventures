@@ -73,7 +73,15 @@ CeruleanCityFisherScript:
 	checkevent EVENT_MET_ROCKET_GRUNT_AT_CERULEAN_GYM
 	iftrue .MetCeruleanRocket
 .ReturnedMachinePart:
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .GuestFan
 	writetext CeruleanCityFisherText
+	waitbutton
+	closetext
+	end
+
+.GuestFan:
+	writetext CeruleanCityFisherGuestText
 	waitbutton
 	closetext
 	end
@@ -124,7 +132,11 @@ CeruleanCitySign:
 	jumptext CeruleanCitySignText
 
 CeruleanGymSign:
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .Guest
 	jumptext CeruleanGymSignText
+.Guest:
+	jumptext CeruleanGymSignGuestText
 
 CeruleanBikeShopSign:
 	jumptext CeruleanBikeShopSignText
@@ -205,6 +217,12 @@ CeruleanCityFisherText:
 	cont "MISTY."
 	done
 
+CeruleanCityFisherGuestText:
+	text "I'm a huge fan of"
+	line "CERULEAN GYM's"
+	cont "new guy, BUGSY."
+	done
+
 CeruleanCityFisherRocketTipText:
 	text "I saw this shady"
 	line "guy go off toward"
@@ -240,6 +258,16 @@ CeruleanGymSignText:
 
 	para "The Tomboyish"
 	line "Mermaid"
+	done
+
+CeruleanGymSignGuestText:
+	text "CERULEAN CITY"
+	line "#MON GYM"
+	cont "LEADER: BUGSY"
+
+	para "The Walking"
+	line "Bug #MON"
+	cont "Encyclopedia"
 	done
 
 CeruleanBikeShopSignText:

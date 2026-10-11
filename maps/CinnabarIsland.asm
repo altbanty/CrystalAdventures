@@ -15,6 +15,14 @@ CinnabarIslandBlue:
 	faceplayer
 	opentext
 	writetext CinnabarIslandBlueText
+	promptbutton
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .AtBlackthorn
+	writetext CinnabarIslandBlueViridianText
+	sjump .Teleport
+.AtBlackthorn:
+	writetext CinnabarIslandBlueBlackthornText
+.Teleport:
 	waitbutton
 	closetext
 	playsound SFX_WARP_TO
@@ -24,7 +32,11 @@ CinnabarIslandBlue:
 	end
 
 CinnabarIslandGymSign:
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .Guest
 	jumptext CinnabarIslandGymSignText
+.Guest:
+	jumptext CinnabarIslandGymSignGuestText
 
 CinnabarIslandSign:
 	jumptext CinnabarIslandSignText
@@ -98,8 +110,10 @@ CinnabarIslandBlueText:
 	para "If I see a strong"
 	line "opponent, it makes"
 	cont "me want to battle."
+	done
 
-	para "If you want to"
+CinnabarIslandBlueViridianText:
+	text "If you want to"
 	line "battle me, come to"
 	cont "the VIRIDIAN GYM."
 
@@ -119,6 +133,32 @@ CinnabarIslandBlueText:
 	line "then."
 	done
 
+CinnabarIslandBlueBlackthornText:
+	text "If you want to"
+	line "battle me, come to"
+	cont "BLACKTHORN GYM."
+
+	para "I'm filling in"
+	line "for CLAIR there."
+
+	para "She's minding my"
+	line "VIRIDIAN GYM, and"
+
+	para "one of RED's"
+	line "legendary birds"
+	cont "with it."
+
+	para "You better come"
+	line "ready for a real"
+	cont "fight."
+
+	para "Come visit me"
+	line "in BLACKTHORN."
+
+	para "I'll take you on"
+	line "then."
+	done
+
 CinnabarIslandGymSignText:
 	text "There's a notice"
 	line "here…"
@@ -126,6 +166,20 @@ CinnabarIslandGymSignText:
 	para "CINNABAR GYM has"
 	line "relocated to SEA-"
 	cont "FOAM ISLANDS."
+
+	para "BLAINE"
+	done
+
+CinnabarIslandGymSignGuestText:
+	text "There's a notice"
+	line "here…"
+
+	para "CINNABAR GYM has"
+	line "relocated to SEA-"
+	cont "FOAM ISLANDS."
+
+	para "PRYCE is standing"
+	line "in for me."
 
 	para "BLAINE"
 	done

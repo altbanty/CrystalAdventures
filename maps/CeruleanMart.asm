@@ -18,7 +18,11 @@ CeruleanMart_CooltrainerM:
 	jumptextfaceplayer CeruleanMart_CooltrainerMText
 
 CeruleanMart_CooltrainerF:
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer CeruleanMart_CooltrainerFText
+.Guest:
+	jumptextfaceplayer CeruleanMart_CooltrainerFGuestText
 
 CeruleanMart_CooltrainerMText:
 	text "You'll run into"
@@ -40,6 +44,18 @@ CeruleanMart_CooltrainerFText:
 
 	para "town who can beat"
 	line "the trainers at"
+	cont "CERULEAN's CAPE."
+	done
+
+CeruleanMart_CooltrainerFGuestText:
+	text "BUGSY, the GYM's"
+	line "exchange LEADER,"
+
+	para "is about the only"
+	line "one in town who"
+
+	para "can beat the"
+	line "trainers at"
 	cont "CERULEAN's CAPE."
 	done
 

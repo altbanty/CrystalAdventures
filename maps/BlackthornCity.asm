@@ -33,6 +33,8 @@ BlackthornCity_MapScripts:
 BlackthornSuperNerdScript:
 	faceplayer
 	opentext
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestLeader
 	checkevent EVENT_BEAT_CLAIR
 	iftrue .BeatClair
 	checkevent EVENT_CLEARED_RADIO_TOWER
@@ -54,11 +56,37 @@ BlackthornSuperNerdScript:
 	closetext
 	end
 
+.GuestLeader:
+	checkevent EVENT_BEAT_CLAIR
+	iftrue .BeatBlue
+	checkevent EVENT_CLEARED_RADIO_TOWER
+	iftrue .BlueIsIn
+	writetext Text_BlueIsOut
+	waitbutton
+	closetext
+	end
+
+.BlueIsIn:
+	writetext Text_BlueIsIn
+	waitbutton
+	closetext
+	end
+
+.BeatBlue:
+	writetext Text_BlueIsBeaten
+	waitbutton
+	closetext
+	end
+
 BlackthornGramps1Script:
 	jumptextfaceplayer BlackthornGrampsRefusesEntryText
 
 BlackthornGramps2Script:
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer BlackthornGrampsGrantsEntryText
+.Guest:
+	jumptextfaceplayer BlackthornGrampsGrantsEntryGuestText
 
 BlackthornBlackBeltScript:
 	faceplayer
@@ -127,7 +155,11 @@ BlackthornCitySign:
 	jumptext BlackthornCitySignText
 
 BlackthornGymSign:
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .Guest
 	jumptext BlackthornGymSignText
+.Guest:
+	jumptext BlackthornGymSignGuestText
 
 MoveDeletersHouseSign:
 	jumptext MoveDeletersHouseSignText
@@ -183,6 +215,44 @@ Text_ClairIsBeaten:
 	line "LANCE."
 	done
 
+Text_BlueIsOut:
+	text "I am sorry."
+
+	para "BLUE, who's"
+	line "minding our GYM,"
+
+	para "went into the"
+	line "DRAGON'S DEN"
+	cont "behind the GYM."
+
+	para "I have no idea"
+	line "when he'll be"
+	cont "back."
+	done
+
+Text_BlueIsIn:
+	text "BLUE, who's"
+	line "minding our GYM,"
+	cont "is waiting."
+
+	para "However, it would"
+	line "be impossible for"
+
+	para "a run-of-the-mill"
+	line "trainer to win."
+	done
+
+Text_BlueIsBeaten:
+	text "You defeated"
+	line "BLUE?"
+
+	para "That's amazing!"
+
+	para "He was KANTO's"
+	line "CHAMPION once,"
+	cont "you know."
+	done
+
 BlackthornGrampsRefusesEntryText:
 	text "No. Only chosen"
 	line "trainers may train"
@@ -196,6 +266,17 @@ BlackthornGrampsGrantsEntryText:
 	line "it, her grand-"
 	cont "father--our MASTER"
 	cont "--will also."
+
+	para "You may enter."
+	done
+
+BlackthornGrampsGrantsEntryGuestText:
+	text "BLUE sent you"
+	line "under CLAIR's"
+	cont "rules, did he?"
+
+	para "Then our MASTER"
+	line "will allow it."
 
 	para "You may enter."
 	done
@@ -290,6 +371,15 @@ BlackthornGymSignText:
 
 	para "The Blessed User"
 	line "of Dragon #MON"
+	done
+
+BlackthornGymSignGuestText:
+	text "BLACKTHORN CITY"
+	line "#MON GYM"
+	cont "LEADER: BLUE"
+
+	para "KANTO's Former"
+	line "CHAMPION"
 	done
 
 MoveDeletersHouseSignText:

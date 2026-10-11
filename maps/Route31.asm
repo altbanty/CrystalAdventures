@@ -267,7 +267,11 @@ ReceivedSpearowMailText:
 	next "to another road@"
 
 Route31YoungsterScript:
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer Route31YoungsterText
+.Guest:
+	jumptextfaceplayer Route31YoungsterGuestText
 
 Route31Sign:
 	jumptext Route31SignText
@@ -424,6 +428,20 @@ Route31YoungsterText:
 
 	para "He's the leader of"
 	line "VIOLET CITY's GYM."
+	done
+
+Route31YoungsterGuestText:
+	text "I found a good"
+	line "#MON in DARK"
+	cont "CAVE."
+
+	para "I'm going to raise"
+	line "it to take on"
+	cont "BROCK."
+
+	para "He's running"
+	line "VIOLET CITY's GYM"
+	cont "this season."
 	done
 
 Route31SignText:

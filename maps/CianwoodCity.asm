@@ -122,9 +122,17 @@ CianwoodCityChucksWife:
 	writetext ChucksWifeFlySpeechText
 	promptbutton
 .GotFly:
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .HusbandAway
 	writetext ChucksWifeChubbyText
 	waitbutton
 .Done:
+	closetext
+	end
+
+.HusbandAway:
+	writetext ChucksWifeHusbandAwayText
+	waitbutton
 	closetext
 	end
 
@@ -135,7 +143,11 @@ CianwoodCityPokefanM:
 	jumptextfaceplayer CianwoodCityPokefanMText
 
 CianwoodCityLass:
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer CianwoodCityLassText
+.Guest:
+	jumptextfaceplayer CianwoodCityLassGuestText
 
 CianwoodCityUnusedScript: ; unreferenced
 	jumptextfaceplayer CianwoodCityUnusedText
@@ -144,7 +156,11 @@ CianwoodCitySign:
 	jumptext CianwoodCitySignText
 
 CianwoodGymSign:
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .Guest
 	jumptext CianwoodGymSignText
+.Guest:
+	jumptext CianwoodGymSignGuestText
 
 CianwoodPharmacySign:
 	jumptext CianwoodPharmacySignText
@@ -254,6 +270,16 @@ ChucksWifeChubbyText:
 	cont "little chubby."
 	done
 
+ChucksWifeHusbandAwayText:
+	text "My husband is off"
+	line "running FUCHSIA's"
+	cont "GYM on exchange."
+
+	para "I hope JANINE"
+	line "didn't go easy"
+	cont "on you!"
+	done
+
 CianwoodCityYoungsterText:
 	text "If you use FLY,"
 	line "you can get back"
@@ -281,6 +307,14 @@ CianwoodCityLassText:
 
 	para "his fighting #-"
 	line "MON."
+	done
+
+CianwoodCityLassGuestText:
+	text "JANINE, the GYM"
+	line "LEADER, trains"
+
+	para "with her poison"
+	line "#MON."
 	done
 
 CianwoodCityUnusedText:
@@ -370,6 +404,16 @@ CianwoodGymSignText:
 
 	para "His Roaring Fists"
 	line "Do the Talking"
+	done
+
+CianwoodGymSignGuestText:
+	text "CIANWOOD CITY"
+	line "#MON GYM"
+
+	para "LEADER: JANINE"
+
+	para "The Poisonous"
+	line "Ninja Master"
 	done
 
 CianwoodPharmacySignText:

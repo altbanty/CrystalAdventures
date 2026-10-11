@@ -17,7 +17,11 @@ CeladonPokecenter1FGentlemanScript:
 	jumpstd HappinessCheckScript
 
 CeladonPokecenter1FCooltrainerFScript:
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer CeladonPokecenter1FCooltrainerFText
+.Guest:
+	jumptextfaceplayer CeladonPokecenter1FCooltrainerFGuestText
 
 CeladonPokecenter1FPharmacistScript:
 	jumptextfaceplayer CeladonPokecenter1FPharmacistText
@@ -75,6 +79,15 @@ CeladonPokecenter1FCooltrainerFText:
 	line "of grass #MON."
 
 	para "She'll make you"
+	line "pay if you don't"
+	cont "watch yourself."
+	done
+
+CeladonPokecenter1FCooltrainerFGuestText:
+	text "MORTY is a master"
+	line "of ghost #MON."
+
+	para "He'll make you"
 	line "pay if you don't"
 	cont "watch yourself."
 	done

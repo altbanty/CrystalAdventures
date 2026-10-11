@@ -240,7 +240,11 @@ GoldenrodDeptStoreSign:
 	jumptext GoldenrodDeptStoreSignText
 
 GoldenrodGymSign:
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .Guest
 	jumptext GoldenrodGymSignText
+.Guest:
+	jumptext GoldenrodGymSignGuestText
 
 GoldenrodCitySign:
 	jumptext GoldenrodCitySignText
@@ -436,6 +440,15 @@ GoldenrodGymSignText:
 
 	para "The Incredibly"
 	line "Pretty Girl!"
+	done
+
+GoldenrodGymSignGuestText:
+	text "GOLDENROD CITY"
+	line "#MON GYM"
+	cont "LEADER: LT.SURGE"
+
+	para "The Lightning"
+	line "American"
 	done
 
 GoldenrodCitySignText:

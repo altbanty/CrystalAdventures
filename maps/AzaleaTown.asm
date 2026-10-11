@@ -170,7 +170,11 @@ KurtsHouseSign:
 	jumptext KurtsHouseSignText
 
 AzaleaGymSign:
+	checkevent EVENT_GYM_PAIR_2_SWAPPED
+	iftrue .Guest
 	jumptext AzaleaGymSignText
+.Guest:
+	jumptext AzaleaGymSignGuestText
 
 SlowpokeWellSign:
 	jumptext SlowpokeWellSignText
@@ -405,6 +409,15 @@ AzaleaGymSignText:
 	para "The Walking"
 	line "Bug #MON"
 	cont "Encyclopedia"
+	done
+
+AzaleaGymSignGuestText:
+	text "AZALEA TOWN"
+	line "#MON GYM"
+	cont "LEADER: MISTY"
+
+	para "The Tomboyish"
+	line "Mermaid"
 	done
 
 SlowpokeWellSignText:

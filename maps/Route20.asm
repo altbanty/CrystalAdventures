@@ -48,7 +48,11 @@ TrainerSwimmermCameron:
 	end
 
 CinnabarGymSign:
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .Guest
 	jumptext CinnabarGymSignText
+.Guest:
+	jumptext CinnabarGymSignGuestText
 
 ArticunoScript:
 	opentext
@@ -130,6 +134,14 @@ CinnabarGymSignText:
 
 	para "CINNABAR GYM"
 	line "LEADER: BLAINE"
+	done
+
+CinnabarGymSignGuestText:
+	text "What does this"
+	line "sign say?"
+
+	para "CINNABAR GYM"
+	line "LEADER: PRYCE"
 	done
 
 Route20_MapEvents:

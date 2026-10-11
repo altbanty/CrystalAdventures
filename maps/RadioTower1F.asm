@@ -134,7 +134,13 @@ RadioTower1FRadioCardWomanScript:
 	iftrue .WrongAnswer
 	playsound SFX_ELEVATOR_END
 	waitsfx
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .Question4Swapped
 	writetext RadioTower1FRadioCardWomanQuestion4Text
+	sjump .Question4Ask
+.Question4Swapped:
+	writetext RadioTower1FRadioCardWomanQuestion4SwappedText
+.Question4Ask:
 	yesorno
 	iffalse .WrongAnswer
 	playsound SFX_ELEVATOR_END
@@ -355,6 +361,17 @@ RadioTower1FRadioCardWomanQuestion4Text:
 	line "VIOLET GYM LEADER"
 
 	para "who uses bird"
+	line "#MON?"
+	done
+
+RadioTower1FRadioCardWomanQuestion4SwappedText:
+	text "So far so good!"
+	line "Question 4:"
+
+	para "Is BROCK the"
+	line "VIOLET GYM LEADER"
+
+	para "who uses rock"
 	line "#MON?"
 	done
 

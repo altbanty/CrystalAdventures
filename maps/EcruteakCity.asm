@@ -71,7 +71,11 @@ TinTowerSign:
 	jumptext TinTowerSignText
 
 EcruteakGymSign:
+	checkevent EVENT_GYM_PAIR_4_SWAPPED
+	iftrue .Guest
 	jumptext EcruteakGymSignText
+.Guest:
+	jumptext EcruteakGymSignGuestText
 
 EcruteakDanceTheaterSign:
 	jumptext EcruteakDanceTheaterSignText
@@ -241,6 +245,15 @@ EcruteakGymSignText:
 
 	para "The Mystic Seer of"
 	line "the Future"
+	done
+
+EcruteakGymSignGuestText:
+	text "ECRUTEAK CITY"
+	line "#MON GYM"
+	cont "LEADER: ERIKA"
+
+	para "The Nature-Loving"
+	line "Princess"
 	done
 
 EcruteakDanceTheaterSignText:

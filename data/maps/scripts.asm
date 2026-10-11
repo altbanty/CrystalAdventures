@@ -435,7 +435,6 @@ SECTION "Map Scripts 23", ROMX
 
 INCLUDE "maps/NewBarkTown.asm"
 INCLUDE "maps/VioletCity.asm"
-INCLUDE "maps/OlivineCity.asm"
 INCLUDE "maps/Route37.asm"
 INCLUDE "maps/Route42.asm"
 INCLUDE "maps/Route46.asm"
@@ -459,7 +458,6 @@ INCLUDE "maps/Route2.asm"
 INCLUDE "maps/Route1.asm"
 INCLUDE "maps/PalletTown.asm"
 INCLUDE "maps/Route21.asm"
-INCLUDE "maps/CinnabarIsland.asm"
 INCLUDE "maps/Route20.asm"
 INCLUDE "maps/Route18.asm"
 INCLUDE "maps/Route17.asm"
@@ -480,6 +478,8 @@ INCLUDE "maps/Route28SteelWingHouse.asm"
 
 SECTION "Map Scripts 25", ROMX
 
+INCLUDE "maps/OlivineCity.asm"
+INCLUDE "maps/CinnabarIsland.asm"
 INCLUDE "maps/SilverCaveOutside.asm"
 INCLUDE "maps/Route10North.asm"
 INCLUDE "maps/Route36NationalParkGate.asm"

@@ -88,7 +88,11 @@ OlivineCityStandingYoungsterScript:
 	end
 
 OlivineCitySailor2Script:
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer OlivineCitySailor2Text
+.Guest:
+	jumptextfaceplayer OlivineCitySailor2GuestText
 
 OlivineCitySign:
 	jumptext OlivineCitySignText
@@ -97,7 +101,11 @@ OlivineCityPortSign:
 	jumptext OlivineCityPortSignText
 
 OlivineGymSign:
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .Guest
 	jumptext OlivineGymSignText
+.Guest:
+	jumptext OlivineGymSignGuestText
 
 OlivineLighthouseSign:
 	jumptext OlivineLighthouseSignText
@@ -208,8 +216,8 @@ OlivineCityRivalText:
 	para "Maybe then you"
 	line "could at least"
 	
-	para "take on CHUCK"
-	line "or PRYCE!"
+	para "take on a real"
+	line "GYM LEADER!"
 	done
 
 OlivineCitySailor1Text:
@@ -270,6 +278,29 @@ OlivineCitySailor2Text:
 	cont "That's for sure!"
 	done
 
+OlivineCitySailor2GuestText:
+	text "The league has"
+	line "SABRINA pegged"
+
+	para "as the sixth"
+	line "strongest GYM"
+	cont "LEADER now!"
+
+	para "Hah! That's"
+	line "a load of crud."
+
+	para "Nobody gets past"
+	line "her psychic #-"
+	cont "MON. Nobody!"
+
+	para "Bureaucracy if"
+	line "you ask me."
+
+	para "She's something"
+	line "to be feared,"
+	cont "That's for sure!"
+	done
+
 OlivineCitySignText:
 	text "OLIVINE CITY"
 
@@ -289,6 +320,15 @@ OlivineGymSignText:
 
 	para "The Steel-Clad"
 	line "Defense Girl"
+	done
+
+OlivineGymSignGuestText:
+	text "OLIVINE CITY"
+	line "#MON GYM"
+	cont "LEADER: SABRINA"
+
+	para "The Master of"
+	line "Psychic #MON!"
 	done
 
 OlivineLighthouseSignText:

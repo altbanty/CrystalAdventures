@@ -27,7 +27,11 @@ FuchsiaCitySign:
 	jumptext FuchsiaCitySignText
 
 FuchsiaGymSign:
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .Guest
 	jumptext FuchsiaGymSignText
+.Guest:
+	jumptext FuchsiaGymSignGuestText
 
 SafariZoneOfficeSign:
 	jumptext SafariZoneOfficeSignText
@@ -90,6 +94,15 @@ FuchsiaGymSignText:
 
 	para "The Poisonous"
 	line "Ninja Master"
+	done
+
+FuchsiaGymSignGuestText:
+	text "FUCHSIA CITY"
+	line "#MON GYM"
+	cont "LEADER: CHUCK"
+
+	para "His Roaring Fists"
+	line "Do the Talking"
 	done
 
 SafariZoneOfficeSignText:

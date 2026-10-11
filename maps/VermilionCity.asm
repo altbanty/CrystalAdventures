@@ -103,7 +103,11 @@ VermilionCitySign:
 	jumptext VermilionCitySignText
 
 VermilionGymSign:
+	checkevent EVENT_GYM_PAIR_3_SWAPPED
+	iftrue .Guest
 	jumptext VermilionGymSignText
+.Guest:
+	jumptext VermilionGymSignGuestText
 
 PokemonFanClubSign:
 	jumptext PokemonFanClubSignText
@@ -247,6 +251,15 @@ VermilionGymSignText:
 
 	para "The Lightning"
 	line "American"
+	done
+
+VermilionGymSignGuestText:
+	text "VERMILION CITY"
+	line "#MON GYM"
+	cont "LEADER: WHITNEY"
+
+	para "The Incredibly"
+	line "Pretty Girl!"
 	done
 
 PokemonFanClubSignText:

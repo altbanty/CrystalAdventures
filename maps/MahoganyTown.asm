@@ -116,7 +116,11 @@ MahoganyTownRagecandybarSign:
 	jumptext MahoganyTownRagecandybarSignText
 
 MahoganyGymSign:
+	checkevent EVENT_GYM_PAIR_7_SWAPPED
+	iftrue .Guest
 	jumptext MahoganyGymSignText
+.Guest:
+	jumptext MahoganyGymSignGuestText
 
 MahoganyTownPokecenterSign:
 	jumpstd PokecenterSignScript
@@ -242,6 +246,15 @@ MahoganyGymSignText:
 
 	para "The Teacher of"
 	line "Winter's Harshness"
+	done
+
+MahoganyGymSignGuestText:
+	text "MAHOGANY TOWN"
+	line "#MON GYM"
+	cont "LEADER: BLAINE"
+
+	para "The Hotheaded"
+	line "Quiz Master"
 	done
 
 MahoganyTown_MapEvents:

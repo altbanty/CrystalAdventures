@@ -63,7 +63,11 @@ VioletCitySuperNerdScript:
 	jumptextfaceplayer VioletCitySuperNerdText
 
 VioletCityGrampsScript:
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .Guest
 	jumptextfaceplayer VioletCityGrampsText
+.Guest:
+	jumptextfaceplayer VioletCityGrampsGuestText
 
 VioletCityYoungsterScript:
 	jumptextfaceplayer VioletCityYoungsterText
@@ -72,7 +76,11 @@ VioletCitySign:
 	jumptext VioletCitySignText
 
 VioletGymSign:
+	checkevent EVENT_GYM_PAIR_1_SWAPPED
+	iftrue .Guest
 	jumptext VioletGymSignText
+.Guest:
+	jumptext VioletGymSignGuestText
 
 SproutTowerSign:
 	jumptext SproutTowerSignText
@@ -242,6 +250,19 @@ VioletCityGrampsText:
 	line "job with it."
 	done
 
+VioletCityGrampsGuestText:
+	text "BROCK, from PEWTER"
+	line "in KANTO, is a"
+	cont "fine trainer!"
+
+	para "He traded posts"
+	line "with FALKNER for"
+	cont "the season."
+
+	para "Our GYM is in"
+	line "rock-solid hands."
+	done
+
 VioletCityYoungsterText:
 	text "I saw a wiggly"
 	line "tree up ahead!"
@@ -265,6 +286,15 @@ VioletGymSignText:
 
 	para "The Elegant Master"
 	line "of Flying #MON"
+	done
+
+VioletGymSignGuestText:
+	text "VIOLET CITY"
+	line "#MON GYM"
+	cont "LEADER: BROCK"
+
+	para "The Rock Solid"
+	line "#MON Trainer"
 	done
 
 SproutTowerSignText:

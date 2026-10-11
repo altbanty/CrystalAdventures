@@ -85,7 +85,11 @@ SaffronCitySign:
 	jumptext SaffronCitySignText
 
 SaffronGymSign:
+	checkevent EVENT_GYM_PAIR_6_SWAPPED
+	iftrue .Guest
 	jumptext SaffronGymSignText
+.Guest:
+	jumptext SaffronGymSignGuestText
 
 FightingDojoSign:
 	jumptext FightingDojoSignText
@@ -240,6 +244,15 @@ SaffronGymSignText:
 
 	para "The Master of"
 	line "Psychic #MON!"
+	done
+
+SaffronGymSignGuestText:
+	text "SAFFRON CITY"
+	line "#MON GYM"
+	cont "LEADER: JASMINE"
+
+	para "The Steel-Clad"
+	line "Defense Girl"
 	done
 
 FightingDojoSignText:
