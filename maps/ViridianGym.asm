@@ -6,18 +6,51 @@ ViridianGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 8 (see BlackthornGym1F.asm). The leader object stays
+; hidden until Blue's Cinnabar scene whoever holds the gym.
+.LeaderSpriteObjects:
+	callasm ApplyViridianGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_8_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_8_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_8_SWAPPED
+.SetSprite:
+	callasm ApplyViridianGymLeaderSprite
+	endcallback
 
 ViridianGymBlueScript:
 	faceplayer
 	opentext
 	checkflag ENGINE_EARTHBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestClair
 	writetext LeaderBlueBeforeText
 	waitbutton
 	closetext
 	winlosstext LeaderBlueWinText, 0
 	setval 11
 	callasm LoadKantoGymTrainer
+	sjump .BlueLoadEnd
+
+; Clair holds Viridian Gym this run; she minds Articuno for Blue, so
+; every guest team carries it and the slot's Articuno release still fits.
+.GuestClair:
+	writetext ClairGuestIntroText
+	waitbutton
+	closetext
+	winlosstext ClairGuestWinText, 0
+	setval 15
+	callasm LoadKantoGymTrainer
+.BlueLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_BLUE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -47,15 +80,43 @@ ViridianGymBlueScript:
 .FightDone:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext BlueRematchText
 	yesorno
 	iftrue .BlueRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext ClairGuestRematchText
+	yesorno
+	iftrue .GuestClairRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestTalk
 	writetext LeaderBlueEpilogueText
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext ClairGuestEpilogueText
+	waitbutton
+	closetext
+	end
+
+.GuestClairRematch:
+	special HealParty
+	winlosstext ClairGuestWinText, 0
+	setval 15
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .BlueRematch:
@@ -75,7 +136,15 @@ ViridianGymGuideScript:
 	opentext
 	checkevent EVENT_BEAT_BLUE
 	iftrue .ViridianGymGuideWinScript
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestGuide
 	writetext ViridianGymGuideText
+	waitbutton
+	closetext
+	end
+
+.GuestGuide:
+	writetext ViridianGymGuideGuestText
 	waitbutton
 	closetext
 	end
@@ -216,6 +285,75 @@ ViridianGymGuideText:
 	line "you've got!"
 	done
 
+ViridianGymGuideGuestText:
+	text "Yo, CHAMP in"
+	line "making!"
+
+	para "CLAIR from JOHTO"
+	line "holds this GYM"
+	cont "for now."
+
+	para "Dragons shrug off"
+	line "most attacks."
+
+	para "ICE moves and"
+	line "DRAGON moves are"
+	cont "the way to win!"
+	done
+
+ClairGuestIntroText:
+	text "CLAIR: So. BLUE"
+	line "said you'd come."
+
+	para "He and I traded"
+	line "GYMS for a while."
+
+	para "He also left me"
+	line "ARTICUNO to mind."
+
+	para "A bird of ice,"
+	line "among my dragons…"
+
+	para "As a GYM LEADER,"
+	line "I will use my full"
+
+	para "power against any"
+	line "opponent!"
+	done
+
+ClairGuestWinText:
+	text "I lost?"
+
+	para "I don't believe"
+	line "it. There must be"
+	cont "some mistake…"
+
+	para "…Take the"
+	line "EARTHBADGE."
+	done
+
+ClairGuestEpilogueText:
+	text "CLAIR: Don't you"
+	line "dare lose at the"
+	cont "#MON LEAGUE."
+
+	para "I'd feel even"
+	line "worse about"
+	cont "losing to you!"
+	done
+
+ClairGuestRematchText:
+	text "CLAIR: KANTO"
+	line "CHAMPION, hm?"
+
+	para "As a Dragon"
+	line "Master, I won't"
+	cont "hold back."
+
+	para "Want to have a"
+	line "rematch with me?"
+	done
+
 ViridianGymGuideWinText:
 	text "Man, you are truly"
 	line "tough…"
@@ -241,5 +379,5 @@ ViridianGym_MapEvents:
 	bg_event  6, 13, BGEVENT_READ, ViridianGymStatue
 
 	def_object_events
-	object_event  5,  3, SPRITE_BLUE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ViridianGymBlueScript, EVENT_VIRIDIAN_GYM_BLUE
+	object_event  5,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ViridianGymBlueScript, EVENT_VIRIDIAN_GYM_BLUE
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ViridianGymGuideScript, EVENT_VIRIDIAN_GYM_BLUE

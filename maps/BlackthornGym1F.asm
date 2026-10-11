@@ -10,6 +10,26 @@ BlackthornGym1F_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_TILES, .Boulders
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 8 (Clair <-> Blue; see CianwoodGym.asm). The Dragon's Den
+; test and Clair's shrine scene are the slot's and run unchanged: a guest
+; Blue sends you to the den, and Clair still comes back to judge it.
+.LeaderSpriteObjects:
+	callasm ApplyBlackthornGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_8_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_8_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_8_SWAPPED
+.SetSprite:
+	callasm ApplyBlackthornGymLeaderSprite
+	endcallback
 
 .Boulders:
 	checkevent EVENT_BOULDER_IN_BLACKTHORN_GYM_1
@@ -33,6 +53,8 @@ BlackthornGymClairScript:
 	iftrue .AlreadyGotBadge
 	checkevent EVENT_BEAT_CLAIR
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestBlue
 	writetext ClairIntroText
 	waitbutton
 	closetext
@@ -47,6 +69,25 @@ BlackthornGymClairScript:
 	sjump .ClairLoadEnd
 .Team3:
 	loadtrainer CLAIR, CLAIR3
+	sjump .ClairLoadEnd
+
+; Blue holds Blackthorn Gym this run; the slot's per-save roll picks his
+; variant and the Dragon's Den badge flow is untouched.
+.GuestBlue:
+	writetext BlueGuestIntroText
+	waitbutton
+	closetext
+	winlosstext BlueGuestWinText, 0
+	callasm GetClairTeam
+	ifequal 3, .BlueTeam3
+	ifequal 2, .BlueTeam2
+	loadtrainer BLUE, BLUE5
+	sjump .ClairLoadEnd
+.BlueTeam2:
+	loadtrainer BLUE, BLUE6
+	sjump .ClairLoadEnd
+.BlueTeam3:
+	loadtrainer BLUE, BLUE7
 .ClairLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_CLAIR1
@@ -56,7 +97,13 @@ BlackthornGymClairScript:
 	reloadmapafterbattle
 	setevent EVENT_BEAT_CLAIR
 	opentext
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestGoToDen
 	writetext ClairText_GoToDragonsDen
+	sjump .AfterGoToDen
+.GuestGoToDen:
+	writetext BlueGuestGoToDragonsDenText
+.AfterGoToDen:
 	waitbutton
 	closetext
 	setevent EVENT_BEAT_COOLTRAINERM_PAUL
@@ -70,7 +117,15 @@ BlackthornGymClairScript:
 	end
 
 .FightDone:
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestTooMuch
 	writetext ClairText_TooMuchToExpect
+	waitbutton
+	closetext
+	end
+
+.GuestTooMuch:
+	writetext BlueGuestTooMuchText
 	waitbutton
 	closetext
 	end
@@ -78,14 +133,26 @@ BlackthornGymClairScript:
 .AlreadyGotBadge:
 	checkevent EVENT_GOT_TM24_DRAGONBREATH
 	iftrue .GotTM24
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestKeptWaiting
 	writetext BlackthornGymClairText_YouKeptMeWaiting
+	sjump .GiveTM24
+.GuestKeptWaiting:
+	writetext BlueGuestTMText
+.GiveTM24:
 	promptbutton
 	setval 8
 	callasm GetGymTM
 	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .BagFull
 	setevent EVENT_GOT_TM24_DRAGONBREATH
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestDescribeTM
 	writetext BlackthornGymClairText_DescribeTM24
+	promptbutton
+	sjump .GotTM24
+.GuestDescribeTM:
+	writetext BlueGuestDescribeTMText
 	promptbutton
 	sjump .GotTM24
 
@@ -98,15 +165,36 @@ BlackthornGymClairScript:
 .GotTM24:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext ClairRematchText
 	yesorno
 	iftrue .ClairRematch
+	sjump .CantRematchYet
+.GuestRematchAsk:
+	writetext BlueGuestRematchText
+	yesorno
+	iftrue .GuestBlueRematch
 	sjump .CantRematchYet
 .NotBeatE4
 	writetext BlackthornGymClairText_League
 	waitbutton
 .CantRematchYet:
 	closetext
+	end
+
+; Swapped rematch: Blue brings his real (Kanto-tier) team.
+.GuestBlueRematch:
+	special HealParty
+	winlosstext BlueGuestWinText, 0
+	setval 11
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest_rematch
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest_rematch
+	startbattle
+	reloadmapafterbattle
 	end
 
 .ClairRematch:
@@ -159,13 +247,29 @@ BlackthornGymGuideScript:
 	opentext
 	checkevent EVENT_BEAT_CLAIR
 	iftrue .BlackthornGymGuideWinScript
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestGuide
 	writetext BlackthornGymGuideText
 	waitbutton
 	closetext
 	end
 
+.GuestGuide:
+	writetext BlackthornGymGuideGuestText
+	waitbutton
+	closetext
+	end
+
 .BlackthornGymGuideWinScript:
+	checkevent EVENT_GYM_PAIR_8_SWAPPED
+	iftrue .GuestGuideWin
 	writetext BlackthornGymGuideWinText
+	waitbutton
+	closetext
+	end
+
+.GuestGuideWin:
+	writetext BlackthornGymGuideGuestWinText
 	waitbutton
 	closetext
 	end
@@ -454,6 +558,96 @@ BlackthornGymGuideWinText:
 	cont "#MON CHAMPION!"
 	done
 
+BlueGuestIntroText:
+	text "BLUE: Yo! So you"
+	line "made it up here."
+
+	para "CLAIR and I traded"
+	line "GYMS for a while."
+
+	para "Dragons, huh? I"
+	line "brought my own"
+	cont "team. Let's go!"
+	done
+
+BlueGuestWinText:
+	text "BLUE: What?"
+
+	para "How the heck did I"
+	line "lose to you?"
+	done
+
+BlueGuestGoToDragonsDenText:
+	text "BLUE: Tch. You"
+	line "beat me, fine."
+
+	para "But CLAIR's rules:"
+	line "nobody gets the"
+
+	para "RISINGBADGE until"
+	line "they pass the test"
+	cont "at DRAGON'S DEN."
+
+	para "It's behind this"
+	line "GYM. Go on."
+	done
+
+BlueGuestTooMuchText:
+	text "BLUE: The DRAGON'S"
+	line "DEN. Behind the"
+	cont "GYM. Get going."
+	done
+
+BlueGuestTMText:
+	text "BLUE: Took you"
+	line "long enough!"
+
+	para "CLAIR left this"
+	line "for the winner."
+	done
+
+BlueGuestDescribeTMText:
+	text "BLUE: Don't thank"
+	line "me. Thank her."
+	done
+
+BlueGuestRematchText:
+	text "BLUE: Well, well."
+	line "JOHTO CHAMPION!"
+
+	para "My real team's"
+	line "here. Rematch?"
+	done
+
+BlackthornGymGuideGuestText:
+	text "Yo! CHAMP in"
+	line "making!"
+
+	para "BLUE from KANTO"
+	line "holds this GYM"
+	cont "for now."
+
+	para "No single type to"
+	line "plan around, so"
+
+	para "bring a balanced"
+	line "team and watch"
+	cont "his ARCANINE!"
+	done
+
+BlackthornGymGuideGuestWinText:
+	text "You were great to"
+	line "beat BLUE!"
+
+	para "All that's left is"
+	line "the #MON LEAGUE"
+	cont "challenge."
+
+	para "You're on the way"
+	line "to becoming the"
+	cont "#MON CHAMPION!"
+	done
+
 BlackthornGym1F_MapEvents:
 	db 0, 0 ; filler
 
@@ -473,7 +667,7 @@ BlackthornGym1F_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, BlackthornGymStatue
 
 	def_object_events
-	object_event  5,  3, SPRITE_CLAIR, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, BlackthornGymClairScript, -1
+	object_event  5,  3, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BlackthornGymClairScript, -1
 	object_event  6,  6, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerCooltrainermMike, -1
 	object_event  1, 14, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerCooltrainermPaul, -1
 	object_event  9,  2, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerCooltrainerfLola, -1

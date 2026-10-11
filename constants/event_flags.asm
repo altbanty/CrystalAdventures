@@ -1505,6 +1505,9 @@
 ; Gym swap pair 7: Pryce (Mahogany) <-> Blaine (Seafoam)
 	const EVENT_GYM_PAIR_7_ROLLED
 	const EVENT_GYM_PAIR_7_SWAPPED
+; Gym swap pair 8: Clair (Blackthorn) <-> Blue (Viridian)
+	const EVENT_GYM_PAIR_8_ROLLED
+	const EVENT_GYM_PAIR_8_SWAPPED
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800

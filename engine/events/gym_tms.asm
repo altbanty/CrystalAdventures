@@ -528,84 +528,96 @@ ApplyVioletGymLeaderSprite::
 	ld a, SPRITE_FALKNER
 	ld b, SPRITE_BROCK
 	ld de, EVENT_GYM_PAIR_1_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyPewterGymLeaderSprite::
 	ld a, SPRITE_BROCK
 	ld b, SPRITE_FALKNER
 	ld de, EVENT_GYM_PAIR_1_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyAzaleaGymLeaderSprite::
 	ld a, SPRITE_BUGSY
 	ld b, SPRITE_MISTY
 	ld de, EVENT_GYM_PAIR_2_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyCeruleanGymLeaderSprite::
 	ld a, SPRITE_MISTY
 	ld b, SPRITE_BUGSY
 	ld de, EVENT_GYM_PAIR_2_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyGoldenrodGymLeaderSprite::
 	ld a, SPRITE_WHITNEY
 	ld b, SPRITE_SURGE
 	ld de, EVENT_GYM_PAIR_3_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyVermilionGymLeaderSprite::
 	ld a, SPRITE_SURGE
 	ld b, SPRITE_WHITNEY
 	ld de, EVENT_GYM_PAIR_3_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyEcruteakGymLeaderSprite::
 	ld a, SPRITE_MORTY
 	ld b, SPRITE_ERIKA
 	ld de, EVENT_GYM_PAIR_4_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyCeladonGymLeaderSprite::
 	ld a, SPRITE_ERIKA
 	ld b, SPRITE_MORTY
 	ld de, EVENT_GYM_PAIR_4_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyCianwoodGymLeaderSprite::
 	ld a, SPRITE_CHUCK
 	ld b, SPRITE_JANINE
 	ld de, EVENT_GYM_PAIR_5_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyFuchsiaGymLeaderSprite::
 	ld a, SPRITE_JANINE
 	ld b, SPRITE_CHUCK
 	ld de, EVENT_GYM_PAIR_5_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyOlivineGymLeaderSprite::
 	ld a, SPRITE_JASMINE
 	ld b, SPRITE_SABRINA
 	ld de, EVENT_GYM_PAIR_6_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplySaffronGymLeaderSprite::
 	ld a, SPRITE_SABRINA
 	ld b, SPRITE_JASMINE
 	ld de, EVENT_GYM_PAIR_6_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplyMahoganyGymLeaderSprite::
 	ld a, SPRITE_PRYCE
 	ld b, SPRITE_BLAINE
 	ld de, EVENT_GYM_PAIR_7_SWAPPED
-	jr ApplyGymLeaderSprite
+	jp ApplyGymLeaderSprite
 
 ApplySeafoamGymLeaderSprite::
 	ld a, SPRITE_BLAINE
 	ld b, SPRITE_PRYCE
 	ld de, EVENT_GYM_PAIR_7_SWAPPED
+	jp ApplyGymLeaderSprite
+
+ApplyBlackthornGymLeaderSprite::
+	ld a, SPRITE_CLAIR
+	ld b, SPRITE_BLUE
+	ld de, EVENT_GYM_PAIR_8_SWAPPED
+	jp ApplyGymLeaderSprite
+
+ApplyViridianGymLeaderSprite::
+	ld a, SPRITE_BLUE
+	ld b, SPRITE_CLAIR
+	ld de, EVENT_GYM_PAIR_8_SWAPPED
 	; fallthrough
 
 ApplyGymLeaderSprite:
@@ -701,6 +713,7 @@ RollGymSwaps::
 	dw EVENT_GYM_PAIR_5_ROLLED, EVENT_GYM_PAIR_5_SWAPPED
 	dw EVENT_GYM_PAIR_6_ROLLED, EVENT_GYM_PAIR_6_SWAPPED
 	dw EVENT_GYM_PAIR_7_ROLLED, EVENT_GYM_PAIR_7_SWAPPED
+	dw EVENT_GYM_PAIR_8_ROLLED, EVENT_GYM_PAIR_8_SWAPPED
 	dw -1, -1
 
 ; --- Elite Four / Champion team variants ---

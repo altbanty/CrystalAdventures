@@ -106,6 +106,9 @@ KRIS EQU __trainer_class__
 	const CLAIR2
 	const CLAIR3
 	const CLAIR4 ; rematch
+	const CLAIR5 ; Viridian guest (Kanto tier) variant A
+	const CLAIR6 ; Viridian guest (Kanto tier) variant B
+	const CLAIR7 ; Viridian guest (Kanto tier) variant C
 
 	trainerclass RIVAL1 ; 9
 	; encounter 1 (Cherrygrove) - 8 variants by player starter
@@ -1124,7 +1127,13 @@ KRIS EQU __trainer_class__
 	const RED1
 
 	trainerclass BLUE ; 40
-	const BLUE1
+	const BLUE1 ; Viridian variant A (original)
+	const BLUE2 ; rematch
+	const BLUE3 ; Viridian variant B
+	const BLUE4 ; Viridian variant C
+	const BLUE5 ; Blackthorn guest variant A
+	const BLUE6 ; Blackthorn guest variant B
+	const BLUE7 ; Blackthorn guest variant C
 
 	trainerclass OFFICER ; 41
 	const KEITH
