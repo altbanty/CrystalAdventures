@@ -115,22 +115,36 @@ InitScaledGymTeams:
 LoadChuckTrainer::
 	ld c, %00110000          ; Chuck mask (bits 5-4)
 	ld b, 4                  ; shift count
+	ld d, CHUCK1             ; first party of the 3x3 grid
 	ld e, CHUCK
+	jr _LoadScaledGymTrainer
+
+; Janine holding Cianwood Gym (swap pair 5): same badge tiers and the same
+; per-save variant roll as Chuck's slot, her own 3x3 grid of parties.
+LoadJanineGuestTrainer::
+	ld c, %00110000          ; Chuck's slot (bits 5-4)
+	ld b, 4
+	ld d, JANINE4
+	ld e, JANINE
 	jr _LoadScaledGymTrainer
 
 LoadJasmineTrainer::
 	ld c, %00001100          ; Jasmine mask (bits 3-2)
 	ld b, 2                  ; shift count
+	ld d, JASMINE1
 	ld e, JASMINE
 	jr _LoadScaledGymTrainer
 
 LoadPryceTrainer::
 	ld c, %00000011          ; Pryce mask (bits 1-0)
 	ld b, 0                  ; shift count
+	ld d, PRYCE1
 	ld e, PRYCE
 	; fall through
 
 _LoadScaledGymTrainer:
+; b = shift count, c = variant mask, d = first party ID of the 3x3
+; (tier x variant) grid, e = trainer class, wScriptVar = tier base (0/3/6)
 	push bc
 	push de
 	call InitScaledGymTeams
@@ -147,11 +161,10 @@ _LoadScaledGymTrainer:
 	srl a
 	jr .shift_loop
 .shift_done:
-	; a = variant (0-2), wScriptVar = tier base (0/3/6)
-	ld d, a                  ; d = variant
+	ld b, a                  ; b = variant (0-2)
 	ld a, [wScriptVar]       ; tier base from setval
-	add d                    ; + variant
-	inc a                    ; 1-based trainer ID
+	add b                    ; + variant
+	add d                    ; + first party ID of the grid
 	ld [wOtherTrainerID], a
 	ld a, e
 	ld [wOtherTrainerClass], a
@@ -541,6 +554,18 @@ ApplyCeladonGymLeaderSprite::
 	ld a, SPRITE_ERIKA
 	ld b, SPRITE_MORTY
 	ld de, EVENT_GYM_PAIR_4_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyCianwoodGymLeaderSprite::
+	ld a, SPRITE_CHUCK
+	ld b, SPRITE_JANINE
+	ld de, EVENT_GYM_PAIR_5_SWAPPED
+	jr ApplyGymLeaderSprite
+
+ApplyFuchsiaGymLeaderSprite::
+	ld a, SPRITE_JANINE
+	ld b, SPRITE_CHUCK
+	ld de, EVENT_GYM_PAIR_5_SWAPPED
 	; fallthrough
 
 ApplyGymLeaderSprite:
@@ -562,7 +587,7 @@ RollGymSwaps::
 ; save-scum any outcome. The lazy rolls in the gym SPRITES callbacks remain
 ; only as a migration fallback for saves from before this feature.
 ;
-; All four coin flips come from separate bits of ONE mixed byte.
+; All the coin flips come from separate bits of ONE mixed byte.
 ; Back-to-back Random calls are correlated (rDIV barely advances between
 ; them, and RandomRange 2 reduces to parity), which used to make all four
 ; pairs swap - or stay home - together far too often.
@@ -633,6 +658,7 @@ RollGymSwaps::
 	dw EVENT_GYM_PAIR_2_ROLLED, EVENT_GYM_PAIR_2_SWAPPED
 	dw EVENT_GYM_PAIR_3_ROLLED, EVENT_GYM_PAIR_3_SWAPPED
 	dw EVENT_GYM_PAIR_4_ROLLED, EVENT_GYM_PAIR_4_SWAPPED
+	dw EVENT_GYM_PAIR_5_ROLLED, EVENT_GYM_PAIR_5_SWAPPED
 	dw -1, -1
 
 ; --- Elite Four / Champion team variants ---

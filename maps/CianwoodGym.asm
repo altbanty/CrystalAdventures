@@ -13,12 +13,35 @@ CianwoodGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 5 (Chuck <-> Janine; see VioletGym.asm): roll once per
+; save for pre-feature saves, then show whoever holds this gym. The
+; OBJECTS callback reasserts the sprite because SPRITES can be skipped
+; on cached re-entry.
+.LeaderSpriteObjects:
+	callasm ApplyCianwoodGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_5_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_5_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_5_SWAPPED
+.SetSprite:
+	callasm ApplyCianwoodGymLeaderSprite
+	endcallback
 
 CianwoodGymChuckScript:
 	faceplayer
 	opentext
 	checkevent EVENT_BEAT_CHUCK
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestJanine
 	writetext ChuckIntroText1
 	waitbutton
 	closetext
@@ -39,19 +62,37 @@ CianwoodGymChuckScript:
 	closetext
 	winlosstext ChuckLossText, 0
 	;  Level scaling + team randomization
+	scall .PickTier
+	callasm LoadChuckTrainer
+	sjump .CianwoodGymChuckScriptEnd
+
+; Janine holds Cianwood Gym this run. Badge, TM, level cap, and story
+; events are the slot's; she fights at the slot's badge tier with the
+; slot's per-save variant roll. No boulder toss - that's Chuck's bit.
+.GuestJanine:
+	writetext JanineGuestIntroText
+	waitbutton
+	closetext
+	winlosstext JanineGuestWinLossText, 0
+	scall .PickTier
+	callasm LoadJanineGuestTrainer
+	sjump .CianwoodGymChuckScriptEnd
+
+; Tier base in wScriptVar from the badge count. A subroutine because
+; checkevent clobbers wScriptVar, so the swap branch must come first.
+.PickTier:
 	readvar VAR_BADGES
 	ifgreater 5, .SevenBadges
 	ifequal 5, .SixBadges
-.FiveBadges:
 	setval 0           ; tier 1 base
-	sjump .LoadTeam
+	end
 .SixBadges:
 	setval 3           ; tier 2 base
-	sjump .LoadTeam
+	end
 .SevenBadges:
 	setval 6           ; tier 3 base
-.LoadTeam:
-	callasm LoadChuckTrainer
+	end
+
 .CianwoodGymChuckScriptEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_3
@@ -101,7 +142,13 @@ CianwoodGymChuckScript:
 	verbosegiveitem ITEM_FROM_MEM, 1
 	iffalse .BagFull
 	setevent EVENT_GOT_TM01_DYNAMICPUNCH
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestTMText
 	writetext ChuckExplainTMText
+	sjump .AfterTMText
+.GuestTMText:
+	writetext JanineGuestTMText
+.AfterTMText:
 	waitbutton
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .SkipLevelCapText
@@ -114,15 +161,44 @@ CianwoodGymChuckScript:
 .AlreadyGotTM:
 	checkevent EVENT_BEAT_ELITE_FOUR
 	iffalse .NotBeatE4
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext ChuckRematchText
 	yesorno
 	iftrue .ChuckRematch
 	sjump .BagFull
+.GuestRematchAsk:
+	writetext JanineGuestRematchText
+	yesorno
+	iftrue .GuestJanineRematch
+	sjump .BagFull
 .NotBeatE4
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestFightDone
 	writetext ChuckAfterText
 	waitbutton
 .BagFull:
 	closetext
+	end
+
+.GuestFightDone:
+	writetext JanineGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+; Swapped rematch: Janine brings her real (Kanto-tier) team.
+.GuestJanineRematch:
+	special HealParty
+	winlosstext JanineGuestWinLossText, 0
+	setval 8
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest_rematch
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest_rematch
+	startbattle
+	reloadmapafterbattle
 	end
 
 .ChuckRematch:
@@ -311,6 +387,52 @@ Chuck_RematchDefeatText:
 	cont "Again?"
 	done
 
+JanineGuestIntroText:
+	text "Fufufufu…"
+
+	para "Surprised? CHUCK"
+	line "and I traded GYMS"
+	cont "for a while."
+
+	para "This GYM is full"
+	line "of muscle, but"
+
+	para "poison beats"
+	line "muscle every time!"
+	done
+
+JanineGuestWinLossText:
+	text "JANINE: You saw"
+	line "through my tricks…"
+
+	para "STORMBADGE is"
+	line "yours. Take it."
+	done
+
+JanineGuestTMText:
+	text "JANINE: Train with"
+	line "it, and sneak up"
+	cont "on your rivals!"
+	done
+
+JanineGuestFightDoneText:
+	text "JANINE: CHUCK's"
+	line "students train so"
+	cont "loudly…"
+
+	para "A ninja prefers"
+	line "silence. Fufufu."
+	done
+
+JanineGuestRematchText:
+	text "JANINE: JOHTO"
+	line "CHAMPION! My real"
+	cont "team came along."
+
+	para "Care for a real"
+	line "rematch?"
+	done
+
 BlackbeltYoshiSeenText:
 	text "My #MON and I"
 	line "are bound togeth-"
@@ -390,7 +512,7 @@ CianwoodGym_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, CianwoodGymStatue
 
 	def_object_events
-	object_event  4,  1, SPRITE_CHUCK, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, CianwoodGymChuckScript, -1
+	object_event  4,  1, SPRITE_GYM_LEADER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodGymChuckScript, -1
 	object_event  2, 12, SPRITE_BLACK_BELT, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerBlackbeltYoshi, -1
 	object_event  7, 12, SPRITE_BLACK_BELT, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerBlackbeltLao, -1
 	object_event  3,  9, SPRITE_BLACK_BELT, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 2, TrainerBlackbeltNob, -1

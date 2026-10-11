@@ -119,6 +119,7 @@ LoadKantoGymTrainer::
 	db 5, SABRINA,  1, 2, 3  ; 9: Saffron - Sabrina
 	db 6, BLAINE,   1, 2, 3  ; 10: Seafoam - Blaine
 	db 7, BLUE,     1, 3, 4  ; 11: Viridian - Blue
+	db 4, CHUCK,    11, 12, 13 ; 12: Fuchsia - guest Chuck
 
 ; --- Game Corner prize rolls ---
 ; Goldenrod stocks one prize per price tier, each rolled independently

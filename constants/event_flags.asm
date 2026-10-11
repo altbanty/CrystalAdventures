@@ -1496,6 +1496,9 @@
 ; Gym swap pair 4: Morty (Ecruteak) <-> Erika (Celadon)
 	const EVENT_GYM_PAIR_4_ROLLED
 	const EVENT_GYM_PAIR_4_SWAPPED
+; Gym swap pair 5: Chuck (Cianwood) <-> Janine (Fuchsia)
+	const EVENT_GYM_PAIR_5_ROLLED
+	const EVENT_GYM_PAIR_5_SWAPPED
 
 	const_next 2048
 NUM_EVENTS EQU const_value ; 800

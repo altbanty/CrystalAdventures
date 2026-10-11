@@ -10,10 +10,31 @@ FuchsiaGym_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
+	callback MAPCALLBACK_SPRITES, .LeaderSprite
+	callback MAPCALLBACK_OBJECTS, .LeaderSpriteObjects
+
+; Gym swap pair 5 (see CianwoodGym.asm): roll if this gym is reached
+; first, then show whoever holds this gym.
+.LeaderSpriteObjects:
+	callasm ApplyFuchsiaGymLeaderSprite
+	endcallback
+
+.LeaderSprite:
+	checkevent EVENT_GYM_PAIR_5_ROLLED
+	iftrue .SetSprite
+	setevent EVENT_GYM_PAIR_5_ROLLED
+	random 2
+	ifequal 0, .SetSprite
+	setevent EVENT_GYM_PAIR_5_SWAPPED
+.SetSprite:
+	callasm ApplyFuchsiaGymLeaderSprite
+	endcallback
 
 FuchsiaGymJanineScript:
 	checkflag ENGINE_SOULBADGE
 	iftrue .FightDone
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestChuck
 	applymovement FUCHSIAGYM_JANINE, Movement_NinjaSpin
 	faceplayer
 	opentext
@@ -23,6 +44,20 @@ FuchsiaGymJanineScript:
 	winlosstext JanineText_ToughOne, 0
 	setval 8
 	callasm LoadKantoGymTrainer
+	sjump .JanineLoadEnd
+
+; Chuck holds Fuchsia Gym this run; the Soul Badge flow is unchanged.
+; The students still dress as Janine - they're her students, not his.
+.GuestChuck:
+	faceplayer
+	opentext
+	writetext ChuckGuestIntroText
+	waitbutton
+	closetext
+	winlosstext ChuckGuestWinLossText, 0
+	setval 12
+	callasm LoadKantoGymTrainer
+.JanineLoadEnd:
 	checkflag ENGINE_ADVENTURE_MODE
 	iffalse .normalmode_JANINE1
 	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
@@ -54,7 +89,13 @@ FuchsiaGymJanineScript:
 .AfterBattle:
 	checkevent EVENT_GOT_TM06_TOXIC
 	iftrue .AfterTM
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestToxicSpeech
 	writetext JanineText_ToxicSpeech
+	sjump .GiveToxic
+.GuestToxicSpeech:
+	writetext ChuckGuestToxicSpeechText
+.GiveToxic:
 	promptbutton
 	verbosegiveitem TM_TOXIC
 	iffalse .AfterTM
@@ -62,15 +103,43 @@ FuchsiaGymJanineScript:
 .AfterTM:
 	checkevent EVENT_ELITE_4_REMATCH
 	iffalse .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestRematchAsk
 	writetext JanineRematchText
 	yesorno
 	iftrue .JanineRematch
 	sjump .SaidNo
+.GuestRematchAsk:
+	writetext ChuckGuestRematchText
+	yesorno
+	iftrue .GuestChuckRematch
+	sjump .SaidNo
 .NotBeatE4Rematch
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestTalk
 	writetext JanineText_ApplyMyself
 	waitbutton
 .SaidNo
 	closetext
+	end
+
+.GuestTalk:
+	writetext ChuckGuestFightDoneText
+	waitbutton
+	closetext
+	end
+
+.GuestChuckRematch:
+	special HealParty
+	winlosstext ChuckGuestWinLossText, 0
+	setval 12
+	callasm LoadKantoGymTrainer
+	checkflag ENGINE_ADVENTURE_MODE
+	iffalse .normalmode_guest
+	loadvar VAR_BATTLETYPE, BATTLETYPE_SETNOITEMS
+.normalmode_guest
+	startbattle
+	reloadmapafterbattle
 	end
 
 .JanineRematch:
@@ -243,7 +312,15 @@ FuchsiaGymGuideScript:
 	opentext
 	checkevent EVENT_BEAT_JANINE
 	iftrue .FuchsiaGymGuideWinScript
+	checkevent EVENT_GYM_PAIR_5_SWAPPED
+	iftrue .GuestGuide
 	writetext FuchsiaGymGuideText
+	waitbutton
+	closetext
+	end
+
+.GuestGuide:
+	writetext FuchsiaGymGuideGuestText
 	waitbutton
 	closetext
 	end
@@ -443,6 +520,74 @@ FuchsiaGymGuideText:
 	line "the real JANINE?"
 	done
 
+FuchsiaGymGuideGuestText:
+	text "Yo, CHAMP in"
+	line "making!"
+
+	para "The trainers here"
+	line "all dress up like"
+	cont "JANINE…"
+
+	para "but the LEADER"
+	line "this year is CHUCK"
+	cont "from JOHTO!"
+	done
+
+ChuckGuestIntroText:
+	text "CHUCK: WAHAHAH!"
+
+	para "JANINE and I"
+	line "traded GYMS for a"
+	cont "while."
+
+	para "All this spinning"
+	line "makes me dizzy!"
+
+	para "Forget tricks."
+	line "Let's do battle!"
+	done
+
+ChuckGuestWinLossText:
+	text "Wha? Huh?"
+	line "I lost?"
+
+	para "Fine! You've"
+	line "earned SOULBADGE!"
+	done
+
+ChuckGuestToxicSpeechText:
+	text "CHUCK: Take this"
+	line "too! JANINE left"
+	cont "it for the winner."
+
+	para "It's TOXIC, a pow-"
+	line "erful poison that"
+
+	para "steadily saps the"
+	line "victim's HP."
+	done
+
+ChuckGuestFightDoneText:
+	text "CHUCK: These ninja"
+	line "kids never sit"
+	cont "still!"
+
+	para "I'm going to train"
+	line "24 hours a day to"
+	cont "keep up! WAHAHAH!"
+	done
+
+ChuckGuestRematchText:
+	text "WAHAHAH!"
+	line "KANTO CHAMPION!"
+
+	para "My fists have been"
+	line "itching for this!"
+
+	para "Ready to see who's"
+	line "stronger?"
+	done
+
 FuchsiaGymGuideWinText:
 	text "That was a great"
 	line "battle, trainer"
@@ -463,7 +608,7 @@ FuchsiaGym_MapEvents:
 	bg_event  6, 15, BGEVENT_READ, FuchsiaGymStatue
 
 	def_object_events
-	object_event  1, 10, SPRITE_JANINE, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, FuchsiaGymJanineScript, -1
+	object_event  1, 10, SPRITE_GYM_LEADER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, FuchsiaGymJanineScript, -1
 	object_event  5,  7, SPRITE_FUCHSIA_GYM_1, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, LassAliceScript, -1
 	object_event  5, 11, SPRITE_FUCHSIA_GYM_2, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, LassLindaScript, -1
 	object_event  9,  4, SPRITE_FUCHSIA_GYM_3, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PicnickerCindyScript, -1

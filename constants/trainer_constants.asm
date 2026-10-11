@@ -91,6 +91,9 @@ KRIS EQU __trainer_class__
 	const CHUCK8  ; tier 3 variant B
 	const CHUCK9  ; tier 3 variant C
 	const CHUCK10 ; rematch
+	const CHUCK11 ; Fuchsia guest (Kanto tier) variant A
+	const CHUCK12 ; Fuchsia guest (Kanto tier) variant B
+	const CHUCK13 ; Fuchsia guest (Kanto tier) variant C
 
 	trainerclass CLAIR ; 8
 	const CLAIR1
@@ -322,7 +325,18 @@ KRIS EQU __trainer_class__
 	const CONNIE1_V2
 
 	trainerclass JANINE ; 1a
-	const JANINE1
+	const JANINE1  ; Fuchsia variant A (original)
+	const JANINE2  ; Fuchsia variant B
+	const JANINE3  ; Fuchsia variant C
+	const JANINE4  ; Cianwood guest tier 1 variant A
+	const JANINE5  ; Cianwood guest tier 1 variant B
+	const JANINE6  ; Cianwood guest tier 1 variant C
+	const JANINE7  ; Cianwood guest tier 2 variant A
+	const JANINE8  ; Cianwood guest tier 2 variant B
+	const JANINE9  ; Cianwood guest tier 2 variant C
+	const JANINE10 ; Cianwood guest tier 3 variant A
+	const JANINE11 ; Cianwood guest tier 3 variant B
+	const JANINE12 ; Cianwood guest tier 3 variant C
 
 	trainerclass COOLTRAINERM ; 1b
 	const NICK
